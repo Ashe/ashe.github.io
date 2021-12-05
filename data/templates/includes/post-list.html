@@ -1,0 +1,9 @@
+<div class="mx-auto">
+  <div class="flex flex-wrap items-start content-start -ml-8" uk-grid="masonry: true;">
+    $for(posts)$
+      <div class="w-full sm:w-1/2 md:w-1/3">
+        $partial("templates/includes/post-preview-small.html")$
+      </div>
+    $endfor$
+  </div>
+</div>

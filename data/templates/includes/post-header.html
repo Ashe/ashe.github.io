@@ -1,0 +1,66 @@
+<header class="bg-muted dark:bg-night font-standout leading-snug">
+
+  <div class="flex flex-col sm:flex-row my-8 container justify-items-center justify-end items-center">
+    <div class="flex flex-col text-center sm:text-right">
+      <h1 class="inline-flex flex-col">
+        $title$ 
+      </h1>
+      $if(subtitle)$
+        <span class="mb-1">$subtitle$</span>
+      $endif$
+      $if(description)$
+        <small>$description$</small>
+      $endif$
+      <span class="text-xs text-muted mt-1">
+        $if(has-authors)$
+          $for(authors)$
+            $author$
+            $sep$⦿
+          $endfor$
+        $else$
+          $social-name$
+        $endif$
+      </span>
+    </div>
+    <hr class="hidden sm:block sm:h-24 sm:w-px mx-4 my-4 sm:my-auto min-w-px">
+    <div class="text-sm text-muted sm:w-5/12 md:w-2/5">
+      <ul>
+        $if(date)$
+          <li class="flex">
+            <i class="las la-calendar-day mr-4"></i> $date$
+          </li>
+        $endif$
+        $if(read-time)$
+          <li class="flex">
+            <i class="las la-stopwatch mr-4"></i> $read-time$ Minutes
+          </li>
+        $endif$
+        $if(related-project)$
+          $for(related-project)$
+            <li class="flex">
+              <i class="las la-hashtag mr-4"></i> <a class="text-emphasis" href="$url$">$title$</a>
+            </li>
+          $endfor$
+        $endif$
+        $if(tags)$
+          <li class="flex flex-wrap break-words">
+            <i class="las la-tags mr-4"></i>
+            $for(tags)$
+              <span><a class="text-emphasis" href="$url$">$name$</a>$sep$, </span>
+            $endfor$
+          </li>
+        $endif$
+        $if(git-commit-hash)$
+          <li class="flex">
+            <i class="las la-code-branch mr-4"></i>
+            <a
+              class="uk-link-muted"
+              href="$site-repo$/commit/$git-commit-hash$">$git-commit$</a>
+          </li>
+        $endif$
+      </ul>
+    </div>
+  </div>
+  <hr class="container" />
+
+</header>

@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="h-56 sm:h-xl xl:h-2xl bg-cover w-5/6 mx-auto lg:min-w-full xl:w-auto mb-8 xl:-mx-24 rounded-lg relative shadow-2xl overflow-hidden">
+    $if(has-images)$
+      <div class="swiper featured-swiper">
+        <div class="swiper-wrapper">
+          $for(images)$
+            <div class="swiper-slide h-56 sm:h-xl xl:h-2xl">
+              <img src="$image$" 
+                   alt="Featured image $index$ for $title$" 
+                   class="object-cover w-full h-56 sm:h-xl xl:h-2xl">
+            </div>
+          $endfor$
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <script>
+        var swiper = new Swiper('.featured-swiper', {
+          direction: 'horizontal',
+          loop: true,
+          slidesPerView: 1,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: true,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+        });
+      </script>
+    $else$
+      <img src="$image$" alt="Article image" class="relative w-full h-full object-cover">
+    $endif$
+  </div>
+</div>
+
+
+$if(toc)$
+  <div class="flex flex-row-reversed max-w-screen-2xl mx-auto">
+    <div class="hidden xl:block xl:flex-1">
+
+      <div class="toc sticky top-10 mt-5 p-6 float-right no-underline">
+        <div class="font-standout text-muted dark:text-emphasizedNight" uk-scrollspy-nav="closest: li; scroll: true; offset: 85; cls: text-black dark:text-highlightNight">
+          $toc$
+        </div>
+      </div>
+
+    </div>
+    <div class="flex-none">
+      <div class="container">
+        <article class="lg:w-4/5 lg:mx-auto">
+          $body$
+        </article>
+      </div>
+    </div>
+
+  </div>
+
+$else$
+
+  <div class="container">
+    <article class="lg:w-4/5 lg:mx-auto">
+      $body$
+    </article>
+  </div>
+
+$endif$

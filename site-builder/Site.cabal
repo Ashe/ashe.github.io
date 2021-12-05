@@ -1,0 +1,72 @@
+cabal-version:      3.0
+name:               Site
+
+-- The package version.  See the Haskell package versioning policy (PVP)
+-- for standards guiding when and how versions should be incremented.
+-- https://pvp.haskell.org
+-- PVP summary:     +-+------- breaking API changes
+--                  | | +----- non-breaking API additions
+--                  | | | +--- code changes with no API change
+version:            0.2.1.1
+license:            MIT
+license-file:       LICENSE
+maintainer:         me@aas.sh
+author:             Ashley Smith
+
+executable site
+    main-is: Main.hs
+    hs-source-dirs: src
+    other-modules:
+      Config
+      Context
+      Route
+      Util
+      Field
+      Field.Bibliography
+      Field.CanonicalUrl
+      Field.Git
+      Field.Group
+      Field.Group.Project
+      Field.Group.Year
+      Field.List
+      Field.Markdown
+      Field.TableOfContents
+      Field.Tags
+      Page
+      Page.About
+      Page.Archive
+      Page.Archive.Date
+      Page.Archive.Project
+      Page.Feed
+      Page.Home
+      Page.Post
+      Page.Project
+      Page.Sitemap
+      Page.Tags
+      Snippet
+      Snippet.Anchor
+      Snippet.Caption
+      Snippet.Figure
+      Snippet.InfoBox
+      Snippet.Util
+
+    default-language: Haskell2010
+    other-extensions: OverloadedStrings
+    build-depends:
+      base >=4.14,
+      containers ^>=0.6.2.1,
+      data-default ^>=0.7,
+      filepath ^>=1.4,
+      process ^>=1.6,
+      random ^>=1.2.0,
+      time ^>=1.9,
+      time-locale-compat ^>=0.1,
+      hakyll ^>= 4.14,
+      hakyll-images ^>=1.0,
+      text ^>=1.2,
+      hakyll-sass ^>=0.2,
+      hsass ^>=0.8,
+      pandoc ^>=2.13,
+      pandoc-types ^>=1.22,
+      blaze-html ^>=0.9,
+      blaze-markup ^>=0.8,

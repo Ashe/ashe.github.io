@@ -1,0 +1,17 @@
+<section class="uk-section mb-10">
+  <h2>Browse tags</h2>
+  <div class="container">
+    <div class="tag-cloud w-full md:w-3/4 lg:w-4/5 xl:w-5/6 mx-auto">
+      $tag-cloud$
+    </div>
+  </div>
+</section>
+
+$if(tag)$
+  <section class="uk-section mb-10">
+    <h2>Posts with tag: <span class="uk-text-primary underline">$tag$</span></h2>
+    <div class="container">
+      $partial("templates/includes/post-list.html")$
+    </div>
+  </section>
+$endif$

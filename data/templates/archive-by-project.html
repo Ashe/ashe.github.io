@@ -1,0 +1,11 @@
+<section>
+  <h3>$title$</h3>
+  $for(projects)$
+    <h4 class="uk-heading-line">
+      $for(project)$
+        <span>Project: <a href="$url$">$title$</a></span>
+      $endfor$
+    </h4>
+    $partial("templates/includes/post-list.html")$
+  $endfor$
+</section>

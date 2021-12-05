@@ -1,0 +1,43 @@
+<div class="p-3">
+  <div class="flex flex-col rounded overflow-hidden shadow-xl hover:shadow-2xl dark:bg-mutedNight">
+    $if(has-images)$
+      <img src="$at-index("images", "0")$" alt="" class="object-cover w-fill h-60">
+    $else$
+      <img src="$image$" alt="" class="object-cover w-fill h-60">
+    $endif$
+
+    <article class="w-full p-8">
+      <header class="mb-4">
+
+        <h1 class="text-xl">
+          <a class="uk-link-heading" href="$url$">
+            $title$
+          </a>
+        </h1>
+
+        <h2 class="text-sm mt-0">
+          <ul class="items-center my-0">
+            <li class>
+              <i class="las la-calendar-day"></i> $date$
+            </li>
+            <li>
+              <i class="las la-stopwatch"></i> $read-time$ Minutes
+            </li>
+            $if(tags)$
+              <li class="break-words">
+                <i class="las la-tags"></i>
+                $for(tags)$
+                  <span><a class="text-emphasis" href="$url$">$name$</a>$sep$, </span>
+                $endfor$
+              </li>
+            $endif$
+          </ul>
+        </h2>
+        <p class="mt-0">$description$</p>
+      </header>
+      <div>
+        <a class="uppercase text-sm text-emphasis no-underline" href="$url$">Read more</a>
+      </div>
+    </article>
+  </div>
+</div>
