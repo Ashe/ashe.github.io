@@ -63,8 +63,10 @@ module.exports = {
         warningNight: '#897e00',
         danger: '#ff8298',
         dangerNight: '#661423',
-        repo: '#ac9ddd',
-        repoNight: '#32255e',
+        gitrepo: '#ac9ddd',
+        gitrepoNight: '#32255e',
+        itch: '#ea5b5b',
+        itchNight: '#4f2424',
 
         // primary: 'var(--color-primary)',
         // secondary: 'var(--color-secondary)',

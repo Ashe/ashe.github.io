@@ -3,7 +3,8 @@ title: Redux For Games
 date: 2017-04-24
 subtitle: A remake of my University assignment, Alacrity, with a homemade engine.
 description: Alacrity was really successful, but I didn't like the fact that it wasn't cross platform. To test myself even further I wanted to try porting it to OpenGL.
-categories: [Engine Development]
+categories: 
+  - Engine Development
 tags: 
   - Game
   - C++
@@ -14,7 +15,7 @@ images:
 status: published
 ---
 
-:::{.repo header="ReduxForGames"}
+:::{.gitrepo header="ReduxForGames"}
 A link to the GitHub repository can be found [here](https://github.com/Ashe/ReduxForGames/).
 :::
 

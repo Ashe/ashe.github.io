@@ -26,7 +26,7 @@ toInfoBox (Div (id, classes, kvp) content) = Div (id, classes', []) content'
 
 --------------------------------------------------------------------------------
 
-data InfoBoxType = Notice | Warning | Help | Danger | Repo
+data InfoBoxType = Notice | Warning | Help | Danger | Git | Itch
 
 
 getInfoBoxType :: [T.Text] -> Maybe InfoBoxType
@@ -35,7 +35,8 @@ getInfoBoxType classes
   | "warning" `elem` classes = Just Warning
   | "help" `elem` classes    = Just Help
   | "danger" `elem` classes  = Just Danger
-  | "repo" `elem` classes    = Just Repo
+  | "gitrepo" `elem` classes = Just Git
+  | "itch" `elem` classes    = Just Itch
   | otherwise = Nothing
 
 
@@ -68,12 +69,13 @@ icon Notice = "las la-info-circle"
 icon Warning = "las la-exclamation-circle"
 icon Help = "las la-question-circle"
 icon Danger = "las la-exclamation-circle"
-icon Repo = "lab la-github"
+icon Git = "lab la-github"
+icon Itch = "lab la-itch-io"
 
 
 prefix :: InfoBoxType -> T.Text
 prefix Notice = "Note - "
 prefix Warning = "Warning - "
 prefix Danger = "Danger - "
-prefix Repo = "Repository - "
+prefix Git = "Repository - "
 prefix _ = ""

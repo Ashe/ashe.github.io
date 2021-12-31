@@ -3,7 +3,8 @@ title: Deus Vult
 date: 2017-05-05
 subtitle: My first attempt at an ECS and implementing Lua and Spine.
 description: This project was more of an exploration than anything else. I wanted to make an engine which could have its data serialised and manipulated with scripts rather than hard code.
-categories: [Engine Development]
+categories: 
+  - Engine Development
 tags: 
   - C++
   - Lua
@@ -16,7 +17,7 @@ images:
 status: published
 ---
 
-:::{.repo header="Deus Vult"}
+:::{.gitrepo header="Deus Vult"}
 A link to the GitHub repository can be found [here](https://github.com/Ashe/Deus_Vult/). Please also note that I was still learning git with this project and so it's a bit of a mess!
 :::
 

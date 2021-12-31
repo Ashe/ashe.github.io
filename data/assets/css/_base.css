@@ -41,8 +41,12 @@
       @apply bg-danger;
     }
 
-    .box.repo {
-      @apply bg-repo;
+    .box.gitrepo {
+      @apply bg-gitrepo;
+    }
+
+    .box.itch {
+      @apply bg-itch;
     }
   }
 
@@ -134,8 +138,12 @@
         @apply bg-dangerNight;
       }
 
-      .box.repo {
-        @apply bg-repoNight;
+      .box.gitrepo {
+        @apply bg-gitrepoNight;
+      }
+
+      .box.itch {
+        @apply bg-itchNight;
       }
     }
   }

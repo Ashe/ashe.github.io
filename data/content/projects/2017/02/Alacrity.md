@@ -3,11 +3,12 @@ title: Alacrity
 date: 2017-02-23
 subtitle: Best-of-show winning puzzle game for Sheffield Hallam Uni.
 description: Alacrity is a tile-based puzzle game where you have to collect pickups before time expires. We won an award for this game and got the opportunity to showcase our game next to Sumo Digital's 'Snake Pass'.
-categories: [Game Development]
 authors:
   - Ashley Smith
   - Holly Savin
   - Elliott Hill
+categories: 
+  - Game Development
 tags: 
   - Game
   - C++
@@ -19,11 +20,11 @@ featured: true
 status: published
 ---
 
-:::{.repo header="Alacrity"}
+:::{.gitrepo header="Alacrity"}
 GitHub repository for Alacrity can be found [here](https://github.com/Ashe/Alacrity).
 :::
 
-# What is this?
+# What is Alacrity?
 Alacrity is a tile-based puzzle game where you have to collect pickups and get to to the finish before time expires. It was made as a university assignment between myself, [my good friend Holly](https://twitter.com/holiwhirl) and [our teammate Elliott](https://twitter.com/MrHilster). Alacrity is quite a special game to me, as it was one of the first times in my life where I have felt that I was truly recognised for my efforts. Note that the time-attack element of the game came from the requirement that we needed to make a 'racing' game.
 
 # How can I play?
