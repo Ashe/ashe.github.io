@@ -63,6 +63,8 @@ module.exports = {
         warningNight: '#897e00',
         danger: '#ff8298',
         dangerNight: '#661423',
+        repo: '#ac9ddd',
+        repoNight: '#32255e',
 
         // primary: 'var(--color-primary)',
         // secondary: 'var(--color-secondary)',

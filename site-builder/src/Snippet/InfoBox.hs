@@ -26,7 +26,7 @@ toInfoBox (Div (id, classes, kvp) content) = Div (id, classes', []) content'
 
 --------------------------------------------------------------------------------
 
-data InfoBoxType = Notice | Warning | Help | Danger
+data InfoBoxType = Notice | Warning | Help | Danger | Repo
 
 
 getInfoBoxType :: [T.Text] -> Maybe InfoBoxType
@@ -35,6 +35,7 @@ getInfoBoxType classes
   | "warning" `elem` classes = Just Warning
   | "help" `elem` classes    = Just Help
   | "danger" `elem` classes  = Just Danger
+  | "repo" `elem` classes    = Just Repo
   | otherwise = Nothing
 
 
@@ -44,7 +45,7 @@ makeTitle boxType kvp = case lookup "header" kvp of
     [Div ("", ["header"], []) (contents header) ]
   Nothing -> []
   where contents header = [ Plain
-          [ Span ("", ["las", icon boxType, "mr-3"],[]) []
+          [ Span ("", [icon boxType, "mr-3"],[]) []
           , Str $ prefix boxType `T.append` header
           ]]
 
@@ -63,14 +64,16 @@ makeCaption kvp = case  lookup "caption" kvp of
 
 
 icon :: InfoBoxType -> T.Text
-icon Notice = "la-info-circle"
-icon Warning = "la-exclamation-circle"
-icon Help = "la-question-circle"
-icon Danger = "la-exclamation-circle"
+icon Notice = "las la-info-circle"
+icon Warning = "las la-exclamation-circle"
+icon Help = "las la-question-circle"
+icon Danger = "las la-exclamation-circle"
+icon Repo = "lab la-github"
 
 
 prefix :: InfoBoxType -> T.Text
 prefix Notice = "Note - "
 prefix Warning = "Warning - "
 prefix Danger = "Danger - "
+prefix Repo = "Repository - "
 prefix _ = ""

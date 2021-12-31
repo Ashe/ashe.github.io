@@ -40,6 +40,10 @@
     .box.danger {
       @apply bg-danger;
     }
+
+    .box.repo {
+      @apply bg-repo;
+    }
   }
 
   header {
@@ -128,6 +132,10 @@
 
       .box.danger {
         @apply bg-dangerNight;
+      }
+
+      .box.repo {
+        @apply bg-repoNight;
       }
     }
   }

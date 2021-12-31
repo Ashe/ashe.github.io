@@ -1,11 +1,12 @@
 ---
 title: Start Programming!
-subtitle: My advice to the curious.
 date: 2017-04-11
-description: Some advice I have for new programmers wanting to embark on the path of programming and computer science.
-summary: In this blog post, I hope to inspire you to get in there and just dive into programming and to give you a few tips to get started. Read on!
+subtitle: Some advice I have for new programmers wanting to embark on the path of programming and computer science.
+description: In this blog post, I hope to inspire you to get in there and just dive into programming and to give you a few tips to get started.
 categories: []
-tags: [Tutorial, Beginner]
+tags: 
+  - Tutorial
+  - Beginner
 images: 
   - https://res.cloudinary.com/aas-sh/image/upload/v1617291310/blog/2017/04/start_programming_ugus7v.gif
 status: published
@@ -57,7 +58,7 @@ This section is for the people who have already learned how to program in some w
   image="https://raw.githubusercontent.com/Ashe/Alacrity/master/img/alacrity.gif"
   caption="A preview of our game, Alacrity."
   source="Alacrity"
-  sourceURL="https://github.com/Ashe/Alacrity"
+  sourceUrl="https://github.com/Ashe/Alacrity"
 }
 :::
 
@@ -116,7 +117,7 @@ I cannot stress this enough. Learning the Vi keyboard shortcuts has been a mini-
   image="https://res.cloudinary.com/aas-sh/image/upload/v1617291310/blog/2017/04/start_programming_ugus7v.gif"
   caption="A clip of the vim tutorial: Vim Adventures."
   source="vim-adventures.com"
-  sourceURL="https://vim-adventures.com/"
+  sourceUrl="https://vim-adventures.com/"
 }
 :::
 
