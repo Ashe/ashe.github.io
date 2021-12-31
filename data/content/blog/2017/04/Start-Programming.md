@@ -7,8 +7,7 @@ categories: []
 tags: 
   - Tutorial
   - Beginner
-images: 
-  - https://res.cloudinary.com/aas-sh/image/upload/v1617291310/blog/2017/04/start_programming_ugus7v.gif
+image: https://res.cloudinary.com/aas-sh/image/upload/v1617291310/blog/2017/04/start_programming_ugus7v.gif
 status: published
 ---
 So you've been using the internet competently for many years of your life and you've become interested in programming --- great! However, you're probably a bit unsure what you should be doing. In this blog post, I hope to inspire you to get in there and just dive into programming and to give you a few tips to get started. Read on!

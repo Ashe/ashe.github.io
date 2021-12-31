@@ -10,8 +10,7 @@ tags:
   - C++
   - Uni
   - Engine
-images:
-  - https://raw.githubusercontent.com/Ashe/ReduxForGames/master/img/preview.gif
+image: https://raw.githubusercontent.com/Ashe/ReduxForGames/master/img/preview.gif
 status: published
 ---
 
