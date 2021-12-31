@@ -1,9 +1,13 @@
 ---
 title: Alacrity
 date: 2017-02-23
-subtitle: Best-of-show winning puzzle game for Sheffield Hallam Uni. Written in C++.
+subtitle: Best-of-show winning puzzle game for Sheffield Hallam Uni.
 description: Alacrity is a tile-based puzzle game where you have to collect pickups before time expires. We won an award for this game and got the opportunity to showcase our game next to Sumo Digital's 'Snake Pass'.
 categories: [Game Development]
+authors:
+  - Ashley Smith
+  - Holly Savin
+  - Elliott Hill
 tags: 
   - Game
   - C++
@@ -16,7 +20,7 @@ status: published
 ---
 
 :::{.repo header="Alacrity"}
-[GitHub repository for Alacrity can be found here.](https://github.com/Ashe/Alacrity)
+GitHub repository for Alacrity can be found [here](https://github.com/Ashe/Alacrity).
 :::
 
 # What is this?
