@@ -272,8 +272,8 @@
     }
   }
 
-  ul {
-    list-style-type: “U+203A”；
+  article ul {
+    @apply list-disc;
   }
 
   ul[horizontal] {
