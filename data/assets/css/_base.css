@@ -263,7 +263,7 @@
   }
 
   blockquote {
-    @apply font-serif text-lg italic border-l border-gray-600 pl-8 my-2;
+    @apply font-serif text-lg border-l border-gray-600 pl-8 my-5;
   }
 
   .footnotes .footnote-back {

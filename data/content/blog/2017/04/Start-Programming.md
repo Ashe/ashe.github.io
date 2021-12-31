@@ -18,6 +18,7 @@ This is not going to be programming language specific and nor should it be --- i
 :::
 
 # Step 0: Motivation and Goals
+
 The first and most important thing to think about when you want to start programming is ***why*** you want to do it. If you are trying to learn how to program purely because then someone else wants you to or if you want a job as a programmer then just be cautious as you will suffer dearly if you try to force yourself into the mindset of a programmer without any real motivation.
 
 The best motives are things such as:
@@ -30,11 +31,13 @@ This list is not complete in the slightest, nor should you feel deterred by havi
 Finding out why you are wanting to program is the key to unlocking the next step, so please think hard and reflect on your own motives before trying to further yourself.
 
 # Step 1: Getting Started
+
 Now that you have confirmed that this feels right to you, the next step is to think of a stepping stone towards your goal that is both achievable and interesting to you. I am trying to make this article about recreational programming in the sense that I want to inspire people to program not just for uni or work, but for themselves.
 
 This step is hard to talk about, so lets break it down a bit:
 
 ## 1.1: Beginners: Learning to code
+
 We all have to start somewhere, and for the people who have little to no programming skills then this is the place! The fact you are reading this very sentence proves you are nerdy enough to have business with the computing world. After you have read this section make sure you read the other sections too, particularly step 2 onwards which provides advice for everyone.
 
 Below are a few suggestions on how to get started programming. Think about your goal, do a bit of googling and find what languages you should be learning. **DO NOT try and embark on a big project, whatever you do. The most important thing for you right now is getting knowledge, not projects, under your belt.**
@@ -52,6 +55,7 @@ If you are wanting to learn web development then you need to be more specific. D
 Remember to read the rest of the article to get a feeling of the world of programming. You never know, you might be ready for the next step already!
 
 ## 1.2: Knowledgeable: Applying Knowledge
+
 This section is for the people who have already learned how to program in some way who either do / have done it as part of an academic course or for work, but do not know how to transfer their skills into something they *want* to do. I like to think this is what sets me apart from some people at my university as I really enjoy working on things in my spare time and I love learning. Sure, we all learn how to program as part of our course, but I'd be lying if I said that when we were asked to make a game we didn't stand out.
 
 :::{.figure
@@ -71,6 +75,7 @@ The key to becoming a better programmer is to actually do something instead of b
 - Try Linux. Sounds really stupid I know, but you don't know how many new programmers just use Windows and Visual Studio. Get Linux and start simple with [Ubuntu](https://www.ubuntu.com/) or something. Then, learn Vim or Emacs (I prefer Emacs with Evil Mode --- the best of both worlds!). You will learn how to program more efficiently and love using your keyboard over your mouse. Additionally, you will learn how to compile programs without an IDE, how to work a computer with just a terminal (perfect for servers!) and finally why so many people love Linux for programming.
 
 # Step 2: Embarking on a project
+
 Now you need to consider what you're going to make for the time being. This is going to be different to your end goal and is going to be something specific to you. You need to really consider what you are going to get out of the project and whether or not you can actually accomplish it. Don't pick something too easy or too hard --- ideally you are going to learn new things by applying things you already know.
 
 Making a game in whatever language you know is a great method of just messing around. Test yourself a bit! Anyone can play a game and so you should be able to show people and they can test and feedback to you. If a game isn't appropriate then pick something which you can imagine the end goal of. If you can picture how the program or website is supposed to look or perform and you have a feeling then you should start thinking about how you should go about programming it.
@@ -80,6 +85,7 @@ If you've taken any sort of class on programming you will have heard a the phras
 If you really want to get serious or if you are working with other people, consider drawing a diagram of some sort or listing the different parts of your program that need implementing. You can then delegate these tasks to your team or simply visualise your progress as you go. Things like this are also great to post on the readme of your GitHub repository (more on that later) so that people who don't want to trawl through your code have some sort of visual indicator of how the program is coming along. If what your making is a website then make sure to include a link to your website somewhere on the actual readme so that people can look at it.
 
 ## Step 3: Staying on Track
+
 To some, programming is hard. To others, it is cruel. While it may be both of these things it can also be neither. It is important to remind yourself why you're programming and to constantly evaluate your progress and interest. If you become bored or dissatisfied then simply look at another field --- the beauty of programming is that its a frame of mind; once you have it you can learn something new at an accelerated rate.
 
 This section is about how you can stay focused on what you set out to do. What's the point in starting something if you don't reach a point of success somewhere down the line? Having a set of tools that make programming enjoyable and easier are vital for survival.
@@ -87,6 +93,7 @@ This section is about how you can stay focused on what you set out to do. What's
 If you need some insight in terms of the programming itself, feel free to check out my other blog posts. If in doubt, look what your compiler or your built program is feeding back to you, isolate the code that is making it function that way and fix it. Don't **EVER** let a problem halt a project. If there's any reason to abandon something *don't ever let it be some sort of bug or compiler error*. In face, these are the things you should be craving as you will develop your skills as a programmer, debugger and a researcher all at once.
 
 ## 3.1: [Github](http://GitHub.com)
+
 I've talked about this previously and I'm going to talk about it again. Any programming enthusiast needs source control and a space on the internet where they can see what they've done.
 
 :::{.help 
@@ -111,6 +118,7 @@ Don't be worried about people stealing your code. It is much more of a benefit t
 :::
 
 ## 3.2: Upgrade your setup
+
 I cannot stress this enough. Learning the Vi keyboard shortcuts has been a mini-challenge and has helped me enjoy programming even more. Sure, it slowed me down in the beginning but now I am comfortable with navigating any piece of software that supports Vi shortcuts (or Vi emulation plugins) without a mouse. Adobe Brackets, Visual Studio, Google Chrome, GitHub, Googlemail all use / can use Vi shortcuts and it is **FUN**.
 
 :::{.figure
@@ -137,6 +145,7 @@ Just in case you didn't know, an IDE is a piece of software that can compile and
 If you're doing games development like I am, try a new engine (or if you haven't tried it, try making your own!). When I first opened up [Unreal](https://www.unrealengine.com/) in January I was a little confused, but I slowly learned. After making a game with it I now understand why I enjoy the challenge making a game in pure code. Just a preference, but having more engines under your belt doesn't hurt!
 
 # Step 4: Network
+
 Another thing I wanted to mention is how important it is to stay social about your hobby/goals. Tell people what progress you're making and what you want to do next. If they're a programmer also then you can also show them your GitHub repo and talk about how you implemented certain features. Speaking personally, people wanted to know how we made our level 'explode' (shown in the gif in this post).
 
 I previously mentioned [Gitter](https://gitter.im/) to be pretty good at getting in touch with people. If you haven't guessed already, it has integration with GitHub! Anyone you speak to on here not only has their own stories, motives and goals but also the repositories to go with them. Find a Gitter room that is related to your project and just chill.
@@ -146,6 +155,7 @@ There's obviously more than Gitter out there. There's the usual [Reddit](http://
 It is important to talk to people --- even if you don't know them. You will learn how people who are stronger programmers than you are operate and how they would go about something you're trying to do. I have made a **HUGE** point about GitHub in this article as frankly I'm appalled at how many people on my course do not utilize such a useful tool. Most of the people you talk to will have GitHub profiles so hopefully if I haven't convinced you then the rest of the programming world will. *Seriously, just try it if you haven't already.*
 
 # Step 5: Finishing and Maintaining
+
 Not many people choose to do these things, however if you do have a repo on GitHub you should try and make sure you keep a version that is *working as intended* committed. If you want to go in-depth, create a development branch so that any commits you make do not affect the master branch. Then, when you have a new, stable build, commit to the master branch and everyone's happy.
 
 The reason I am talking about the end of a project is because it is awfully tempting to abandon a project once you have learned what you can from it. Personally, I have stopped work on one of my projects, Sprinty, ever since Uni started again. It works, sure, but I wish I actually continued it, added new things and ported it to Android like I intended. I am probably never going to actually finish this, but it would be awfully impressive if I did. If I wanted to work with Monogame more, I would, but right now my attention is on [SDL](https://www.libsdl.org/), which is essentially Monogame but C++.
@@ -153,6 +163,7 @@ The reason I am talking about the end of a project is because it is awfully temp
 If you do manage to finish a project then you should do everything in your power to maintain it. Let's say you made a plugin for some software, or an extension to make a website better --- if that website or software changes in some way then your program breaks down. Maybe no one will care, but if someone was to check out your portfolio and find something broken without you giving a good reason on the readme then it may make you out as someone who doesn't test their code thoroughly.
 
 # Wrapping things up
+
 I hope this post has been somewhat helpful. I think more people who have programming jobs or who program as part of a university course should try and embrace programming as a hobby as well as a job. I may not be a professional (right now) but apparently I'm pretty good at picking up new things and teaching people what I know, so hopefully now you know just as much as I do about how to get started with doing.
 
 If you are really, **really** new to programming and you found this article dissatisfying, let me know. I chose to focus on the people who have some knowledge as its very common for people to create tutorials about the extreme basics of programming --- its easy and everyone who programs understands it. The hard thing to talk about is the grey blur between learning about what a function is and how to make a game purely out of code using DirectX, for instance. There are many places out there that will teach you how to code, and I hope that once you have any sort of grasp on it you will think about the things I have talked about and get started with making something for yourself!
