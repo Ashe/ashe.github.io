@@ -1,7 +1,7 @@
 ---
 title: "HSRogue: A roguelike in Haskell"
 date: 2019-03-08
-subtitle: The foundations of a roguelike in the purely-functional programming language Haskell with SDL.
+subtitle: A prototype roguelike in the functional language, Haskell.
 description: My first attempt at game development in the functional language, Haskell, as well as a description of the challenges I had to overcome to get things working.
 categories: 
   - Engine Development

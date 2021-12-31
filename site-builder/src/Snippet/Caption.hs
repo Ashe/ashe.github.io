@@ -23,8 +23,7 @@ isCaption = hasClass "caption"
 toCaption :: Block -> Block
 toCaption (Div attr@(id, c, _) content) = 
   Div (id, c', []) $ content ++ [makeCaption attr]
-    where c' = delete "caption" c ++ 
-            ["caption-frame", "max-w-full", "md:max-w-11/12"]
+    where c' = delete "caption" c ++ ["caption-frame"]
 
 --------------------------------------------------------------------------------
 

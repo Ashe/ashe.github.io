@@ -9,8 +9,8 @@ tags:
   - C++
   - Lua
   - ECS
+  - SFML
   - Engine
-  - Physics
   - Imgui
 images:
   - https://raw.githubusercontent.com/Ashe/Deus_Vult/master/img/preview.gif

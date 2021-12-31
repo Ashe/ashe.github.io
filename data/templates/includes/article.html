@@ -36,17 +36,17 @@
 
 
 $if(toc)$
-  <div class="flex flex-row-reversed max-w-screen-2xl mx-auto">
-    <div class="hidden xl:block xl:flex-1">
+  <div class="xl:flex xl:flex-row-reversed xl:max-w-screen-2xl xl:mx-auto">
 
+    <div class="hidden xl:block xl:flex-1">
       <div class="toc sticky top-10 mt-5 p-6 float-right no-underline">
         <div class="font-standout text-muted dark:text-emphasizedNight" uk-scrollspy-nav="closest: li; scroll: true; offset: 85; cls: text-black dark:text-highlightNight">
           $toc$
         </div>
       </div>
-
     </div>
-    <div class="flex-none">
+
+    <div class="xl:flex-none">
       <div class="container">
         <article class="lg:w-4/5 lg:mx-auto">
           $body$
