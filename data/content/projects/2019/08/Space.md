@@ -2,7 +2,7 @@
 title: Space
 date: 2019-08-20
 subtitle: Space is an open-source forum that I was making in order to learn Clojure.
-description: While I have some webdev experience from my static blog, I've never ventured further. I made Space so that I could learn more about technologies such as databases, servers and RESTful APIs to open up more opportunities.
+description: While I have some webdev experience from my static blog, I've never ventured further. I made Space so that I could learn more about things such as databases, servers and RESTful APIs to open up more opportunities.
 categories: 
   - Functional
   - Web
