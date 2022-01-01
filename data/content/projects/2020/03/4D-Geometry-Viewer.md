@@ -2,14 +2,15 @@
 title: 4D Geometry Viewer
 date: 2020-05-03
 subtitle: A tool to visualise and interact with the fourth dimension.
-description: Most games are typically set in a two or three dimensional world and the fourth dimension is rarely discussed as part of a game's core design, if discussed at all. I aimed to create an interactive visualisation of four-dimensional geometry to learn how to apply 3D rendering concepts to higher dimensions.
+description: Developing a game that uses the fourth dimension is rarely discussed, if discussed at all. I created an interactive visualisation of 4D geometry to learn how to apply 3D rendering concepts to higher dimensions.
 categories: 
-  -Engine Development
+  - Engine Development
 tags: 
   - C++
   - Tool
   - Uni
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617295182/projects/4d_geometry_viewer/preview_g92hon.gif
+featured: true
 status: published
 ---
 
