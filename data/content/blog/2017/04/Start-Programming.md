@@ -61,7 +61,7 @@ This section is for the people who have already learned how to program in some w
   image="https://raw.githubusercontent.com/Ashe/Alacrity/master/img/alacrity.gif"
   caption="A preview of our game, Alacrity."
   source="Alacrity"
-  sourceUrl="https://github.com/Ashe/Alacrity"
+  sourceUrl="/project/alacrity"
 }
 :::
 

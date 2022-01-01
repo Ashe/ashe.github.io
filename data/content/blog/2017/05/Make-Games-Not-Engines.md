@@ -23,7 +23,7 @@ This was a phrase I saw being thrown around in many of the communities I frequen
   image="https://raw.githubusercontent.com/Ashe/ReduxForGames/master/img/preview.gif"
   caption="Alacrity ported into my own SDL and OpenGL engine."
   source="ReduxForGames"
-  sourceUrl="https://github.com/Ashe/ReduxForGames"
+  sourceUrl="/project/redux-for-games"
 }
 :::
 
