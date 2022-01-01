@@ -31,7 +31,8 @@ toFigure (Div attr@(id, c, kvp) content) = case lookup "image" kvp of
 --------------------------------------------------------------------------------
 
 makeImage :: T.Text -> [(T.Text, T.Text)] -> Inline
-makeImage imageSrc kvp = Image nullAttr [ Str alt ] (imageSrc, title)
-  where caption = fromMaybe "" $ lookup "caption" kvp
+makeImage imageSrc kvp = Image ("", classes, []) [ Str alt ] (imageSrc, title)
+  where classes = ["w-full", "object-cover"]
+        caption = fromMaybe "" $ lookup "caption" kvp
         alt = fromMaybe caption $ lookup "image-alt" kvp
         title = fromMaybe alt $ lookup "image-title" kvp

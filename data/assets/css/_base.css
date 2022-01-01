@@ -287,7 +287,7 @@
   }
 
   table {
-    @apply table-auto overflow-auto block;
+    @apply block table-auto overflow-auto m-auto overflow-hidden p-5;
   }
 
   td {
