@@ -17,17 +17,17 @@
   .gallery-wall-2, .gallery-wall-2 > p {
     @apply my-0 mx-auto sm:flex sm:flex-row;
 
-    .child {
-      @apply sm:w-1/2 sm:flex sm:flex-col;
+    > *:not(p) {
+      @apply m-auto sm:w-1/2 sm:flex sm:flex-col;
+
+      * {
+        @apply m-auto p-1 sm:p-2;
+      }
     }
 
-    img {
-      @apply m-auto p-3;
+    > *:not(p, .child) {
+      @apply p-1 sm:p-2;
     }
-  }
-
-  .gallery-wall-2 > p > * {
-    @apply p-3 sm:w-1/2;
   }
 
   .box {
@@ -137,7 +137,7 @@
     width: -moz-fit-content;
     width: fit-content;
 
-    > iframe, video {
+    > iframe, > video {
       @apply h-64 w-full;
       @screen sm {
         @apply h-96;
