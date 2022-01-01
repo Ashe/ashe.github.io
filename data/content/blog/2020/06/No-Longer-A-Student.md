@@ -8,6 +8,7 @@ categories:
 tags: 
   - Uni
   - Career
+  - Deep Silver
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617293178/blog/2020/06/student_meme_1_x80vax.png
 status: published
 ---
