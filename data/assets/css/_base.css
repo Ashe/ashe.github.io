@@ -318,6 +318,10 @@
     vertical-align: text-bottom;
   }
 
+  .swiper-slide {
+    @apply mx-auto;
+  }
+
   .small-slides .swiper-slide {
 
     @screen sm {

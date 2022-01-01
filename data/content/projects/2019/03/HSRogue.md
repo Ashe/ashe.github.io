@@ -10,8 +10,7 @@ tags:
   - Engine
   - Haskell
   - Functional
-images:
-  - https://raw.githubusercontent.com/Ashe/HSRogue/master/img/gameplay.gif
+image: https://raw.githubusercontent.com/Ashe/HSRogue/master/img/preview.png
 status: published
 ---
 

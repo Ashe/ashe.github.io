@@ -10,6 +10,7 @@ tags:
   - Haskell
   - Functional
 image: https://raw.githubusercontent.com/Ashe/FirstGameHS/master/img/preview.gif
+project: hsrogue
 status: published
 ---
 
