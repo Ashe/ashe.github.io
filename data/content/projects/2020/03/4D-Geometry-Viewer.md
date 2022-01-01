@@ -41,7 +41,7 @@ In order to see a 4D object, a 4D object needs to be created. The tesseract is a
   source="4D Geometry Viewer"
   sourceUrl="https://github.com/Ashe/4D-Geometry-Viewer"
 }
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295219/projects/4d_geometry_viewer/polytopes_dmb47x.mp4" autoplay muted controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295219/projects/4d_geometry_viewer/polytopes_dmb47x.mp4" autoplay loop muted controls></video>
 :::
 
 For each polytope there is a set of information that describes the number of vertices, edges, faces and cells of not only the 4D shape but also each variant of the same polytope such as a line, a square and a cube --- while this information is trivial, being able to compare the geometry between each shape does help create an understanding of what a higher dimension means. Furthermore, clicking the name of each shape scales the rendered polytope such that a cube would get flattened into a square, for instance. I hope that small details like this inspire interest in the user to learn more about the relationships between dimensions.
@@ -54,8 +54,8 @@ For each polytope there is a set of information that describes the number of ver
   sourceUrl="https://github.com/Ashe/4D-Geometry-Viewer"
 }
 :::{.gallery-wall}
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295256/projects/4d_geometry_viewer/3d_camera_goypbh.mp4" autoplay muted controls></video>
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295293/projects/4d_geometry_viewer/4d_camera_yz4g2a.mp4" autoplay muted controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295256/projects/4d_geometry_viewer/3d_camera_goypbh.mp4" autoplay muted loop controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295293/projects/4d_geometry_viewer/4d_camera_yz4g2a.mp4" autoplay muted loop controls></video>
 :::
 :::
 
@@ -72,12 +72,12 @@ In the transformation window, the user can specify different types of transforma
 }
 :::{.gallery-wall}
 :::{.child}
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295346/projects/4d_geometry_viewer/translation_bv9b1w.mp4" autoplay muted controls></video>
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295385/projects/4d_geometry_viewer/scale_sbnpe2.mp4" autoplay muted controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295346/projects/4d_geometry_viewer/translation_bv9b1w.mp4" autoplay muted loop controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295385/projects/4d_geometry_viewer/scale_sbnpe2.mp4" autoplay muted loop controls></video>
 :::
 :::{.child}
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295470/projects/4d_geometry_viewer/rotation_s7rzkq.mp4" autoplay muted controls></video>
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295422/projects/4d_geometry_viewer/shear_qwj3yi.mp4" autoplay muted controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295470/projects/4d_geometry_viewer/rotation_s7rzkq.mp4" autoplay muted loop controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295422/projects/4d_geometry_viewer/shear_qwj3yi.mp4" autoplay muted loop controls></video>
 :::
 :::
 :::
