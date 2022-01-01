@@ -14,7 +14,7 @@
     }
   }
 
-  .gallery-wall-2, .gallery-wall-2 > p {
+  .gallery-wall, .gallery-wall > p {
     @apply my-0 mx-auto sm:flex sm:flex-row;
 
     > *:not(p) {

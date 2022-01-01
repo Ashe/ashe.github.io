@@ -33,7 +33,7 @@ A search algorithm is a recursive method designed to find a match for a piece of
   source="Red Blob Games: Introduction to A*"
   sourceUrl="https://www.redblobgames.com/pathfinding/a-star/introduction.html"
 }
-:::{.gallery-wall-2}
+:::{.gallery-wall}
 ![image](https://res.cloudinary.com/aas-sh/image/upload/v1617294810/projects/thesis/red_blob_dijkstras_xoak4b.png)
 ![image](https://res.cloudinary.com/aas-sh/image/upload/v1617294841/projects/thesis/red_blob_astar_s96nel.png)
 :::
@@ -94,7 +94,7 @@ During this project, I researched a very similar game AI implementation named [G
 
 Search algorithms such as A* are generic, maintainable and versatile and are therefore theoretically suitable replacements for FSMs and behaviour trees for implementing game AI. While GOAP does use A* for part of it's decision making process, it isn't a complete solution and still separates decision making from the pathfinding process. This is acceptable and valid as GOAP is for generating a sequence of actions whereas pathfinding is strictly for navigating the map in order to perform these actions. Unfortunately, some information found during pathfinding that could be considered useful for decision making is lost unless explicitly communicated --- a decision might request to navigate to some location, but the path generated might be longer than expected and a different course of action could have been more appropriate. Without replanning, GOAP's disconnect between these systems could result in the wrong decisions being made.
 
-In this project, the mechanisms of the A* search algorithm were examined and re-engineered, through the substitution of input and output types, to investigate the modularity and adaptability of an AI that uses search algorithms to make decisions while actively involving pathfinding in the process as opposed to keeping these systems separate. 
+In this project, the mechanisms of the A\* search algorithm were examined and re-engineered, through the substitution of input and output types, to investigate the modularity and adaptability of an AI that uses search algorithms to make decisions while actively involving pathfinding in the process as opposed to keeping these systems separate. 
 
 Several approaches to defining goals and heuristic methods were used to visualise the effects they have on a squad-controlling game AI. The aim of using this approach is to bring decision-making and pathfinding closer together and therefore simplifying the overarching process of perceiving, deciding and interacting in the game world.
 
@@ -107,7 +107,7 @@ In order to test and observe this experimental AI, I decided to build a simple, 
   source="The path to the right decision - Ashley Smith 2020"
   sourceUrl="https://github.com/Ashe/Thesis/blob/master/Docs/thesis.pdf"
 }
-:::{.gallery-wall-2}
+:::{.gallery-wall}
 :::{.child}
 ![](https://res.cloudinary.com/aas-sh/image/upload/v1617295043/projects/thesis/strategy_game_uml_r5ki78.png)
 :::

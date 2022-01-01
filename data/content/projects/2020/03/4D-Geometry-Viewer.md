@@ -52,7 +52,7 @@ For each polytope there is a set of information that describes the number of ver
   source="4D Geometry Viewer"
   sourceUrl="https://github.com/Ashe/4D-Geometry-Viewer"
 }
-:::{.gallery-wall-2}
+:::{.gallery-wall}
 <video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295256/projects/4d_geometry_viewer/3d_camera_goypbh.mp4" autoplay muted controls></video>
 <video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295293/projects/4d_geometry_viewer/4d_camera_yz4g2a.mp4" autoplay muted controls></video>
 :::
@@ -69,7 +69,7 @@ In the transformation window, the user can specify different types of transforma
   source="4D Geometry Viewer"
   sourceUrl="https://github.com/Ashe/4D-Geometry-Viewer"
 }
-:::{.gallery-wall-2}
+:::{.gallery-wall}
 :::{.child}
 <video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295346/projects/4d_geometry_viewer/translation_bv9b1w.mp4" autoplay muted controls></video>
 <video src="https://res.cloudinary.com/aas-sh/video/upload/v1617295385/projects/4d_geometry_viewer/scale_sbnpe2.mp4" autoplay muted controls></video>
