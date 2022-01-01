@@ -152,6 +152,13 @@
     }
   }
 
+  .caption-frame,
+  .figure {
+    .caption p {
+      @apply mx-auto my-0;
+    }
+  }
+
   .tag-cloud {
     @apply text-center p-1;
 

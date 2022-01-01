@@ -30,10 +30,8 @@ toCaption (Div attr@(id, c, _) content) =
 makeCaption :: Attr -> Block
 makeCaption attr@(id, _, kvp) = case lookup "caption" kvp of
   Nothing -> Null
-  Just caption -> Div ("", classes, [])
-    [ Plain [ Str caption ]
-    , Div ("", sourceClasses, []) [source]
-    ]
+  Just caption -> Div ("", classes, []) 
+    (parse caption ++ [Div ("", sourceClasses, []) [source]])
   where classes = ["caption", "box", "m-0", "pt-5", "pb-2",
           "text-center", "dark:bg-mutedNight"]
         sourceClasses = ["uppercase", "text-xs", "pt-2", "font-medium", "text-muted"]
