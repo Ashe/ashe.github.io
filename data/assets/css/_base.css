@@ -223,7 +223,6 @@
         margin-top: 8px;
       }
     }
-
   }
 
   a {
@@ -302,6 +301,10 @@
     & svg {
       display: inline;
     }
+  }
+
+  video {
+    @apply object-fill;
   }
 
   svg {
