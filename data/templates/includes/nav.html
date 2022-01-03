@@ -40,18 +40,17 @@
             <ul class="flex flex-col gap-2">
               <a href="/blog"><li class="uppercase text-black dark:text-white">Blog</li></a>
               <li><a href="/blog">All Posts</a></li>
-              <li class="flex">
-                <ul class="items-center m-0 ml-2" horizontal>
-                  <li><i class="las la-rss"></i></li>
-                  <li class="ml-4"><a href="/rss.xml">RSS</a></li>
-                  <li class="ml-4"><a href="/atom.xml">Atom</a></li>
-                </ul>
+              <li>
+                <i class="las la-rss"></i>
+                <a href="/rss.xml">RSS</a>
+                <a href="/atom.xml">Atom</a>
               </li>
               <li><hr></li>
               <li>
+                <i class="las la-code-branch"></i>
+                Current rev.: 
                 <a href="$site-repo$/commit/$git-head-commit-hash$">
-                  <i class="las la-code-branch"></i>
-                  Current rev.: $git-head-commit$
+                  $git-head-commit$
                 </a>
               </li>
             </ul>
