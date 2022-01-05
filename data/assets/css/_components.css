@@ -163,7 +163,7 @@
     @apply text-center p-1;
 
     a {
-      @apply no-underline m-auto;
+      @apply no-underline m-auto leading-none;
 
       &:before {
         content: "";
