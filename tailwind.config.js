@@ -16,12 +16,13 @@ module.exports = {
           defaultTheme.fontFamily.sans,
         ],
         serif: [
-          "Merriweather",
-          "Roboto Slab",
+          'Merriweather',
+          'Roboto Slab',
           defaultTheme.fontFamily.serif
         ],
         'standout': [
-            'Fira Code', 'monospace'
+          'Fira Code', 
+          'monospace'
         ]
       },
       fontSize: {
@@ -32,12 +33,11 @@ module.exports = {
         'lg': '1.125rem',
         'xl': '1.25rem',
         '2xl': '1.375rem',
-       '3xl': '1.625rem',
-       '4xl': '2.25rem',
+        '3xl': '1.625rem',
+        '4xl': '2.25rem',
         '5xl': '3rem',
         '6xl': '4rem',
-       '7xl': '5rem',
-
+        '7xl': '5rem',
         'lead': '1.125rem'
       },
       colors: {
@@ -67,11 +67,6 @@ module.exports = {
         gitrepoNight: '#32255e',
         itch: '#ea5b5b',
         itchNight: '#4f2424',
-
-        // primary: 'var(--color-primary)',
-        // secondary: 'var(--color-secondary)',
-        // heading: 'var(--color-heading)',
-        // body: 'var(--color-body)'
       },
       textColor: {
         black: "#252525",
