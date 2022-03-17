@@ -1,7 +1,7 @@
 ---
 title: What is Nix?
 date: 2021-12-20
-subtitle: A build tool lots of people have heard of, but not used
+subtitle: A build tool lots of people have heard of, but not used.
 description: I seem to be nixifying everything, from my operating system to my website. I wanted to go into a bit of detail about what it's like working with Nix.
 categories: 
   - Web Development

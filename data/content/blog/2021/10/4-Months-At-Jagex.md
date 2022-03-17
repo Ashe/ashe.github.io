@@ -1,7 +1,7 @@
 ---
 title: 4 Months At Jagex
 date: 2021-10-19
-subtitle: A short update about what I've been getting up to at Jagex
+subtitle: A short update about what I've been getting up to at Jagex.
 description: 4 months ago, I accepted a life-changing opportunity to work for Jagex, a studio I've aspired to work for since I played RuneScape when I was younger. I thought I'd update my blog since it has been a while.
 categories: 
   - Life
