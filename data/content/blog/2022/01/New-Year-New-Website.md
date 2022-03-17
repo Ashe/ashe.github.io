@@ -33,6 +33,18 @@ Another reason is that [I got a job at Jagex](/tag/Jagex) and now that I felt mo
 
 Instead of doing advent of code this year, I decided to rework my website and create it using [Hakyll](https://jaspervdj.be/hakyll/). It's like [Jekyll](https://jekyllrb.com/) but can be programmed with [Haskell](https://www.haskell.org/) to suit your needs. I've had a Hakyll blog in the past, but my problem was it was quite annoying to set up and work with on other machines if they weren't set up for Haskell development.
 
+## Inspiration
+
+My biggest inspiration by far for this website was [Yannik Sander's website](https://ysndr.de). It was clean yet extremely functional, and best of all it took advantage of both [Nix](https://nixos.org/) and [Haskell](https://haskell.org). Without his website, I wouldn't have had the motivation or starting point to recreate my website. It is my intention to one day distinguish my site from his and really make it my own, but he's done such a good job that it's hard to resist using some of his visuals!
+
+:::{.figure
+  image="https://res.cloudinary.com/aas-sh/image/upload/v1647537276/blog/2022/01/btndp7.png"
+  caption="A screenshot of Yannik's impressive website."
+  source="Yannik Sander's homepage"
+  sourceUrl="https://ysndr.de"
+}
+:::
+
 # Tools
 
 ## Nix
@@ -63,7 +75,7 @@ Of course this website uses Haskell! Thanks to [Hakyll](https://jaspervdj.be/hak
 
 I'll be honest, I'm not a web designer and I don't really understand what the best choices for these things are. I saw a lot of buzz about tailwind and when I saw it in use on some blogs made by other people, I thought to myself 'this is great!' and committed to using it in my own website. My favourite thing about tailwind is that it can be customised and extended pretty easily by it's `tailwind.config.js` file. This means I can change the font of my website or the colourscheme all in a single place. I imagine this is possible with CSS as well, but this works well for me.
 
-:::{.figure 
+:::{.figure
   image="https://res.cloudinary.com/aas-sh/image/upload/v1641645177/blog/2022/01/l2g8zg.png"
   caption="Tailwind's website"
   source="Tailwind CSS"
