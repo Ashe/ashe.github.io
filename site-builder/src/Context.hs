@@ -74,5 +74,4 @@ socialContext = constField "social-name" socialName
              <> constField "social-email" socialEmail
              <> constField "social-github" socialGithub
              <> constField "social-linkedin" socialLinkedin
-             <> constField "social-devto" socialDevto
              <> constField "social-instagram" socialInstagram

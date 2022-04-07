@@ -1,5 +1,5 @@
-<header id="header" class="mb-10">
-  <div class="flex flex-col sm:flex-row lg:w-1/2 my-8 justify-items-center justify-end items-left">
+<header id="header">
+  <div class="flex flex-col sm:flex-row md:w-1/2 mt-8 justify-items-center justify-end items-left">
     <div class="flex flex-col p-5 text-center sm:text-left mx-auto">
       <small class="font-medium">$social-name$</small>
       <div class="font-bold text-6xl mt-0">
@@ -9,32 +9,70 @@
   </div>
 </header>
 
-<section>
-  <div class="flex flex-col lg:flex-row ">
-    <div class="flex flex-col w-full lg:w-1/2">
-      <div class="w-2/3 mx-auto my-0 lg:mr-0">
-        <img class="w-full rounded-lg my-0" 
-             src="$profile-featured-image$" 
+<section class="container">
+
+  <div class="flex flex-col md:flex-row my-8">
+    <div class="p-3 md:w-2/5">
+      <div class="m-auto md:float-right rounded shadow-xl">
+        <img class="w-full md:h-80" 
+             src="$profile-photo$" 
              alt="Photo of myself" 
              style="object-fit: cover;"/>
-
         <div class="text-center py-5">
           $partial("templates/includes/socials-horizontal.html")$
         </div>
       </div>
     </div>
-
-    <div class="flex flex-col p-3 mx-auto lg:px-8 w-full lg:w-1/2">
+    <div class="p-3 md:w-3/5">
       <p class="font-medium text-2xl lg:text-3xl">
         $description$
       </p>
       <p class="text-xl lg:text-2xl mt-0">
         $description-extension$
       </p>
-      <div class="mt-0 lg:text-lg">
-        $read-md("about")$
-      </div>
-
+      <p class="mt-0">
+        $read-md("description-detail")$
+      </p>
     </div>
   </div>
+
+  <div class="flex flex-col md:flex-row-reverse my-8">
+    <div class="p-3 md:w-2/5">
+      <img class="h-80 m-auto md:float-right rounded shadow-xl" 
+           src="$jagex-img$" 
+           style="object-fit: cover;"/>
+    </div>
+    <div class="p-3 md:w-3/5">
+      <p class="font-medium text-2xl lg:text-3xl lg:mb-0">
+        $jagex-title$
+      </p>
+      <p class="font-medium text-sm mt-0 lg:text-base">
+        $jagex-subtitle$
+      </p>
+      <p class="mt-0">
+        $read-md("jagex-body")$
+      </p>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row my-8">
+    <div class="p-3 md:w-2/5">
+      <img class="h-80 m-auto md:float-right rounded shadow-xl" 
+           src="$dsd-img$" 
+           style="object-fit: cover;"/>
+    </div>
+    <div class="p-3 md:w-3/5">
+      <p class="font-medium text-2xl lg:text-3xl lg:mb-0">
+        $dsd-title$
+      </p>
+      <p class="font-medium text-sm mt-0 lg:text-base">
+        $dsd-subtitle$
+      </p>
+      <p class="mt-0">
+        $read-md("dsd-body")$
+      </p>
+    </div>
+  </div>
+
+  $body$
 </section>

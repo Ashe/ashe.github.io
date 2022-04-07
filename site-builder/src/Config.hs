@@ -12,7 +12,6 @@ module Config
 , socialEmail
 , socialGithub
 , socialLinkedin
-, socialDevto
 , socialInstagram
 , postsGlob
 , projectsGlob
@@ -67,9 +66,6 @@ socialGithub = "ashe"
 
 socialLinkedin :: String
 socialLinkedin = "itsashe"
-
-socialDevto :: String
-socialDevto = "ashe"
 
 socialInstagram :: String
 socialInstagram = "theofficialashe"
