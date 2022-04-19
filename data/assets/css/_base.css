@@ -41,6 +41,10 @@
       @apply bg-danger;
     }
 
+    .box.live {
+      @apply bg-live;
+    }
+
     .box.gitrepo {
       @apply bg-gitrepo;
     }
@@ -114,6 +118,10 @@
 
       .box.danger {
         @apply bg-dangerNight;
+      }
+
+      .box.live {
+        @apply bg-liveNight;
       }
 
       .box.gitrepo {

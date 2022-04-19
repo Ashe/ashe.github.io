@@ -63,6 +63,8 @@ module.exports = {
         warningNight: '#897e00',
         danger: '#ff8298',
         dangerNight: '#661423',
+        live: '#ccff66',
+        liveNight: '#339933',
         gitrepo: '#ac9ddd',
         gitrepoNight: '#32255e',
         itch: '#ea5b5b',
