@@ -1,12 +1,13 @@
 ---
-title: First ever Q&A!
+title: "First ever QNA!"
 date: 2022-05-01
 subtitle: Responses to questions I've received via email!
 description: I've been corresponding with some of my readers over the past few months, and I've sent so many emails that I might as well make a post about it!
 categories:
-  - Q&A
+  - QNA
 tags:
   - Life
+  - QNA
 image: https://res.cloudinary.com/aas-sh/image/upload/v1655579357/blog/2022/05/qna.png
 status: published
 ---
