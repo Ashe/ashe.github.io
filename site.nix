@@ -1,4 +1,4 @@
-{ pkgs , nur, thirdparty }: with pkgs;
+{ pkgs , thirdparty }: with pkgs;
 let
 
   #######################
@@ -31,16 +31,27 @@ let
   ## Compile site ##
   ##################
 
+  # Get third party dependencies
+  thirdparty' = linkFarm "thirdparty" thirdparty;
+
+  # Generate the basic site
   site = (haskellPackages.callCabal2nix "Site" "${./site-builder}" {});
+
+  # Bundle third party dependencies with site
+  site-with-thirdparty =
+    symlinkJoin {
+      name = "site-with-thirdparty";
+      paths = [ site ];
+      buildInputs = [ makeWrapper ];
+    };
 
   #######################
   ## Generate commands ##
   #######################
 
-  generate-website = wrap {
+  rebuild-website = wrap {
     name = "generate-website";
-    paths = [ site git ];
-
+    paths = [ site-with-thirdparty git ];
     script = ''
       site rebuild
     '';
@@ -48,10 +59,26 @@ let
 
   watch-website = wrap {
     name = "watch-website";
-    paths = [ site git ];
-
+    paths = [ site-with-thirdparty git ];
     script = ''
       site watch
+    '';
+  };
+
+  rebuild-watch-website = wrap {
+    name = "rebuild-watch-website";
+    paths = [ site-with-thirdparty git ];
+    script = ''
+      site clean
+      site watch
+    '';
+  };
+
+  clean-website = wrap {
+    name = "clean-website";
+    paths = [ site-with-thirdparty git ];
+    script = ''
+      site clean
     '';
   };
 
@@ -75,9 +102,11 @@ let
   };
 
 in {
-  inherit shell site generate-website;
+  inherit shell site site-with-thirdparty generate-website;
   ci = {
-    compile = generate-website;
+    rebuild = rebuild-website;
     watch = watch-website;
+    rebuild-watch = rebuild-watch-website;
+    clean = clean-website;
   };
 }

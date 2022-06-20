@@ -7,7 +7,7 @@ echo 'Stashing local changes..'
 git stash
 git_hash=$(git rev-parse --short HEAD)
 echo "Generating site for commit: $git_hash.."
-nix run ./#site rebuild
+nix run ./#rebuild
 
 # Create deploy environment inside of .deploy
 echo '' && echo '[DEPLOY]'
@@ -35,7 +35,7 @@ git push -f origin site
 # Cleanup
 echo '' && echo '[CLEAN]'
 echo 'Cleaning build files..'
-cd ../../ && nix run ./#site clean
+cd ../../ && nix run ./#clean
 
 # Restore pending changes
 echo 'Restoring changes..'

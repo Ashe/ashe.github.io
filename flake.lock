@@ -1,12 +1,28 @@
 {
   "nodes": {
+    "bulma": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1655546553,
+        "narHash": "sha256-/gM09jG/LYaAa73UulZBn+Cd6K3gBVqVHONz4Ozaw1w=",
+        "ref": "master",
+        "rev": "644542a3c838b6569bbc1b13547b436b755c0714",
+        "revCount": 1694,
+        "type": "git",
+        "url": "https://github.com/jgthms/bulma/"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/jgthms/bulma/"
+      }
+    },
     "flake-utils": {
       "locked": {
-        "lastModified": 1601282935,
-        "narHash": "sha256-WQAFV6sGGQxrRs3a+/Yj9xUYvhTpukQJIcMbIi7LCJ4=",
+        "lastModified": 1653893745,
+        "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "588973065fce51f4763287f0fda87a174d78bf48",
+        "rev": "1ed9fb1935d260de5fe1c2f7ee0ebaae17ed2fa1",
         "type": "github"
       },
       "original": {
@@ -17,43 +33,28 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1623423544,
-        "narHash": "sha256-3b6CdnlUBXb2M5F7vLQ/DVRmpu31YDo1wthdybF46Dc=",
+        "lastModified": 1655753060,
+        "narHash": "sha256-84y6seSeIbLLsflY+JyBJvasp9OI74uQX3cZ56P901E=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5707a8efadbd9a2bfe5aa663555c62ba2933cc81",
+        "rev": "937bef0ae78fbf71cb63a532259a7504c318757f",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nur": {
-      "locked": {
-        "lastModified": 1603662597,
-        "narHash": "sha256-9V96YNdEf9XVvcg2QLtqhUdZx/rMq1qYwR983dfdSL8=",
-        "owner": "nix-community",
-        "repo": "NUR",
-        "rev": "2c7ca9ac16f505d802099c4dfb1c2f02191ca349",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "NUR",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
+        "bulma": "bulma",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
-        "nur": "nur",
-        "uikit-src": "uikit-src"
+        "uikit": "uikit"
       }
     },
-    "uikit-src": {
+    "uikit": {
       "flake": false,
       "locked": {
         "narHash": "sha256-qlcgmSUDiM71+12IZNTzLLbbsRwBXVjuuF3ChdT+8e4=",

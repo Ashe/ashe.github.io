@@ -19,9 +19,9 @@ import Util
 
 --------------------------------------------------------------------------------
 
-assembleProjects :: Tags -> Tags -> Bool -> Rules ()
-assembleProjects tags categories isDevelopment =
-  matchMetadata (projectsGlob .&&. hasNoVersion) (\m -> isDevelopment || lookupString "status" m == Just "published") $ do
+assembleProjects :: Tags -> Tags -> Rules ()
+assembleProjects tags categories =
+  matchMetadata (projectsGlob .&&. hasNoVersion) (\m -> lookupString "status" m == Just "published") $ do
     version "simple" $ do
       route $ composeRoutes (cleanRouteContent "project") idRoute
       compile $ do

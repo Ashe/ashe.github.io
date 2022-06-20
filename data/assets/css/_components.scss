@@ -6,7 +6,7 @@
   .fill-horizontal {
     @apply -mx-4 sm:-mx-8 lg:mx-auto ;
     @apply overflow-hidden;
-    @apply rounded-none lg:rounded px-8 !important;
+    @apply rounded-none lg:rounded px-8;
 
     & > .sourceCode {
       @apply -mx-8 sm:-mx-8 lg:-mx-8;
@@ -67,8 +67,6 @@
 
     & .caption {
       color: inherit;
-      font-size: $global-small-font-size;
-      padding-top: $container-padding-horizontal;
     }
   }
 

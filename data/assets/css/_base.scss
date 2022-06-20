@@ -139,7 +139,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-standout mb-2 !important;
+    @apply font-standout mb-2;
   }
 
   h1, h2, h3 {
@@ -259,7 +259,7 @@
     @apply text-highlight;
   }
 
-  &:not(.uk-card-body) a {
+  :not(.uk-card-body) a {
      text-decoration: underline;
   }
   .footnotes a {

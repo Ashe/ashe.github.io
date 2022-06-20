@@ -5,7 +5,7 @@ module Main (main) where
 import Hakyll
 import Data.List (isPrefixOf, isSuffixOf)
 import Hakyll.Images (loadImage, compressJpgCompiler, ensureFitCompiler)
-import Hakyll.Web.Sass (sassCompilerWith)
+import Hakyll.Web.Sass (sassCompiler)
 import System.Environment (lookupEnv)
 import System.Exit (ExitCode(ExitSuccess))
 import System.FilePath.Posix (takeFileName)
@@ -36,44 +36,27 @@ config = defaultConfiguration
          | otherwise = False
          where fileName = takeFileName path
 
-
-sassOptions :: Maybe FilePath -> SassOptions
-sassOptions distPath = defaultSassOptions
-    { sassSourceMapEmbed = True
-    , sassOutputStyle    = SassStyleCompressed
-    , sassIncludePaths   = fmap (: []) distPath
-    }
-
-
 -- Main
 -------------------------------------------------------------------------------
 
 main :: IO ()
 main = do
-  sassCompiler <- fmap (sassCompilerWith . sassOptions)
-                       (lookupEnv "THIRDPARTY")
-  compilerEnv <- lookupEnv "HAKYLL_ENV"
-  let isDevelopment = compilerEnv == Just "development"
-
   hakyllWith config $ do
 
+    -- Build tags and categories
     tags <- buildTags contentGlob (fromCapture "tag/*/index.html")
     categories <- buildCategories contentGlob (fromCapture "posts/*.html")
-
     tagsRules tags $ \tag pattern -> do
       let title = "Posts tagged \"" ++ tag ++ "\""
       let ctx   = contentContext tags categories
-
       route idRoute
       compile $ do
         posts <- recentFirst =<< loadAll (pattern .&&. hasNoVersion)
-
         let tagsCtx = constField "title" title
                    <> listField "posts" ctx (pure posts)
                    <> constField "tag" tag
                    <> tagCloudField "tag-cloud" 110 550 (randomiseTags tags)
                    <> siteContext
-
         makeItem ""
             >>= loadAndApplyTemplate "templates/tag.html" tagsCtx
             >>= loadAndApplyTemplate "templates/page.html" tagsCtx
@@ -104,12 +87,13 @@ main = do
         route idRoute
         compile copyFileCompiler
 
-      -- Compile SASS/CSS
-      depends <- makePatternDependency "assets/css/**.css"
-      rulesExtraDependencies [depends] $ do
-        match (fromRegex "^assets/css/[^_].*\\.css") $ do
+      -- Compile SASS into CSS
+      scssDependency <- makePatternDependency "assets/css/**.scss"
+      rulesExtraDependencies [scssDependency]
+        $ match "assets/css/main.scss"
+        $ do
           route $ setExtension "css"
-          compile copyFileCompiler
+          compile (fmap compressCss <$> sassCompiler)
 
       -- Compile bibliographies
       match "**.bib" $ compile biblioCompiler
@@ -131,8 +115,8 @@ main = do
       createProjectArchive "posts-by-project.html" "Posts By Project" tags categories
 
       -- Assemble site content
-      assembleBlogPosts tags categories isDevelopment 
-      assembleProjects tags categories isDevelopment
+      assembleBlogPosts tags categories
+      assembleProjects tags categories
 
       -- Assemble tag page
       createTagsPage "tags.html" "Tags" tags
