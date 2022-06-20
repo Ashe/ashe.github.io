@@ -26,7 +26,7 @@ assembleBlogPosts tags categories isDevelopment =
       route $ composeRoutes (cleanRouteContent "blog") idRoute
       compile $ do
         item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
-        buildPost item $ blogPostContext tags categories
+        simpleCompile item
     route $ composeRoutes (cleanRouteContent "blog") idRoute
     compile $ do
       item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
@@ -36,7 +36,7 @@ assembleBlogPosts tags categories isDevelopment =
 --------------------------------------------------------------------------------
 
 buildPost :: Item String -> Context String -> Compiler (Item String)
-buildPost item ctx = 
+buildPost item ctx =
   pure item >>= bibliography
             >>= saveSnapshot "posts-content"
             >>= loadAndApplyTemplate "templates/post.html" ctx
@@ -48,7 +48,7 @@ buildPost item ctx =
 
 
 postContext :: Item String -> Tags -> Tags -> Compiler (Context String)
-postContext item tags categories = do 
+postContext item tags categories = do
   m <- getMetadata $ itemIdentifier item
   posts <- recentFirst =<< loadAll (postsGlob .&&. hasVersion "simple")
   ctx <- case lookupString "project" m of
@@ -68,7 +68,7 @@ postContext item tags categories = do
 
 
 getNextAndPrev :: Item String -> [Item String] -> Tags -> Tags -> Compiler (Context String)
-getNextAndPrev item content tags categories = pure $ 
+getNextAndPrev item content tags categories = pure $
   listField "previous-post" (blogPostContext tags categories) (pure previous)
   <> listField "next-post" (blogPostContext tags categories) (pure next)
   where currentIndex = fromMaybe (-2) (findIndex (\i -> getSlug i == getSlug item) content)

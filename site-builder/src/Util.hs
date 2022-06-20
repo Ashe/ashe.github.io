@@ -3,6 +3,7 @@ module Util
 , shuffle
 , cleanIndexUrls
 , localAssetsUrls
+, simpleCompile
 ) where
 
 import Hakyll
@@ -49,6 +50,14 @@ localAssetsUrls item = let
   file = toFilePath ident
   local = takeBaseName file
   in pure $ fmap (withUrls localAssets) item
+
+
+simpleCompile :: Item String -> Compiler (Item String)
+simpleCompile item =
+  pure item >>= saveSnapshot "posts-content"
+            >>= relativizeUrls
+            >>= cleanIndexUrls
+            >>= localAssetsUrls
 
 --------------------------------------------------------------------------------
 

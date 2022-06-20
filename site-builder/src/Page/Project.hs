@@ -26,7 +26,7 @@ assembleProjects tags categories isDevelopment =
       route $ composeRoutes (cleanRouteContent "project") idRoute
       compile $ do
         item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
-        buildProject item $ projectContext tags categories
+        simpleCompile item
     route $ composeRoutes (cleanRouteContent "project") idRoute
     compile $ do
       item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
@@ -36,7 +36,7 @@ assembleProjects tags categories isDevelopment =
 --------------------------------------------------------------------------------
 
 buildProject :: Item String -> Context String -> Compiler (Item String)
-buildProject item ctx = 
+buildProject item ctx =
   pure item >>= bibliography
             >>= saveSnapshot "posts-content"
             >>= loadAndApplyTemplate "templates/project.html" ctx
@@ -48,12 +48,12 @@ buildProject item ctx =
 
 
 projectPostContext :: Item String -> Tags -> Tags -> Compiler (Context String)
-projectPostContext item tags categories = do 
+projectPostContext item tags categories = do
   posts <- filterM (isProjectPost item) =<< recentFirst =<< loadAll (postsGlob .&&. hasVersion "simple")
   projects <- recentFirst =<< loadAll (projectsGlob .&&. hasVersion "simple")
   nextAndPrev <- getNextAndPrev item projects tags categories
-  pure $ (if null posts 
-      then mempty 
+  pure $ (if null posts
+      then mempty
       else listField "project-posts" (blogPostContext tags categories) (pure posts))
     <> nextAndPrev
     <> projectContext tags categories
@@ -69,7 +69,7 @@ isProjectPost project item = do
 
 
 getNextAndPrev :: Item String -> [Item String] -> Tags -> Tags -> Compiler (Context String)
-getNextAndPrev item content tags categories = pure $ 
+getNextAndPrev item content tags categories = pure $
   listField "previous-post" (blogPostContext tags categories) (pure previous)
   <> listField "next-post" (blogPostContext tags categories) (pure next)
   where currentIndex = fromMaybe (-2) (findIndex (\i -> getSlug i == getSlug item) content)
