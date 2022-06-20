@@ -45,21 +45,6 @@ sassOptions distPath = defaultSassOptions
     }
 
 
-postCssCompiler:: Compiler (Item String)
-postCssCompiler = do
-  file <- getResourceFilePath
-  compiled <-  unsafeCompiler $ runPostCss file
-  makeItem compiled
-
-
-runPostCss :: FilePath -> IO String
-runPostCss file = do
-  (status, stdout, _) <- readProcessWithExitCode "postcss" [ file ] ""
-  pure $ case status  of
-    ExitSuccess -> stdout
-    _           -> error "could not compile css"
-
-
 -- Main
 -------------------------------------------------------------------------------
 
@@ -124,7 +109,7 @@ main = do
       rulesExtraDependencies [depends] $ do
         match (fromRegex "^assets/css/[^_].*\\.css") $ do
           route $ setExtension "css"
-          compile postCssCompiler
+          compile copyFileCompiler
 
       -- Compile bibliographies
       match "**.bib" $ compile biblioCompiler

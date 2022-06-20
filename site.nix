@@ -1,113 +1,83 @@
+{ pkgs , nur, thirdparty }: with pkgs;
 let
-  all-hies = import (builtins.fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
-in
-{ pkgs ? import <nixpkgs> {}
-, thirdparty ? []
-, nur ? import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-    pkgs = pkgs;
-  }
-}:
-  with pkgs;
-  let
-    # -------------- Utils -------------
-    script = { ... } @ args: nur.repos.ysndr.lib.wrap (
+
+  #######################
+  ## Utility functions ##
+  #######################
+
+  wrap = { paths ? [], vars ? {}, file ? null, script ? null, shell ? false, bin ? false, name ? "wrap" }:
+    assert file != null || script != null ||
+          abort "wrap needs 'file' or 'script' argument";
+    with rec {
+      set  = n: v: "--set ${escapeShellArg (escapeShellArg n)} " +
+                    "'\"'${escapeShellArg (escapeShellArg v)}'\"'";
+      args = (map (p: "--prefix PATH : ${p}/bin") paths) ++
+             (builtins.attrValues (builtins.mapAttrs set vars));
+      destination = if bin then "/bin/${name}" else "";
+    };
+    runCommand name
       {
-        shell = true;
-      } // args
-    );
-
-    # ------------- Haskell ------------
-    # hie = all-hies.selection { selector = p: { inherit (p) ghc865; }; };
-    haskellPackages' = haskellPackages.extend (
-      self: super: with pkgs.haskell.lib;  {
-        # hakyll = appendPatch (dontCheck (super.callHackage "hakyll" "4.13.4.1" {})) ./hakyll.patch;
-
-
-        # hakyll-images = unmarkBroken super.hakyll-images;
-        JuicyPixels-extra = super.callHackage "JuicyPixels-extra" "0.4.1" {};
-        # pandoc = super.callHackage "pandoc" "2.14.0.1" {};
-
-        # hakyll-sass = unmarkBroken super.hakyll-sass;
-      }
-    );
-
-    # --------------- JS --------------
-    css-tools = (import ./css-tools { inherit pkgs; });
-
-    # ------------ dist ---------------
-    thirdparty' = linkFarm "thirdparty" thirdparty;
-
-    # ------------- Site -----------
-    site = (haskellPackages'.callCabal2nix "Site" "${./site-builder}" {});
-
-    site-with-thirdparty =
-      symlinkJoin {
-        name = "site- with-thirdparty";
-        paths = [site css-tools.shell.nodeDependencies css-tools.package ];
+        f = if file != null then file
+            else (
+              if shell then writeShellScript
+              else writeScript) "${name}-unwrapped" script;
         buildInputs = [ makeWrapper ];
-        postBuild = ''
-            wrapProgram $out/bin/site \
-              --set THIRDPARTY "${thirdparty'}" \
-              --set POSTCSS_MODULES "${css-tools.shell.nodeDependencies}/lib/node_modules" \
-              --prefix NODE_PATH : ${css-tools.shell.nodeDependencies}/lib/node_modules \
-              --prefix PATH : ${css-tools.shell.nodeDependencies}/bin
-          '';
-      };
-
-    # --------------- Commands ----------------
-
-    generate-website = script {
-      name = "generate-website";
-      paths = [ site-with-thirdparty git css-tools.shell.nodeDependencies ];
-
-      script = ''
-        site rebuild
+      }
+      ''
+        makeWrapper "$f" "$out"${destination} ${builtins.toString args}
       '';
-    };
 
-    watch-website = script {
-      name = "watch-website";
-      paths = [ site-with-thirdparty git css-tools.shell.nodeDependencies ];
+  ##################
+  ## Compile site ##
+  ##################
 
-      script = ''
-        site watch
-      '';
-    };
+  site = (haskellPackages.callCabal2nix "Site" "${./site-builder}" {});
 
-    # ---------------- Shell ------------------
-    haskell-env = haskellPackages'.ghcWithHoogle (
-      hp: with hp; [ haskell-language-server cabal-install ]
-      ++ site.buildInputs
-    );
+  #######################
+  ## Generate commands ##
+  #######################
 
-    shell = mkShell {
-      name = "blog-env";
-      buildInputs = [
-        haskell-env
-        css-tools.shell.nodeDependencies
-      ];
+  generate-website = wrap {
+    name = "generate-website";
+    paths = [ site git ];
 
-      shellHook = ''
+    script = ''
+      site rebuild
+    '';
+  };
 
-        export THIRDPARTY="${thirdparty'}"
-        export HAKYLL_ENV="development"
+  watch-website = wrap {
+    name = "watch-website";
+    paths = [ site git ];
 
-        export POSTCSS_MODULES="${css-tools.shell.nodeDependencies}/lib/node_modules"
-        export NODE_PATH="$POSTCSS_MODULES:$NODE_PATH"
-        export NODE_ENV="$HAKYLL_ENV"
+    script = ''
+      site watch
+    '';
+  };
 
-        export HIE_HOOGLE_DATABASE="${haskell-env}/share/doc/hoogle/default.hoo"
-        export NIX_GHC="${haskell-env}/bin/ghc"
-        export NIX_GHCPKG="${haskell-env}/bin/ghc-pkg"
-        export NIX_GHC_DOCDIR="${haskell-env}/share/doc/ghc/html"
-        export NIX_GHC_LIBDIR=$( $NIX_GHC --print-libdir )
-      '';
-    };
-  in
-    {
-      inherit shell site site-with-thirdparty generate-website;
-      ci = {
-        compile = generate-website;
-        watch = watch-website;
-      };
-    }
+  ###########
+  ## Shell ##
+  ###########
+
+  haskell-env = haskellPackages.ghcWithHoogle (
+    hp: with hp; [ 
+      haskell-language-server 
+      cabal-install 
+    ]
+    ++ site.buildInputs
+  );
+
+  shell = mkShell {
+    name = "blog-env";
+    buildInputs = [
+      haskell-env
+    ];
+  };
+
+in {
+  inherit shell site generate-website;
+  ci = {
+    compile = generate-website;
+    watch = watch-website;
+  };
+}

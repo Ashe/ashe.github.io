@@ -27,7 +27,7 @@
         };
       in rec {
         defaultApp = apps.watch;
-        defaultPackage = website.site-with-thirdparty;
+        defaultPackage = website.site;
         devShell = website.shell;
 
         apps = {
@@ -36,7 +36,7 @@
             exePath = ""; 
           };
           site = flake-utils.lib.mkApp { 
-            drv = website.site-with-thirdparty; 
+            drv = website.site; 
             exePath = "/bin/site"; 
           };
           watch = flake-utils.lib.mkApp { 
@@ -48,7 +48,6 @@
         packages = { 
           inherit (website)
           site 
-          site-with-thirdparty 
           ci 
           shell; 
         };
