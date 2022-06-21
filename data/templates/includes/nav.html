@@ -1,18 +1,19 @@
-<header class="sticky font-standout inset-0 z-50 min-w-full bg-muted dark:bg-mutedNight text-base">
-  <nav class="container grid grid-cols-3">
-
-    <div class="flex flex-col">
-      <a class="content-center my-auto text-muted dark:text-white w-max">
-        <svg xmlns="http://www.w3.org/2000/svg" class="inline-block h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20" />
-        </svg>
-        <span class="ml-2 uppercase text-xs">Menu</span>
+<nav id="navbar-container">
+  <div class="level container is-mobile is-max-desktop">
+    <div id="navbar-expand-trigger" class="level-left">
+      <a class="icon-text">
+        <span class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"/>
+          </svg>
+        </span>
+        <span class="ml-2 is-uppercase is-size-7">Menu</span>
       </a>
 
-      <div uk-dropdown class="container hidden">
-        <div class="inset-x-0 absolute container px-8 grid sm:grid-cols-3 sm:gap-8 shadow-lg bg-white dark:bg-night text-sm text-muted dark:text-white fill-current stroke-current">
-          <div>
-            <ul class="flex flex-col gap-2" >
+      <div id="expanded-navbar">
+        <div class="columns container is-max-widescreen">
+          <div class="column">
+            <ul>
               <a href="/"><li class="uppercase text-black dark:text-white">Home</li></a>
               <li><a href="/about/">About</a></li>
               <li><a href="/archive/">Archive</a></li>
@@ -22,8 +23,8 @@
               </li>
             </ul>
           </div>
-          <div>
-            <ul class="flex flex-col gap-2">
+          <div class="column">
+            <ul>
               <a href="/projects/"><li class="uppercase text-black dark:text-white">Projects</li></a>
               <li><a href="/projects/">All Projects</a></li>
               <li><a href="/posts-by-project/">Posts By Project</a></li>
@@ -36,8 +37,8 @@
               </li>
             </ul>
           </div>
-          <div>
-            <ul class="flex flex-col gap-2">
+          <div class="column">
+            <ul>
               <a href="/blog/"><li class="uppercase text-black dark:text-white">Blog</li></a>
               <li><a href="/blog/">All Posts</a></li>
               <li>
@@ -59,19 +60,19 @@
       </div>
     </div>
 
-    <div class="uk-navbar-nav uk-flex-1 align-items-center content-center my-auto">
-      <a href="/" class="flex items-center justify-center text-muted dark:text-white">
-        <span class="text-xs">aas.sh</span>
+    <div class="level-item">
+      <a href="/" class="">
+        <span class="is-size-7">aas.sh</span>
       </a>
     </div>
 
-    <div class="flex flex-col items-end md:relative">
+    <div class="level-right">
       <div class="flex">
         $if(toc)$
           <a class="content-center uppercase my-auto text-xs text-muted dark:text-white w-max">
             <span class="md:hidden">Content</span> <span class="hidden md:block 2xl:hidden">Table of Contents</span>
           </a>
-          <div class="toc hidden" uk-drop>
+          <div class="toc hidden">
             <div class="container max-w-full sm:max-w-sm  bg-white dark:bg-night p-6 w-full absolute text-muted dark:text-emphasizedNight right-0 shadow-xl rounded-b" uk-scrollspy-nav="closest: li; scroll: true; offset: 85; cls: text-black dark:text-highlightNight">
               $toc$
             </div>
@@ -79,16 +80,15 @@
         $endif$
 
         <span class="ml-2" style="margin-top:auto;margin-bottom:auto">
-          <button id="theme-toggle-light" type="button" class="text-muted dark:text-emphasizedNight hover:text-highlight dark:hover:text-highlight focus:outline-none rounded-lg text-sm p-2.5 hidden">
+          <button id="theme-toggle-light" type="button" class="hidden">
             <i class="w-5 h-5 lar la-moon"></i>
           </button>
-          <button id="theme-toggle-dark" type="button" class="text-muted dark:text-emphasizedNight hover:text-highlight dark:hover:text-highlight focus:outline-none rounded-lg text-sm p-2.5 hidden">
+          <button id="theme-toggle-dark" type="button" class="hidden">
             <i class="w-5 h-5 lar la-sun"></i>
           </button>
         </span>
-
       </div>
     </div>
-  </nav>
+  </div>
 
-</header>
+</nav>

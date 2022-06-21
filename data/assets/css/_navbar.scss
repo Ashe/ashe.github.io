@@ -1,0 +1,43 @@
+// Everything inside the navbar
+#navbar-container {
+
+  // Show above all else
+  z-index: 50;
+
+  // Stretch full width
+  min-width: 100%;
+
+  // Always stick to top of the screen
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  height: 30px;
+
+  // Appearance
+  background-color: $white-bis;
+}
+
+
+// Becomes visible when #navbar-expand-trigger is hovered
+#expanded-navbar {
+
+  // Hide by default
+  display: none;
+
+  // Position below navbar (and ensure 30px wiggle room from bottom)
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  right: 0px;
+
+  // Appearance
+  background-color: $white-bis;
+}
+
+// Show when triggered
+#navbar-expand-trigger:hover #expanded-navbar {
+  display: block;
+}
