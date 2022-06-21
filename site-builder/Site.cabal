@@ -49,6 +49,7 @@ executable site
       Snippet.Figure
       Snippet.InfoBox
       Snippet.Util
+      Style
 
     default-language: Haskell2010
     other-extensions: OverloadedStrings

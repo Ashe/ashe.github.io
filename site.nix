@@ -43,6 +43,9 @@ let
       name = "site-with-thirdparty";
       paths = [ site ];
       buildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/site --set THIRDPARTY "${thirdparty'}"
+      '';
     };
 
   #######################

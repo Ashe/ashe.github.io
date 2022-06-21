@@ -1,6 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+// Import Bulma CSS library
+@import "thirdparty/bulma/base/_all.sass";
+@import "thirdparty/bulma/components/_all.sass";
+@import "thirdparty/bulma/elements/_all.sass";
+@import "thirdparty/bulma/form/_all.sass";
+@import "thirdparty/bulma/grid/_all.sass";
+@import "thirdparty/bulma/helpers/_all.sass";
+@import "thirdparty/bulma/layout/_all.sass";
+@import "thirdparty/bulma/utilities/_all.sass";
 
-@import '_base.scss';
-@import '_code.scss';
-@import '_components.scss';
-@import '_variables.scss';
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
