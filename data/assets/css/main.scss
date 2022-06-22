@@ -78,6 +78,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 // Import custom CSS
+@import "_base.scss";
 @import "_navbar.scss";
 @import "_toc.scss";
 @import "_util.scss";

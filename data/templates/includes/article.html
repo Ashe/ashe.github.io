@@ -34,34 +34,43 @@
   </div>
 </div>
 
+<div class="container is-widescreen">
+  <div class="columns is-centered is-variable is-8">
 
-$if(toc)$
-  <div class="2xl:flex 2xl:flex-row-reversed 2xl:max-w-screen-2xl 2xl:mx-auto">
-
-    <div class="hidden 2xl:block 2xl:flex-1">
-      <div class="toc sticky top-10 mt-5 p-6 float-right no-underline">
-        <div class="font-standout text-muted dark:text-emphasizedNight" uk-scrollspy-nav="closest: li; scroll: true; offset: 85; cls: text-black dark:text-highlightNight">
+    $if(toc)$
+      <div class="column is-narrow">
+        <div id="side-toc" class="table-of-contents">
           $toc$
         </div>
       </div>
-    </div>
 
-    <div class="2xl:flex-none">
-      <div class="container">
-        <article class="lg:w-4/5 lg:mx-auto">
-          $body$
-        </article>
-      </div>
+      <script>
+        window.onload = function () {
+          scrollSpy('#side-toc', {
+            sectionClass: '.anchor-header',
+            menuActiveTarget: 'li > a',
+            smoothScroll: true,
+            smoothScrollBehavior: function(element, options) {
+              element.scrollIntoView({ 
+                block: 'start',
+                inline: 'nearest',
+                behavior: 'smooth', 
+              })
+            }
+          })
+        }
+      </script>
+    $endif$
+
+    <div class="column is-narrow">
+      <article class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            $body$
+          </div>
+        </div>
+      </article>
     </div>
 
   </div>
-
-$else$
-
-  <div class="container">
-    <article class="lg:w-4/5 lg:mx-auto">
-      $body$
-    </article>
-  </div>
-
-$endif$
+</div>

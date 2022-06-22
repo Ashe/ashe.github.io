@@ -1,6 +1,9 @@
 // Table of contents menu
 .table-of-contents {
 
+  // Appearance
+  font-family: monospace;
+
   // Make current section in toc bold
   .active {
     font-weight: bold;
@@ -28,6 +31,9 @@
     display: none;
     @include tablet {
       display: inline-block;
+      @include fullhd {
+        display: none;
+      }
     }
   }
 }
@@ -52,5 +58,31 @@
   // When not on mobile, popup moves to right side
   @include tablet {
     left: unset;
+  }
+
+  // Ensure navbar toc is hidden when trigger also hides
+  @include fullhd {
+    visibility: hidden;
+  }
+}
+
+// Becomes visible when screen is wide
+#side-toc {
+
+  // Hide by default
+  display: none;
+
+  // Show when screen is wide enough to accommodate
+  @include fullhd {
+
+    // Positioning
+    display: block;
+    position: sticky;
+    margin-top: 25px;
+    top: 0px;
+
+    // Position table of contents on the right side
+    float: right;
+    padding: 30px;
   }
 }
