@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Field.TableOfContents
 ( tableOfContentsField
 ) where
@@ -7,12 +9,13 @@ import Hakyll
 import Data.Default (Default, def)
 import Data.Either (fromRight)
 import Data.String (fromString)
+import Data.Text (Text, empty)
 import Text.Blaze.Html (Html, Attribute)
 import Text.Blaze.Html.Renderer.Text (renderHtml)
 import Text.Blaze.Internal ( MarkupM (..), (!))
 import Text.Blaze.XHtml5 (ul, li, toHtml)
 import Text.Blaze.XHtml5.Attributes (class_, alt)
-import Text.Pandoc (Pandoc (..), Block (BulletList), nullMeta, runPure)
+import Text.Pandoc (Pandoc (..), Block (..), Inline(..), nullMeta, runPure)
 import Text.Pandoc.Options (WriterOptions (writerTOCDepth))
 import Text.Pandoc.Readers (readHtml)
 import Text.Pandoc.Writers (writeHtml5)
@@ -47,18 +50,36 @@ instance Default ToCExtra where
 modList :: WriterOptions -> ((Html -> Html)->(Html->Html)) -> [Block] -> Html
 modList opts ulMod = makeBulletItem
   where
-      -- This decomposes one item of a bullet list
-      -- BulletList takes a  list of items each of which is a list of blocks
-      -- respectively :: [[Block]]
-      makeBulletItem :: [Block] -> Html
-      makeBulletItem [] = Empty ()
-      makeBulletItem ((BulletList elems):extra)
-        = toHtml [makeList $ filter (not . null) elems, makeBulletItem extra]
-      makeBulletItem (block:extra) = toHtml [makeItem block, makeBulletItem extra]
+    -- This decomposes one item of a bullet list
+    -- BulletList takes a  list of items each of which is a list of blocks
+    -- respectively :: [[Block]]
+    makeBulletItem :: [Block] -> Html
+    makeBulletItem [] = Empty ()
+    makeBulletItem ((BulletList elems):extra)
+      = toHtml [makeList $ filter (not . null) elems, makeBulletItem extra]
+    makeBulletItem (block:extra) = toHtml [makeItem block, makeBulletItem extra]
 
-      makeItem :: Block -> Html
-      makeItem block = fromRight (Empty ()) (runPure $ writeHtml5 opts (Pandoc nullMeta [block]))
+    makeItem :: Block -> Html
+    makeItem block = 
+      fromRight (Empty ()) (runPure $ writeHtml5 opts (Pandoc nullMeta [simplifyBlock block]))
 
-      makeList:: [[Block]] -> Html
-      makeList [] = Empty ()
-      makeList listItems = ulMod ul (toHtml . Prelude.map (li . makeBulletItem) $ listItems)
+    makeList:: [[Block]] -> Html
+    makeList [] = Empty ()
+    makeList listItems = ulMod ul (toHtml . Prelude.map (li . makeBulletItem) $ listItems)
+
+
+simplifyBlock :: Block -> Block
+simplifyBlock (Plain []) = Plain []
+simplifyBlock (Plain ((Link a inlines t):xs)) = Plain [ Link a [ removeSpan inlines ] t ]
+simplifyBlock (Plain inlines) = Plain [ removeSpan inlines ]
+
+
+removeSpan :: [Inline] -> Inline
+removeSpan inlines = Str $ foldl inlineToString empty inlines
+
+
+inlineToString :: Text -> Inline -> Text
+inlineToString str (Str text) = str <> text
+inlineToString str Space = str <> " "
+inlineToString str (Span _ inlines) = foldl inlineToString str inlines
+inlineToString str _ = str

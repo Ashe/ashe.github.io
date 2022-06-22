@@ -8,13 +8,9 @@
       url = "git+https://github.com/jgthms/bulma/";
       flake = false;
     };
-    uikit = {
-      url = "https://github.com/uikit/uikit/archive/v3.6.20.tar.gz";
-      flake = false;
-    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, bulma, uikit }:
+  outputs = { self, nixpkgs, flake-utils, bulma }:
     flake-utils.lib.eachDefaultSystem ( system:
       let
         pkgs' = import nixpkgs { inherit system; };
@@ -24,10 +20,6 @@
             {
               name = "bulma";
               path = "${bulma}/sass";
-            }
-            {
-              name = "uikit";
-              path = "${uikit}/src";
             }
           ];
         };

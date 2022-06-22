@@ -80,7 +80,12 @@ main = hakyllWith config $ do
       compile copyFileCompiler
 
     -- Copy scripts
-    match "assets/scripts/**" $ do
+    match "assets/scripts/**.js*" $ do
+      route idRoute
+      compile copyFileCompiler
+
+    -- Copy plain CSS
+    match "assets/css/**.css" $ do
       route idRoute
       compile copyFileCompiler
 

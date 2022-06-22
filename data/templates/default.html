@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Metadata -->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,27 +10,24 @@
     <meta property="og:url" content="$to-canonical(url)$">
     <meta property="og:image" content="$if(has-images)$$at-index("images", "0")$$else$$if(image)$$image$$else$$to-canonical(site-logo)$$endif$$endif$">
     <title>$title$</title>
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">  <link rel="alternate" type="application/rss+xml"  title="RSS Feed" href="/rss.xml" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
     <link rel="alternate" type="application/atom+xml"  title="Atom Feed" href="/atom.xml" />
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
     <link rel="manifest" href="/assets/images/favicon/site.webmanifest">
 
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma-prefers-dark" />
+    <!-- Style -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/swiper-8.2.4/swiper-bundle.min.css"/>
 
-    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
-
-    <script>
-      // On page load or when changing themes, best to add inline in `head`
-      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
-      } else {
-          document.documentElement.classList.remove('dark')
-      }
-    </script>
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="/assets/scripts/init-darkmode.js"></script>
+    <script src="/assets/scripts/swiper-8.2.4/swiper-bundle.min.js"></script>
+    <script src="/assets/scripts/jump-1.0.2/jump.min.js" type="module"></script>
   </head>
 
   <body>
@@ -43,9 +41,10 @@
 
     $partial("templates/includes/footer.html")$
 
-    <script src="/assets/scripts/navbar-menu.js"></script>
     <script src="/assets/scripts/darkmode.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.9.4/js/uikit.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.9.4/js/uikit-icons.min.js"></script>
+    <script src="/assets/scripts/navbar-menu.js"></script>
+    <script src="/assets/scripts/navbar-toc.js"></script>
+    <script src="/assets/scripts/scrollspy-2.2/simple-scrollspy.min.js"></script>
   </body>
+
 </html>

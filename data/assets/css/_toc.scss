@@ -1,0 +1,56 @@
+// Table of contents menu
+.table-of-contents {
+
+  // Make current section in toc bold
+  .active {
+    font-weight: bold;
+  }
+}
+
+// 'Table of Contents' button in navbar
+#nav-toc-trigger {
+
+  // Hide on large screens
+  @include fullhd {
+    display: none;
+  }
+
+  // Mobile version
+  .mobile {
+    display: inline-block;
+    @include tablet {
+      display: none;
+    }
+  }
+
+  // Non-mobile version
+  .desktop {
+    display: none;
+    @include tablet {
+      display: inline-block;
+    }
+  }
+}
+
+// Becomes visible when #toc-expand-trigger is hovered
+#nav-toc {
+
+  // Remove from dom and position just below navbar container to the right
+  position: absolute;
+  top: 24px;
+  left: 0px;
+  right: 0px;
+
+  // Hide by default
+  display: none;
+
+  // Appearance
+  padding: 20px;
+  background-color: $white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  // When not on mobile, popup moves to right side
+  @include tablet {
+    left: unset;
+  }
+}

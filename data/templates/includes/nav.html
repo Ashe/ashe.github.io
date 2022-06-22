@@ -1,14 +1,14 @@
 <nav id="navbar-container">
   <div class="level container is-mobile is-max-desktop">
 
-    <div id="navbar-expand-trigger" class="level-left">
-      <a class="icon-text">
+    <div class="level-left">
+      <a id="nav-menu-trigger" class="icon-text">
         <span class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"/>
           </svg>
         </span>
-        <span class="ml-2 is-uppercase is-size-7">Menu</span>
+        <span class="is-uppercase is-size-7">Menu</span>
       </a>
     </div>
 
@@ -21,14 +21,12 @@
     <div class="level-right">
       <div class="flex">
         $if(toc)$
-          <a class="content-center uppercase my-auto text-xs text-muted dark:text-white w-max">
-            <span class="md:hidden">Content</span> <span class="hidden md:block 2xl:hidden">Table of Contents</span>
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
           </a>
-          <div class="toc hidden">
-            <div class="container max-w-full sm:max-w-sm  bg-white dark:bg-night p-6 w-full absolute text-muted dark:text-emphasizedNight right-0 shadow-xl rounded-b" uk-scrollspy-nav="closest: li; scroll: true; offset: 85; cls: text-black dark:text-highlightNight">
-              $toc$
-            </div>
-          </div>
         $endif$
 
         <span class="ml-2" style="margin-top:auto;margin-bottom:auto">
@@ -44,7 +42,7 @@
 
   </div>
 
-  <div id="expanded-navbar">
+  <div id="nav-menu">
     <div class="columns container is-max-widescreen">
       <div class="column">
         <ul>
@@ -92,5 +90,27 @@
       </div>
     </div>
   </div>
+
+  $if(toc)$
+    <div id="nav-toc" class="table-of-contents">
+      $toc$
+    </div>
+    <script>
+      window.onload = function () {
+        scrollSpy('#nav-toc', {
+          sectionClass: '.anchor-header',
+          menuActiveTarget: 'li > a',
+          smoothScroll: true,
+          smoothScrollBehavior: function(element, options) {
+            element.scrollIntoView({ 
+              block: 'start',
+              inline: 'nearest',
+              behavior: 'smooth', 
+            })
+          }
+        })
+      }
+    </script>
+  $endif$
 
 </nav>

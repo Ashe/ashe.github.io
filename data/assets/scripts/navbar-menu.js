@@ -1,22 +1,25 @@
-const trigger = document.getElementById('navbar-expand-trigger');
-const menu = document.getElementById('expanded-navbar');
+const nav_trigger = document.getElementById('nav-menu-trigger');
+const nav_menu = document.getElementById('nav-menu');
 
-// Show hidden div on hover
-trigger.addEventListener('mouseover', function handleMouseOver() {
-  menu.style.display = 'block';
-});
+if (nav_trigger && nav_menu) {
 
-// Hide div on mouse out
-menu.addEventListener('mouseleave', function handleMouseOut() {
-  menu.style.display = 'none';
-});
+  // Show hidden div on hover
+  nav_trigger.addEventListener('mouseover', function handleMouseOver() {
+    nav_menu.style.display = 'block';
+  });
 
-// Toggle visibility on click
-trigger.addEventListener('click', function toggleVisibility() {
-  if (menu.style.display === "none") {
-    menu.style.display = "block";
-  }
-  else {
-    menu.style.display = "none";
-  }
-});
+  // Hide div on mouse out
+  nav_menu.addEventListener('mouseleave', function handleMouseOut() {
+    nav_menu.style.display = 'none';
+  });
+
+  // Toggle visibility on click
+  nav_trigger.addEventListener('click', function toggleVisibility() {
+    if (nav_menu.style.display === "none") {
+      nav_menu.style.display = "block";
+    }
+    else {
+      nav_menu.style.display = "none";
+    }
+  });
+}
