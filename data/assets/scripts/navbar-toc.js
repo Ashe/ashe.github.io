@@ -5,12 +5,18 @@ if (toc_trigger && toc_menu) {
 
   // Show hidden div on hover
   toc_trigger.addEventListener('mouseover', function handleMouseOver() {
-    toc_menu.style.display = 'block';
+    let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+    if (!isMobile) {
+      toc_menu.style.display = 'block';
+    }
   });
 
   // Hide div on mouse out
   toc_menu.addEventListener('mouseleave', function handleMouseOut() {
-    toc_menu.style.display = 'none';
+    let isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+    if (!isMobile) {
+      toc_menu.style.display = 'none';
+    }
   });
 
   // Toggle visibility on click
