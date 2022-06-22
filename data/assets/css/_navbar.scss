@@ -19,9 +19,14 @@
   background-color: $white-bis;
 }
 
-
 // Becomes visible when #navbar-expand-trigger is hovered
 #expanded-navbar {
+
+  // Remove from dom and position just below navbar container
+  position: absolute;
+  top: 24px;
+  left: 0px;
+  right: 0px;
 
   // Hide by default
   display: none;
@@ -29,4 +34,9 @@
   // Appearance
   background-color: $white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  // Columns mess up the appearance
+  .columns {
+    margin: 0px;
+  }
 }
