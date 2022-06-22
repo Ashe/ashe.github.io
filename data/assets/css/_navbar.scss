@@ -14,7 +14,6 @@
   right: 0px;
   bottom: 0px;
   left: 0px;
-  height: 30px;
 
   // Appearance
   background-color: $white-bis;
@@ -27,17 +26,7 @@
   // Hide by default
   display: none;
 
-  // Position below navbar (and ensure 30px wiggle room from bottom)
-  position: absolute;
-  top: 30px;
-  left: 0px;
-  right: 0px;
-
   // Appearance
-  background-color: $white-bis;
-}
-
-// Show when triggered
-#navbar-expand-trigger:hover #expanded-navbar {
-  display: block;
+  background-color: $white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

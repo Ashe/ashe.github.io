@@ -1,5 +1,6 @@
 <nav id="navbar-container">
   <div class="level container is-mobile is-max-desktop">
+
     <div id="navbar-expand-trigger" class="level-left">
       <a class="icon-text">
         <span class="icon">
@@ -9,55 +10,6 @@
         </span>
         <span class="ml-2 is-uppercase is-size-7">Menu</span>
       </a>
-
-      <div id="expanded-navbar">
-        <div class="columns container is-max-widescreen">
-          <div class="column">
-            <ul>
-              <a href="/"><li class="uppercase text-black dark:text-white">Home</li></a>
-              <li><a href="/about/">About</a></li>
-              <li><a href="/archive/">Archive</a></li>
-              <li><hr></li>
-              <li>
-                $partial("templates/includes/socials-horizontal.html")$
-              </li>
-            </ul>
-          </div>
-          <div class="column">
-            <ul>
-              <a href="/projects/"><li class="uppercase text-black dark:text-white">Projects</li></a>
-              <li><a href="/projects/">All Projects</a></li>
-              <li><a href="/posts-by-project/">Posts By Project</a></li>
-              <li><hr></li>
-              <li class="items-center">
-                <i class="las la-snowflake"></i>
-                <a href="https://github.com/$social-github$/dotfiles">
-                  NixOS Config
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div class="column">
-            <ul>
-              <a href="/blog/"><li class="uppercase text-black dark:text-white">Blog</li></a>
-              <li><a href="/blog/">All Posts</a></li>
-              <li>
-                <i class="las la-rss"></i>
-                <a href="/rss.xml">RSS</a>
-                <a href="/atom.xml">Atom</a>
-              </li>
-              <li><hr></li>
-              <li>
-                <i class="las la-code-branch"></i>
-                Current rev.: 
-                <a href="$site-repo$/commit/$git-head-commit-hash$">
-                  $git-head-commit$
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="level-item">
@@ -87,6 +39,56 @@
             <i class="w-5 h-5 lar la-sun"></i>
           </button>
         </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="expanded-navbar">
+    <div class="columns container is-max-widescreen">
+      <div class="column">
+        <ul>
+          <a href="/"><li class="uppercase text-black dark:text-white">Home</li></a>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            $partial("templates/includes/socials-horizontal.html")$
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="/projects/"><li class="uppercase text-black dark:text-white">Projects</li></a>
+          <li><a href="/projects/">All Projects</a></li>
+          <li><a href="/posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/$social-github$/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="/blog/"><li class="uppercase text-black dark:text-white">Blog</li></a>
+          <li><a href="/blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="/rss.xml">RSS</a>
+            <a href="/atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="$site-repo$/commit/$git-head-commit-hash$">
+              $git-head-commit$
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
