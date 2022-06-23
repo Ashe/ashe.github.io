@@ -1,39 +1,35 @@
-<div class="swiper-slide h-96 p-5 pb-10">
-  <div class="grid grid-cols-1 md:grid-cols-3 rounded overflow-hidden dark:bg-mutedNight shadow-xl">
+<div class="swiper-slide post-preview-featured">
+  <div class="internal apply-shadow">
 
-    <div class="col-span-1 md:col-span-2">
+    <div class="left">
       $if(has-images)$
-        <div class="swiper featured-swiper$slug$ h-64 md:h-96">
+        <div class="swiper featured-swiper$slug$">
           <div class="swiper-wrapper">
             $for(images)$
               <div class="swiper-slide">
-                <img src="$image$" 
-                     alt="Image $index$ for $title$" 
-                     class="object-cover w-full h-64 md:h-96">
+                <img src="$image$" alt="Image $index$ for $title$">
               </div>
             $endfor$
           </div>
           <div class="swiper-pagination"></div>
         </div>
       $else$
-        <img src="$image$" 
-             alt="Image for $title$" 
-             class="object-cover w-full md:h-96">
+        <img src="$image$" alt="Image for $title$">
       $endif$
     </div>
 
-    <div class="col-span-1">
-      <div class="p-5 md:pb-0">
+    <div class="right">
+      <div class="p-5">
         <header class="mb-4">
 
-          <h1 class="text-xl">
-            <a class="uk-link-heading" href="$url$">
+          <h4 class="title is-5">
+            <a href="$url$">
               $title$
             </a>
-          </h1>
+          </h4>
 
-          <h2 class="text-sm mt-0">
-            <ul class="items-center my-0">
+          <h2 class="mt-0">
+            <ul>
               <li class>
                 <i class="las la-calendar-day"></i> $date$
               </li>
@@ -44,7 +40,7 @@
                 <li class="break-words">
                   <i class="las la-tags"></i>
                   $for(tags)$
-                    <span><a class="text-emphasis" href="$url$">$name$</a>$sep$, </span>
+                    <span><a href="$url$">$name$</a>$sep$, </span>
                   $endfor$
                 </li>
               $endif$
@@ -53,9 +49,10 @@
           <p class="mt-0">$description$</p>
         </header>
         <div>
-          <a class="uppercase text-sm no-underline text-emphasis" href="$url$">Read more</a>
+          <a class="is-uppercase is-size-7 no-underline" href="$url$">Read more</a>
         </div>
       </div>
     </div>
+
   </div>
 </div>

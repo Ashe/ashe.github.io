@@ -3,7 +3,7 @@
 </section>
 
 $if(related-project)$
-  <section class="container">
+  <section class="container is-max-desktop">
     <h2>Related Project</h2>
     $for(related-project)$
       $partial("templates/includes/post-preview-featured.html")$
@@ -48,8 +48,3 @@ $endif$
     $endif$
   </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
-<!--[if lt IE 9]>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-<![endif]-->

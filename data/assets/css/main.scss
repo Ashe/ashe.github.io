@@ -1,87 +1,10 @@
-///////////////////////
-// Bulma CSS imports //
-///////////////////////
+// Third party imports
+@import "_thirdparty.scss";
 
-// Utilities
-@import "thirdparty/bulma/utilities/initial-variables.sass";
-@import "thirdparty/bulma/utilities/functions.sass";
-@import "thirdparty/bulma/utilities/derived-variables.sass";
-@import "thirdparty/bulma/utilities/mixins.sass";
-@import "thirdparty/bulma/utilities/controls.sass";
-@import "thirdparty/bulma/utilities/extends.sass";
-
-// Base
-@import "thirdparty/bulma/base/minireset.sass";
-@import "thirdparty/bulma/base/generic.sass";
-@import "thirdparty/bulma/base/animations.sass";
-
-// Components
-@import "thirdparty/bulma/components/breadcrumb.sass";
-@import "thirdparty/bulma/components/card.sass";
-@import "thirdparty/bulma/components/dropdown.sass";
-@import "thirdparty/bulma/components/level.sass";
-@import "thirdparty/bulma/components/media.sass";
-@import "thirdparty/bulma/components/menu.sass";
-@import "thirdparty/bulma/components/message.sass";
-@import "thirdparty/bulma/components/modal.sass";
-// @import "thirdparty/bulma/components/navbar.sass";
-@import "thirdparty/bulma/components/pagination.sass";
-@import "thirdparty/bulma/components/panel.sass";
-@import "thirdparty/bulma/components/tabs.sass";
-
-// Elements
-@import "thirdparty/bulma/elements/box.sass";
-@import "thirdparty/bulma/elements/button.sass";
-@import "thirdparty/bulma/elements/container.sass";
-@import "thirdparty/bulma/elements/content.sass";
-@import "thirdparty/bulma/elements/icon.sass";
-@import "thirdparty/bulma/elements/image.sass";
-@import "thirdparty/bulma/elements/notification.sass";
-@import "thirdparty/bulma/elements/other.sass";
-@import "thirdparty/bulma/elements/progress.sass";
-@import "thirdparty/bulma/elements/table.sass";
-@import "thirdparty/bulma/elements/tag.sass";
-@import "thirdparty/bulma/elements/title.sass";
-
-// Form
-@import "thirdparty/bulma/form/shared.sass";
-@import "thirdparty/bulma/form/input-textarea.sass";
-@import "thirdparty/bulma/form/checkbox-radio.sass";
-@import "thirdparty/bulma/form/select.sass";
-@import "thirdparty/bulma/form/file.sass";
-@import "thirdparty/bulma/form/tools.sass";
-
-// Grid
-@import "thirdparty/bulma/grid/columns.sass";
-@import "thirdparty/bulma/grid/tiles.sass";
-
-// Helpers
-@import "thirdparty/bulma/helpers/color.sass";
-@import "thirdparty/bulma/helpers/flexbox.sass";
-@import "thirdparty/bulma/helpers/float.sass";
-@import "thirdparty/bulma/helpers/other.sass";
-@import "thirdparty/bulma/helpers/position.sass";
-@import "thirdparty/bulma/helpers/spacing.sass";
-@import "thirdparty/bulma/helpers/typography.sass";
-@import "thirdparty/bulma/helpers/visibility.sass";
-
-// Layout
-@import "thirdparty/bulma/layout/footer.sass";
-@import "thirdparty/bulma/layout/hero.sass";
-@import "thirdparty/bulma/layout/section.sass";
-
-//////////////////////
-// Site CSS imports //
-//////////////////////
-
-// Import fonts
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-// Import custom CSS
+// General site imports
 @import "_base.scss";
-@import "_navbar.scss";
-@import "_toc.scss";
 @import "_util.scss";
+@import "_components.scss";
 
 // Enable dark mode
 .dark {

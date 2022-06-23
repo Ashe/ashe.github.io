@@ -1,4 +1,21 @@
-// Hide hidden elements
 .hidden {
   display: none;
+}
+
+.break-words {
+  overflow-wrap: break-word;
+}
+
+.apply-shadow {
+  // Shadows
+  --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  transition-property: box-shadow;
+  transition-duration: 0.08s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+}
+
+.no-underline {
+  text-decoration: none;
 }

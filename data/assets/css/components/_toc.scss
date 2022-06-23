@@ -4,6 +4,11 @@
   // Appearance
   font-family: monospace;
 
+  // Indent sub-links
+  li {
+    margin-left: 1.5rem;
+  }
+
   // Make current section in toc bold
   .active {
     font-weight: bold;
