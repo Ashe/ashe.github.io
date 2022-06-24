@@ -35,11 +35,11 @@
 </div>
 
 <div class="container is-widescreen">
-  <div class="columns is-centered is-variable is-8">
+  <div class="columns is-desktop is-centered is-variable is-8 m-0">
 
     $if(toc)$
-      <div class="column is-narrow">
-        <div id="side-toc" class="table-of-contents">
+      <div id="side-toc" class="column is-narrow">
+        <div class="table-of-contents">
           $toc$
         </div>
       </div>
@@ -64,8 +64,8 @@
 
     <div class="column is-narrow">
       <article class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column is-four-fifths">
+        <div class="columns is-desktop is-centered">
+          <div class="column $if(toc)$can-shrink-for-toc$endif$">
             $body$
           </div>
         </div>

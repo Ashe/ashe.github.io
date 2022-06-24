@@ -1,9 +1,6 @@
 // Table of contents menu
 .table-of-contents {
 
-  // Appearance
-  font-family: monospace;
-
   // Indent sub-links
   li {
     margin-left: 1.5rem;
@@ -80,14 +77,22 @@
   // Show when screen is wide enough to accommodate
   @include fullhd {
 
-    // Positioning
+    // Show on full screen
     display: block;
-    position: sticky;
-    margin-top: 25px;
-    top: 0px;
 
-    // Position table of contents on the right side
-    float: right;
-    padding: 30px;
+    // Style toc differently when displayed to the side
+    .table-of-contents {
+      position: sticky;
+      top: 45px;
+      float: right;
+      padding: 30px;
+    }
+  }
+}
+
+// Shrink main article to 80% when toc is visible
+article .can-shrink-for-toc {
+  @include fullhd {
+    width: 80%;
   }
 }
