@@ -7,51 +7,44 @@
           <div class="swiper-wrapper">
             $for(images)$
               <div class="swiper-slide">
-                <img src="$image$" alt="Image $index$ for $title$">
+                <img src="$image$"
+                     alt="Preview image $index$ for post '$title$'">
               </div>
             $endfor$
           </div>
           <div class="swiper-pagination"></div>
         </div>
       $else$
-        <img src="$image$" alt="Image for $title$">
+        <img src="$image$" alt="Preview image for post '$title$'">
       $endif$
     </div>
 
-    <div class="right">
-      <div class="p-5">
-        <header class="mb-4">
+    <div class="right p-5">
+      <header class="mb-4">
 
-          <h4 class="title is-5">
-            <a href="$url$">
-              $title$
-            </a>
-          </h4>
+        <h4 class="title is-5"><a href="$url$">$title$</a></h4>
 
-          <h2 class="mt-0">
-            <ul>
-              <li class>
-                <i class="las la-calendar-day"></i> $date$
+        <h5 class="is-uppercase mt-0 mb-2">
+          <ul>
+            <li>
+              <i class="las la-calendar-day"></i> $date$
+            </li>
+            <li>
+              <i class="las la-stopwatch"></i> $read-time$ Minutes
+            </li>
+            $if(tags)$
+              <li class="break-words">
+                <i class="las la-tags"></i>
+                $for(tags)$
+                  <span><a href="$url$">$name$</a>$sep$, </span>
+                $endfor$
               </li>
-              <li>
-                <i class="las la-stopwatch"></i> $read-time$ Minutes
-              </li>
-              $if(tags)$
-                <li class="break-words">
-                  <i class="las la-tags"></i>
-                  $for(tags)$
-                    <span><a href="$url$">$name$</a>$sep$, </span>
-                  $endfor$
-                </li>
-              $endif$
-            </ul>
-          </h2>
-          <p class="mt-0">$description$</p>
-        </header>
-        <div>
-          <a class="is-uppercase is-size-7 no-underline" href="$url$">Read more</a>
-        </div>
-      </div>
+            $endif$
+          </ul>
+        </h5>
+        <p class="mt-0">$description$</p>
+      </header>
+      <a class="is-uppercase is-size-7 no-underline" href="$url$">Read more</a>
     </div>
 
   </div>

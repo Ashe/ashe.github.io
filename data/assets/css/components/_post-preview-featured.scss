@@ -9,19 +9,30 @@
   // Div inside the preview
   .internal {
 
-    // Ensure eight matches preview
-    height: 24rem;
-
     // Stay central
     margin-left: auto;
     margin-right: auto;
 
-    // Hide overflow
+    // Hide overflowing content
     overflow: hidden;
 
-    // When on desktop, display side by side
+    // Appearance
+    border-radius: 0.25rem;
+
+    // Handle grids
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    .left {
+      grid-column: span 1 / span 1;
+    }
+
+    // When on desktop
     @include desktop {
-      display: grid;
+
+      // Ensure height matches preview
+      height: 24rem;
+
+      // Rearrange grids to be side-by-side
       grid-template-columns: repeat(3, minmax(0, 1fr));
       .left {
         grid-column: span 2 / span 2;

@@ -1,0 +1,48 @@
+// Small cards showing posts
+.post-preview-small {
+
+  // Sizing
+  padding: 0.75rem;
+  box-sizing: border-box;
+
+  // Div inside the preview
+  .internal {
+
+    // Hide overflowing content
+    overflow: hidden;
+
+    // Appearance
+    border-radius: 0.25rem;
+
+    // Images should all be the same size
+    img {
+      width: 100%;
+      height: 15rem;
+      object-fit: cover;
+    }
+
+    // Text area
+    .information {
+
+      // Sizing
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    // Reduce resulting whitespace from titles
+    .title {
+      margin-bottom: 0.8rem; 
+    }
+  }
+}
+
+// Change size of slides
+.small-slides .swiper-slide {
+  width: 100%;
+  @include tablet {
+    width: 50%;
+    @include desktop {
+      width: 33.333%;
+    }
+  }
+}

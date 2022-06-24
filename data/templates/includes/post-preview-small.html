@@ -1,23 +1,16 @@
-<div class="p-3">
-  <div class="flex flex-col rounded overflow-hidden shadow-xl hover:shadow-2xl dark:bg-mutedNight">
-    $if(has-images)$
-      <img src="$at-index("images", "0")$" alt="" class="object-cover w-fill h-60">
-    $else$
-      <img src="$image$" alt="" class="object-cover w-fill h-60">
-    $endif$
+<div class="post-preview-small">
+  <div class="internal apply-shadow hover">
+    <img  src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$" 
+          alt="Preview image for post '$title$'">
 
-    <div class="w-full p-8">
+    <div class="information p-5">
       <header class="mb-4">
 
-        <h1 class="text-xl">
-          <a class="uk-link-heading" href="$url$">
-            $title$
-          </a>
-        </h1>
+        <h4 class="title is-5"><a href="$url$">$title$</a></h4>
 
-        <h2 class="text-sm mt-0">
-          <ul class="items-center my-0">
-            <li class>
+        <h5 class="is-uppercase mt-0 mb-2">
+          <ul>
+            <li>
               <i class="las la-calendar-day"></i> $date$
             </li>
             <li>
@@ -27,17 +20,15 @@
               <li class="break-words">
                 <i class="las la-tags"></i>
                 $for(tags)$
-                  <span><a class="text-emphasis" href="$url$">$name$</a>$sep$, </span>
+                  <span><ahref="$url$">$name$</a>$sep$, </span>
                 $endfor$
               </li>
             $endif$
           </ul>
-        </h2>
+        </h5>
         <p class="mt-0">$description$</p>
       </header>
-      <div>
-        <a class="uppercase text-sm text-emphasis no-underline" href="$url$">Read more</a>
-      </div>
+      <a class="is-uppercase is-size-7 no-underline" href="$url$">Read more</a>
     </div>
   </div>
 </div>
