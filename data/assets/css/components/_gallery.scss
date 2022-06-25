@@ -1,0 +1,41 @@
+// Gallery snippets contain multiple images
+.gallery-wall, .gallery-wall > p {
+
+  // Positioning
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+
+  // When screen wide enough, place images side by side
+  @include tablet {
+    display: flex;
+    flex-direction: row;
+  }
+
+  // When children exist, stack grandchildren into columns
+  > *:not(p) {
+    margin: auto;
+    @include tablet {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    // Ensure children are positioned nicely
+    * {
+      margin: auto;
+      @include tablet {
+        padding: 0.5rem;
+      }
+    }
+  }
+
+  // Final padding adjustment
+  > *:not(p, .child) {
+    padding: 0.25rem;
+    @include tablet {
+      padding: 0.5rem;
+    }
+  }
+}
