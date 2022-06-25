@@ -14,3 +14,11 @@ p a {
   color: #252525;
   text-decoration: underline;
 }
+
+ul {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+  li:not(:first-child) {
+      margin-top: 0.5rem;
+  }
+}
