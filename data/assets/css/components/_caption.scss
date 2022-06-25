@@ -1,0 +1,56 @@
+// Captions use Bulma 'Card' CSS, but content might need adjusting
+.caption-frame {
+
+  // Sizing
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0px;
+
+  // Appearance
+  border-radius: 0.25rem;
+  overflow: hidden;
+
+  // Source text underneath caption
+  .caption-source {
+    padding-top: 0.5rem;
+    a {
+      text-transform: uppercase;
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      &:not(:hover) {
+        color: #999999;
+      }
+    }
+  }
+
+  // Youtube videos
+  > iframe, > video {
+    width: 100%;
+    height: 16rem;
+    @include tablet {
+      height: 480px;
+    }
+  }
+
+  // Tweets
+  .twitter-tweet {
+    margin: 0px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+// Ensure captions are centered
+.caption-frame, .figure {
+  .caption p {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+}

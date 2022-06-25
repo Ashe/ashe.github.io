@@ -24,7 +24,7 @@ isFigure = hasClass "figure"
 toFigure :: Block -> Block
 toFigure (Div attr@(id, c, kvp) content) = case lookup "image" kvp of
   Nothing -> Null
-  Just imageSrc -> toCaption $ Div ("", delete "figure" c, kvp) 
+  Just imageSrc -> toCaption $ Div ("", delete "figure" c, kvp)
     [ Plain [makeImage imageSrc kvp]
     ]
 

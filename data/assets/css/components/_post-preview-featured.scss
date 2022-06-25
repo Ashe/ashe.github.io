@@ -18,6 +18,9 @@
 
     // Appearance
     border-radius: 0.25rem;
+    li:not:first-child {
+      margin-top: 5px;
+    }
 
     // Handle grids
     display: grid;

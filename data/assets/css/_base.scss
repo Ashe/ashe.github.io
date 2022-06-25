@@ -30,6 +30,10 @@ h4 {
   font-size: 1.125rem;
 }
 
+a:hover, a:hover > * {
+  color: #5d8c91;
+}
+
 *, ::before, ::after {
     box-sizing: border-box;
     border-width: 0;

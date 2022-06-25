@@ -22,19 +22,24 @@
 
   // Appearance
   background-color: $white-bis;
+
+  // Highlight all links when parent anchor hovered
   a, a > * {
     color: #999999;
-    &:hover {
-      color: #5d8c91;
-    }
+  }
+
+  a:hover, a:hover * {
+    color: #5d8c91;
   }
 
   // Theme toggle button
   .theme-toggle button {
 
     // Appearance
-    color: #999999;
     background-color: transparent;
+    &:not(:hover) {
+      color: #999999;
+    }
     &:hover {
       color: #5d8c91;
     }

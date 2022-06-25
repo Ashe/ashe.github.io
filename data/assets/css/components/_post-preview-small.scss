@@ -13,6 +13,9 @@
 
     // Appearance
     border-radius: 0.25rem;
+    li:not:first-child {
+      margin-top: 5px;
+    }
 
     // Images should all be the same size
     img {

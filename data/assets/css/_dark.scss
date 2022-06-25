@@ -20,11 +20,19 @@ a, a > * {
 
 #navbar-container {
   background-color: #273146;
-  a, a > *, .theme-toggle button {
-    color: #8cabe6;
-    &:hover {
-      color: #5d8c91;
+  .theme-toggle button {
+    &:not(:hover) {
+      color: #8cabe6;
     }
+    &:hover {
+      color: #8fd8e0;
+    }
+  }
+  a, a > * {
+    color: #8cabe6;
+  }
+  a:hover, a:hover * {
+    color: #8fd8e0;
   }
 }
 
@@ -34,6 +42,27 @@ a, a > * {
 
 #nav-toc {
   background-color: #172136;
+}
+
+////////////////////////
+// General components //
+////////////////////////
+
+.title {
+  color: #cbd9f4;
+}
+
+.post-preview-featured, .post-preview-small {
+  .internal {
+    background-color: #273146;
+  }
+}
+
+.caption-frame {
+  background-color: #273146;
+  .caption-source a:not(:hover) {
+    color: #8cabe6;
+  }
 }
 
 /////////////
