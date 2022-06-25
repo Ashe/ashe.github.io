@@ -1,0 +1,50 @@
+// Info box snippets that can be used in articles
+.infobox {
+
+  // Positioning
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  padding: 1.5rem 1rem;
+
+  // Header text
+  > .header {
+    display: flex;
+    font-size: 1.125rem;
+    font-weight: 500;
+
+    :first-child {
+      display: flex;
+    }
+  }
+
+  // Colours
+
+  &.note {
+    background-color: #a5d2ff;
+  }
+
+  &.help {
+    background-color: #85fcd2;
+  }
+
+  &.warning {
+    background-color: #ffbc89;
+  }
+
+  &.danger {
+    background-color: #ff8298;
+  }
+
+  &.live {
+    background-color: #ccff66;
+  }
+
+  &.gitrepo {
+    background-color: #ac9ddd;
+  }
+
+  &.itch {
+    background-color: #ea5b5b;
+  }
+}

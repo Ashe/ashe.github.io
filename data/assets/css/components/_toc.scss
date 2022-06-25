@@ -6,14 +6,39 @@
     margin-left: 1.5rem;
   }
 
-  // Make current section in toc bold
-  .active {
-    font-weight: bold;
+  // Change link appearance
+  a {
+
+    // Change colours
+    color: #999999;
+    &:hover {
+      color: #5d8c91;
+    }
+
+    // Position icons next to each link
+    &::before {
+      color: #777777;
+      margin-right: 0.3rem;
+      content: "\f105";
+      font-family: 'Line Awesome Free';
+      font-weight: 900;
+    }
+
+    // Change appearance of current section
+    &.active {
+      font-weight: bold;
+      &::before {
+        content: "\f101";
+      }
+    }
   }
 }
 
 // 'Table of Contents' button in navbar
 #nav-toc-trigger {
+
+  // Placement
+  vertical-align: top;
 
   // Hide on large screens
   @include fullhd {
@@ -45,7 +70,7 @@
 
   // Remove from dom and position just below navbar container to the right
   position: absolute;
-  top: 24px;
+  top: 2rem;
   left: 0px;
   right: 0px;
 

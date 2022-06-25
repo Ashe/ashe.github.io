@@ -22,3 +22,23 @@
 .no-underline {
   text-decoration: none;
 }
+
+.fill-horizontal {
+  overflow: hidden;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  border-radius: 0px !important;
+
+  @include tablet {
+    margin-left: -2rem;
+    margin-right: -2rem;
+  }
+
+  @include desktop {
+    border-radius: 0.25rem !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

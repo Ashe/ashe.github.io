@@ -1,3 +1,71 @@
+/////////////
+// General //
+/////////////
+
 body {
+  color: #cbd9f4;
   background-color: #172136;
+}
+
+a, a > * {
+  color: #8cabe6;
+  &:hover {
+    color: #8fd8e0;
+  }
+}
+
+//////////////////////
+// Navbar and menus //
+//////////////////////
+
+#navbar-container {
+  background-color: #273146;
+  a, a > *, .theme-toggle button {
+    color: #8cabe6;
+    &:hover {
+      color: #5d8c91;
+    }
+  }
+}
+
+#nav-menu {
+  background-color: #172136;
+}
+
+#nav-toc {
+  background-color: #172136;
+}
+
+/////////////
+// Infobox //
+/////////////
+
+.infobox {
+  &.note {
+    background-color: #33608c;
+  }
+
+  &.help {
+    background-color: #24604b;
+  }
+
+  &.warning {
+    background-color: #897e00;
+  }
+
+  &.danger {
+    background-color: #661423;
+  }
+
+  &.live {
+    background-color: #339933;
+  }
+
+  &.gitrepo {
+    background-color: #32255e;
+  }
+
+  &.itch {
+    background-color: #4f2424;
+  }
 }

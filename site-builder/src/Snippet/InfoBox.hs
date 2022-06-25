@@ -21,7 +21,7 @@ isInfoBox (_, classes, _) = isJust . getInfoBoxType $ classes
 toInfoBox :: Block -> Block
 toInfoBox (Div (id, classes, kvp) content) = Div (id, classes', []) content'
   where boxType = fromMaybe Notice $ getInfoBoxType classes
-        classes' = classes ++ ["box", "fill-horizontal"]
+        classes' = classes ++ ["infobox", "fill-horizontal"]
         content' = makeTitle boxType kvp ++ content ++ makeCaption kvp
 
 --------------------------------------------------------------------------------

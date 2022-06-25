@@ -10,13 +10,35 @@
   // Always stick to top of the screen
   position: -webkit-sticky;
   position: sticky;
-  top: 0px;
+  top: -1px;
   right: 0px;
   bottom: 0px;
   left: 0px;
 
+  // Override normal padding of columns
+  .nav-section {
+    padding: 0.3rem;
+  }
+
   // Appearance
   background-color: $white-bis;
+  a, a > * {
+    color: #999999;
+    &:hover {
+      color: #5d8c91;
+    }
+  }
+
+  // Theme toggle button
+  .theme-toggle button {
+
+    // Appearance
+    color: #999999;
+    background-color: transparent;
+    &:hover {
+      color: #5d8c91;
+    }
+  }
 }
 
 // Becomes visible when #nav-menu-trigger is hovered
@@ -24,7 +46,7 @@
 
   // Remove from dom and position just below navbar container
   position: absolute;
-  top: 24px;
+  top: 2rem;
   left: 0px;
   right: 0px;
 

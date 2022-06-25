@@ -9,3 +9,11 @@ h1, h2, h3, h4, h5, h6 {
 *+p, *+ul, *+ol, *+dl, *+pre, *+address, *+fieldset, *+figure {
   margin-top: 1rem;
 }
+
+a {
+  color: #252525;
+  text-decoration: underline;
+  &:hover {
+    color: #5d8c91;
+  }
+}

@@ -1,25 +1,25 @@
 <nav id="navbar-container">
-  <div class="level container is-mobile is-max-desktop">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
 
-    <div class="level-left">
-      <a id="nav-menu-trigger" class="icon-text">
-        <span class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"/>
-          </svg>
-        </span>
-        <span class="is-uppercase is-size-7">Menu</span>
-      </a>
-    </div>
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"/>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
 
-    <div class="level-item">
-      <a href="/" class="">
-        <span class="is-size-7">aas.sh</span>
-      </a>
-    </div>
+      <div class="column nav-section has-text-centered">
+        <a href="/">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
 
-    <div class="level-right">
-      <div class="flex">
+      <div class="column nav-section has-text-right">
         $if(toc)$
           <a id="nav-toc-trigger">
             <span class="mr-2 is-uppercase is-size-7">
@@ -29,17 +29,17 @@
           </a>
         $endif$
 
-        <span class="ml-2" style="margin-top:auto;margin-bottom:auto">
+        <span class="theme-toggle ml-2" style="margin-top:auto;margin-bottom:auto">
           <button id="theme-toggle-light" type="button" class="hidden">
-            <i class="w-5 h-5 lar la-moon"></i>
+            <i class="lar la-moon"></i>
           </button>
           <button id="theme-toggle-dark" type="button" class="hidden">
-            <i class="w-5 h-5 lar la-sun"></i>
+            <i class="lar la-sun"></i>
           </button>
         </span>
       </div>
-    </div>
 
+    </div>
   </div>
 
   <div id="nav-menu" class="container is-max-widescreen">
