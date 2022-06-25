@@ -20,7 +20,7 @@ GitHub repository for the viewer can be found [here](https://github.com/Ashe/4D-
 
 # What is this?
 
-This project is an interactive simulation for visualising 4D geometry. See [`report.pdf`](/docs/report.pdf) for a full writeup about what this project is and how it was made. This was really interesting to make as GLSL did not support 5x5 matrices used to manipulate the 4th dimension, and so I had to essentially write matrix mathematics in the shader code in order to get this to work!
+This project is an interactive simulation for visualising 4D geometry. See [`report.pdf`](https://github.com/Ashe/4D-Geometry-Viewer/blob/master/docs/report.pdf) for a full writeup about what this project is and how it was made. This was really interesting to make as GLSL did not support 5x5 matrices used to manipulate the 4th dimension, and so I had to essentially write matrix mathematics in the shader code in order to get this to work!
 
 # How do I use it?
 
