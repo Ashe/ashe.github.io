@@ -1,0 +1,15 @@
+// Quote snippets for articles
+blockquote {
+
+  // Positioning
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-left-width: 1px;
+  padding-left: 2rem;
+
+  // Appearance
+  --tw-border-opacity: 1;
+  border-color: rgba(75, 85, 99, var(--tw-border-opacity));
+  font-family: serif;
+  font-size: 1.125rem;
+}

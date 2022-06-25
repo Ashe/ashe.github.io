@@ -7,6 +7,10 @@ body {
   background-color: #172136;
 }
 
+strong {
+  color: #cbd9f4;
+}
+
 a, a > * {
   color: #8cabe6;
   &:hover {
@@ -56,6 +60,10 @@ a, a > * {
   .internal {
     background-color: #273146;
   }
+}
+
+blockquote {
+  border-left-color: #cbd9f4;
 }
 
 .caption-frame {
