@@ -49,6 +49,10 @@ a:hover, a:hover > * {
 // Common classes //
 ////////////////////
 
+.columns {
+  margin: unset;
+}
+
 .swiper-slide {
   margin-left: auto;
   margin-right: auto;

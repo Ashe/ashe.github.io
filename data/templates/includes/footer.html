@@ -1,54 +1,54 @@
-<footer class="font-standout text-sm py-8 px-4 bg-dark dark:bg-darkNight text-white dark:text-white">
+<footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
 
-  <div class="container grid sm:grid-cols-3 gap-8">
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:$social-email$" class="no-underline">
+              <i class="las la-envelope-open-text"></i> $social-email$
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/$social-github$" class="no-underline">
+              <i class="lab la-github"></i> github.com/$social-github$
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/$social-linkedin$" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/$social-linkedin$
+            </a>
+          </li>
+        </ul>
+      </div>
 
-    <div class="mt-4 sm:mt-0">
-      <h3 class="text-emphasizedDark dark:text-white">Contact</h3>
-      <ul class="ml-1 list-none">
-        <li>
-          <a href="mailto:$social-email$" class="no-underline">
-            <i class="las la-envelope-open-text"></i> $social-email$
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/$social-github$" class="no-underline">
-            <i class="lab la-github"></i> github.com/$social-github$
-          </a>
-        </li>
-        <li>
-          <a href="https://linkedin.com/in/$social-linkedin$" class="no-underline">
-            <i class="lab la-linkedin"></i></svg> linkedin.com/in/$social-linkedin$
-          </a>
-        </li>
-      </ul>
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="$site-repo$">$git-head-commit-full$</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="/">
+          <img src="/assets/images/logo.png" 
+               alt="Aas.sh site logo">
+        </a>
+      </div>
+
     </div>
-
-    <div class="mt-4 sm:mt-0">
-      <h3 class="text-emphasizedDark dark:text-white">About this blog</h3>
-      <ul class="ml-1 list-none">
-        <li>
-          Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a class="text-emphasizedDark no-underline" href="https://jaspervdj.be/hakyll/">Hakyll</a>
-        </li>
-        <li class="text-muted">
-          <i class="las la-code-branch"></i> 
-          Last updated: 
-          <a class="text-emphasizedDark no-underline" href="$site-repo$">$git-head-commit-full$</a>
-        </li>
-        <li>
-          <a class="no-underline" href="https://builtwithnix.org" rel="nofollow">
-            <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix" class="max-w-full">
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="mt-4 sm:mt-0 sm:p-6">
-      <a href="/">
-        <img src="/assets/images/logo.png" 
-             alt="Aas.sh logo"
-             class="w-28 h-28 m-auto">
-      </a>
-    </div>
-
   </div>
 </footer>

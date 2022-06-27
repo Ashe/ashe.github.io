@@ -1,0 +1,36 @@
+// Footer of every page
+footer {
+
+  // Sizing
+  padding: 2rem 1rem;
+  li {
+    margin-top: 0.5rem;
+  }
+
+  // Appearance
+  color: rgba(203, 217, 244, 1);
+  background-color: rgba(37, 37, 37, 1);
+  :not(.title):not(.las):not(.lab):not(.lar) {
+    font-size: 0.8rem;
+    font-family: monospace;
+  }
+
+  // Standard text
+  .title, a:not(:hover) {
+    color: rgba(203, 217, 244, 1);
+  }
+
+  // Git hash text
+  #git-hash, #git-hash *:not(:hover) {
+    color: rgba(153, 153, 153, 1);
+  }
+
+  // Site logo
+  #footer-logo {
+    text-align: center;
+    margin: auto;
+    img {
+      width: 7rem;
+    }
+  }
+}
