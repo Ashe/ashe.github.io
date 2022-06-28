@@ -1,5 +1,6 @@
 module Snippet.Util
-( hasClass
+( hasID
+, hasClass
 , hasAnyClass
 , parse
 ) where
@@ -12,6 +13,10 @@ import Text.Pandoc.Readers (readMarkdown)
 import qualified Data.Text as T
 
 --------------------------------------------------------------------------------
+
+hasID :: T.Text -> Attr -> Bool
+hasID search (eID, _, _) = search == eID
+
 
 hasClass :: T.Text -> Attr -> Bool
 hasClass search (_, classes, _) = search `elem` classes

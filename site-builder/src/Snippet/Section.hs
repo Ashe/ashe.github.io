@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Snippet.Anchor
-( toHeaderAnchor
+module Snippet.Section
+( toSectionHeader
 ) where
 
 import Hakyll
@@ -10,11 +10,10 @@ import qualified Data.Text as T
 
 --------------------------------------------------------------------------------
 
--- Headers: Add anchor links to each header to link to parts of the post
-toHeaderAnchor :: Block -> Block
-toHeaderAnchor (Header level (id, classes, kvp) content) = 
-  Header level (id, classes', kvp) content' 
-    where classes' = classes ++ ["anchor-header"]
+toSectionHeader :: Block -> Block
+toSectionHeader (Header level (id, _, _) content) = newSection
+    where newSection = Div (id, ["section"], []) [header]
+          header = Header level ("", ["anchor-header"], []) content' 
           content' = 
             [ Span ("", [], []) content
             , Link ("", ["anchor", "las", "la-link"], [])

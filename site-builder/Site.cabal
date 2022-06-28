@@ -44,10 +44,10 @@ executable site
       Page.Sitemap
       Page.Tags
       Snippet
-      Snippet.Anchor
       Snippet.Caption
       Snippet.Figure
       Snippet.InfoBox
+      Snippet.Section
       Snippet.Util
       Style
 

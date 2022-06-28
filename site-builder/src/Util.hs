@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Util
 ( getSlug
 , shuffle
@@ -12,6 +14,9 @@ import Data.List (isPrefixOf, isSuffixOf)
 import Data.Map (Map, elems, insert, singleton, (!))
 import System.FilePath.Posix (takeBaseName, (</>))
 import System.Random (RandomGen, StdGen, randomR, mkStdGen)
+import Text.Pandoc.Definition (nullMeta, Pandoc (..), Block(..))
+
+import Config
 
 --------------------------------------------------------------------------------
 
@@ -52,8 +57,10 @@ localAssetsUrls item = let
   in pure $ fmap (withUrls localAssets) item
 
 
-simpleCompile :: Item String -> Compiler (Item String)
-simpleCompile item =
+simpleCompile :: Compiler (Item String)
+simpleCompile = do
+  item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions $ 
+          const $ Pandoc nullMeta [Div ("", [], []) []]
   pure item >>= saveSnapshot "posts-content"
             >>= relativizeUrls
             >>= cleanIndexUrls

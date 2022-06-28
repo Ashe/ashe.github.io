@@ -24,9 +24,7 @@ assembleProjects tags categories =
   matchMetadata (projectsGlob .&&. hasNoVersion) (\m -> lookupString "status" m == Just "published") $ do
     version "simple" $ do
       route $ composeRoutes (cleanRouteContent "project") idRoute
-      compile $ do
-        item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
-        simpleCompile item
+      compile simpleCompile
     route $ composeRoutes (cleanRouteContent "project") idRoute
     compile $ do
       item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets

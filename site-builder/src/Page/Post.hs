@@ -24,9 +24,7 @@ assembleBlogPosts tags categories =
   matchMetadata (postsGlob .&&. hasNoVersion) (\m -> lookupString "status" m == Just "published") $ do
     version "simple" $ do
       route $ composeRoutes (cleanRouteContent "blog") idRoute
-      compile $ do
-        item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
-        simpleCompile item
+      compile simpleCompile
     route $ composeRoutes (cleanRouteContent "blog") idRoute
     compile $ do
       item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
