@@ -95,22 +95,6 @@
     <div id="nav-toc" class="table-of-contents">
       $toc$
     </div>
-    <script>
-      window.onload = function () {
-        scrollSpy('#nav-toc', {
-          sectionClass: '.anchor-header',
-          menuActiveTarget: 'li > a',
-          smoothScroll: true,
-          smoothScrollBehavior: function(element, options) {
-            element.scrollIntoView({ 
-              block: 'start',
-              inline: 'nearest',
-              behavior: 'smooth', 
-            })
-          }
-        })
-      }
-    </script>
   $endif$
 
 </nav>

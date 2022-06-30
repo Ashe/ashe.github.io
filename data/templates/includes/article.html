@@ -43,23 +43,6 @@
           $toc$
         </div>
       </div>
-
-      <script>
-        window.onload = function () {
-          scrollSpy('#side-toc', {
-            sectionClass: '.anchor-header',
-            menuActiveTarget: 'li > a',
-            smoothScroll: true,
-            smoothScrollBehavior: function(element, options) {
-              element.scrollIntoView({ 
-                block: 'start',
-                inline: 'nearest',
-                behavior: 'smooth', 
-              })
-            }
-          })
-        }
-      </script>
     $endif$
 
     <div class="column is-narrow">
