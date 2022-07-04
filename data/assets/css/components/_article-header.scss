@@ -1,0 +1,11 @@
+// Article header containing title, description, tags etc
+#article-header {
+
+  // Sizing
+  margin: 2rem auto;
+
+  // Make subtitles more compact
+  .subtitle {
+    margin-top: -0.25rem;
+  }
+}

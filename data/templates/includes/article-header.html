@@ -1,0 +1,65 @@
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title mb-2">$title$</h1>
+      $if(subtitle)$
+        <h2 class="subtitle mb-2">$subtitle$</h2>
+      $endif$
+      $if(description)$
+        <div><small>$description$</small></div>
+      $endif$
+      <div>
+        <span class="is-size-7">
+          $if(has-authors)$
+            $for(authors)$
+              $author$
+              $sep$⦿
+            $endfor$
+          $else$
+            $social-name$
+          $endif$
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <h5 class="is-family-monospace is-size-7">
+        <ul>
+          $if(date)$
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> $date$
+            </li>
+          $endif$
+          $if(read-time)$
+            <li class=mt-1>
+              <i class="las la-stopwatch"></i> $read-time$ Minutes
+            </li>
+          $endif$
+          $if(related-project)$
+            $for(related-project)$
+              <li class=mt-1>
+                <i class="las la-hashtag"></i> <a href="$url$">$title$</a>
+              </li>
+            $endfor$
+          $endif$
+          $if(tags)$
+            <li class="mt-1 break-words">
+              <i class="las la-tags"></i>
+              $for(tags)$
+                <span><a href="$url$">$name$</a>$sep$, </span>
+              $endfor$
+            </li>
+          $endif$
+          $if(git-commit-hash)$
+            <li class="mt-1">
+              <i class="las la-code-branch"></i>
+              <a href="$site-repo$/commit/$git-commit-hash$">$git-commit$</a>
+            </li>
+          $endif$
+        </ul>
+      </h5>
+    </div>
+
+  </div>
+</header>
