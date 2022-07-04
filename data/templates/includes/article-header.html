@@ -7,9 +7,11 @@
         <h2 class="subtitle mb-2">$subtitle$</h2>
       $endif$
       $if(description)$
-        <div><small>$description$</small></div>
+        <div class="mb-2">
+          <small>$description$</small>
+        </div>
       $endif$
-      <div>
+      <div class="authors">
         <span class="is-size-7">
           $if(has-authors)$
             $for(authors)$

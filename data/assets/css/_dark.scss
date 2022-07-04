@@ -18,10 +18,6 @@ a, a > * {
   }
 }
 
-.subtitle {
-  color: #cbd9f4;
-}
-
 ////////////////////////
 // General components //
 ////////////////////////
@@ -37,7 +33,7 @@ footer {
   }
 }
 
-.title {
+.title, .subtitle {
   color: #cbd9f4;
 }
 
@@ -52,6 +48,10 @@ footer {
   .caption-source a:not(:hover) {
     color: #8cabe6;
   }
+}
+
+#article-header .authors {
+  color: #cbd9f4;
 }
 
 //////////////////////
