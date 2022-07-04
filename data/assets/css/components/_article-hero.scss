@@ -1,0 +1,37 @@
+// Image / slideshow at top of each article
+#article-hero {
+
+  // Positioning
+  padding: 3rem;
+
+  // Wrapper around contents
+  .inner {
+
+    // Swiper images all need to be uniform with the container
+    &, .swiper-slide, .swiper-slide img {
+      height: 14rem;
+      @include tablet {
+        height: 32rem;
+      }
+      @include desktop {
+        height: 40rem;
+      }
+    }
+  }
+
+  // All images in hero
+  img {
+
+    // Always fill width
+    width: 100%;
+
+    // Appearance
+    object-fit: cover;
+    border-radius: 0.5rem;
+
+    // Standalone images must fill parent
+    &.standalone {
+      height: 100%;
+    }
+  }
+}
