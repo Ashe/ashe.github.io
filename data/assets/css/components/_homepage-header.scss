@@ -1,0 +1,68 @@
+// Header of homepage
+#homepage-header {
+
+  // Title text
+  .title {
+
+    // Sizing
+    font-size: 4rem;
+    width: fit-content;
+
+    // Centre text on mobile
+    @include mobile {
+      margin: auto;
+    }
+    @include tablet {
+      margin-left: 2rem;
+    }
+
+    // Appearance
+    animation: flow 600s linear infinite;
+    background-image: linear-gradient(-40deg, #2ebf91, #8360c3, #c71585);
+    background: conic-gradient(
+      #CA4246 16.666%, 
+      #E16541 16.666%, 
+      #E16541 33.333%, 
+      #F18F43 33.333%, 
+      #F18F43 50%, 
+      #8B9862 50%, 
+      #8B9862 66.666%, 
+      #476098 66.666%, 
+      #476098 83.333%, 
+      #A7489B 83.333%);
+    background-size: 80%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+  }
+
+  // Profile image
+  img {
+
+    // Sizing
+    width: 7rem;
+
+    // Positioning
+    display: block;
+    margin: auto;
+
+    // Appearance
+    object-fit: cover;
+    border-radius: 9999px;
+  }
+}
+
+// Animation for text
+@keyframes flow {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  50% {
+    background-position: 8000% 8000%;
+  }
+
+  100% {
+    background-position: 0% 0%;
+  }
+}

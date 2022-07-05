@@ -2,32 +2,28 @@
 title: Welcome
 ---
 
-<header id="header" class="mb-10">
-  <div class="flex flex-col md:flex-row my-8 justify-items-center justify-end items-left">
-    <div class="flex flex-col p-5 text-center sm:text-left mx-auto">
-      <small class="font-medium">$social-name$</small>
-      <div class="font-bold text-6xl mt-0">
-        $title$
-      </div>
+<header id="homepage-header" class="my-6">
+  <div class="columns is-vcentered">
+
+    <div class="column">
+      <h1 class="title">Ashley<br>Smith</h1>
     </div>
 
-    <div class="flex flex-col md:flex-row md:w-1/2">
-      <img class="w-32 sm:w-32 lg:w-32 m-auto rounded-full"
-           src="$profile-photo$"
-           alt="Photo of myself"
-           style="object-fit: cover;"/>
-      <div class="flex flex-col p-5 text-left container">
-        <div class="inline-flex flex-col">
-          <p>
-            $site-description$ <a href="/about/" class="text-emphasis underline">More about me</a>.
-          </p>
+    <div class="column">
+      <div class="columns is-vcentered">
+        <div class="column is-narrow">
+          <img src="$profile-photo$" alt="Photo of myself">
+        </div>
+        <div class="column">
+          <p>$site-description$ <a href="/about/" class="underline">More about me</a>.</p>
         </div>
       </div>
     </div>
+
   </div>
 </header>
 
-<section class="mb-10">
+<section>
   <div class="p-2">
     <h2 class="title">Featured Projects</h2>
     <h3 class="subtitle"><a href="/projects/">See all projects</a></h3>
@@ -104,7 +100,7 @@ $endfor$
   </script>
 </section>
 
-<section class="mb-10">
+<section>
   <h2>Explore By Tag</h2>
   <div class="tag-cloud w-full p-5 sm:p-10 mx-auto">
     $tag-cloud$

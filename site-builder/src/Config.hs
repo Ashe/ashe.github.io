@@ -44,7 +44,7 @@ siteRepo :: String
 siteRepo = "https://github.com/ashe/ashe.github.io"
 
 siteDescription :: String
-siteDescription = "Hey there! My name is Ashley Smith and I'm a game developer from the UK. I love to undertake projects to improve, challenge and extend my skillset - I never stop learning."
+siteDescription = "Hey there! My name is Ashley Smith and I'm a software engineer from the UK. I love working on challenging projects and trying new things — I try to never stop learning."
 
 siteLogo :: String
 siteLogo = "/assets/images/logo.png"
