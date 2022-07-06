@@ -42,6 +42,7 @@ executable site
       Page.Post
       Page.Project
       Page.Sitemap
+      Page.Tag
       Page.Tags
       Snippet
       Snippet.Caption

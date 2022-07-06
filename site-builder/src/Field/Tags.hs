@@ -1,6 +1,6 @@
 module Field.Tags
 ( allTagsField
-, randomiseTags
+, allTagsCloudField
 ) where
 
 import Hakyll
@@ -32,7 +32,10 @@ allTagsField name tags = listFieldWith name (tagCtx tags) mkPostTags
                     else mapM makeItem tags'
 
 
-randomiseTags :: Tags -> Tags
-randomiseTags tags = tags { tagsMap = shuffle $ tagsMap tags }
+allTagsCloudField :: Tags -> Context a
+allTagsCloudField tags = tagCloudField "tag-cloud" 110 550 (randomiseTags tags)
 
 --------------------------------------------------------------------------------
+
+randomiseTags :: Tags -> Tags
+randomiseTags tags = tags { tagsMap = shuffle $ tagsMap tags }

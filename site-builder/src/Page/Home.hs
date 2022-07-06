@@ -29,7 +29,7 @@ createHomepageFrom source tags categories = match source $ do
     let indexCtx = listField "posts" contentCtx (pure $ take 16 posts)
                 <> listField "projects" projCtx (pure $ take 5 featuredProjects)
                 <> constField "item-type" "home"
-                <> tagCloudField "tag-cloud" 110 550 (randomiseTags tags)
+                <> allTagsCloudField tags
                 <> siteContext
     getResourceBody
       >>= applyAsTemplate indexCtx

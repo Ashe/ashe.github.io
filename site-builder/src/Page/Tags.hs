@@ -19,7 +19,7 @@ createTagsPage url title tags = create [url] $ do
   route cleanRoute
   compile $ do
     let tagsCtx = constField "title" title
-               <> tagCloudField "tag-cloud" 110 550 (randomiseTags tags)
+               <> allTagsCloudField tags
                <> siteContext
     makeItem []
       >>= applyAsTemplate siteContext

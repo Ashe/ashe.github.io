@@ -8,6 +8,7 @@ module Page
 , module Page.Post
 , module Page.Project
 , module Page.Sitemap
+, module Page.Tag
 , module Page.Tags
 ) where
 
@@ -20,4 +21,5 @@ import Page.Home
 import Page.Post
 import Page.Project
 import Page.Sitemap
+import Page.Tag
 import Page.Tags
