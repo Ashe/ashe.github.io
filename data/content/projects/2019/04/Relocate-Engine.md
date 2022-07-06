@@ -8,11 +8,8 @@ categories:
 tags: 
   - C++
   - Lua
-  - ECS
   - SFML
   - Engine
-  - Box2D
-  - Imgui
 images:
   - https://raw.githubusercontent.com/Ashe/Relocate-Engine/master/img/engine-preview.png
   - https://raw.githubusercontent.com/Ashe/Relocate-Engine/master/img/relocate-demo.gif

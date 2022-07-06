@@ -7,9 +7,6 @@ categories:
   - Life
 tags: 
   - Career
-  - Industry
-  - Jagex
-  - Deep Silver
   - Life
 image: https://res.cloudinary.com/aas-sh/image/upload/v1623570915/blog/2021/06/2021-06-13T08_54_23_424914738_01_00_un9zli.png
 status: published

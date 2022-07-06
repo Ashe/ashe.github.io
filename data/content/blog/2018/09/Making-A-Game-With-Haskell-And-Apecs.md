@@ -9,9 +9,9 @@ categories:
 tags: 
   - Game
   - Engine
-  - ECS
   - Haskell
   - Functional
+  - Tutorial
 image: https://raw.githubusercontent.com/Ashe/HSRogue/master/img/gameplay.gif
 project: hsrogue
 status: published

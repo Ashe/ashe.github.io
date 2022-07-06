@@ -6,8 +6,7 @@ description: I have spent quite a lot of time lately making an engine for a game
 categories: 
   - Engine Development
 tags: 
-  - Unity
-  - Unreal Engine
+  - Thoughts
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617291619/blog/2017/05/blueprint_scripting_fiwfcl.png
 project: reduxforgames
 status: published

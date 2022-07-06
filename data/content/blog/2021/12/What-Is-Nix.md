@@ -8,7 +8,6 @@ categories:
 tags: 
   - Nix
   - Haskell
-  - Beginner
 image: https://res.cloudinary.com/aas-sh/image/upload/v1641643413/blog/2021/12/tekatm.png
 status: published
 ---

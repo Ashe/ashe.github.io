@@ -8,10 +8,8 @@ categories:
 tags: 
   - C++
   - Lua
-  - ECS
   - SFML
   - Engine
-  - Imgui
 image: https://raw.githubusercontent.com/Ashe/Deus_Vult/master/img/preview.gif
 status: published
 ---

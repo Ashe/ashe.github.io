@@ -7,8 +7,6 @@ categories:
   - Life
 tags: 
   - Career
-  - Industry
-  - Jagex
   - Life
 image: https://res.cloudinary.com/aas-sh/image/upload/v1634662787/blog/2021/10/48375354_01_00_lvntr8.png
 status: published

@@ -1,0 +1,148 @@
+// The tag cloud itself (visible on homepage and browse-by-tag pages)
+#tag-cloud {
+
+  // Sizing
+  padding: 1rem;
+
+  // Enlarge tags in tag-clouds
+  .tag {
+    font-size: 1rem;
+  }
+
+  // Invert colour for count
+  .has-addons .tag.count {
+    background-color: #252525;
+    color: #ffffff;
+  }
+}
+
+// Tag customisations
+.tag {
+
+  // Make tags have consistent font
+  font-family: ubuntu, sans-serif;
+
+  // Revert changes to font size on request
+  &.unset-size {
+    font-size: unset;
+  }
+
+  /////////////////////
+  // Per-tag styling //
+  /////////////////////
+
+  &.aas\.sh {
+    background-color: #dfdfdf;
+    color: #252525;
+  }
+
+  &.AI {
+    background-color: #8617b4;
+    color: #ffffff;
+  }
+
+  &.C\+\+ {
+    background-color: #f34b7d;
+    color: #252525;
+  }
+
+  &.C\# {
+    background-color: #178600;
+    color: #ffffff;
+  }
+
+  &.Career {
+    background-color: #bb3d3d;
+    color: #ffffff;
+  }
+
+  &.Clojure {
+    background-color: #db5855;
+    color: #ffffff;
+  }
+
+  &.Engine {
+    background-color: #94152c;
+    color: #ffffff;
+  }
+
+  &.Functional {
+    background-color: #bd7ac2;
+    color: #ffffff;
+  }
+
+  &.Game {
+    background-color: #40a97c;
+    color: #ffffff;
+  }
+
+  &.GameMaker {
+    background-color: #71b417;
+    color: #ffffff;
+  }
+
+  &.Haskell {
+    background-color: #5e5086;
+    color: #ffffff;
+  }
+
+  &.Haxe {
+    background-color: #df7900;
+    color: #ffffff;
+  }
+
+  &.Life {
+    background-color: #ccffd3;
+    color: #252525;
+  }
+
+  &.Lua {
+    background-color: #000080;
+    color: #ffffff;
+  }
+
+  &.QNA {
+    background-color: #dbb854;
+    color: #252525;
+  }
+
+  &.SFML {
+    background-color: #89c141;
+    color : #252525;
+  }
+
+  &.Thoughts {
+    background-color: #c8c8fd;
+    color: #252525;
+  }
+
+  &.Tool {
+    background-color: #b46717;
+    color: #ffffff;
+  }
+
+  &.Tutorial {
+    background-color: #598edd;
+    color: #ffffff;
+  }
+
+  &.Nix {
+    background-color: #7e7eff;
+    color: #ffffff;
+  }
+
+  &.Uni {
+    background-color: #a8d8f7;
+    color: #252525;
+  }
+
+  &.Unity {
+    background-color: #555555;
+    color: #ffffff;
+  }
+
+  &.Web {
+    background-color: #f1e05a;
+    color: #252525;
+  }
+}

@@ -6,7 +6,6 @@ description: In this blog post, I hope to inspire you to get in there and just d
 categories: []
 tags: 
   - Tutorial
-  - Beginner
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617291310/blog/2017/04/start_programming_ugus7v.gif
 status: published
 ---

@@ -8,6 +8,7 @@ categories:
 tags: 
   - Haskell
   - Functional
+  - Tutorial
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617292285/blog/2018/03/haskell_code_umjeh2.png
 status: published
 ---

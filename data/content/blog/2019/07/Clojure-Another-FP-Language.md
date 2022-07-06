@@ -9,6 +9,7 @@ tags:
   - Web
   - Clojure
   - Functional
+  - Tutorial
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617292812/blog/2019/07/brave_clojure_hiwogp.png
 status: published
 ---

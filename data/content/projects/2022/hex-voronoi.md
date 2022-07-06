@@ -7,7 +7,6 @@ categories:
   - Game development
 tags:
   - Haxe
-  - Heaps
 images:
   - https://github.com/Ashe/Hex-Voronoi/blob/master/docs/preview/1.png?raw=true
   - https://github.com/Ashe/Hex-Voronoi/blob/master/docs/preview/2.png?raw=true

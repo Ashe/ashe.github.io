@@ -8,7 +8,6 @@ categories:
 tags: 
   - C++
   - AI
-  - A*
   - Uni
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617294761/projects/thesis/thesis_preview_lijz1n.gif
 status: published
