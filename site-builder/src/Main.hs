@@ -3,11 +3,7 @@
 module Main (main) where
 
 import Hakyll
-import Data.List (isPrefixOf, isSuffixOf)
 import Hakyll.Images (loadImage, compressJpgCompiler, ensureFitCompiler)
-import System.Exit (ExitCode(ExitSuccess))
-import System.FilePath.Posix (takeFileName)
-import System.Process (readProcessWithExitCode)
 
 import Config
 import Context
@@ -18,27 +14,11 @@ import Snippet
 import Style
 import Util
 
--- Configuration
---------------------------------------------------------------------------------
-
-config :: Configuration
-config = defaultConfiguration 
-  { destinationDirectory = "build/site"
-  , storeDirectory       = "build/_store"
-  , tmpDirectory         = "build/_tmp"
-  , providerDirectory    = sourceDir
-  , ignoreFile           = ignoreFile'
-  } 
-  where ignoreFile' path
-         | "."`isPrefixOf` fileName = True
-         | otherwise = False
-         where fileName = takeFileName path
-
 -- Main
 -------------------------------------------------------------------------------
 
 main :: IO ()
-main = hakyllWith config $ do
+main = hakyllWith hakyllConfig $ do
 
   -- Build tags and categories
   tags <- buildTags contentGlob (fromCapture "tag/*/index.html")

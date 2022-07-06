@@ -4,6 +4,7 @@ module Config
 ( sourceDir
 , domain
 , root
+, hakyllConfig
 , siteRepo
 , siteDescription
 , siteLogo
@@ -22,6 +23,8 @@ module Config
 ) where
 
 import Hakyll
+import Data.List (isPrefixOf)
+import System.FilePath.Posix (takeFileName)
 import Text.Pandoc (ReaderOptions (readerExtensions), def, enableExtension)
 import Text.Pandoc.Options (Extension (Ext_citations))
 
@@ -36,6 +39,22 @@ domain = "aas.sh"
 
 root :: String
 root = "https://" ++ domain
+
+-- Hakyll Config
+--------------------------------------------------------------------------------
+
+hakyllConfig :: Configuration
+hakyllConfig = defaultConfiguration 
+  { destinationDirectory = "build/site"
+  , storeDirectory       = "build/_store"
+  , tmpDirectory         = "build/_tmp"
+  , providerDirectory    = sourceDir
+  , ignoreFile           = ignoreFile'
+  } 
+  where ignoreFile' path
+         | "."`isPrefixOf` fileName = True
+         | otherwise = False
+         where fileName = takeFileName path
 
 -- Site details
 --------------------------------------------------------------------------------
