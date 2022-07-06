@@ -7,6 +7,9 @@
   // Wrapper around contents
   .inner {
 
+    // Apply same border radius as image
+    border-radius: 0.25rem;
+
     // Swiper images all need to be uniform with the container
     &, .swiper-slide, .swiper-slide img {
       height: 14rem;
@@ -27,7 +30,7 @@
 
     // Appearance
     object-fit: cover;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
 
     // Standalone images must fill parent
     &.standalone {
