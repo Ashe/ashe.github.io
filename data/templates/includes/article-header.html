@@ -56,7 +56,7 @@
             </li>
           $endif$
           $if(git-commit-hash)$
-            <li class="mt-1">
+            <li $if(tags)$style="margin-top:-0.25rem;"$else$class="mt-1"$endif$>
               <i class="las la-code-branch"></i>
               <a href="$site-repo$/commit/$git-commit-hash$">$git-commit$</a>
             </li>

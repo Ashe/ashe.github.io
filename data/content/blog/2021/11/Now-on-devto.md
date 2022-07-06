@@ -9,6 +9,7 @@ tags:
   - aas.sh
   - Web
 image: https://res.cloudinary.com/aas-sh/image/upload/v1636548957/blog/2021/11/2021-11-10T12_h6t8ib.png
+project: aassh
 status: published
 ---
 
