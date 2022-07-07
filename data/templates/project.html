@@ -5,7 +5,7 @@
 $if(project-posts)$
   <section class="container is-max-desktop">
     <h3 class="title">Related posts</h3>
-    <div class="swiper project-post-swiper small-slides">
+    <div class="swiper project-post-swiper small-slides px-5 pb-6">
       <div class="swiper-wrapper pb-12">
         $for(project-posts)$
           <div class="swiper-slide">
@@ -29,45 +29,42 @@ $if(project-posts)$
   </section>
 $endif$
 
-<div class="flex flex-col md:flex-row w-full max-w-screen-2xl mx-auto mt-10">
-  <div class="w-full md:w-1/2 pr-12 text-left">
-    $if(previous-post)$
-      $for(previous-post)$
-        <div class="w-full xl:w-4/5 box dark:bg-mutedNight p-0 float-left shadow-xl hover:shadow-2xl">
-          <div class="flex flex-row w-full">
-            <img class="block w-48 h-32 lg:w-64 lg:h-36 object-cover my-auto"
-                 src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
-            <div class="p-3 w-full text-black dark:text-white">
-              <small class="uppercase text-sm">Previous Project</small>
-              <h3 class="m-0 text-lg"><a href="$url$" class="no-underline">$title$</a></h3>
-              $if(subtitle)$<small class="text-sm">$subtitle$</small>$endif$
-            </div>
-          </div>
-        </div>
-      $endfor$
-    $endif$
-  </div>
+<div id="post-links">
+  <div class="columns">
 
-  <div class="w-full md:w-1/2 pl-12 text-right">
-    $if(next-post)$
-      $for(next-post)$
-        <div class="w-full xl:w-4/5 box dark:bg-mutedNight p-0 float-right shadow-xl hover:shadow-2xl">
-          <div class="flex flex-row w-full">
-            <div class="p-3 w-full text-black dark:text-white">
-              <small class="uppercase text-sm">Next Project</small>
-              <h3 class="m-0 text-lg"><a href="$url$" class="no-underline">$title$</a></h3>
-              $if(subtitle)$<small class="text-sm">$subtitle$</small>$endif$
+    <div class="column left">
+      $if(previous-post)$
+        $for(previous-post)$
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Previous Project</small>
+                <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
+                $if(subtitle)$<small class="text-sm">$subtitle$</small>$endif$
+              </div>
             </div>
-            <img class="block w-48 h-32 lg:w-64 lg:h-36 object-cover my-auto"
-                 src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
           </div>
-        </div>
-      $endfor$
-    $endif$
+        $endfor$
+      $endif$
+    </div>
+
+    <div class="column right">
+      $if(next-post)$
+        $for(next-post)$
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Next Project</small>
+                <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
+                $if(subtitle)$<small class="text-sm">$subtitle$</small>$endif$
+              </div>
+              <img src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
+            </div>
+          </div>
+        $endfor$
+      $endif$
+    </div>
+
   </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
-<!--[if lt IE 9]>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-<![endif]-->

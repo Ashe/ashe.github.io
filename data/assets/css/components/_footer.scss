@@ -1,6 +1,9 @@
 // Footer of every page
 footer {
 
+  // Ensure no floating elements reach the footer
+  clear: both;
+
   // Sizing
   padding: 2rem 1rem;
   li {
