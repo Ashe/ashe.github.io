@@ -1,6 +1,9 @@
 // Table of contents menu
 .table-of-contents {
 
+  // Sizing
+  width: fit-content;
+
   // Indent sub-links
   li {
     margin-left: 1.5rem;
@@ -110,7 +113,7 @@
       position: sticky;
       top: 45px;
       float: right;
-      padding: 30px;
+      padding: 2rem 0rem;
     }
   }
 }

@@ -66,14 +66,14 @@ $partial("templates/includes/article-header.html")$
   <div class="columns is-desktop is-centered is-variable is-8 m-0">
 
     $if(toc)$
-      <div id="side-toc" class="column is-narrow">
+      <div id="side-toc" class="column is-3">
         <div class="table-of-contents">
           $toc$
         </div>
       </div>
     $endif$
 
-    <div class="column is-narrow">
+    <div class="column">
       <article class="container is-max-desktop">
         <div class="columns is-desktop is-centered">
           <div class="column $if(toc)$can-shrink-for-toc$endif$">
