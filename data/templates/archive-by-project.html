@@ -1,11 +1,14 @@
-<section>
-  <h3>$title$</h3>
+<section class="p-2">
+  <h1 class="title">$title$</h1>
+</section>
+
+<section class="p-2">
   $for(projects)$
-    <h4 class="uk-heading-line">
+    <h2 class="title is-4 mt-5 mb-3">
       $for(project)$
         <span>Project: <a href="$url$">$title$</a></span>
       $endfor$
-    </h4>
+    </h2>
     $partial("templates/includes/post-list.html")$
   $endfor$
 </section>

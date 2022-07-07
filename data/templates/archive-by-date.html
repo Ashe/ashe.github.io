@@ -1,9 +1,12 @@
-<section>
-  <h3>$title$</h3>
+<section class="p-2">
+  <h1 class="title">$title$</h1>
+</section>
+
+<section class="p-2">
   $for(years)$
-    <h4 class="uk-heading-line">
+    <h2 class="title is-4 mt-5 mb-3">
       <span>$year$</span>
-    </h4>
+    </h2>
     $partial("templates/includes/post-list.html")$
   $endfor$
 </section>

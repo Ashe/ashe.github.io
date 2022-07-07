@@ -1,0 +1,14 @@
+// A list of posts in collections
+#post-list {
+  .post {
+
+    // Sizing
+    width: 100%;
+    @include desktop {
+      width: 50%;
+    }
+    @include fullhd {
+      width: 33%;
+    }
+  }
+}
