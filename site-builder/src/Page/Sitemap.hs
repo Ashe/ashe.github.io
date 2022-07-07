@@ -11,8 +11,8 @@ import Context
 
 --------------------------------------------------------------------------------
 
-createSitemap :: Identifier -> Tags -> Tags -> Rules ()
-createSitemap url tags categories = create [url] $ do
+createSitemap :: Identifier -> Tags -> Rules ()
+createSitemap url tags = create [url] $ do
   route idRoute
   compile $ do
 
@@ -25,12 +25,12 @@ createSitemap url tags categories = create [url] $ do
     -- Mappend the posts and singlePages together
     let pages = posts <> singlePages
 
-        postCtx' t c = dateField "date" "%Y-%m-%d" <> contentContext t c
+        postCtx' t = dateField "date" "%Y-%m-%d" <> contentContext t
 
         -- Create the `pages` field with the postCtx containing standard date
         -- and return the `pages` value for it
         sitemapCtx = constField "root" root 
-                  <> listField "pages" (postCtx' tags categories) (pure pages)
+                  <> listField "pages" (postCtx' tags) (pure pages)
 
     -- Make the item and apply our sitemap template
     makeItem ""

@@ -14,12 +14,12 @@ import Util
 
 --------------------------------------------------------------------------------
 
-createHomepageFrom :: Pattern -> Tags -> Tags -> Rules ()
-createHomepageFrom source tags categories = match source $ do
+createHomepageFrom :: Pattern -> Tags -> Rules ()
+createHomepageFrom source tags = match source $ do
   route cleanRoute
   compile $ do
-    let contentCtx = contentContext tags categories
-        projCtx = projectContext tags categories
+    let contentCtx = contentContext tags
+        projCtx = projectContext tags
         isFeatured item = do
           m <- getMetadata $ itemIdentifier item
           pure $ lookupString "featured" m == Just "true"

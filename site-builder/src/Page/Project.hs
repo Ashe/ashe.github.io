@@ -19,8 +19,8 @@ import Util
 
 --------------------------------------------------------------------------------
 
-assembleProjects :: Tags -> Tags -> Rules ()
-assembleProjects tags categories =
+assembleProjects :: Tags -> Rules ()
+assembleProjects tags =
   matchMetadata (projectsGlob .&&. hasNoVersion) (\m -> lookupString "status" m == Just "published") $ do
     version "simple" $ do
       route $ composeRoutes (cleanRouteContent "project") idRoute
@@ -28,7 +28,7 @@ assembleProjects tags categories =
     route $ composeRoutes (cleanRouteContent "project") idRoute
     compile $ do
       item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
-      ctx <- projectPostContext item tags categories
+      ctx <- projectPostContext item tags
       buildProject item ctx
 
 --------------------------------------------------------------------------------
@@ -45,16 +45,16 @@ buildProject item ctx =
             >>= localAssetsUrls
 
 
-projectPostContext :: Item String -> Tags -> Tags -> Compiler (Context String)
-projectPostContext item tags categories = do
+projectPostContext :: Item String -> Tags -> Compiler (Context String)
+projectPostContext item tags= do
   posts <- filterM (isProjectPost item) =<< recentFirst =<< loadAll (postsGlob .&&. hasVersion "simple")
   projects <- recentFirst =<< loadAll (projectsGlob .&&. hasVersion "simple")
-  nextAndPrev <- getNextAndPrev item projects tags categories
+  nextAndPrev <- getNextAndPrev item projects tags
   pure $ (if null posts
       then mempty
-      else listField "project-posts" (blogPostContext tags categories) (pure posts))
+      else listField "project-posts" (blogPostContext tags) (pure posts))
     <> nextAndPrev
-    <> projectContext tags categories
+    <> projectContext tags
 
 
 isProjectPost :: Item String -> Item String -> Compiler Bool
@@ -66,10 +66,10 @@ isProjectPost project item = do
   where projectSlug = getSlug project
 
 
-getNextAndPrev :: Item String -> [Item String] -> Tags -> Tags -> Compiler (Context String)
-getNextAndPrev item content tags categories = pure $
-  listField "previous-post" (blogPostContext tags categories) (pure previous)
-  <> listField "next-post" (blogPostContext tags categories) (pure next)
+getNextAndPrev :: Item String -> [Item String] -> Tags -> Compiler (Context String)
+getNextAndPrev item content tags= pure $
+  listField "previous-post" (blogPostContext tags) (pure previous)
+  <> listField "next-post" (blogPostContext tags) (pure next)
   where currentIndex = fromMaybe (-2) (findIndex (\i -> getSlug i == getSlug item) content)
         findAt index = [content !! index | index >= 0 && index < length content]
         previous = findAt $ currentIndex + 1

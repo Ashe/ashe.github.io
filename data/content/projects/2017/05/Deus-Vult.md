@@ -3,9 +3,7 @@ title: Deus Vult
 date: 2017-05-05
 subtitle: My first attempt at an ECS and implementing Lua and Spine.
 description: This project was more of an exploration than anything else. I wanted to make an engine which could have its data serialised and manipulated with scripts rather than hard code.
-categories: 
-  - Engine Development
-tags: 
+tags:
   - C++
   - Lua
   - SFML

@@ -3,9 +3,7 @@ title: "Now on dev.to!"
 date: 2021-11-10
 subtitle: I am going to be cross-posting my blog posts from now on!
 description: I haven't been blogging much and I thought that it would be good for me to try and take blogging a little more seriously and to try and promote myself so that I'm encouraged to write more content.
-categories: 
-  - Site
-tags: 
+tags:
   - aas.sh
   - Web
 image: https://res.cloudinary.com/aas-sh/image/upload/v1636548957/blog/2021/11/2021-11-10T12_h6t8ib.png

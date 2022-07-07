@@ -3,9 +3,7 @@ title: 4D Geometry Viewer
 date: 2020-05-03
 subtitle: A tool to visualise and interact with the fourth dimension.
 description: Developing a game that uses the fourth dimension is rarely discussed, if discussed at all. I created an interactive visualisation of 4D geometry to learn how to apply 3D rendering concepts to higher dimensions.
-categories: 
-  - Engine Development
-tags: 
+tags:
   - C++
   - Tool
   - Uni
@@ -24,7 +22,7 @@ This project is an interactive simulation for visualising 4D geometry. See [`rep
 
 # How do I use it?
 
-Use `WASD` to move the camera with `space` and `c` to go upwards and downwards. Hold down the `right-mouse-button` and move the mouse to look around the simulation (much like an FPS game). 
+Use `WASD` to move the camera with `space` and `c` to go upwards and downwards. Hold down the `right-mouse-button` and move the mouse to look around the simulation (much like an FPS game).
 
 Pick a polytope from the menubar in the top left and then use the transformation window to manipulate it. Changing the settings of the 4D camera will also change the appearance of the object --- as an exercise to the reader, I highly recommend translating the shape and then moving the 4D camera to correct it!
 

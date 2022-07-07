@@ -7,13 +7,11 @@ authors:
   - Ashley Smith
   - Holly Savin
   - Elliott Hill
-categories: 
-  - Game Development
-tags: 
+tags:
   - Game
   - C++
   - Uni
-images: 
+images:
   - https://raw.githubusercontent.com/Ashe/Alacrity/master/img/splash.jpg
   - https://raw.githubusercontent.com/Ashe/Alacrity/master/img/alacrity.gif
 featured: true

@@ -3,8 +3,6 @@ title: "Hex Voronoi"
 date: 2022-04-19
 subtitle: An experiment with Haxe and Heaps.
 description: "After spending a while wandering the internet in search of something new to learn, I found something I somehow missed: the language, Haxe, and the game framework, Heaps. This was the result of my learning."
-categories:
-  - Game development
 tags:
   - Haxe
 images:

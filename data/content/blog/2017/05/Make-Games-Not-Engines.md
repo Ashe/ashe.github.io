@@ -3,9 +3,7 @@ title: Make games, not engines
 date: 2017-05-04
 subtitle: My thoughts on game vs engine development for indie devs.
 description: I have spent quite a lot of time lately making an engine for a game idea I have, but the result I got wasn't exactly what I had in mind. This post is my opinion on engine development vs game development based on my experiences over the last few weeks.
-categories: 
-  - Engine Development
-tags: 
+tags:
   - Thoughts
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617291619/blog/2017/05/blueprint_scripting_fiwfcl.png
 project: reduxforgames

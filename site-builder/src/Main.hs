@@ -20,9 +20,8 @@ import Util
 main :: IO ()
 main = hakyllWith hakyllConfig $ do
 
-  -- Build tags and categories
+  -- Build tags
   tags <- buildTags contentGlob (fromCapture "tag/*/index.html")
-  categories <- buildCategories contentGlob (fromCapture "posts/*.html")
 
   -- Compress JPEG images
   match jpgs $ version "large" $ do
@@ -63,31 +62,31 @@ main = hakyllWith hakyllConfig $ do
   match "templates/**" $ compile templateBodyCompiler
 
   -- Create home page
-  createHomepageFrom "index.html" tags categories
+  createHomepageFrom "index.html" tags
 
   -- Create simple static pages
   createAboutPageFrom "about.md"
 
   -- Create content archives
-  createDateArchive "archive.html" "Archive" contentGlob tags categories
-  createDateArchive "blog.html" "Blog" postsGlob tags categories
-  createDateArchive "projects.html" "Projects" projectsGlob tags categories
-  createProjectArchive "posts-by-project.html" "Posts By Project" tags categories
+  createDateArchive "archive.html" "Archive" contentGlob tags
+  createDateArchive "blog.html" "Blog" postsGlob tags
+  createDateArchive "projects.html" "Projects" projectsGlob tags
+  createProjectArchive "posts-by-project.html" "Posts By Project" tags
 
   -- Assemble site content
-  assembleBlogPosts tags categories
-  assembleProjects tags categories
+  assembleBlogPosts tags
+  assembleProjects tags
 
   -- Assemble tag page and pages for each tag
   createTagsPage "tags.html" "Tags" tags
-  assembleTagPages tags categories
+  assembleTagPages tags
 
   -- Create atom and rss feeds
   createFeed Atom "atom.xml"
   createFeed Rss "rss.xml"
 
   -- Create sitemap
-  createSitemap "sitemap.xml" tags categories
+  createSitemap "sitemap.xml" tags
 
   -- Create CNAME file
   create ["CNAME"] $ do

@@ -3,9 +3,7 @@ title: "My Website: aas.sh"
 date: 2021-12-01
 subtitle: "My website, portfolio, and blog: aas.sh."
 description: This website is more than just a landing page for people looking to contact me, it's a trophy cabinet for all of my digital achievements, it's a canvas for thinking out loud and a place for me to tinker.
-categories: 
-  - Web Development
-tags: 
+tags:
   - aas.sh
   - Web
   - Nix

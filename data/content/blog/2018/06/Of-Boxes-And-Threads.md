@@ -3,9 +3,7 @@ title: "Of Boxes and Threads: Game development in Haskell"
 date: 2018-06-09
 subtitle: A discussion about games development in Haskell.
 description: My experiences of making a game in Haskell and how I think it's is a pioneering process. Despite a wiki and subreddit dedicated to gamedev in Haskell, not many people have actually succeeded making anything close to current games.
-categories: 
-  - Functional Programming
-tags: 
+tags:
   - Game
   - Haskell
   - Functional

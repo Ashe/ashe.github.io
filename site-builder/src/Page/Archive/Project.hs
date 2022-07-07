@@ -14,8 +14,8 @@ import Util
 
 --------------------------------------------------------------------------------
 
-createProjectArchive :: Identifier -> String -> Tags -> Tags -> Rules ()
-createProjectArchive url title tags categories = create [url] $ do
+createProjectArchive :: Identifier -> String -> Tags -> Rules ()
+createProjectArchive url title tags = create [url] $ do
   route cleanRoute
   compile $ do
     posts <- recentFirst =<< loadAll (postsGlob .&&. hasVersion "simple")
@@ -29,6 +29,6 @@ createProjectArchive url title tags categories = create [url] $ do
       >>= loadAndApplyTemplate "templates/default.html" ctx
       >>= relativizeUrls
       >>= cleanIndexUrls
-  where contentCtx = contentContext tags categories
+  where contentCtx = contentContext tags
 
 --------------------------------------------------------------------------------

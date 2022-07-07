@@ -3,15 +3,13 @@ title: New Year, New Website
 date: 2022-01-01
 subtitle: An update about the new look to my website.
 description: My website has gone through many iterations but I wanted to truly make it my own and have control of every aspect. My website is just as much for me as it is for the rest of the world and I enjoy tinkering with it now and again.
-categories: 
-  - Web Development
-tags: 
+tags:
   - aas.sh
   - Web
   - Nix
   - Haskell
   - Life
-images: 
+images:
   - https://res.cloudinary.com/aas-sh/image/upload/v1641635303/blog/2022/01/gza7tz.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1641635336/blog/2022/01/yl008c.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1641636014/blog/2022/01/cpngcp.png

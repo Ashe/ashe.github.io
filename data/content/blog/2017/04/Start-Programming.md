@@ -3,8 +3,7 @@ title: Start Programming!
 date: 2017-04-11
 subtitle: Some advice I have for new programmers wanting to embark on the path of programming and computer science.
 description: In this blog post, I hope to inspire you to get in there and just dive into programming and to give you a few tips to get started.
-categories: []
-tags: 
+tags:
   - Tutorial
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617291310/blog/2017/04/start_programming_ugus7v.gif
 status: published

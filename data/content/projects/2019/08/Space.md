@@ -3,12 +3,9 @@ title: Space
 date: 2019-08-20
 subtitle: An open-source forum that I was making in order to learn Clojure.
 description: While I have some webdev experience from my static blog, I've never ventured further. I made Space so that I could learn more about things such as databases, servers and RESTful APIs to open up more opportunities.
-categories: 
-  - Functional
+tags:
   - Web
-tags: 
-  - Web
-  - Clojure 
+  - Clojure
   - Functional
 images:
   - https://raw.githubusercontent.com/Ashe/Space/master/img/logo.png

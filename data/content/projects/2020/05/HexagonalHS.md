@@ -3,10 +3,7 @@ title: HexagonalHS
 date: 2020-06-25
 subtitle: A quick demo rendering 3D hexagonal prisms in Haskell with OpenGL.
 description: I've been playing around with Haskell for quite a while and I wanted to have a play around with a purely-functional graphics pipeline.
-categories: 
-  - Functional Programming
-  - Engine Development
-tags: 
+tags:
   - Engine
   - Haskell
   - Functional

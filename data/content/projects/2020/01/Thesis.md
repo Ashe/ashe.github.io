@@ -3,9 +3,7 @@ title: Thesis
 date: 2020-01-19
 subtitle: My final year project for my masters degree at Sheffield Hallam Uni.
 description: "The path to the right decision: An investigation into using heuristic pathfinding algorithms for decision making in game AI."
-categories: 
-  - Game Development
-tags: 
+tags:
   - C++
   - AI
   - Uni

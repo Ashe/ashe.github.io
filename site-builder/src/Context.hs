@@ -22,7 +22,7 @@ siteContext = headCommitField "git-head-commit" Commit
            <> concatField "concat"
            <> markdownField "read-md"
            <> slugField "slug"
-           <> atIndexField "at-index" 
+           <> atIndexField "at-index"
            <> socialContext
            <> siteDetailsContext
            <> defaultContext
@@ -34,10 +34,9 @@ feedContext = bodyField "description"
            <> siteContext
 
 
-contentContext :: Tags -> Tags -> Context String
-contentContext tags category = dateField "date" "%B %e, %Y"
+contentContext :: Tags -> Context String
+contentContext tags = dateField "date" "%B %e, %Y"
                             <> allTagsField "tags" tags
-                            <> allTagsField "category" category
                             <> simpleListField "authors" "author"
                             <> simpleListField "images" "image"
                             <> constField "item-type" "post"
@@ -51,11 +50,11 @@ contentContext tags category = dateField "date" "%B %e, %Y"
                             <> siteContext
 
 
-blogPostContext :: Tags -> Tags -> Context String
+blogPostContext :: Tags -> Context String
 blogPostContext = contentContext
 
 
-projectContext :: Tags -> Tags -> Context String
+projectContext :: Tags -> Context String
 projectContext = contentContext
 
 --------------------------------------------------------------------------------

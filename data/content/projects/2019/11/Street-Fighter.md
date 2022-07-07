@@ -3,9 +3,7 @@ title: Street Fighter Clone
 date: 2019-11-29
 subtitle: A fun revisit of the GameMaker engine.
 description: A university assignment where the goal was to study and recreate Street Fighter's mechanics in our own clone of the game.
-categories: 
-  - Game Development
-tags: 
+tags:
   - GameMaker
   - Game
   - Uni

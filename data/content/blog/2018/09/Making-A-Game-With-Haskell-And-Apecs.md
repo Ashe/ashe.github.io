@@ -3,10 +3,7 @@ title: An Introduction to game development in Haskell using Apecs
 date: 2018-09-10
 subtitle: A post about how I used Apecs ECS framework to make 'HSRogue'.
 description: There have been so many attempts to pioneer gamedev in Haskell, and yet still no commercial releases. In this post I hope to clear the air a little bit and encourage new developers to try Haskell.
-categories: 
-  - Functional Programming
-  - Game Development
-tags: 
+tags:
   - Game
   - Engine
   - Haskell

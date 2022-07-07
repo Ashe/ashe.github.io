@@ -19,8 +19,8 @@ import Util
 
 --------------------------------------------------------------------------------
 
-assembleBlogPosts :: Tags -> Tags -> Rules ()
-assembleBlogPosts tags categories =
+assembleBlogPosts :: Tags -> Rules ()
+assembleBlogPosts tags =
   matchMetadata (postsGlob .&&. hasNoVersion) (\m -> lookupString "status" m == Just "published") $ do
     version "simple" $ do
       route $ composeRoutes (cleanRouteContent "blog") idRoute
@@ -28,7 +28,7 @@ assembleBlogPosts tags categories =
     route $ composeRoutes (cleanRouteContent "blog") idRoute
     compile $ do
       item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions substituteSnippets
-      ctx <- postContext item tags categories
+      ctx <- postContext item tags
       buildPost item ctx
 
 --------------------------------------------------------------------------------
@@ -45,14 +45,14 @@ buildPost item ctx =
             >>= localAssetsUrls
 
 
-postContext :: Item String -> Tags -> Tags -> Compiler (Context String)
-postContext item tags categories = do
+postContext :: Item String -> Tags -> Compiler (Context String)
+postContext item tags = do
   m <- getMetadata $ itemIdentifier item
   posts <- recentFirst =<< loadAll (postsGlob .&&. hasVersion "simple")
   ctx <- case lookupString "project" m of
     Nothing -> do
       posts' <- filterM hasNoProject posts
-      getNextAndPrev item posts' tags categories
+      getNextAndPrev item posts' tags
     Just slug -> do
       projects <- recentFirst =<< loadAll (projectsGlob .&&. hasVersion "simple")
       let projects' = filter (isMatchingProject slug) projects
@@ -60,15 +60,15 @@ postContext item tags categories = do
         then pure mempty
         else do
           posts' <- filterM (isProjectPost slug) posts
-          prevNext <- getNextAndPrev item posts' tags categories
-          pure $ prevNext <> listField "related-project" (projectContext tags categories) (pure $ take 1 projects')
-  pure $ ctx <> blogPostContext tags categories
+          prevNext <- getNextAndPrev item posts' tags
+          pure $ prevNext <> listField "related-project" (projectContext tags) (pure $ take 1 projects')
+  pure $ ctx <> blogPostContext tags
 
 
-getNextAndPrev :: Item String -> [Item String] -> Tags -> Tags -> Compiler (Context String)
-getNextAndPrev item content tags categories = pure $
-  listField "previous-post" (blogPostContext tags categories) (pure previous)
-  <> listField "next-post" (blogPostContext tags categories) (pure next)
+getNextAndPrev :: Item String -> [Item String] -> Tags -> Compiler (Context String)
+getNextAndPrev item content tags = pure $
+  listField "previous-post" (blogPostContext tags) (pure previous)
+  <> listField "next-post" (blogPostContext tags) (pure next)
   where currentIndex = fromMaybe (-2) (findIndex (\i -> getSlug i == getSlug item) content)
         findAt index = [content !! index | index >= 0 && index < length content]
         previous = findAt $ currentIndex + 1

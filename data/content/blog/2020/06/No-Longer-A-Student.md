@@ -3,9 +3,7 @@ title: No longer a student
 date: 2020-06-24
 subtitle: An update about my experiences with finding employment after uni.
 description: I've just completed my master's year at Sheffield Hallam University and accepted a job offer, life is feeling pretty great right now! Unfortunately, I haven't written a blog post in over a year because of academia, and so it's finally time to update my blog!
-categories: 
-  - Life
-tags: 
+tags:
   - Uni
   - Career
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617293178/blog/2020/06/student_meme_1_x80vax.png

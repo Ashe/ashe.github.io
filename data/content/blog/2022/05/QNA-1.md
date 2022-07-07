@@ -3,8 +3,6 @@ title: "First ever QNA!"
 date: 2022-05-01
 subtitle: Responses to questions I've received via email!
 description: I've been corresponding with some of my readers over the past few months, and I've sent so many emails that I might as well make a post about it!
-categories:
-  - QNA
 tags:
   - Life
   - QNA

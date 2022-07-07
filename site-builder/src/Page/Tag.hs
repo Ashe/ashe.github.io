@@ -14,10 +14,10 @@ import Util
 
 --------------------------------------------------------------------------------
 
-assembleTagPages :: Tags -> Tags -> Rules ()
-assembleTagPages tags categories = tagsRules tags $ \tag pattern -> do
+assembleTagPages :: Tags -> Rules ()
+assembleTagPages tags = tagsRules tags $ \tag pattern -> do
   let title = "Posts tagged \"" ++ tag ++ "\""
-  let ctx   = contentContext tags categories
+  let ctx   = contentContext tags
   route idRoute
   compile $ do
     posts <- recentFirst =<< loadAll (pattern .&&. hasNoVersion)

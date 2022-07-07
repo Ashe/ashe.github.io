@@ -6,14 +6,12 @@ description: Made during Summer 2018 as a part of an enterprise scheme to test n
 authors:
   - Ashley Smith
   - Cameron Terras
-categories: 
-  - Game Development
-tags: 
+tags:
   - Game
   - Unity
   - C#
   - Uni
-images: 
+images:
   - https://res.cloudinary.com/aas-sh/image/upload/v1623433580/projects/vect/Vect_uuvvc1.png
   - https://img.itch.zone/aW1hZ2UvMjY4ODY2LzEyOTc2OTguZ2lm/original/1JSiVP.gif
   - https://img.itch.zone/aW1hZ2UvMjY4ODY2LzEyOTc3MDguZ2lm/original/pz0Mis.gif

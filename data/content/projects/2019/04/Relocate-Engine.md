@@ -3,9 +3,7 @@ title: Relocate Engine
 date: 2019-04-28
 subtitle: A prototype engine built to learn how to integrate Lua and physics.
 description: Relocate is a physics is an experiment with Box2D physics, Lua scripting, ImGui debugging and the SFML framework, and has been used as a starting point for a few of my other C++ projects.
-categories: 
-  - Engine Development
-tags: 
+tags:
   - C++
   - Lua
   - SFML

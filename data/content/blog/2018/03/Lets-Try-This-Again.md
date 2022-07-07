@@ -3,9 +3,7 @@ title: Let's try this again!
 date: 2018-03-14
 subtitle: An update of what happened when we tried starting our own studio.
 description: A reflection of what happened when running my own games studio during placement year, as well as an update for what I'm up to now after that rough experience.
-categories: 
-  - Life
-tags: 
+tags:
   - Uni
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617291991/blog/2018/03/git_commit_graphs_af28w0.png
 status: published

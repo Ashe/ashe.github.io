@@ -13,8 +13,8 @@ import Util
 
 --------------------------------------------------------------------------------
 
-createDateArchive :: Identifier -> String -> Pattern -> Tags -> Tags -> Rules ()
-createDateArchive url title glob tags categories = create [url] $ do
+createDateArchive :: Identifier -> String -> Pattern -> Tags -> Rules ()
+createDateArchive url title glob tags = create [url] $ do
   route cleanRoute
   compile $ do
     content <- recentFirst =<< loadAll (glob .&&. hasVersion "simple")
@@ -27,6 +27,6 @@ createDateArchive url title glob tags categories = create [url] $ do
       >>= loadAndApplyTemplate "templates/default.html" ctx
       >>= relativizeUrls
       >>= cleanIndexUrls
-  where contentCtx = contentContext tags categories
+  where contentCtx = contentContext tags
 
 --------------------------------------------------------------------------------

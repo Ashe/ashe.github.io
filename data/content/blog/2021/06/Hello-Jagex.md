@@ -3,9 +3,7 @@ title: Goodbye DSD, Hello Jagex!
 date: 2021-06-25
 subtitle: A short update about a change in my career.
 description: Roughly this time last year, I accepted a job at Deep Silver Dambuster Studios, but unfortunately it wasn't a great fit for me. I'm now pleased to announce that I managed to get a job at Jagex!
-categories: 
-  - Life
-tags: 
+tags:
   - Career
   - Life
 image: https://res.cloudinary.com/aas-sh/image/upload/v1623570915/blog/2021/06/2021-06-13T08_54_23_424914738_01_00_un9zli.png

@@ -3,13 +3,11 @@ title: "Hogs of War: Level Editor"
 date: 2020-03-23
 subtitle: A cross-platform tool to edit maps from the game Hogs of War (2000).
 description: A cross-platform tool that allows for the visualisation and manipulation of Hogs of War map files.
-categories: 
-  - Game Development
-tags: 
+tags:
   - C++
   - Tool
   - Uni
-images: 
+images:
   - https://res.cloudinary.com/aas-sh/image/upload/v1617296706/projects/hogs_of_war_level_editor/thumbnail_qiom9m.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1617296743/projects/hogs_of_war_level_editor/screenshot_uk6iiq.png
 featured: true
