@@ -54,6 +54,11 @@ main = hakyllWith hakyllConfig $ do
   -- Compile SASS into CSS
   compileStyleWith "THIRDPARTY"
 
+  -- Copy third-party content
+  match "assets/thirdparty/**" $ do
+    route idRoute
+    compile copyFileCompiler
+
   -- Compile bibliographies
   match "**.bib" $ compile biblioCompiler
   match "**.csl" $ compile cslCompiler

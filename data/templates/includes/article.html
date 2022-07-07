@@ -1,36 +1,64 @@
-<div id="article-hero" class="container">
-  <div class="inner apply-shadow">
-    $if(has-images)$
-      <div class="swiper featured-swiper">
-        <div class="swiper-wrapper">
-          $for(images)$
-            <div class="swiper-slide">
-              <img src="$image$" alt="Featured image $index$ for $title$">
-            </div>
-          $endfor$
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
-      <script>
-        var swiper = new Swiper('.featured-swiper', {
-          direction: 'horizontal',
-          loop: true,
-          slidesPerView: 1,
-          autoplay: {
-            delay: 5000,
-            disableOnInteraction: true,
-          },
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-          },
-        });
-      </script>
-    $else$
-      <img class="standalone" src="$image$" alt="Article image">
-    $endif$
+$if(slides)$
+
+  <div id="slideshow" class="reveal reset-style">
+    <div class="slides">
+      <section data-markdown>
+        <textarea data-template>
+$slides$
+        </textarea>
+      </section>
+    </div>
   </div>
-</div>
+
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    const slides = new Reveal( document.querySelector( '#slideshow' ), {
+      embedded: true,
+      keyboardCondition: 'focused',
+      plugins: [ RevealMath, RevealMarkdown, RevealHighlight ]
+    } );
+    slides.initialize();
+  </script>
+
+$else$
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      $if(has-images)$
+        <div class="swiper featured-swiper">
+          <div class="swiper-wrapper">
+            $for(images)$
+              <div class="swiper-slide">
+                <img src="$image$" alt="Featured image $index$ for $title$">
+              </div>
+            $endfor$
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        <script>
+          var swiper = new Swiper('.featured-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            slidesPerView: 1,
+            autoplay: {
+              delay: 5000,
+              disableOnInteraction: true,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+          });
+        </script>
+      $else$
+        <img class="standalone" src="$image$" alt="Article image">
+      $endif$
+    </div>
+  </div>
+
+$endif$
 
 $partial("templates/includes/article-header.html")$
 
