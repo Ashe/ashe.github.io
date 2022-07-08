@@ -8,7 +8,6 @@ tags:
   - Web
   - Nix
   - Haskell
-  - Life
 images:
   - https://res.cloudinary.com/aas-sh/image/upload/v1641635303/blog/2022/01/gza7tz.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1641635336/blog/2022/01/yl008c.png
