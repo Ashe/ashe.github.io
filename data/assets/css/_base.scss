@@ -46,6 +46,10 @@ a:hover, a:hover > * {
   border-color: currentColor;
 }
 
+img, video {
+  object-fit: cover;
+}
+
 ////////////////////
 // Common classes //
 ////////////////////
