@@ -1,78 +1,46 @@
-<header id="header">
-  <div class="flex flex-col sm:flex-row md:w-1/2 mt-8 justify-items-center justify-end items-left">
-    <div class="flex flex-col p-5 text-center sm:text-left mx-auto">
-      <small class="font-medium">$social-name$</small>
-      <div class="font-bold text-6xl mt-0">
-        $title$
-      </div>
-    </div>
-  </div>
+<header class="p-2">
+  <h1 class="title">$title$</h1>
 </header>
 
-<section class="container">
+<article id="about-page-content" class="is-max-desktop">
 
-  <div class="flex flex-col md:flex-row my-8">
-    <div class="p-3 md:w-2/5">
-      <div class="m-auto md:float-right rounded shadow-xl">
-        <img class="w-full md:h-80" 
-             src="$profile-photo$" 
-             alt="Photo of myself" 
-             style="object-fit: cover;"/>
-        <div class="text-center py-5">
+  <div id="profile" class="columns my-8">
+    <div class="column is-two-fifths p-3">
+      <div id="about-profile-image-container" class="apply-shadow">
+        <img src="$profile-photo$" alt="Photo of myself">
+        <div class="has-text-centered py-3">
           $partial("templates/includes/socials-horizontal.html")$
         </div>
       </div>
     </div>
-    <div class="p-3 md:w-3/5">
-      <p class="font-medium text-2xl lg:text-3xl">
-        $description$
-      </p>
-      <p class="text-xl lg:text-2xl mt-0">
-        $description-extension$
-      </p>
-      <p class="mt-0">
-        $read-md("description-detail")$
-      </p>
+    <div class="column is-three-fifths p-3">
+      <h1 class="title is-4">$description$</h1>
+      <p class="is-size-5">$description-extension$</p>
+      <p>$read-md("description-detail")$</p>
     </div>
   </div>
 
-  <div class="flex flex-col md:flex-row-reverse my-8">
-    <div class="p-3 md:w-2/5">
-      <img class="h-80 m-auto md:float-right rounded shadow-xl" 
-           src="$jagex-img$" 
-           style="object-fit: cover;"/>
+  <div class="entry columns is-vcentered my-8">
+    <div class="column is-two-fifths p-3">
+      <img class="apply-shadow" src="$jagex-img$" alt="Jagex entry image">
     </div>
-    <div class="p-3 md:w-3/5">
-      <p class="font-medium text-2xl lg:text-3xl lg:mb-0">
-        $jagex-title$
-      </p>
-      <p class="font-medium text-sm mt-0 lg:text-base">
-        $jagex-subtitle$
-      </p>
-      <p class="mt-0">
-        $read-md("jagex-body")$
-      </p>
+    <div class="column is-three-fifths p-3">
+      <h1 class="title is-4">$jagex-title$</h1>
+      <h2 class="subtitle is-5"><b>$jagex-subtitle$</b></h2>
+      <p>$read-md("jagex-body")$</p>
     </div>
   </div>
 
-  <div class="flex flex-col md:flex-row my-8">
-    <div class="p-3 md:w-2/5">
-      <img class="h-80 m-auto md:float-right rounded shadow-xl" 
-           src="$dsd-img$" 
-           style="object-fit: cover;"/>
+  <div class="entry columns is-vcentered my-8">
+    <div class="column is-two-fifths p-3">
+      <img class="apply-shadow" src="$dsd-img$" alt="Deep Silver Dambuster entry image">
     </div>
-    <div class="p-3 md:w-3/5">
-      <p class="font-medium text-2xl lg:text-3xl lg:mb-0">
-        $dsd-title$
-      </p>
-      <p class="font-medium text-sm mt-0 lg:text-base">
-        $dsd-subtitle$
-      </p>
-      <p class="mt-0">
-        $read-md("dsd-body")$
-      </p>
+    <div class="column is-three-fifths p-3">
+      <h1 class="title is-4">$dsd-title$</h1>
+      <h2 class="subtitle is-5"><b>$dsd-subtitle$</b></h2>
+      <p>$read-md("dsd-body")$</p>
     </div>
   </div>
 
   $body$
-</section>
+</article>

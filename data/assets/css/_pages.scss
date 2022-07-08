@@ -1,3 +1,11 @@
+// Only style content within an article
 article {
+
+  // All articles
   @import "pages/_article.scss";
+
+  // About page
+  &#about-page-content {
+    @import "pages/_about.scss";
+  }
 }
