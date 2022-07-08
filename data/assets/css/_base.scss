@@ -1,5 +1,5 @@
 // Import fonts
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 /////////////////////
 // General styling //
@@ -8,6 +8,7 @@
 body {
   color: #252525;
   font-size: 15px;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 strong {
@@ -39,10 +40,10 @@ a:hover, a:hover > * {
 }
 
 *, ::before, ::after {
-    box-sizing: border-box;
-    border-width: 0;
-    border-style: solid;
-    border-color: currentColor;
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
 }
 
 ////////////////////
@@ -59,6 +60,10 @@ a:hover, a:hover > * {
 }
 
 .la, .lab, .lad, .lal, .lar, .las {
-    font-size: 150%;
-    vertical-align: text-bottom;
+  font-size: 150%;
+  vertical-align: text-bottom;
+}
+
+.is-monospace {
+  font-family: 'Fira Code', monospace;
 }
