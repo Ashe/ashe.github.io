@@ -49,20 +49,17 @@ postContext :: Item String -> Tags -> Compiler (Context String)
 postContext item tags = do
   m <- getMetadata $ itemIdentifier item
   posts <- recentFirst =<< loadAll (postsGlob .&&. hasVersion "simple")
-  ctx <- case lookupString "project" m of
-    Nothing -> do
-      posts' <- filterM hasNoProject posts
-      getNextAndPrev item posts' tags
+  nextAndPrev <- getNextAndPrev item posts tags
+  relatedProject <- case lookupString "project" m of
     Just slug -> do
       projects <- recentFirst =<< loadAll (projectsGlob .&&. hasVersion "simple")
       let projects' = filter (isMatchingProject slug) projects
-      if null projects'
-        then pure mempty
-        else do
-          posts' <- filterM (isProjectPost slug) posts
-          prevNext <- getNextAndPrev item posts' tags
-          pure $ prevNext <> listField "related-project" (projectContext tags) (pure $ take 1 projects')
-  pure $ ctx <> blogPostContext tags
+      if not $ null projects'
+        then pure $ 
+          listField "related-project" (projectContext tags) (pure $ take 1 projects')
+        else pure mempty
+    _ -> pure mempty
+  pure $ nextAndPrev <> relatedProject <> blogPostContext tags
 
 
 getNextAndPrev :: Item String -> [Item String] -> Tags -> Compiler (Context String)
@@ -78,17 +75,3 @@ getNextAndPrev item content tags = pure $
 isMatchingProject :: String -> Item String -> Bool
 isMatchingProject slug item = map toLower slug == projectSlug
   where projectSlug = getSlug item
-
-
-isProjectPost :: String -> Item String -> Compiler Bool
-isProjectPost projectSlug item = do
-  m <- getMetadata $ itemIdentifier item
-  case lookupString "project" m of
-    Nothing -> pure False
-    Just slug -> pure $ map toLower slug == map toLower projectSlug
-
-
-hasNoProject :: Item String -> Compiler Bool
-hasNoProject item = do
-  m <- getMetadata $ itemIdentifier item
-  pure . isNothing $ lookupString "project" m

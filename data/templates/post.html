@@ -21,7 +21,7 @@ $endif$
             <div class="w-full is-flex is-flex-direction-row">
               <img src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
               <div class="p-3 w-full">
-                <small class="uppercase text-sm">Previous $if(project)$Project $endif$Post</small>
+                <small class="uppercase text-sm">Previous Post</small>
                 <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
                 $if(subtitle)$<small class="text-sm">$subtitle$</small>$endif$
               </div>
@@ -37,7 +37,7 @@ $endif$
           <div class="post-link apply-shadow hover">
             <div class="w-full is-flex is-flex-direction-row">
               <div class="p-3 w-full">
-                <small class="uppercase text-sm">Next $if(project)$Project $endif$Post</small>
+                <small class="uppercase text-sm">Next Post</small>
                 <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
                 $if(subtitle)$<small class="text-sm">$subtitle$</small>$endif$
               </div>
