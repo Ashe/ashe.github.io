@@ -102,6 +102,11 @@ footer {
 /////////////
 
 .infobox {
+
+  .caption {
+    border-top-color: #cbd9f4;
+  }
+
   &.note {
     background-color: #33608c;
   }
@@ -128,5 +133,9 @@ footer {
 
   &.itch {
     background-color: #4f2424;
+  }
+
+  &.references {
+    background-color: #273146;
   }
 }

@@ -26,24 +26,26 @@ toInfoBox (Div (id, classes, kvp) content) = Div (id, classes', []) content'
 
 --------------------------------------------------------------------------------
 
-data InfoBoxType = Notice | Warning | Help | Danger | Live | Git | Itch
+data InfoBoxType =
+  Notice | Warning | Help | Danger | Live | Git | Itch | References
 
 
 getInfoBoxType :: [T.Text] -> Maybe InfoBoxType
 getInfoBoxType classes
-  | "note" `elem` classes    = Just Notice
-  | "warning" `elem` classes = Just Warning
-  | "help" `elem` classes    = Just Help
-  | "danger" `elem` classes  = Just Danger
-  | "live" `elem` classes    = Just Live
-  | "gitrepo" `elem` classes = Just Git
-  | "itch" `elem` classes    = Just Itch
+  | "note" `elem` classes       = Just Notice
+  | "warning" `elem` classes    = Just Warning
+  | "help" `elem` classes       = Just Help
+  | "danger" `elem` classes     = Just Danger
+  | "live" `elem` classes       = Just Live
+  | "gitrepo" `elem` classes    = Just Git
+  | "itch" `elem` classes       = Just Itch
+  | "references" `elem` classes = Just References
   | otherwise = Nothing
 
 
 makeTitle :: InfoBoxType -> [(T.Text, T.Text)] -> [Block]
 makeTitle boxType kvp = case lookup "header" kvp of
-  Just header -> 
+  Just header ->
     [Div ("", ["header"], []) (contents header) ]
   Nothing -> []
   where contents header = [ Plain
@@ -54,14 +56,7 @@ makeTitle boxType kvp = case lookup "header" kvp of
 
 makeCaption :: [(T.Text, T.Text)] -> [Block]
 makeCaption kvp = case  lookup "caption" kvp of
-  Just caption -> [Div ("", 
-    [ "caption"
-    , "pt-3"
-    , "border-t"
-    , "border-textBlack"
-    , "dark:border-textWhite"
-    , "text-sm"
-    ], []) (parse caption)]
+  Just caption -> [Div ("", ["caption"], []) (parse caption)]
   Nothing -> []
 
 
@@ -73,6 +68,7 @@ icon Danger = "las la-exclamation-circle"
 icon Live = "las la-satellite-dish"
 icon Git = "lab la-github"
 icon Itch = "lab la-itch-io"
+icon References = "las la-pencil-alt"
 
 
 prefix :: InfoBoxType -> T.Text

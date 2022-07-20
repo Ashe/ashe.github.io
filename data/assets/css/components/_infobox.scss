@@ -18,8 +18,34 @@
     }
   }
 
+  // Captions
+  > .caption {
+    margin-top: 0.5rem;
+    padding-top: 0.25rem;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #252525;
+    font-size: 0.8em;
+  }
+
   // Ensure infoboxes have standard font sizes
-  font-size: 15px;
+  font-size: 1em;
+
+  // References are a special case as they are generated
+  &.references {
+    .header {
+      padding-bottom: 1rem;
+    }
+    .csl-entry {
+      padding: 0.5rem 0rem;
+      .csl-left-margin {
+        padding-right: 0.5rem;
+      }
+      * {
+        display: inline;
+      }
+    }
+  }
 
   // Colours
 
@@ -49,5 +75,9 @@
 
   &.itch {
     background-color: #ea5b5b;
+  }
+
+  &.references {
+    background-color: #f5f5f5;
   }
 }
