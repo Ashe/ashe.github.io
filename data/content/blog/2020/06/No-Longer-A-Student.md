@@ -14,7 +14,7 @@ Hello world! The last time I posted on my blog was [on the 20th of July, 2019](/
 
 # My master's year
 
-My final year was a little more difficult as all my friends had already graduated with honours or had left for other reasons. It was a little lonely, but I made a couple new friends and got through it. The first semester was mostly dedicated to my [thesis](/project/thesis/) anyway, so I rarely went into the university and rarely saw anyone else. 
+My final year was a little more difficult as all my friends had already graduated with honours or had left for other reasons. It was a little lonely, but I made a couple new friends and got through it. The first semester was mostly dedicated to my [thesis](/project/thesis/) anyway, so I rarely went into the university and rarely saw anyone else.
 
 Honestly, from a learning standpoint, I am highly displeased with higher education. Let me make this clear: my words may not apply to every course at Sheffield Hallam, nor does it apply to a specific CS course at another university. I can say what I'm about to say for sure though, that it isn't just my own university and it wasn't just my year.
 
