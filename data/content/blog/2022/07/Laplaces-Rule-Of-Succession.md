@@ -13,7 +13,7 @@ status: published
 
 ## A scientific certainty
 
-In 1840, [Pierre-Simon Laplace](https://en.wikipedia.org/wiki/Pierre-Simon_Laplace)[@laplace1840essai] posed the following question :
+In 1840, [Pierre-Simon Laplace](https://en.wikipedia.org/wiki/Pierre-Simon_Laplace)[@laplace1840essai] posed the following question:
 
 > What is the probability that the sun will rise tomorrow?
 
@@ -27,7 +27,7 @@ But... What if it *didn't*?
 
 The reason the sunrise problem is even worth considering can be discovered by simply asking *what if it didn't?* --- what is it we're really asking? If the chance of the sun rising is 100%, then what is the purpose of contemplating the scenario where it didn't?
 
-What we're actually questionning here is not whether the sun rises, but in fact whether the *probability* of the sun rising is actually what we expect --- this is a question of the probability of another probability!
+What we're actually questioning here is not whether the sun rises, but in fact whether the *probability* of the sun rising is actually what we expect --- this is a question of the probability of another probability!
 
 ## Laplace's answer to the sunrise problem
 
@@ -114,9 +114,9 @@ In this completely arbitrary example, Laplace's rule of succession tells us to t
 
 ## Challenge nudger
 
-Another time I've used Laplace's rule of succession was while I was at work! I was working on a piece of UI that 'nudged' the player towards content in the game. Players had vast amounts of challenges going on simultaneously, such as 'kill 50 players', 'win 4 matches' and 'walk 1000km'. The problem? Which challenge has the highest probability of being relevant to the player?
+Another time I've used Laplace's rule of succession was while I was at work! I was working on a piece of UI that 'nudged' the player towards content in the game. Players had vast amounts of challenges going on simultaneously, such as 'kill 50 players', 'win 4 matches' and 'walk 1000km'. The problem: determining which challenge has the highest probability of being relevant to the player.
 
-After the review chapter, I'm sure you can figure out why I chose to apply the rule here; how do we compare the player's progress on these challenges when they have completely different requirements in terms of difficulty and time to complete.
+After the review chapter, I'm sure you can figure out why I chose to apply the rule here; how do we compare the player's progress on these challenges when they have completely different requirements in terms of difficulty and time to complete?
 
 > Quiz time! Which challenge would you consider to be closest to completion?
 >
