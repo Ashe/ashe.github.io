@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>aas.sh</title>
+        <link>https://aas.sh</link>
+        <description><![CDATA[Hey there! My name is Ashley Smith and I'm a software engineer from the UK. I love working on challenging projects and trying new things — I try to never stop learning.]]></description>
+        <atom:link href="https://aas.sh/rss.xml" rel="self"
+                   type="application/rss+xml" />
+        <lastBuildDate>Wed, 20 Jul 2022 00:00:00 UT</lastBuildDate>
+        <item>
+    <title>Laplace's rule of succession</title>
+    <link>https://aas.sh/blog/laplaces-rule-of-succession/index.html</link>
+    <description><![CDATA[<div>
+
+</div>]]></description>
+    <pubDate>Wed, 20 Jul 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/laplaces-rule-of-succession/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>Laplace's rule of succession</title>
+    <link>https://aas.sh/blog/laplaces-rule-of-succession/index.html</link>
+    <description><![CDATA[<section id="the-sunrise-problem" class="article-section">
+<h1>
+<span>The sunrise problem</span><a href="#the-sunrise-problem" class="anchor las la-link" title="the-sunrise-problem"></a>
+</h1>
+<section id="a-scientific-certainty" class="article-section">
+<h2>
+<span>A scientific certainty</span><a href="#a-scientific-certainty" class="anchor las la-link" title="a-scientific-certainty"></a>
+</h2>
+<p>
+In 1840, <a href="https://en.wikipedia.org/wiki/Pierre-Simon_Laplace">Pierre-Simon Laplace</a><span class="citation" data-cites="laplace1840essai"><span class="citation" data-cites="laplace1840essai">[1]</span></span> posed the following question:
+</p>
+<blockquote>
+<p>
+What is the probability that the sun will rise tomorrow?
+</p>
+</blockquote>
+<p>
+This is the <em><a href="https://en.wikipedia.org/wiki/Sunrise_problem">Sunrise Problem</a></em>. It’s a bit of a peculiar one, and at first glance one might think that either the question is trivial, stupid, or both, but let’s dive a little deeper into what it is the question is asking.
+</p>
+<p>
+Through observation, we can say with confidence that there hasn’t ever been a day where the sun hasn’t risen. It is a scientific certainty that it’ll rise and this very fact is taken as the truth by most if not all of the population — just look up at the sky and one can indeed see the sun rising each morning. After so much time, there is not one doubt that the sun does indeed rise every day.
+</p>
+<p>
+But… What if it <em>didn’t</em>?
+</p>
+</section>
+<section id="the-real-question" class="article-section">
+<h2>
+<span>The real question</span><a href="#the-real-question" class="anchor las la-link" title="the-real-question"></a>
+</h2>
+<p>
+The reason the sunrise problem is even worth considering can be discovered by simply asking <em>what if it didn’t?</em> — what is it we’re really asking? If the chance of the sun rising is 100%, then what is the purpose of contemplating the scenario where it didn’t?
+</p>
+<p>
+What we’re actually questioning here is not whether the sun rises, but in fact whether the <em>probability</em> of the sun rising is actually what we expect — this is a question of the probability of another probability!
+</p>
+</section>
+<section id="laplaces-answer-to-the-sunrise-problem" class="article-section">
+<h2>
+<span>Laplace’s answer to the sunrise problem</span><a href="#laplaces-answer-to-the-sunrise-problem" class="anchor las la-link" title="laplaces-answer-to-the-sunrise-problem"></a>
+</h2>
+<div class="note infobox fill-horizontal">
+<div class="header">
+<p><span class="las la-info-circle mr-3"></span>Note - Simplification ahead!</p>
+</div>
+<p>
+I’m going to be the first to say I learned about this stuff online — while I did further mathematics in sixth form, that is not where I learned about this. Someone with a better education could write this part a lot better, with a full history of how it was deduced and the impact it has had. This post is mostly <em>my</em> experience in understanding and using the theorem.
+</p>
+</div>
+<p>
+So, what was Laplace’s answer, and why was it interesting? Let’s go back to the sunrise problem: if human life had existed for 99 days exactly and the sun failed to rise on day 100, then one could argue that the probability is 99/100, as in, it happened 99 days in 100. However, on day 99, the observed probability would have been 99/99, or 1, which isn’t too useful in the context of the problem. If only there was a way to think in a similar way that’s as simple, while also giving us an answer of worth.
+</p>
+<p>
+Laplace’s rule states that, for any event that has occurred multiple times until now, the probability of it happening again is equal one plus to this number divided by the number of times plus two. Obviously, words aren’t the best way of showing this, so here’s some fancy math:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(X_n+1=1|X_1+...+X_n=s)=\frac{s + 1}{n + 2}
+$$</span></span>
+</p>
+<p>
+Maybe this doesn’t help either.. The part to focus on is the last part on the right side of the equation — take the number of times where the sun has risen and add 1, and divide that number by the number of total days and add 2. What this is essentially doing is ‘simulating’ what the probability would be <em>if</em> there was one more day where the sun had risen, and another where it didn’t. In our example, this would be equivalent to:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(\text{Sun rises on 100th day})=\frac{99 + 1}{99 + 2}=\frac{100}{101}
+$$</span></span>
+</p>
+<p>
+While simple, and indeed slightly weird, this does provide us a tangible value which we can use, which is a whole lot better than ‘always.. I think’.
+</p>
+<p>
+I can understand why one would think that this piece of knowledge isn’t very useful, however it’s important to remember what Laplace’s rule is telling us: it’s giving us a probability of a probability in a fairly quick and easy way: all you need to do is add 1 to the numerator and 2 to the denominator!
+</p>
+<p>
+Finally, remember that in maths there can be multiple ways of doing things; you can get the average of a bunch of values via mean, median <em>or</em> mode, as a quick example. So while this does give us <em>something</em>, you should think of it as <em>an</em> answer rather than <em>the</em> answer.
+</p>
+</section>
+</section>
+<section id="my-experience-with-the-rule-of-succession" class="article-section">
+<h1>
+<span>My experience with the rule of succession</span><a href="#my-experience-with-the-rule-of-succession" class="anchor las la-link" title="my-experience-with-the-rule-of-succession"></a>
+</h1>
+<p>
+So I learned about this theorem from <a href="https://www.youtube.com/watch?v=8idr1WZ1A7Q&amp;">Grant’s video on Binomial Distributions</a><span class="citation" data-cites="sanderson2020binomial"><span class="citation" data-cites="sanderson2020binomial">[2]</span></span>. While the main topic of this not Laplace’s theorem, it did use it as a quick introduction to the video those 30 seconds truly struck me as something useful. Here’s the video if you’re curious:
+</p>
+<div class="w-full caption-frame apply-shadow">
+<iframe src="https://www.youtube.com/embed/8idr1WZ1A7Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<div class="caption">
+<p>
+Grant Sanderson talks about Binomial Distributions, mentioning Laplace’s rule of succession.
+</p>
+<div class="caption-source">
+<p><a href="https://www.youtube.com/watch?v=8idr1WZ1A7Q&amp;feature=emb_title" title="3Blue1Brown, YouTube">3Blue1Brown, YouTube</a></p>
+</div>
+</div>
+</div>
+<p>
+Ever since I saw that video, I’ve had the rule of succession flash into my mind whenever I see a situation I might be able to apply it to. In the next section hopefully I can show you how!
+</p>
+<section id="reviews" class="article-section">
+<h2>
+<span>Reviews</span><a href="#reviews" class="anchor las la-link" title="reviews"></a>
+</h2>
+<section id="the-question" class="article-section">
+<h3>
+<span>The question</span><a href="#the-question" class="anchor las la-link" title="the-question"></a>
+</h3>
+<p>
+Admittedly I stole this idea from <a href="https://www.youtube.com/watch?v=8idr1WZ1A7Q&amp;?t=98">Grant’s video</a>, but it deserves its own section nonetheless. Unfortunately, fake reviews have recently begun to run rampant and so the effectiveness of applying Laplace’s rule of succession is diminished in these scenarios.
+</p>
+<p>
+So, let’s imagine that you’re wanting to purchase something and you can see two similarly rated products. The question we’re trying to answer is the following:
+</p>
+<blockquote>
+<p>
+Given that numerous people have had positive experiences, what is the probability that my own experience is also going to be positive?
+</p>
+</blockquote>
+<p>
+This looks nothing like the rising sun problem! Where in this problem is there an element of ‘probabilities of probabilities’? Let’s start making some assumptions:
+</p>
+<ol type="1">
+<li>
+<p>
+When we say positive experience, we mean an experience that we could comfortably rate 5/5 stars in the same way that others have done previously.
+</p>
+</li>
+<li>
+<p>
+Each review is a binary representation of someone’s experience; they either had a 5 star experience, or they didn’t.
+</p>
+</li>
+</ol>
+<p>
+So with that, we can start viewing this problem in the same way as the sunrise problem, except the probability of someone giving a 5 star review is not 100%.
+</p>
+</section>
+<section id="the-math" class="article-section">
+<h3>
+<span>The math</span><a href="#the-math" class="anchor las la-link" title="the-math"></a>
+</h3>
+<p>
+Let’s say that 87% of 957 people gave a product 5 stars, meaning that 832/957 people had a 5 star experience. What is the probability that the next experience (yours) is also going to be positive? Let’s do the math:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(\text{5 star experience})=\frac{832 + 1}{957 + 2}=\frac{833}{959}=0.86861
+$$</span></span>
+</p>
+<p>
+We now have a result! <code>0.86861</code>! You could do the same maths on another product and then compare these values to see which one is more likely to satisfy you. Now like I said before, this is <em>an</em> answer, not <em>the</em> answer. There are many other ways you could compare two products, but if you can’t be bothered going full math-mode, this is a nice trick.
+</p>
+</section>
+<section id="why-is-this-value-useful" class="article-section">
+<h3>
+<span>Why is this value useful?</span><a href="#why-is-this-value-useful" class="anchor las la-link" title="why-is-this-value-useful"></a>
+</h3>
+<p>
+Now the question you might have is, ‘how is this value any better than just taking the raw 87% value?’ The answer lies in the <em>amount</em> of reviews. We’ve always been skeptical of products with 100% 5 star reviews when only 2 people have reviewed it, but why? I believe it’s because deep down we simply don’t trust these two people to have experienced the product enough to represent our own experience, and so we are filled with distrust.
+</p>
+<p>
+Laplace’s rule of succession handles this gracefully; by adding two extra reviews, one positive and one negative, we can somewhat ‘balance’ the review scores with the amount of reviews. Let’s see an example:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(\text{5 star experience with } A) = \frac{2 + 1}{2 + 2}=\frac{3}{4}=0.75 \\
+$$</span></span>
+<span class="math display"><span class="math display">$$
+P(\text{5 star experience with } B) = \frac{350 + 1}{400 + 2}=\frac{351}{402}=0.87313
+$$</span></span>
+</p>
+<p>
+In this completely arbitrary example, Laplace’s rule of succession tells us to trust product <span class="math inline"><em>B</em></span> more than product <span class="math inline"><em>A</em></span> despite <span class="math inline"><em>B</em></span> only having an 87.5% review score and <span class="math inline"><em>A</em></span> having a 100% review score; the low amount of reviews on product <span class="math inline"><em>A</em></span> meant that the adjustments made by the succession rule impact the score more significantly than they did in product <span class="math inline"><em>B</em></span>!
+</p>
+</section>
+</section>
+<section id="challenge-nudger" class="article-section">
+<h2>
+<span>Challenge nudger</span><a href="#challenge-nudger" class="anchor las la-link" title="challenge-nudger"></a>
+</h2>
+<p>
+Another time I’ve used Laplace’s rule of succession was while I was at work! I was working on a piece of UI that ‘nudged’ the player towards content in the game. Players had vast amounts of challenges going on simultaneously, such as ‘kill 50 players’, ‘win 4 matches’ and ‘walk 1000km’. The problem: determining which challenge has the highest probability of being relevant to the player.
+</p>
+<p>
+After the review chapter, I’m sure you can figure out why I chose to apply the rule here; how do we compare the player’s progress on these challenges when they have completely different requirements in terms of difficulty and time to complete?
+</p>
+<blockquote>
+<p>
+Quiz time! Which challenge would you consider to be closest to completion?
+</p>
+<ol type="1">
+<li>
+<p>
+<strong>Win 5 matches —</strong> Player has won 4.
+</p>
+</li>
+<li>
+<p>
+<strong>Kill 50 players —</strong> Player has killed 40 players.
+</p>
+</li>
+<li>
+<p>
+<strong>Destroy 100 barrels —</strong> Player has destroyed 80.
+</p>
+</li>
+<li>
+<p>
+<strong>Walk 1000km —</strong> Player has walked 800km.
+</p>
+</li>
+</ol>
+</blockquote>
+<p>
+Regardless of which one you <em>think</em> is more relevant to players, it may be difficult to pick between them especially when their progress percentages are all 80%! However, once again, Laplace’s rule gives us <em>an</em> answer to this question (not <em>the</em> answer). Applying Laplace’s rule here not only allows us to consistently rank challenges by a common metric, but it also allows us to stop caring about details — we <em>know</em> there is not one right answer to this problem, so let’s just lean on statistics and move on!
+</p>
+</section>
+</section>
+<section id="wrapping-things-up" class="article-section">
+<h1>
+<span>Wrapping things up</span><a href="#wrapping-things-up" class="anchor las la-link" title="wrapping-things-up"></a>
+</h1>
+<p>
+I hope you enjoyed reading this post; this is the first time I’ve written about something other than programming specifically, but I personally have found if very handy for more things than I’ve listed. I hope that after giving it some thought, you too might find the answer’s that Laplace provides useful!
+</p>
+<p>
+Make it a good one!
+</p>
+</section>
+<section id="references" class="article-section">
+<h1><span>References</span><a href="#references" class="anchor las la-link" title="references"></a></h1>
+<div class="references csl-bib-body infobox fill-horizontal" role="doc-bibliography">
+<div class="header">
+<span class="las la-pencil-alt mr-3"></span>References
+</div>
+<div id="ref-laplace1840essai" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">P. S. marquis de Laplace <em>et al.</em>, <em>Essai philosophique sur les probabilit<span>é</span>s</em>. Bachelier, 1840.</div>
+</div>
+<div id="ref-sanderson2020binomial" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">G. Sanderson, <span>“Binomial distributions | probabilities of probabilities, part 1,”</span> 2020. <a href="https://youtu.be/8idr1WZ1A7Q?t=98">https://youtu.be/8idr1WZ1A7Q?t=98</a></div>
+</div>
+</div>
+</section>]]></description>
+    <pubDate>Wed, 20 Jul 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/laplaces-rule-of-succession/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>Website redesign with Bulma CSS</title>
+    <link>https://aas.sh/blog/website-redesign-with-bulma/index.html</link>
+    <description><![CDATA[<div>
+
+</div>]]></description>
+    <pubDate>Thu, 07 Jul 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/website-redesign-with-bulma/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>Website redesign with Bulma CSS</title>
+    <link>https://aas.sh/blog/website-redesign-with-bulma/index.html</link>
+    <description><![CDATA[<div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - aas.sh
+</div>
+<p>GitHub repository for this website can be found <a href="https://github.com/Ashe/ashe.github.io">here</a>.</p>
+</div>
+<section id="introduction" class="article-section">
+<h1><span>Introduction</span><a href="#introduction" class="anchor las la-link" title="introduction"></a></h1>
+<p>As stated in my <a href="/blog/new-year-new-website/">previous website post</a>, I have a weird habit of redesigning my website every so often. This is always fueled by nitpicks and ambitions, however this time feels different. The last change was the move to <a href="https://nixos.org">Nix</a> and <a href="https://jaspervdj.be/hakyll/">Hakyll</a>, and this time I have kept those foundations and focused solely on the appearance.</p>
+<p>The result, and I hope you’ll agree, is a cleaner, smoother website with an appearance I have more control over. In my mission to inspire and share, I want to make things as frictionless as possible!</p>
+</section>
+<section id="changes" class="article-section">
+<h1><span>Changes</span><a href="#changes" class="anchor las la-link" title="changes"></a></h1>
+<section id="there-are-now-slides" class="article-section">
+<h2><span>There are now slides</span><a href="#there-are-now-slides" class="anchor las la-link" title="there-are-now-slides"></a></h2>
+<p>As you may have noticed, there is now a slideshow embedded into the blog post. How cool is that?!</p>
+<p>Slides are located as a replacement for the gallery at the top of the page for any blogs with slides enabled. I used to have a section of my website dedicated to slides, but I could never decide if a given post should be in slide format or in blog format. Sometimes I want to go into detail on a specific part of a presentation, whereas other times I want to just do a slideshow. Now I don’t need to choose!</p>
+<p>If you haven’t seen it yet, check the top of this page!</p>
+</section>
+<section id="we-now-use-bulma" class="article-section">
+<h2><span>We now use Bulma!</span><a href="#we-now-use-bulma" class="anchor las la-link" title="we-now-use-bulma"></a></h2>
+<p><a href="https://bulma.io">Bulma</a> is a CSS framework. I was previously using <a href="https://tailwindcss.com">Tailwind</a>, but unfortunately I leaned on it too much and became controlled by it since I found it very difficult to change the appearance of parts of my site to my liking.</p>
+<p><a href="https://bulma.io">Bulma</a> is simpler and is purely CSS. My strategy was to use Bulma for the foundations of the website, and then hand-crafting elements I had a particular interest in. It worked out really well and I feel really comfortable in the fact that I’ve had a hand in every aspect of the website now.</p>
+<p>Another advantage of changing framework is that it gave me an opportunity to simplify my <a href="https://nixos.org">Nix</a> code, speeding up iteration and simplifying dependencies. Bulma, along with all of my personal styling, is compiled into a single <code>main.css</code> file via <a href="https://sass-lang.com/">Sass</a>. I’m hoping that this strategy also alleviates pressure on your browser since it’s all in a single file, but I don’t know enough about web technologies to provide any evidence.</p>
+</section>
+<section id="refreshed-appearance-of-tags" class="article-section">
+<h2><span>Refreshed appearance of tags</span><a href="#refreshed-appearance-of-tags" class="anchor las la-link" title="refreshed-appearance-of-tags"></a></h2>
+<p>The old tag appearance was quite ugly to be honest. This was the <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Tags.html#v:renderTagCloud">default implementation of Hakyll</a>. I decided to reimplement this function and use the actual number of uses per tag as part of the design. The result is a nice new tag list sorted by popularity!</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1657296459/blog/2022/07/08-07-2022_17_07_25_tpdkvt.png" title="New appearance of tag cloud." class="w-full object-cover" alt="New appearance of tag cloud." />
+<div class="caption">
+<p>New appearance of tag cloud.</p>
+<div class="caption-source">
+<a href="https://aas.sh" title="aas.sh">aas.sh</a>
+</div>
+</div>
+</div>
+</section>
+<section id="code-cleanup" class="article-section">
+<h2><span>Code cleanup</span><a href="#code-cleanup" class="anchor las la-link" title="code-cleanup"></a></h2>
+<p>One of the barriers I had to writing more content was how long Hakyll took to compile my website. As per usual, this was user error. After being spoilt by frameworks like <a href="https://gohugo.io/">Hugo</a> in the past, I chalked all of the slowness found in building the site up to <a href="https://www.haskell.org/">Haskell</a>’s compilation times and Hakyll’s programming.</p>
+<p>Fortunately, I spotted a lot of places in the code base that could have been optimised and as part of the refresh I fixed them. In the past, I had to recompile every page whenever anything was saved, but this was actually my fault and Hakyll does in fact have the ability to only recompile what’s necessary so long as you take the time to understand each step of the building process. That, and making sure your indents are as you expect so that you don’t do expensive processes inside loops…</p>
+</section>
+</section>
+<section id="wrapping-up" class="article-section">
+<h1><span>Wrapping up</span><a href="#wrapping-up" class="anchor las la-link" title="wrapping-up"></a></h1>
+<p>It’s been a good few weeks working on my website — if only I put as much love and effort into myself as I do my online presence; perhaps this could be said for lots of people.</p>
+<p>I hope the redesign helps provide a more enjoyable experience so that I can receive more comments and questions via email as I really enjoyed <a href="/blog/qna-1/">responding to you all in the Q and A!</a>.</p>
+<p>As always, I hope to participate more in the blog-writing space in the coming months, but don’t hold me to it. If you have any questions about what you see, feel free to get in touch at <a href="mailto:contact@aas.sh">contact@aas.sh</a>!</p>
+</section>]]></description>
+    <pubDate>Thu, 07 Jul 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/website-redesign-with-bulma/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>First ever QNA!</title>
+    <link>https://aas.sh/blog/qna-1/index.html</link>
+    <description><![CDATA[<div>
+
+</div>]]></description>
+    <pubDate>Sun, 01 May 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/qna-1/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>First ever QNA!</title>
+    <link>https://aas.sh/blog/qna-1/index.html</link>
+    <description><![CDATA[<div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>Want to ask a question?
+</div>
+<p>There’s no such thing as a stupid question, and I’m no where near important enough to be able to ignore anyone! If you have anything you want to ask, feel free to email me at <a href="mailto:contact@aas.sh">contact@aas.sh</a>.</p>
+</div>
+<section id="introduction" class="article-section">
+<h1><span>Introduction</span><a href="#introduction" class="anchor las la-link" title="introduction"></a></h1>
+<p>Wow! People actually read my website — who knew? I have been speaking to some delightful people over the past few months, and I realised that their questions and my answers would make for a great post on my website, especially when I haven’t been posting much!</p>
+<p>I’ve asked the people who contacted me whether they’d be comfortable with me sharing their sides of the conversation. I’ll only be writing their initials just to keep it anonymous.</p>
+</section>
+<section id="questions" class="article-section">
+<h1><span>Questions</span><a href="#questions" class="anchor las la-link" title="questions"></a></h1>
+<section id="daily-schedule" class="article-section">
+<h2><span>Daily schedule</span><a href="#daily-schedule" class="anchor las la-link" title="daily-schedule"></a></h2>
+<blockquote>
+<p>Hello,</p>
+<p>Idealization is very common for humans, and internet incentives this behavior. After reading most of your blog, you appear to me as an insatiable knowledge sponge capable of working for days straight without rest. (this is not an attempt at flattery)</p>
+<p>If I’m not asking too much, would you be able to share your general daily schedule? How much time you dedicate to programming and to entertainment? Maybe to a person such as yourself entertainment IS programming? :)</p>
+<p>I apologize for any grammar mistake.</p>
+<p>Good day!</p>
+<p><strong>— LX, 23/03/2022</strong></p>
+</blockquote>
+<p>Perhaps I am a bit of a sponge, but I think it’s mostly just a drive to do more. While at university, I had this feeling like I wasn’t prepared to go into the industry, that there was something they weren’t telling us. After doing stuff in my spare time, people started noticing that I just became more competent at programming seemingly overnight, which motivated me more.</p>
+<p>The goal at first was simply to get a job in the industry, since I didn’t really have a backup plan for what to do if I failed. I’ve always been confident in myself and never really failed at exams or tests, so I truly believed I can achieve whatever I put my mind to. I am currently working at Jagex, a company my younger self described as ‘if I worked there, I’d know I’d have won at life’. Never really expected to achieve it so soon if I’m honest!</p>
+<p>I can’t really give you my schedule, because I simply don’t have one. When I was doing the bulk of my projects that you have seen, I basically became nocturnal. I’d go to sleep, think of a cool idea for a game (or a mechanic for a game I’m making), then become unable to sleep until I acted on it. I’d boot up my computer and start programming until I achieved it and fell asleep. It was very unhealthy, but I felt alive.</p>
+<p>If I wasn’t making games, I was playing them, or watching someone on twitch play them. I’m very much obsessed, and maybe that’s unattractive or a bit repulsive to some, but it’s these very qualities that allowed me to overtake my peers at uni as well as perform my best at work. Even as a junior, I was heavily relied on as an instrumental part of the team — not for my programming but for my ideas and insight into products, demographics and companies in the games industry.</p>
+<p>Since getting my job, I don’t do as many personal projects anymore, since I learn just as many things from simply attending work. Right now I’m learning soft skills and leadership skills; how to create and participate in a good team of engineers to make something as a group. This is something I couldn’t have learned on my own and is vital for my career, and so I’m comfortable with simply finishing work and then relaxing. I do get the drive to make games sometimes, but I don’t act on them like I used to.</p>
+<p>To answer your question about how much time did I dedicate to entertainment, I basically never stop doing something game related. I’m what you’d call sedentary, I basically am always on my computer. I put my education and career first before my physical health, which in turn has started to hit me mentally too. I wouldn’t reccomend having such an unhealthy balance, but I will say that making video games rather than going clubbing as a student will definitely be a better use of your time!</p>
+<p>At the end of the day, you have to ask yourself what YOU want to do. I’ve had plenty of people want to learn programming for the sake of getting a job in STEM and getting a job etc. That’s all well and good, but you have to actually be interested, if you’re not then the people who are interested will have the edge on you. This might not be the case as you get more experienced, but since we’re talking about learning to program, having an interest makes all the difference in the world. So many of my student peers didn’t actually care about why one algorithm is different to another, what the applications of the algorithms are, or even how the implementation of that algorithm changes with different languages.</p>
+<p>Ask yourself why you’re wanting to program, and more specifically what it is you want to program. Get excited, start simple, but work towards learning enough to start another project which matters a lot to you. Before you know it, you’ll have learned from 2-3 projects and be in the same position I was where you start to get a feel for your own progress and start to enjoy it.</p>
+<p>I hope this has been useful, and don’t hesitate to ask for more!</p>
+</section>
+<section id="programming-and-loneliness" class="article-section">
+<h2><span>Programming and loneliness</span><a href="#programming-and-loneliness" class="anchor las la-link" title="programming-and-loneliness"></a></h2>
+<blockquote>
+<p>Your readers might be interested in the following question:
+Programming often leads to isolation, how to deal with loneliness and lack of social interaction?</p>
+<p><strong>— LX, 24/03/2022</strong></p>
+</blockquote>
+<p>I wouldn’t say programming leads to isolation, but it is true that loneliness is an issue I’m facing just personally.</p>
+<p>As with most things — everything in moderation. Just because you’re learning programming doesn’t mean that you can’t go see your friends!</p>
+<p>In terms of jobs, yeah maybe programming is quite a lonely job since you need to do a lot of thinking and sometimes that requires a bit of peace and quiet. Additionally you don’t really share a computer (although you can do ‘pair programming’ when you work together on the same thing for a bit). Nothing much you can do about that, but at the same time this is considered a positive by a lot of people.</p>
+<p>If you work in an office, I guess things become a little bit more social since you’re next to other people, really depending on the job and the project / product.</p>
+<p>Hope this helps!</p>
+</section>
+<section id="passion-and-programming" class="article-section">
+<h2><span>Passion and programming</span><a href="#passion-and-programming" class="anchor las la-link" title="passion-and-programming"></a></h2>
+<blockquote>
+<p>Hello, I couldn’t resist the temptation to write to your email and tell you that in each of your posts I feel more inspired to learn from the wonderful world of programming.</p>
+<p>I have more than 8 years in the world of technology (azure, dns AD, Vmware) but I have always wanted to learn to program in a language that will generate excitement and thanks to you Haskell seems to be the choice</p>
+<p>I would just like to have your opinion on what could be the best way forward for someone like me to have the passion and knowledge that you have (at least 10 percent).</p>
+<p>Sorry again for contacting you like this, but thank you for contributing to a world so full of information, with real data of value.</p>
+<p><strong>— HLC, 15/05/2022</strong></p>
+</blockquote>
+<p>Hello, and thank you for your kind words!</p>
+<p>It’s a tough question since a lot of my posts were written when I was at university, where my energy and enthusiasm came from a rebellious phase of trying to convince the university that they weren’t doing enough (they didn’t teach students about source control or build systems etc).</p>
+<p>Since starting my career in the games industry, my enthusiasm has certainly degraded and I’m trying to rekindle the same spark that you’re searching for. I think there comes a point in most people’s lives where you have to soul search for what it is you really want. When you spend a lot of your time programming professionally, do you really have the energy to then start working on your own projects? This is the question I’m asking myself.</p>
+<p>A lot of what drove me was that everything felt useful. Haskell was the door to functional programming, and forcing myself to do the things I enjoyed (games) in this new context was fascinating. My end goal wasn’t to make a game, it was to learn. Now though, everything is about trying to be more employable, trying to get that new position, trying to keep relevant. Hobby projects that don’t really produce anything won’t be as interesting as say, 5 years in the industry. When viewing my own projects through this lens, I feel like I should be doing more and that line of thinking is exhausting.</p>
+<p>I’m currently considering a career change so that what I program professionally doesn’t clash with what I do recreationally. I love programming games and messing with functional languages, so having to then go to work on a video game means that my creative capacity is expended on work rather than myself. By hopefully moving to a job in software, I should be able to work on hobby projects without feeling the way I do now.</p>
+<p>Right now, my interest is captivated in a project I’m doing with a colleague, and it’s a ‘slow burn’ project because we’re both worried about taking too much at once. It’s in ‘Haxe’, a language which is kind of in the middle of traditional imperative languages and functional. It’s fun for games, and was used to make games like Dead Cells and Northgard. It allows me to make something (and hopefully release it), while also doing some systems functionally. It’s been over a year since a project has made me excited enough to work on it after work and so I’m grateful to find the strength to start this. Starting is always the hardest bit.</p>
+<p>Sorry if that wasn’t the answer you’re looking for, but that’s the position I’m in. You can also see my drop of energy being reflected in the frequency of posts on my site. I have tons of posts planned, but mental health / energy is really limiting me.</p>
+<p>Thanks!</p>
+</section>
+</section>
+<section id="wrapping-up" class="article-section">
+<h1><span>Wrapping up</span><a href="#wrapping-up" class="anchor las la-link" title="wrapping-up"></a></h1>
+<p>That seems like a lot of writing, but actually I did 0 work for this post since I just skimmed through what I was talking to people about over email! I really appreciate people’s questions and thoughts and my inbox is always open if more people want to get in touch!</p>
+<p>In terms of improving this type of post… I might need to either ask people to ask specific questions, or perhaps come up with a better name than Q&amp;A! I don’t care that the questions are a little longer and my responses are lengthy, but perhaps it doesn’t make for a very good blog post. Maybe making a distinction between conversations with readers and Q&amp;A posts might be the answer, but that all hinges on the kinds of reader interaction I get in the future!</p>
+<p>Let me know if you have any feedback, and if you have any questions or thoughts, feel free to email me: <a href="mailto:contact@aas.sh">contact@aas.sh</a>.</p>
+<p>Thanks for reading!</p>
+</section>]]></description>
+    <pubDate>Sun, 01 May 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/qna-1/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>Hex Voronoi</title>
+    <link>https://aas.sh/project/hex-voronoi/index.html</link>
+    <description><![CDATA[<div>
+
+</div>]]></description>
+    <pubDate>Tue, 19 Apr 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/project/hex-voronoi/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>Hex Voronoi</title>
+    <link>https://aas.sh/project/hex-voronoi/index.html</link>
+    <description><![CDATA[<div class="live infobox fill-horizontal">
+<div class="header">
+<span class="las la-satellite-dish mr-3"></span>Live demo available
+</div>
+<p>A live demo of this project can be found <a href="https://aas.sh/Hex-Voronoi">here</a>.</p>
+</div>
+<div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - aas.sh
+</div>
+<p>GitHub repository for this website can be found <a href="https://github.com/Ashe/Hex-Voronoi">here</a>.</p>
+</div>
+<section id="what-is-this" class="article-section">
+<h1><span>What is this?</span><a href="#what-is-this" class="anchor las la-link" title="what-is-this"></a></h1>
+<p>I build this as part of my introduction to both <a href="https://haxe.org/">Haxe</a> and <a href="https://heaps.io/">Heaps</a>. I started off with their <a href="https://heaps.io/samples/">sample projects</a> and iterated until I had a good handle about what tools were available. The result is something similar to another project of mine, <a href="https://aas.sh/project/hexagonalhs/">HexagonalHS</a>.</p>
+<p>You can test this project live at <a href="https://aas.sh/Hex-Voronoi/">https://aas.sh/Hex-Voronoi</a>.</p>
+<div class="w-full h-full hidden lg:block caption-frame apply-shadow">
+<canvas id="webgl" style="width:100%;height:100%">
+</canvas>
+<script type="text/javascript" src="https://aas.sh/Hex-Voronoi/voronoi.js"></script>
+<div class="caption">
+<p>The live demo of Hex-Voronoi, embedded into this page. It might not work as well as the <a href="https://aas.sh/Hex-Voronoi/">full-window version</a>.</p>
+<div class="caption-source">
+<a href="https://github.com/Ashe/Hex-Voronoi" title="Hex Voronoi">Hex Voronoi</a>
+</div>
+</div>
+</div>
+</section>
+<section id="how-was-it-made" class="article-section">
+<h1><span>How was it made?</span><a href="#how-was-it-made" class="anchor las la-link" title="how-was-it-made"></a></h1>
+<p>This application features a generated mesh made up of hexagonal tiles of varying heights. This itself isn’t too difficult, especially when you follow the teachings of <a href="https://www.redblobgames.com/grids/hexagons/">Red Blob Games</a>. However, these tiles are transformed and deformed to completely alter the overall shape of the landscape.</p>
+<section id="generating-hexagonal-tiles" class="article-section">
+<h2><span>Generating hexagonal tiles</span><a href="#generating-hexagonal-tiles" class="anchor las la-link" title="generating-hexagonal-tiles"></a></h2>
+<p>You can find all the code for actually creating the hexagonal tiles <a href="https://github.com/Ashe/Hex-Voronoi/blob/master/src/Hexgrid.hx#L295-L339">here</a>. I essentially made a class to represent tiles that contain their centers and the world position of each of their 6 corners. The basics of this are described in that <a href="https://www.redblobgames.com/grids/hexagons/">Red Blob Games post</a>, but below is the entire snippet of code generating these hexagons:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> <span class="kw">new</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  pos : Axial,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  height : <span class="dt">Int</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  size : <span class="dt">Float</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  padding : <span class="dt">Float</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  heightMultiplier : <span class="dt">Float</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  random : Random) {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Record variables for convenience</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.pos = pos;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.height = height;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.size = size;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.padding = padding;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.heightMultiplier = heightMultiplier;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calculate perfect center of hexagon</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  final width = Math.sqrt(<span class="dv">3</span>) * (size + padding);</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  center = <span class="kw">new</span> Vec3(</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      (pos.q * width ) + (pos.r * width * <span class="fl">0.5</span>),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      (pos.r * (size + padding) * (<span class="dv">3</span> / <span class="dv">2</span>)),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      height * heightMultiplier);</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Generate corners of a regular hexagon</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  corners = [<span class="kw">for</span> (i <span class="kw">in</span> <span class="dv">0</span>...<span class="dv">6</span>) {</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      final angleDeg = <span class="dv">60</span> * i - <span class="dv">30</span>;</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      final angleRad = Math.PI / <span class="fl">180.0</span> * angleDeg;</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> Vec3(center.x + size * Math.cos(angleRad),</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                center.y + size * Math.sin(angleRad),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                height * heightMultiplier);</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  }];</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="applying-voronoi" class="article-section">
+<h2><span>Applying voronoi</span><a href="#applying-voronoi" class="anchor las la-link" title="applying-voronoi"></a></h2>
+<p>Next, I started to transform the grid into a voronoi pattern. In nature, voronoi patterns appear in things like bubbles, where a shape is ‘inflated’ until its boundaries collide with other boundaries. The trick is to select a point inside a shape and then ‘inflate’ from there. You can find all the code below <a href="https://github.com/Ashe/Hex-Voronoi/blob/master/src/Hexgrid.hx">here</a>.</p>
+<p>To select the location, I separated each hexagon into 3 rhombi around the centre. I then chose a point by randomly traversing the lengths of the rhombus, where each side is equal to the radius of the hexagon to any of its corners.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// The code below is appended to the &#39;new&#39; function shown above</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Split the hexagon into 3 rhombi and choose one</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>final selectedCorner = random.randomInt(<span class="dv">0</span>, <span class="dv">2</span>) * <span class="dv">2</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>final corner = corners[selectedCorner];</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>final nextCorner = corners[selectedCorner + <span class="dv">1</span>];</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> toCenter = center.sub(corner);</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>toCenter.normalize();</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> toNext = nextCorner.sub(corner);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>toNext.normalize();</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Randomly select a feature point within the rhombus (and hexagon)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>final i = toCenter.multiply(random.random() * size);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>final j = toNext.multiply(random.random() * size);</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>featurePoint = corner.add(i).add(j);</span></code></pre></div>
+<p>After selecting these points for each hexagon, I then iterated through the list of hexagons to ‘inflate them’. Recall that each corner of a hexagonal tesselation is in contact with three hexagons, meaning that other than the current hexagon, we need to locate these other two hexagons. These hexagons may not exist if the current hexagon is on the border of your grid.</p>
+<p>We use these feature points (the name I gave to that randomly selected location we picked earlier) to distort each hexagon in relation to those closest to them. Since we started with pattern of tesselated, regular hexagons, we know that we aren’t going to get more than 3 feature points for any corner since the other corners will act as the contact points in the ‘inflation’ process. It’s hard to explain, but if you visualise the process of picking these points and drawing a line that’s equidistant between them, you’ll see that the way other corners distort results in there only ever being 3 feature points to consider per hexagon.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> (tile <span class="kw">in</span> tiles) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Hard code directions for iterating around the tile</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  final dirs = [</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial(-<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial(-<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">0</span>,-<span class="dv">1</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">1</span>,-<span class="dv">1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ];</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Iterate for each corner and direction</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">for</span> (i <span class="kw">in</span> <span class="dv">0</span> ... <span class="dv">6</span>) {</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Prepare to reposition corner</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    final prevDir = dirs[i &gt; <span class="dv">0</span> ? i - <span class="dv">1</span>: <span class="dv">5</span>];</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    final nextDir = dirs[i];</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    final prevTile = getTileAt(Axial.add(tile.pos, prevDir));</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    final nextTile = getTileAt(Axial.add(tile.pos, nextDir));</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Next, we need to find the midpoint of the three hexagons in contact’s feature points. To get the midpoint of three points, simply take the averages of their <code>x</code>, <code>y</code> and <code>z</code> (although I only wanted <code>x</code> and <code>y</code> here, since I manipulated <code>z</code> in other ways to ‘smoothen’ the map).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Find midpoint between adjacent neighbours</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> midpoint = <span class="kw">if</span> (prevTile != <span class="kw">null</span>) {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Both tiles valid - 3 way midpoint</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (nextTile != <span class="kw">null</span>) {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        .add(prevTile.featurePoint)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        .add(nextTile.featurePoint)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">1.</span> / <span class="fl">3.</span>);</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Just previous tile valid - 2 way midpoint</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">else</span> {</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        .add(prevTile.featurePoint)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">0.5</span>);</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">else</span> {</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Just next tile valid - 2 way midpoint</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (nextTile != <span class="kw">null</span>) {</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        .add(nextTile.featurePoint)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">0.5</span>);</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">// No neighbours - do whatever</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">else</span> {</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        .add(tile.corners[i])</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">0.5</span>);</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">// Apply voronoi if requested</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> (voronoi) {</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">// If tiles have padding, shift midpoint to tile center</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (tilePadding &gt; <span class="dv">0</span>) {</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    final z = midpoint.z;</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> toCenter = tile.center.sub(midpoint);</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    toCenter.normalize();</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    toCenter = toCenter.multiply(tilePadding);</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    midpoint = midpoint.add(toCenter);</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    midpoint.z = z;</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Set location of corner to resulting midpoint</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  tile.corners[i].x = midpoint.x;</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  tile.corners[i].y = midpoint.y;</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>And with that, we have our voronoi pattern! We don’t need to worry about the edges, since the corners are where the boundries converge, and so by handling the corners the edges just line into place.</p>
+</section>
+<section id="smoothing" class="article-section">
+<h2><span>Smoothing</span><a href="#smoothing" class="anchor las la-link" title="smoothing"></a></h2>
+<p>One of the options of this project is the ‘smoothing’ feature. This feature allows the sides of a tile to blend into the tile adjacent, forming ramps where possible. Below is a preview of how this looks:</p>
+<div class="caption-frame apply-shadow">
+<div class="gallery-wall">
+<div class="child">
+<p><img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/default.png" alt="Default" />
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/voronoi.png" alt="With voronoi enabled" /></p>
+</div>
+<div class="child">
+<p><img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/smoothing.png" alt="Smoothing enabled" />
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/voronoi_smoothing.png" alt="With voronoi and smoothing enabled" /></p>
+</div>
+</div>
+<div class="caption">
+<p>Example of how smoothing effects maps with and without voronoi applied.</p>
+<div class="caption-source">
+<a href="https://github.com/Ashe/Hex-Voronoi" title="Hex Voronoi">Hex Voronoi</a>
+</div>
+</div>
+</div>
+<p>Smoothing is performed by simply taking the average Z coordinate of all tile vertices that touch. This is essentially the same as the voronoi application with three subtle differences:</p>
+<ol type="1">
+<li>Smoothing can be enabled independently of voronoi</li>
+<li>Voronoi application only cares about XY position so that there’s no gaps in the terrain</li>
+<li>You might not always want to smoothen edges</li>
+</ol>
+<p>Point 3 is interesting: take 3 tiles that touch at a single corner. One tile has height of 1, the second a height of 2 and the last a height of 3. If you smoothen the Z coordinate, nothing changes since the average height is 2. Instead, I decided to only smoothen when tiles are within a certain height range of each other (which can be chosen at runtime). This means that in that example, a ‘smoothen height’ of 1 would mean that the first and second tile get smoothed into a ramp, but the final tile remains as a cliff, since the difference between the highest and lowest tiles is greater than the smoothing value. This was done with the following snippets:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Smoothing logic for 3-way corners</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> (smoothen) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Always include current tile</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> count = <span class="dv">1</span>;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  smoothedZ = tile.height;</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Include previous tile in smoothing if applicable</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (Math.abs(prevTile.height - tile.height) &lt;= smoothRange) {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    smoothedZ += prevTile.height;</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    count += <span class="dv">1</span>;</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Include next tile in smoothing if applicable</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (Math.abs(nextTile.height - tile.height) &lt;= smoothRange) {</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    smoothedZ += nextTile.height;</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    count += <span class="dv">1</span>;</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Average all applicable tile heights</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  smoothedZ /= count;</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  smoothedZ *= tileHeightMultiplier;</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">// Smoothing logic for 2-way corners (using nextTile as an example)</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> (smoothen &amp;&amp; Math.abs(nextTile.height - tile.height) &lt;= smoothRange) {</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  smoothedZ = (tile.height + nextTile.height) *</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>      tileHeightMultiplier * <span class="fl">0.5</span>;</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+</section>
+<section id="how-do-i-use-it" class="article-section">
+<h1><span>How do I use it?</span><a href="#how-do-i-use-it" class="anchor las la-link" title="how-do-i-use-it"></a></h1>
+<p>By default, the application will rotate around the map. You can disable this orbiting mode in the top right corner. From there, you can control the camera with your mouse and zoom in with the scroll wheel.</p>
+<p>In the top left, you’ll find various settings for changing how the terrain looks. In the top right, you’ll find functions like changing the map’s colour, regenerating the map, and resetting all settings to default.</p>
+</section>
+<section id="how-do-i-compile-it" class="article-section">
+<h1><span>How do I compile it?</span><a href="#how-do-i-compile-it" class="anchor las la-link" title="how-do-i-compile-it"></a></h1>
+<p>This project was created using <a href="https://haxe.org/">Haxe</a> and can be compiled in two ways. Before attempting compilation, you’ll need to <a href="https://heaps.io/documentation/installation.html">install Haxe and Heaps</a>. Additionally, you’ll need to install <code>seedyrng</code> and <code>domkit</code> via <code>haxelib install &lt;package&gt;</code>.</p>
+<section id="visual-studio-code" class="article-section">
+<h2><span>Visual Studio Code:</span><a href="#visual-studio-code" class="anchor las la-link" title="visual-studio-code"></a></h2>
+<p><a href="https://haxe.org/">Haxe</a> works very well with <a href="https://code.visualstudio.com/">Visual Studio Code</a> when using the <a href="https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-extension-pack">Haxe Extension Pack</a>. When everything is installed, you should be able to hit <code>CTRL+SHIFT+B</code> to build the project. It’ll compile to JS and be found in the <code>docs</code> folder, which you can then test by opening <code>index.html</code> in your web browser.</p>
+</section>
+<section id="command-line" class="article-section">
+<h2><span>Command line:</span><a href="#command-line" class="anchor las la-link" title="command-line"></a></h2>
+<p>After installing dependencies, you can run <code>haxe build.hxml</code> to compile the project. A JS file will appear in the <code>docs</code> folder and you can then test it by opening <code>index.html</code> in your web browser.</p>
+</section>
+</section>]]></description>
+    <pubDate>Tue, 19 Apr 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/project/hex-voronoi/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>New Year, New Website</title>
+    <link>https://aas.sh/blog/new-year-new-website/index.html</link>
+    <description><![CDATA[<div>
+
+</div>]]></description>
+    <pubDate>Sat, 01 Jan 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/new-year-new-website/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+<item>
+    <title>New Year, New Website</title>
+    <link>https://aas.sh/blog/new-year-new-website/index.html</link>
+    <description><![CDATA[<div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - aas.sh
+</div>
+<p>GitHub repository for this website can be found <a href="https://github.com/Ashe/ashe.github.io">here</a>.</p>
+</div>
+<section id="why-the-redesign" class="article-section">
+<h1><span>Why the redesign?</span><a href="#why-the-redesign" class="anchor las la-link" title="why-the-redesign"></a></h1>
+<p>People who have been following my website (read: people I’ve forced to proof-read my website) will know that it has undergone several redesigns. I never truly was happy with them since I usually just used open source or even premium <a href="http://jekyllthemes.org/">Jekyll themes</a> and inserted my content into it. Now that isn’t to say I have anything against this, but I always wanted a larger sense of ownership.</p>
+<p>Another reason is that <a href="/tag/Jagex">I got a job at Jagex</a> and now that I felt more settled in my career I wanted to make sure my website was a little better equipped for what I wanted to put on here.</p>
+<p>Instead of doing advent of code this year, I decided to rework my website and create it using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>. It’s like <a href="https://jekyllrb.com/">Jekyll</a> but can be programmed with <a href="https://www.haskell.org/">Haskell</a> to suit your needs. I’ve had a Hakyll blog in the past, but my problem was it was quite annoying to set up and work with on other machines if they weren’t set up for Haskell development.</p>
+<section id="inspiration" class="article-section">
+<h2><span>Inspiration</span><a href="#inspiration" class="anchor las la-link" title="inspiration"></a></h2>
+<p>My biggest inspiration by far for this website was <a href="https://ysndr.de">Yannik Sander’s website</a>. It was clean yet extremely functional, and best of all it took advantage of both <a href="https://nixos.org/">Nix</a> and <a href="https://haskell.org">Haskell</a>. Without his website, I wouldn’t have had the motivation or starting point to recreate my website. It is my intention to one day distinguish my site from his and really make it my own, but he’s done such a good job that it’s hard to resist using some of his visuals!</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1647537276/blog/2022/01/btndp7.png" title="A screenshot of Yannik&#39;s impressive website." class="w-full object-cover" alt="A screenshot of Yannik&#39;s impressive website." />
+<div class="caption">
+<p>A screenshot of Yannik’s impressive website.</p>
+<div class="caption-source">
+<a href="https://ysndr.de" title="Yannik Sander&#39;s homepage">Yannik Sander's homepage</a>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tools" class="article-section">
+<h1><span>Tools</span><a href="#tools" class="anchor las la-link" title="tools"></a></h1>
+<section id="nix" class="article-section">
+<h2><span>Nix</span><a href="#nix" class="anchor las la-link" title="nix"></a></h2>
+<p>Since I’ve been nixifying my operating system and the way I work in my free time, it was a no-brainer to use Nix. I’ve tried using Haskell and Hakyll in the past, but having to set up my environment for Haskell development each time I wanted to write a post was beyond tiresome. If you want to learn more about Nix, <a href="/blog/what-is-nix">I wrote a post about it specifically title ‘what is nix?’</a></p>
+<div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>What is Nix?
+</div>
+<blockquote>
+<p><a href="https://nixos.org/">Nix</a> is a reproducable, declarative and reliable way of building and deploying software.</p>
+</blockquote>
+<ul>
+<li><strong>Reproducible:</strong> Nix builds packages in isolation from each other. This ensures that they are reproducible and don’t have undeclared dependencies, so <strong>if a package works on one machine, it will also work on another</strong>.</li>
+<li><strong>Declarative:</strong> Nix makes it <strong>trivial to share development and build environments</strong> for your projects, regardless of what programming languages and tools you’re using.</li>
+<li><strong>Reliable:</strong> Nix ensures that installing or upgrading one package <strong>cannot break other packages</strong>. It allows <strong>you to roll back to previous versions</strong>, and ensures that no package is in an inconsistent state during an upgrade.</li>
+</ul>
+<div class="caption">
+<p>Information taken from the official Nix website found <a href="https://nixos.org/">here</a>.</p>
+</div>
+</div>
+<p>Now that the website is running Nix, I have no worries about using Haskell. I never have to worry about which GHC version I need to install, or what tooling is now the best choice to use for my text editor when writing Haskell code. If I ever need to work on a new machine, I just need to do three things:</p>
+<ol type="1">
+<li>Acquire <code>Nix</code> (I run NixOS, so this is already done!)</li>
+<li>Clone repository</li>
+<li><code>nix develop</code></li>
+</ol>
+<p>And boom, I can continue working on my website!</p>
+</section>
+<section id="haskell-hakyll" class="article-section">
+<h2><span>Haskell + Hakyll</span><a href="#haskell-hakyll" class="anchor las la-link" title="haskell-hakyll"></a></h2>
+<p>Of course this website uses Haskell! Thanks to <a href="https://jaspervdj.be/hakyll/">Hakyll</a>, I have full control over how posts are curated, how markdown is translated to html, and even the URLs. It can be confusing at first but once you have a simple site going (that you can probably steal from the docs) you can iterate on it very easily to experiment with how you can make changes.</p>
+</section>
+<section id="tailwind" class="article-section">
+<h2><span>Tailwind</span><a href="#tailwind" class="anchor las la-link" title="tailwind"></a></h2>
+<p>I’ll be honest, I’m not a web designer and I don’t really understand what the best choices for these things are. I saw a lot of buzz about tailwind and when I saw it in use on some blogs made by other people, I thought to myself ‘this is great!’ and committed to using it in my own website. My favourite thing about tailwind is that it can be customised and extended pretty easily by it’s <code>tailwind.config.js</code> file. This means I can change the font of my website or the colourscheme all in a single place. I imagine this is possible with CSS as well, but this works well for me.</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1641645177/blog/2022/01/l2g8zg.png" title="Tailwind&#39;s website" class="w-full object-cover" alt="Tailwind&#39;s website" />
+<div class="caption">
+<p>Tailwind’s website</p>
+<div class="caption-source">
+<a href="https://tailwindcss.com" title="Tailwind CSS">Tailwind CSS</a>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="new-features" class="article-section">
+<h1><span>New features</span><a href="#new-features" class="anchor las la-link" title="new-features"></a></h1>
+<p>Below are just some of the things I’ve always wanted to put into my website</p>
+<section id="dark-mode" class="article-section">
+<h2><span>Dark mode</span><a href="#dark-mode" class="anchor las la-link" title="dark-mode"></a></h2>
+<p>In the past I had a really couldn’t decide between having a minimal white website, or a nice dark one. I decided to support dark mode from the very beginning of my website’s development, and thanks to <a href="https://tailwindcss.com/">tailwind</a> it was a fairly painless process so long as I tested every feature in both light and dark mode. All you need to do is click the sun/moon icon in the top right of my website and everything will change colour!</p>
+</section>
+<section id="table-of-contents" class="article-section">
+<h2><span>Table of contents</span><a href="#table-of-contents" class="anchor las la-link" title="table-of-contents"></a></h2>
+<p>I’ve seen on a few people’s websites that they have a nice smooth way of navigating chapters of their blog posts, and I wanted to include this on my website as well. I previously had a progress bar to indicate how far you are through a post, but it’s nicer to have a table of contents built into it! If you have a large monitor, the table of contents for a page will display on the left of the content!</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1641645844/blog/2022/01/rgxf4f.png" title="A preview of a page&#39;s table of contents." class="w-full object-cover" alt="A preview of a page&#39;s table of contents." />
+<div class="caption">
+<p>A preview of a page’s table of contents.</p>
+<div class="caption-source">
+<a href="https://aas.sh" title="aas.sh">aas.sh</a>
+</div>
+</div>
+</div>
+</section>
+<section id="project-posts" class="article-section">
+<h2><span>Project posts</span><a href="#project-posts" class="anchor las la-link" title="project-posts"></a></h2>
+<p>Some people have a notion of a ‘series’ of posts and I wanted to include something similar to that in my website. I’d rather have the page of a project be a timeless record of the project, and the historical records be encapsulated in blog posts. This very post is a project-post — the project is <a href="/project/aas-sh">aas.sh</a>, and any updates I make to the website will be detailed in the posts!</p>
+<p>This does mean there might be some duplicated information, but the information in the project itself will be 100% correct, whereas the project posts are allowed to be no longer correct yet still stand as a record of what was previously the case.</p>
+</section>
+<section id="image-galleries" class="article-section">
+<h2><span>Image galleries</span><a href="#image-galleries" class="anchor las la-link" title="image-galleries"></a></h2>
+<p>Using <a href="https://swiperjs.com/">SwiperJS</a>, I was easily able to create smooth, slide-show like image galleries. I’ve used these to showcase featured posts, regular posts and even images of a single post. You’ll find them all across the website and they’re a very handy way of making things look clean yet still show everything I want to show!</p>
+</section>
+</section>
+<section id="wrap-up" class="article-section">
+<h1><span>Wrap up</span><a href="#wrap-up" class="anchor las la-link" title="wrap-up"></a></h1>
+<p>I’ll probably write some more blog posts that relate to cool or important updates to the website, but right now I’m very comfortable with how things have come out. I might play around with fonts and add new pages, but for now I’m going to get back to work and focus on actually putting more content on here!</p>
+</section>]]></description>
+    <pubDate>Sat, 01 Jan 2022 00:00:00 UT</pubDate>
+    <guid>https://aas.sh/blog/new-year-new-website/index.html</guid>
+    <dc:creator>Ashley Smith</dc:creator>
+</item>
+
+    </channel>
+</rss>
