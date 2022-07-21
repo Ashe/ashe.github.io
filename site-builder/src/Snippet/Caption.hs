@@ -21,7 +21,7 @@ isCaption = hasClass "caption"
 
 
 toCaption :: Block -> Block
-toCaption (Div attr@(id, c, _) content) = 
+toCaption (Div attr@(id, c, _) content) =
   Div (id, c', []) $ content ++ [makeCaption attr]
     where c' = delete "caption" c ++ ["caption-frame apply-shadow"]
 
@@ -30,9 +30,9 @@ toCaption (Div attr@(id, c, _) content) =
 makeCaption :: Attr -> Block
 makeCaption attr@(id, _, kvp) = case lookup "caption" kvp of
   Nothing -> Null
-  Just caption -> Div ("", classes, []) 
+  Just caption -> Div ("", classes, [])
     (parse caption ++ [Div ("", sourceClasses, []) [source]])
-  where classes = ["caption", "has-text-centered", "m-0", "pt-4", "pb-2"]
+  where classes = ["caption"]
         sourceClasses = ["caption-source"]
         sourceUrl = lookup "sourceUrl" kvp
         source = case lookup "source" kvp of
