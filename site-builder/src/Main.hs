@@ -12,6 +12,7 @@ import Page
 import Route
 import Snippet
 import Style
+import Thirdparty
 import Util
 
 -- Main
@@ -23,7 +24,7 @@ main = hakyllWith hakyllConfig $ do
   -- Build tags
   tags <- buildTags contentGlob (fromCapture "tag/*/index.html")
 
-  -- Compress JPEG images
+  -- Compress JPEG imges
   match jpgs $ version "large" $ do
     route idRoute
     compile $ loadImage
@@ -55,9 +56,14 @@ main = hakyllWith hakyllConfig $ do
   compileStyleWith "THIRDPARTY"
 
   -- Copy third-party content
-  match "assets/thirdparty/**" $ do
-    route idRoute
-    compile copyFileCompiler
+  copyThirdpartyFilesFrom "THIRDPARTY" "assets/thirdparty/"
+    [ ("line-awesome", "line-awesome")
+    , ("mathjax", "mathjax")
+    , ("revealjs/plugin", "revealjs/plugin")
+    , ("revealjs/dist", "revealjs")
+    , ("swiperjs", "swiperjs")
+    , ("vanillajs-scrollspy", "vanillajs-scrollspy")
+    ]
 
   -- Compile bibliographies
   match "**.bib" $ compile biblioCompiler

@@ -8,18 +8,58 @@
       url = "git+https://github.com/jgthms/bulma/";
       flake = false;
     };
+    line-awesome = {
+      url = "git+https://github.com/icons8/line-awesome/";
+      flake = false;
+    };
+    mathjax = {
+      url = "git+https://github.com/mathjax/MathJax/";
+      flake = false;
+    };
+    revealjs = {
+      url = "git+https://github.com/hakimel/reveal.js/";
+      flake = false;
+    };
+    vanillajs-scrollspy = {
+      url = "git+https://github.com/ederssouza/vanillajs-scrollspy/";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, bulma }:
+  outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem ( system:
       let
         pkgs' = import nixpkgs { inherit system; };
+        swiperjs = (builtins.fetchTarball {
+          url = "https://registry.npmjs.org/swiper/-/swiper-8.3.2.tgz";
+          sha256 = "1bn2zfg668zaj3sacqqnqn7df82801yq11wgx34xrd5qh6297x68";
+        });
         website = pkgs'.callPackage ./site.nix {
           pkgs = pkgs';
           thirdparty = [
             {
               name = "bulma";
-              path = "${bulma}/sass";
+              path = "${inputs.bulma}/sass";
+            }
+            {
+              name = "line-awesome";
+              path = "${inputs.line-awesome}/dist/line-awesome";
+            }
+            {
+              name = "mathjax";
+              path = "${inputs.mathjax}/es5";
+            }
+            {
+              name = "revealjs";
+              path = "${inputs.revealjs}";
+            }
+            {
+              name = "swiperjs";
+              path = "${swiperjs}";
+            }
+            {
+              name = "vanillajs-scrollspy";
+              path = "${inputs.vanillajs-scrollspy}/dist";
             }
           ];
         };

@@ -12,40 +12,40 @@
     <title>$title$</title>
 
     <!-- Favicons -->
-    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
-    <link rel="alternate" type="application/atom+xml"  title="Atom Feed" href="/atom.xml" />
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
+    <link rel="alternate" type="application/atom+xml"  title="Atom Feed" href="/atom.xml">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
     <link rel="manifest" href="/assets/images/favicon/site.webmanifest">
 
     <!-- Style -->
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-    <link rel="stylesheet" href="/assets/thirdparty/swiper-8.2.4/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/assets/thirdparty/swiperjs/swiper-bundle.min.css">
 
     $if(slides)$
-      <link rel="stylesheet" href="/assets/thirdparty/revealjs-4.3.1/reveal.css">
+      <link rel="stylesheet" href="/assets/thirdparty/revealjs/reveal.css">
       $if(slide-theme)$
-        <link rel="stylesheet" href="/assets/thirdparty/revealjs-4.3.1/theme/$slide-theme$.css">
+        <link rel="stylesheet" href="/assets/thirdparty/revealjs/theme/$slide-theme$.css">
       $else$
-        <link rel="stylesheet" href="/assets/thirdparty/revealjs-4.3.1/theme/black.css">
+        <link rel="stylesheet" href="/assets/thirdparty/revealjs/theme/black.css">
       $endif$
       $if(slide-code-theme)$
-        <link rel="stylesheet" href="/assets/thirdparty/revealjs-4.3.1/plugin/highlight/$slide-code-theme$.css">
+        <link rel="stylesheet" href="/assets/thirdparty/revealjs/plugin/highlight/$slide-code-theme$.css">
       $else$
-        <link rel="stylesheet" href="/assets/thirdparty/revealjs-4.3.1/plugin/highlight/rose-pine.css">
+        <link rel="stylesheet" href="/assets/thirdparty/revealjs/plugin/highlight/rose-pine.css">
       $endif$
     $endif$
 
     <!-- Important JS that needs to be loaded up front -->
     <script src="/assets/scripts/init-darkmode.js"></script>
-    <script src="/assets/thirdparty/swiper-8.2.4/swiper-bundle.min.js"></script>
+    <script src="/assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
     $if(slides)$
-      <script src="/assets/thirdparty/revealjs-4.3.1/reveal.js"></script>
-      <script src="/assets/thirdparty/revealjs-4.3.1/plugin/highlight/highlight.js"></script>
-      <script src="/assets/thirdparty/revealjs-4.3.1/plugin/markdown/markdown.js"></script>
-      <script src="/assets/thirdparty/revealjs-4.3.1/plugin/math/math.js"></script>
+      <script src="/assets/thirdparty/revealjs/reveal.js"></script>
+      <script src="/assets/thirdparty/revealjs/plugin/highlight/highlight.js"></script>
+      <script src="/assets/thirdparty/revealjs/plugin/markdown/markdown.js"></script>
+      <script src="/assets/thirdparty/revealjs/plugin/math/math.js"></script>
     $endif$
 
   </head>
@@ -62,9 +62,9 @@
     <script src="/assets/scripts/darkmode.js"></script>
     <script src="/assets/scripts/navbar-menu.js"></script>
     <script src="/assets/scripts/navbar-toc.js"></script>
-    <script src="/assets/thirdparty/mathjax-3.2.2/tex-chtml.js"></script>
+    <script src="/assets/thirdparty/mathjax/tex-chtml.js"></script>
     $if(toc)$
-      <script src="/assets/thirdparty/vanillajs-scrollspy-2.2.0/vanillajs-scrollspy.min.js"></script>
+      <script src="/assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
       <script src="/assets/scripts/init-scrollspy.js"></script>
     $endif$
   </body>

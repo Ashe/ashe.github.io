@@ -31,6 +31,38 @@
         "type": "github"
       }
     },
+    "line-awesome": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1600071511,
+        "narHash": "sha256-zLTGTOhAexBx2ZYvczd2jiAMxNYQXgUS/RsAIedz7Vk=",
+        "ref": "master",
+        "rev": "a60f11367584e7df157277b5ab9d1654ec91ae24",
+        "revCount": 18,
+        "type": "git",
+        "url": "https://github.com/icons8/line-awesome/"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/icons8/line-awesome/"
+      }
+    },
+    "mathjax": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1654710011,
+        "narHash": "sha256-RIHI2qigotGqbwO09rUfmjkYzmkhYeEX+4B/F+Q6094=",
+        "ref": "master",
+        "rev": "600692ad9d3552cc25f85510d5797bc942ecc9f7",
+        "revCount": 3346,
+        "type": "git",
+        "url": "https://github.com/mathjax/MathJax/"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/mathjax/MathJax/"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1655753060,
@@ -46,11 +78,47 @@
         "type": "github"
       }
     },
+    "revealjs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1653993278,
+        "narHash": "sha256-X43lsjoLBWmttIKj9Jzut0UP0dZlsue3fYbJ3++ojbU=",
+        "ref": "master",
+        "rev": "039972c730690af7a83a5cb832056a7cc8b565d7",
+        "revCount": 2915,
+        "type": "git",
+        "url": "https://github.com/hakimel/reveal.js/"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/hakimel/reveal.js/"
+      }
+    },
     "root": {
       "inputs": {
         "bulma": "bulma",
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "line-awesome": "line-awesome",
+        "mathjax": "mathjax",
+        "nixpkgs": "nixpkgs",
+        "revealjs": "revealjs",
+        "vanillajs-scrollspy": "vanillajs-scrollspy"
+      }
+    },
+    "vanillajs-scrollspy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1635080176,
+        "narHash": "sha256-X6B6wTRYzOEbiG9m9jcTLf945FCaXI+3StYm9B3LvO8=",
+        "ref": "master",
+        "rev": "3143adf4372fe13a475b0db992097b98a17c87ac",
+        "revCount": 57,
+        "type": "git",
+        "url": "https://github.com/ederssouza/vanillajs-scrollspy/"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/ederssouza/vanillajs-scrollspy/"
       }
     }
   },
