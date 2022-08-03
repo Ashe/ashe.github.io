@@ -57,12 +57,12 @@ main = hakyllWith hakyllConfig $ do
 
   -- Copy third-party content
   copyThirdpartyFilesFrom "THIRDPARTY" "assets/thirdparty/"
-    [ ("line-awesome", "line-awesome")
-    , ("mathjax", "mathjax")
-    , ("revealjs/plugin", "revealjs/plugin")
-    , ("revealjs/dist", "revealjs")
-    , ("swiperjs", "swiperjs")
-    , ("vanillajs-scrollspy", "vanillajs-scrollspy")
+    [ ImportTo "line-awesome" "line-awesome"
+    , Import "mathjax"
+    , Import "revealjs/plugin"
+    , ImportTo "revealjs/dist" "revealjs"
+    , Import "swiperjs"
+    , Import "vanillajs-scrollspy"
     ]
 
   -- Compile bibliographies

@@ -1,7 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Thirdparty
-( copyThirdpartyFilesFrom
+( Import (..)
+, copyThirdpartyFilesFrom
 ) where
 
 import Hakyll
@@ -15,18 +16,24 @@ import qualified Data.ByteString as B
 
 --------------------------------------------------------------------------------
 
-copyThirdpartyFilesFrom :: String -> FilePath -> [(FilePath, FilePath)] -> Rules ()
+-- Representation of an import scheme
+data Import = Import FilePath | ImportTo FilePath FilePath
+
+
+-- Imports files as directed by import scheme
+copyThirdpartyFilesFrom :: String -> FilePath -> [Import] -> Rules ()
 copyThirdpartyFilesFrom includeEnv destination mappings = do
   thirdparty <- preprocess $ lookupEnv includeEnv
   case thirdparty of
     Just thirdpartyRoot -> do
-      forM_ mappings $ copyFilesInDir thirdpartyRoot destination
+      forM_ mappings $ walkFrom thirdpartyRoot destination
     _ -> pure ()
 
 --------------------------------------------------------------------------------
 
-copyFilesInDir :: FilePath -> FilePath -> (FilePath, FilePath) -> Rules ()
-copyFilesInDir root dest (from, to) = walkPaths (root </> from) (dest </> to) ""
+walkFrom :: FilePath -> FilePath -> Import -> Rules ()
+walkFrom root dest (Import path) = walkPaths (root </> path) (dest </> path) ""
+walkFrom root dest (ImportTo from to) = walkPaths (root </> from) (dest </> to) ""
 
 
 walkPaths :: FilePath -> FilePath -> FilePath -> Rules ()
