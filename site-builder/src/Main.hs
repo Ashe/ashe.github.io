@@ -42,6 +42,11 @@ main = hakyllWith hakyllConfig $ do
     route idRoute
     compile copyFileCompiler
 
+  -- Copy fonts
+  match "assets/fonts/**.woff2" $ do
+    route idRoute
+    compile copyFileCompiler
+
   -- Copy scripts
   match "assets/scripts/**.js*" $ do
     route idRoute
