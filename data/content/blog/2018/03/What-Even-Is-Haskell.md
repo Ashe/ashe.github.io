@@ -4,9 +4,9 @@ date: 2018-03-18
 subtitle: An introduction to the functional language known as Haskell.
 description: In this post, I'd like to write a beginner-friendly summary in layman's terms with regards to why I have taken such an interest in a language I've only started using. Hopefully this will inspire some people to consider using alternate languages to the ones they're used to.
 tags:
+  - Tutorial
   - Haskell
   - Functional
-  - Tutorial
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617292285/blog/2018/03/haskell_code_umjeh2.png
 status: published
 ---

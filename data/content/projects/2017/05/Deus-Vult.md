@@ -7,7 +7,6 @@ tags:
   - C++
   - Lua
   - SFML
-  - Engine
 image: https://raw.githubusercontent.com/Ashe/Deus_Vult/master/img/preview.gif
 status: published
 ---

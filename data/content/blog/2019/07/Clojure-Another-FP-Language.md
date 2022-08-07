@@ -4,10 +4,10 @@ date: 2019-07-20
 subtitle: An insight into my experiences with Clojure.
 description: I've always been aware of the Lisp language, but always been afraid to dive in. However, after reading 'Clojure for the brave and true', I now recognise Clojure as a simple, pleasant and powerful language.
 tags:
+  - Tutorial
   - Web
   - Clojure
   - Functional
-  - Tutorial
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617292812/blog/2019/07/brave_clojure_hiwogp.png
 status: published
 ---

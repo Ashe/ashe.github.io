@@ -61,9 +61,9 @@
     color: #ffffff;
   }
 
-  &.Engine {
-    background-color: #94152c;
-    color: #ffffff;
+  &.DirectX {
+    background-color: #7fba00;
+    color: #252525;
   }
 
   &.Functional {
@@ -77,7 +77,7 @@
   }
 
   &.GameMaker {
-    background-color: #71b417;
+    background-color: #759848;
     color: #ffffff;
   }
 
@@ -106,13 +106,18 @@
     color: #ffffff;
   }
 
+  &.OpenGL {
+    background-color: #5381ac;
+    color: #ffffff;
+  }
+
   &.QNA {
     background-color: #dbb854;
     color: #252525;
   }
 
   &.SFML {
-    background-color: #89c141;
+    background-color: #a6e94f;
     color : #252525;
   }
 
@@ -132,7 +137,7 @@
   }
 
   &.Tutorial {
-    background-color: #598edd;
+    background-color: #74a3e9;
     color: #ffffff;
   }
 
@@ -148,6 +153,11 @@
 
   &.Unity {
     background-color: #555555;
+    color: #ffffff;
+  }
+
+  &.Vulkan {
+    background-color: #94152c;
     color: #ffffff;
   }
 

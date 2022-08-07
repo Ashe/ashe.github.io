@@ -4,9 +4,10 @@ date: 2020-05-03
 subtitle: A tool to visualise and interact with the fourth dimension.
 description: Developing a game that uses the fourth dimension is rarely discussed, if discussed at all. I created an interactive visualisation of 4D geometry to learn how to apply 3D rendering concepts to higher dimensions.
 tags:
-  - C++
   - Tool
   - Uni
+  - C++
+  - OpenGL
 image: https://res.cloudinary.com/aas-sh/image/upload/v1617295182/projects/4d_geometry_viewer/preview_g92hon.gif
 featured: true
 status: published

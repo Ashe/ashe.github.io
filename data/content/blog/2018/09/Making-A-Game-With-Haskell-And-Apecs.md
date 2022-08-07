@@ -4,11 +4,11 @@ date: 2018-09-10
 subtitle: A post about how I used Apecs ECS framework to make 'HSRogue'.
 description: There have been so many attempts to pioneer gamedev in Haskell, and yet still no commercial releases. In this post I hope to clear the air a little bit and encourage new developers to try Haskell.
 tags:
+  - Tutorial
   - Game
-  - Engine
   - Haskell
   - Functional
-  - Tutorial
+  - OpenGL
 image: https://raw.githubusercontent.com/Ashe/HSRogue/master/img/gameplay.gif
 project: hsrogue
 status: published

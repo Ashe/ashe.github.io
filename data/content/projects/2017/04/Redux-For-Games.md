@@ -5,9 +5,9 @@ subtitle: A remake of my Alacrity in a homemade engine.
 description: Alacrity was really successful, but I didn't like the fact that it wasn't cross platform. To test myself even further I wanted to try porting it to OpenGL.
 tags:
   - Game
-  - C++
   - Uni
-  - Engine
+  - C++
+  - OpenGL
 image: https://raw.githubusercontent.com/Ashe/ReduxForGames/master/img/preview.gif
 status: published
 ---

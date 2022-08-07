@@ -9,8 +9,9 @@ authors:
   - Elliott Hill
 tags:
   - Game
-  - C++
   - Uni
+  - C++
+  - DirectX
 images:
   - https://raw.githubusercontent.com/Ashe/Alacrity/master/img/splash.jpg
   - https://raw.githubusercontent.com/Ashe/Alacrity/master/img/alacrity.gif
