@@ -27,7 +27,7 @@ I build this as part of my introduction to both [Haxe](https://haxe.org/) and [H
 
 You can test this project live at [https://aas.sh/Hex-Voronoi](https://aas.sh/Hex-Voronoi/).
 
-:::{.caption .w-full .h-full .hidden .lg:block
+:::{.caption .w-full .h-full .hidden-on-mobile
   caption="The live demo of Hex-Voronoi, embedded into this page. It might not work as well as the [full-window version](https://aas.sh/Hex-Voronoi/)."
   source="Hex Voronoi"
   sourceUrl="https://github.com/Ashe/Hex-Voronoi"
