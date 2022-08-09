@@ -59,8 +59,7 @@ localAssetsUrls item = let
 
 simpleCompile :: Compiler (Item String)
 simpleCompile = do
-  item <- pandocCompilerWithTransform readerOptions defaultHakyllWriterOptions $ 
-          const $ Pandoc nullMeta [Div ("", [], []) []]
+  item <- pandocCompiler
   pure item >>= saveSnapshot "posts-content"
             >>= relativizeUrls
             >>= cleanIndexUrls
