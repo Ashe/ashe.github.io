@@ -6,7 +6,14 @@
 
   // Make subtitles more compact
   .subtitle {
-    margin-top: -0.25rem;
+    font-size: 1.25rem;
+    margin-top: -1.2rem;
+  }
+
+  // Raise description up
+  .description {
+    font-family: 'Crimson Pro', serif;
+    margin-top: -1rem;
   }
 
   // Article authors

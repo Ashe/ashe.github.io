@@ -47,7 +47,7 @@
 
     // Reduce resulting whitespace from titles
     .title {
-      margin-bottom: 0.8rem; 
+      margin-bottom: 0.8rem;
     }
 
     // All images within post preview
@@ -64,6 +64,13 @@
     // Images should cover available space
     img {
       object-fit: cover;
+    }
+
+    // Make description use sans-serif
+    .description {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.1rem;
+      margin-top: 0rem;
     }
   }
 }

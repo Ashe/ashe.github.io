@@ -73,6 +73,9 @@ footer {
 
 #navbar-container {
   background-color: #273146;
+  hr {
+    background-color: #273146;
+  }
   .theme-toggle button {
     &:not(:hover) {
       color: #8cabe6;
