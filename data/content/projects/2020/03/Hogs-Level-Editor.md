@@ -37,7 +37,7 @@ The first feature I wanted to implement was simply manipulating vertices with a 
   caption="The *sculpt* tool can be used to raise and lower vertices in an adjustable brush. Holding the `Shift` key keeps the tool in place to avoid accidentally altering the heightmap."
   source="Hogs of War: Level Editor"
 }
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1623691315/projects/hogs_of_war_level_editor/sculpt.mkv" autoplay muted loop controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1623691315/projects/hogs_of_war_level_editor/sculpt.mp4" autoplay muted loop controls></video>
 :::
 
 To make sure that these changes were correctly applied to the map file, I had to demonstrate that I could open a map, edit it, save it and then re-open it to see the changes perfectly recreated.
@@ -51,7 +51,7 @@ The second big feature I implemented was something I noticed from the sculpting 
   caption="The *selection* tool separates the selection of vertices from their modifications. Once a selection has been made, the tool can be used to modify all selected vertices at once."
   source="Hogs of War: Level Editor"
 }
-<video src="https://res.cloudinary.com/aas-sh/video/upload/v1623691328/projects/hogs_of_war_level_editor/select.mkv" autoplay muted loop controls></video>
+<video src="https://res.cloudinary.com/aas-sh/video/upload/v1623691328/projects/hogs_of_war_level_editor/select.mp4" autoplay muted loop controls></video>
 :::
 
 The ability to undo and redo was also added around this time, since I was able to be encapsulate an 'edit', and so the undo-chain was as simple as applying the same transformation in reverse. This was a little bit trickier with the sculpting tool since that was one long continuous mutation, but all I needed to do was record the net change in height for each vertex.
