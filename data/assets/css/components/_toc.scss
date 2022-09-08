@@ -124,6 +124,7 @@
 
 // Shrink main article to 80% when toc is visible
 article .can-shrink-for-toc {
+  max-width: 100%;
   @include fullhd {
     width: 80%;
   }
