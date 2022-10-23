@@ -28,76 +28,76 @@
 
   outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem ( system:
-      let
-        pkgs' = import nixpkgs { inherit system; };
-        swiperjs = (builtins.fetchTarball {
-          url = "https://registry.npmjs.org/swiper/-/swiper-8.3.2.tgz";
-          sha256 = "1bn2zfg668zaj3sacqqnqn7df82801yq11wgx34xrd5qh6297x68";
-        });
-        website = pkgs'.callPackage ./site.nix {
-          pkgs = pkgs';
-          thirdparty = [
-            {
-              name = "bulma";
-              path = "${inputs.bulma}/sass";
-            }
-            {
-              name = "line-awesome";
-              path = "${inputs.line-awesome}/dist/line-awesome";
-            }
-            {
-              name = "mathjax";
-              path = "${inputs.mathjax}/es5";
-            }
-            {
-              name = "revealjs";
-              path = "${inputs.revealjs}";
-            }
-            {
-              name = "swiperjs";
-              path = "${swiperjs}";
-            }
-            {
-              name = "vanillajs-scrollspy";
-              path = "${inputs.vanillajs-scrollspy}/dist";
-            }
-          ];
+    let
+      pkgs = import nixpkgs { inherit system; };
+      swiperjs = (builtins.fetchTarball {
+        url = "https://registry.npmjs.org/swiper/-/swiper-8.3.2.tgz";
+        sha256 = "1bn2zfg668zaj3sacqqnqn7df82801yq11wgx34xrd5qh6297x68";
+      });
+      website = pkgs.callPackage ./site.nix {
+        inherit pkgs;
+        thirdparty = [
+          {
+            name = "bulma";
+            path = "${inputs.bulma}/sass";
+          }
+          {
+            name = "line-awesome";
+            path = "${inputs.line-awesome}/dist/line-awesome";
+          }
+          {
+            name = "mathjax";
+            path = "${inputs.mathjax}/es5";
+          }
+          {
+            name = "revealjs";
+            path = "${inputs.revealjs}";
+          }
+          {
+            name = "swiperjs";
+            path = "${swiperjs}";
+          }
+          {
+            name = "vanillajs-scrollspy";
+            path = "${inputs.vanillajs-scrollspy}/dist";
+          }
+        ];
+      };
+    in {
+      packages = flake-utils.lib.flattenTree {
+        inherit (website);
+        default = website.site-with-thirdparty;
+      };
+      apps = rec {
+        rebuild = flake-utils.lib.mkApp {
+          drv = website.ci.rebuild;
+          exePath = "";
         };
-      in rec {
-        defaultApp = apps.rebuild-watch;
-        defaultPackage = website.site-with-thirdparty;
-        devShell = website.shell;
-
-        apps = {
-          rebuild = flake-utils.lib.mkApp { 
-            drv = website.ci.rebuild; 
-            exePath = ""; 
-          };
-          watch = flake-utils.lib.mkApp { 
-            drv = website.ci.watch; 
-            exePath = ""; 
-          };
-          rebuild-watch = flake-utils.lib.mkApp { 
-            drv = website.ci.rebuild-watch; 
-            exePath = ""; 
-          };
-          clean = flake-utils.lib.mkApp { 
-            drv = website.ci.clean; 
-            exePath = ""; 
-          };
-          site = flake-utils.lib.mkApp { 
-            drv = website.site-with-thirdparty; 
-            exePath = "/bin/site"; 
-          };
+        watch = flake-utils.lib.mkApp {
+          drv = website.ci.watch;
+          exePath = "";
         };
-
-        packages = { 
-          inherit (website)
-          site
-          site-with-thirdparty 
-          ci 
-          shell; 
+        rebuild-watch = flake-utils.lib.mkApp {
+          drv = website.ci.rebuild-watch;
+          exePath = "";
         };
-      }
-    );
+        clean = flake-utils.lib.mkApp {
+          drv = website.ci.clean;
+          exePath = "";
+        };
+        site = flake-utils.lib.mkApp {
+          drv = website.site-with-thirdparty;
+          exePath = "/bin/site";
+        };
+        default = rebuild-watch;
+      };
+      devShell = pkgs.haskellPackages.shellFor {
+        packages = p: [ website.site ];
+        buildInputs = with pkgs.haskellPackages; website.site.buildInputs ++ [
+          haskell-language-server
+          cabal-install
+        ];
+      };
+    }
+  );
 }

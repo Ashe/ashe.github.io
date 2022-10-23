@@ -1,6 +1,6 @@
 .direnv/
 build/
-src/dist/
-src/dist-newstyle/
+dist/
+dist-newstyle/
 result
 result/
