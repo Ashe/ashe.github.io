@@ -30,6 +30,7 @@
     flake-utils.lib.eachDefaultSystem ( system:
     let
       pkgs = import nixpkgs { inherit system; };
+      toApp = drv: { type = "app"; program = "${drv}";};
       swiperjs = (builtins.fetchTarball {
         url = "https://registry.npmjs.org/swiper/-/swiper-8.3.2.tgz";
         sha256 = "1bn2zfg668zaj3sacqqnqn7df82801yq11wgx34xrd5qh6297x68";
@@ -69,26 +70,11 @@
         default = website.site-with-thirdparty;
       };
       apps = rec {
-        rebuild = flake-utils.lib.mkApp {
-          drv = website.ci.rebuild;
-          exePath = "";
-        };
-        watch = flake-utils.lib.mkApp {
-          drv = website.ci.watch;
-          exePath = "";
-        };
-        rebuild-watch = flake-utils.lib.mkApp {
-          drv = website.ci.rebuild-watch;
-          exePath = "";
-        };
-        clean = flake-utils.lib.mkApp {
-          drv = website.ci.clean;
-          exePath = "";
-        };
-        site = flake-utils.lib.mkApp {
-          drv = website.site-with-thirdparty;
-          exePath = "/bin/site";
-        };
+        rebuild = toApp website.ci.rebuild;
+        watch = toApp website.ci.watch;
+        rebuild-watch = toApp website.ci.rebuild-watch;
+        clean = toApp website.ci.clean;
+        site = toApp website.site-with-thirdparty;
         default = rebuild-watch;
       };
       devShell = pkgs.haskellPackages.shellFor {
