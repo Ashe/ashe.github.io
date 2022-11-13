@@ -30,7 +30,7 @@ So, what did I actually pay for by doing a master's year? If it wasn't for the e
 
 # The degree
 
-The almighty piece of paper that I won't get until later this year that means we're qualified to do our future jobs. By getting a degree, we should be able to say we're ready. I can tell you now, the only way my degree would feel valuable to me would be if less people were in possession of one --- it is watered down. This isn't the fault of the student's but the university --- our money was used to build several new buildings and our tutors went on strike. I can't say if my criticisms of the tutors were fair because of financial struggles or management issues, but they were still legitimate. Perhaps the blame lies with my tutor's employers instead? 
+The almighty piece of paper that I won't get until later this year that means we're qualified to do our future jobs. By getting a degree, we should be able to say we're ready. I can tell you now, the only way my degree would feel valuable to me would be if less people were in possession of one --- it is watered down. This isn't the fault of the student's but the university --- our money was used to build several new buildings and our tutors went on strike. I can't say if my criticisms of the tutors were fair because of financial struggles or management issues, but they were still legitimate. Perhaps the blame lies with my tutor's employers instead?
 
 There are people graduating all courses who probably shouldn't even be in their current year. This is pretty mean of me to say I admit, but hear me out. So many people came to me for help with debugging because they simply didn't know how --- it would get to the point where they'd ask me if a snippet of code would work before they even tested it themselves --- are these people really ready? Are these people really the people the university wanted to show off as first-class students?
 
@@ -70,7 +70,7 @@ The worst part is that I don't think the university really cares about students 
 
 # Graduates
 
-Seasoned programmers know that computer science degrees are a bit of a meme. They simply aren't always ready. A graduate's degree doesn't actually mean they're any good at what they want to get paid to do, and is insufficient evidence for their suitability. This is encapsulated in the [CS graduate meme](https://imgur.com/a/lGOvs), some of the best of which will be posted below for your amusement. Please remember that no one is perfect and everyone makes mistakes. 
+Seasoned programmers know that computer science degrees are a bit of a meme. They simply aren't always ready. A graduate's degree doesn't actually mean they're any good at what they want to get paid to do, and is insufficient evidence for their suitability. This is encapsulated in the [CS graduate meme](https://imgur.com/a/lGOvs), some of the best of which will be posted below for your amusement. Please remember that no one is perfect and everyone makes mistakes.
 
 I like to think that I wouldn't make the same kinds of mistakes that are commonly attributed to graduates, but at the same time, I have always been at the top of the pile and therefore I'm sure anyone with more experience than I do will have numerous criticisms for me --- criticisms I'm excited to receive seeing as university didn't really teach me anything. I don't blame graduates for these mistakes, but the universities that let them graduate without being thorough enough (while also yoinking £9k a year at the same time).
 
@@ -98,7 +98,7 @@ I like to think that I wouldn't make the same kinds of mistakes that are commonl
 
 # Getting a job
 
-Despite the amount of criticism I've just given about higher education, it is true that degrees help you get a job. It is more of a filter than anything else --- I had 6 interviews and each and every one of them were impressed with my [portfolio](https://aas.sh/projects/) and testing results, while none of them asked me anything about what I learned at the university. One of the employees who was present for my interview at [Jagex](https://www.jagex.com/) had even gone to Sheffield Hallam and had the exact same complaints I had. We both came to the conclusion that despite our feedback nothing of worth has changed in relation to our course.
+Despite the amount of criticism I've just given about higher education, it is true that degrees help you get a job. It is more of a filter than anything else --- I had 6 interviews and each and every one of them were impressed with my [portfolio](/projects/) and testing results, while none of them asked me anything about what I learned at the university. One of the employees who was present for my interview at [Jagex](https://www.jagex.com/) had even gone to Sheffield Hallam and had the exact same complaints I had. We both came to the conclusion that despite our feedback nothing of worth has changed in relation to our course.
 
 All of my interviews went well, and I couldn't be any happier. Everyone liked me. After so many years of feeling like I wasn't enough, that my hard work was 'expected' and thus didn't require praise,  I was finally being recognised. My confidence really did plummet as a result of the university; the only times my work was given feedback was when I did something wrong. However, those years are behind me, and with that I can finally say the following:
 
