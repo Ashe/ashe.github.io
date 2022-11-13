@@ -67,6 +67,25 @@ footer {
   background-color: #273146;
 }
 
+//////////////
+// Articles //
+//////////////
+
+article {
+
+  table {
+    background-color: #172136;
+    th, td {
+      color: #cbd9f4;
+      border-color: #273146;
+    }
+    tr:nth-child(even) {
+      background-color: #202439;
+    }
+  }
+
+}
+
 //////////////////////
 // Navbar and menus //
 //////////////////////
