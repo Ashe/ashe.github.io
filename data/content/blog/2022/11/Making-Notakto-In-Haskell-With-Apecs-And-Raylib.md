@@ -83,7 +83,7 @@ At this point in time, running the project should print `Hello, Notakto`.
 A link to the repository's commit for the following section can be found [here](https://github.com/Ashe/Notakto/tree/0852350c18071b6332899639055d3c38c1976963).
 :::
 
-After setting up the repository, my next step with any project is getting a motified example running to demonstrate that things are working correctly. Lets begin by updating our cabal file to include the `h-raylib` and `apecs`.
+After setting up the repository, my next step with any project is adding the libraries I know I'll be using and getting a modified example running to demonstrate that things are working correctly. Lets begin by updating our cabal file to include the `h-raylib` and `apecs`.
 
 ```cabal
 library
@@ -98,7 +98,7 @@ library
 
 ## Single file example
 
-### Imports
+### Imports, options and extensions
 
 Now we can try and use our dependencies by modifying an example! Thankfully, `h-raylib` supplies us with a [first-person-camera example](https://github.com/Anut-py/h-raylib/tree/606936336922dea13517abf4d136f17b162efcc1/examples/first-person-camera), and I already have some Apecs examples from the [project](https://github.com/Ashe/HSRogue/) featured in my [previous post](https://aas.sh/blog/making-a-game-with-haskell-and-apecs/)!
 
@@ -126,15 +126,15 @@ Here is how our `Lib` module is setup now. We're still working in one file to ke
 
 * I use the `-Wall` language option just to make sure we're ironing out warnings we go --- personal prefence.
 * The language extensions you see are all used by Apecs (or at least, the example made use of them). I know for a fact that `TemplateHaskell` is used as an easy way of building a `World` type for use throughout the application.
-* `Lib` only needs to export `main` for now, but if we ever want to export a configuration class that our client can provide then this is where we'd put it.
+* `Lib` only needs to export `main` for now, but if we ever want to export a configuration data type that our client can provide then this is where we'd put it.
 * I try to structure my includes with my 'Haskell libraries' at the top (i.e. things that aren't specific to my project), followed by blocks of imports for my dependencies:
-  * `Apecs` has quite a nice API; it doesn't get messy if you just import it in its entirety and it almost feels like it's part of the language.
+  * Apecs has quite a nice API; it doesn't get messy if you just import it in its entirety and it almost feels like it's part of the language.
   * Raylib has a *lot* of things going on (again, refer to the [cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html), so I've `qualified` it. Normally I'd explicitly write every function I use, however for this tutorial I'm going to use qualifications so that you can easily tell when something is a Raylib thing and when it's something else.
     * I made an exception for `Raylib.Types` --- certain types are quite commonly used throughout the project and so rather than typing `RL.Vector3` constantly I instead explicitly imported it so that we can use it without restraint.
 
 ### Creating and initialising a World
 
-Next up is creating our `World`. In Apecs, the `World` is a type built specifically for your components to live in; that's why `TemplateHaskell` is used to automatically write the code that glues your components together. The `initWorld` function is also a result of this template, which is why you might find it hard to find the `World` type and `initWorld' in the [`apecs` documentation](https://hackage.haskell.org/package/apecs).
+Next up is creating our `World`. In Apecs, the `World` is a type built specifically for your components to live in; that's why `TemplateHaskell` is used to automatically write the code that glues your components together. The `initWorld` function is also a result of this template, which is why you might find it hard to find the `World` type and `initWorld` in the [`apecs` documentation](https://hackage.haskell.org/package/apecs).
 
 ```hs
 -- Define a component, a Camera
@@ -165,7 +165,7 @@ initialise = do
 
   -- Define a Raylib 3D perspective camera and name it 'camera'
   let camera = RL.Camera3D (Vector3 0 1 0) (Vector3 2 1 1) (Vector3 0 1 0) 70
-      RL.cameraProjection'perspective
+        RL.cameraProjection'perspective
 
   -- Create a global entity with our camera component
   -- 'set' is an apecs function for setting a component's state on a given entity
@@ -264,8 +264,386 @@ After what feels like an eternity (it has taken me 2 hours to write this!), here
 
 :::{.figure
   image="https://res.cloudinary.com/aas-sh/image/upload/v1668335749/blog/2022/11/13-11-2022_10_35_33_e1xmdy.png"
-  caption="Screenshot of the single file example running"
+  caption="Screenshot of the single file example running."
   source="Notakto"
   sourceUrl="https://github.com/Ashe/Notakto/tree/dd26d756904358cc907a8db11ae66392f45bfa96"
+}
+:::
+
+# Visualising the state of the game
+
+:::{.gitrepo header="Notakto"}
+A link to the repository's commit for the following section can be found [here](https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e).
+:::
+
+## What should be an entity?
+
+I believe that the next step of this project is to visualise the boards and the marks placed upon them. In terms of priority, I want to get the visuals set up first otherwise testing the game is going to be a pain, but in order to get that done we need to create a basic representation of state!
+
+So, representations of state --- `data` types! Let's make some new types to represent things we'll need in our game! But wait.. Do you hear alarm bells?
+
+:::{.danger header="Don't rush!"}
+While it's all fun and games to get experimental and start playing around with Haskell's wonderful type system, sometimes we can get bogged down in actually using these types and trying to make them work.
+
+Let's take a moment to appreciate the blank slate we have right now and come up with at least a hypothesis for how things should be laid out.
+:::
+
+After heeding that warning, let's create an action plan. What should consist of an entity in our game? More specifically, should the boards themselves be entities? Should the marks that players place be entities? One could argue that both the board itself and the crosses placed could be entities. I disagree; I believe that the crosses don't really make sense without the context of a board, and so there'd be little use in having an entity representing each cross in isolation (it might even make things more confusing trying to figure out which board each cross is on).
+
+:::{.caption
+  caption="A table describing my plan for entities in Notakto."
+  source="Notakto"
+  sourceUrl="https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e"
+}
+
+| Thing | Is Entity? | Reasoning |
+|:-:|:-:|:-------------:|
+| Player | Maybe | The player won't have much data of their own; they can be represented elsewhere. If it turns out we want things like customisable player names and colours then they could become entities. |
+| 'Game' | Global | The global entity can contain a component with the information for who's turn it is (either player one or player two). |
+| Cross | No | Crosses don't have much of their own data other than their location, which is dependent on the board. Standard Haskell data types will suffice. |
+| Board | Yes | Boards contain the state of crosses placed on them, as well as whether they are 'dead' or not. Their state will need to be rendered. |
+:::
+
+I believe that's all we need to think about to get started; let's do some programming.
+
+## The Types module
+
+A single-file example is nice, but is only going to impede us going forward; let's make a new module containing all of our components and miscellaneous types: `Types.hs`!
+
+```hs
+{-# OPTIONS -Wall #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeFamilies #-}
+
+module Types (
+  World,
+  initWorld,
+  Camera (..),
+) where
+
+import Apecs
+
+import qualified Raylib.Types as RL
+
+newtype Camera = Camera RL.Camera3D
+
+makeWorldAndComponents "World" [''Camera]
+```
+
+So I've moved all language extensions into this new file, since they're only relevant for the `World` initialisation code. We now have a cleaner space to declare new data types, and since components *should* be simple, we should be fine to place them all in here for the duration of this project.
+
+## The BoardComponent
+
+In the previous section, we asked the question "what should be an entity?" Now that we know of some certain entities, we now need to think about what components we might like to attach. The one I'm most interested in right now is a representation of a board, the standard tic-tac-toe battle ground.
+
+```hs
+-----------
+-- Types --
+-----------
+
+data Cell = Empty | Filled deriving (Show, Eq)
+
+----------------
+-- Components --
+----------------
+
+newtype CameraComponent = Camera RL.Camera3D
+
+
+data BoardComponent = Board {
+  _tl :: Cell, _tc :: Cell, _tr :: Cell,
+  _ml :: Cell, _mc :: Cell, _mr :: Cell,
+  _bl :: Cell, _bc :: Cell, _br :: Cell
+} deriving (Show, Eq)
+
+makeWorldAndComponents "World" [''CameraComponent, ''BoardComponent]
+```
+This will do for now I think, no need to get too fancy. One thing I'd like to draw your attention to is the separation of standard types and types that are used as components --- components are the things you'll be operating on when using Apecs, so try to organise your code in a way which makes sense to you. I've appended `Component` to my component types, but I've omitted it from my data constructors so I don't have to type it out as much.
+
+Now go back to `Lib.hs` and fix any errors we have and ensure things still run. Let's also create an entity with `BoardComponent`s to represent a singular board while we're at it!
+
+```hs
+initialise :: System World ()
+initialise = do
+
+      -- Update location of camera so we can look at origin
+  let camera = RL.Camera3D (Vector3 0 1 6) (Vector3 0 1 0) (Vector3 0 1 0) 90
+        RL.cameraProjection'perspective
+
+      -- Define what a blank board looks like
+      newBoard = Board Empty Empty Empty Empty Empty Empty Empty Empty Empty
+
+  set global $ Camera camera
+
+  -- Create a new entity with a blank board
+  -- Note: if you want the return value, omit '_'
+  newEntity_ newBoard
+
+  liftIO $ do
+    RL.initWindow 1920 1080 "App"
+    RL.setTargetFPS 60
+    RL.setCameraMode camera RL.cameraMode'firstPerson
+```
+
+## Rendering
+
+Now that we have some data floating around cyberspace it's time to prove that we do indeed have some state by trying to visualise it. Now for the sake of fun, I'm going to **continue to use the first-person camera**. If this was any other project I'd throw it out the window, but it gives us an event handling system built as well as a great opportunity to experience Notakto in 3D! Throwing it away right now would just create a detour since we can use it in the short term to explore our world.
+
+:::{.help header="What if I want to do 2D?"}
+If you're planning to use this project as a springboard for a 2D project, you might be thinking of splintering off here and doing some exploration with Raylib's 2D camera. I have to say that it doesn't look too scary, so maybe this would be a good point for you to take a break and play around with it. We will be using cubes and 3D shapes to represent our boards in 3D space, so you'll have to translate things as you go. If you want to continue using 3D, I'm sure it wouldn't take long to switch it out for 2D later down the line.
+
+If you choose to split off now, good luck!
+:::
+
+Once again, I'm going to make a new module: `Rendering.hs`. This module is going to import `Types` and be imported by our main `Lib` module. This module will house all the dirty Raylib rendering things so that our main file can be more gameplay-focused. I've also moved the `render` function into this module so that we only have to export a single function for the entire module.
+
+```hs
+module Rendering (
+  render
+) where
+
+import Apecs
+
+import qualified Raylib as RL
+import qualified Raylib.Colors as RL
+import qualified Raylib.Constants as RL
+import qualified Raylib.Types as RL
+import Raylib.Types (Vector3 (..))
+
+import Types
+
+
+render :: System World ()
+render = do
+  Camera camera <- get global
+  liftIO $ do
+    RL.beginDrawing
+    RL.clearBackground RL.black
+    RL.drawFPS 10 20
+    RL.beginMode3D camera
+    RL.drawGrid 10 1
+
+  -- Our systems are sandwiched between the 'begin' and 'end' functions
+  renderBoards
+
+  liftIO $ do
+    RL.endMode3D
+    RL.endDrawing
+
+
+renderBoards :: System World ()
+renderBoards = undefined
+```
+
+Time to get creative! We need to draw some array of cubes and shapes to visualise the board! Our use of `RL.drawGrid` means we can visualise the units of the world --- the grid is spaced such that each cell is 1 unit by 1 unit. Now we just need to draw 4 cuboids to mock out a hash symbol.
+
+```hs
+-- Those experienced with monads can probably guess what cmapM_ does
+renderBoards :: System World ()
+renderBoards = cmapM_ renderBoard
+
+-- The signature of this function also qualifies as a condition, only the
+-- entities that satisfy said condition will have this function mapped onto them
+-- In short, only entities with a BoardComponent get rendered via this function
+renderBoard :: BoardComponent -> System World ()
+renderBoard b = liftIO $ do
+  RL.drawCube (Vector3 0.5    1.5 0) t 3 t RL.white
+  RL.drawCube (Vector3 (-0.5) 1.5 0) t 3 t RL.white
+  RL.drawCube (Vector3 0 1 0) 3 t t RL.white
+  RL.drawCube (Vector3 0 2 0) 3 t t RL.white
+
+  -- 't' is the thickness here
+  where t = 0.05
+```
+
+The key takeaway here is `cmapM_`. Let's quickly recap the other variants so that we can deduce what this does (I'm going to shorten the type signatures a bit here):
+
+> ```hs
+> cmap :: (cx -> cy) -> System w ()
+> ```
+
+This function maps a standard, non-monadic function onto all entities with `cx`. What is `cx` you might ask? Well I shortened the type signature for the blog (sorry) but it's a polymorphic parameter representing a bundle of components. Apecs leverages Haskell's type system to intelligently select all entities that meet the criteria for `cx`. A singular type is one of the simplest forms of using this function; notice how our `renderBoard` function *requires* a parameter of `BoardComponent`. We can actually specify more than just a single component, and Apecs will use that group as `cx`. Similarly, `cy` is a group of components to be output.
+
+> ```hs
+> cmapM :: (cx -> System w cy) -> System w ()
+> ```
+
+This function is very similar to `cmap` with one exception --- the function mapped onto entities returns a composable side-effect of the `System` monad, which also means *access to `IO`* as well as other Apecs functions. You will typically use `pure <your components>` to return things. Appending `M` to a function to denote the presence of a monad is very common in Haskell.
+
+> ```hs
+> cmapM_ :: (cx -> System w ()) -> System w ()
+> ```
+
+Once again, very similar, except this time to `cmapM`. We still have access to monads, except the function we map onto entities no longer produces a `cy`. This means that the function you're mapping onto your entities is there to only produce side-effects. In the case of `renderBoards`, we want to map a monad function to our entities, but we don't need to return anything, so `cmapM_` is used.
+
+After all of that, we have our first board rendered!
+
+:::{.figure
+  image="https://res.cloudinary.com/aas-sh/image/upload/v1668352718/blog/2022/11/13-11-2022_15_18_24_lfwnkh.png"
+  caption="Screenshot of our first board being rendered in 3D space."
+  source="Notakto"
+  sourceUrl="https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e"
+}
+:::
+
+What does this tell us? Well, if we had no entities in the game that contained a `BoardComponent`, this arrangement of sticks wouldn't appear in the world at all! We have correctly defined, initialised, stored, read and visualised state, even on a very basic level!
+
+There are some things however that this doesn't tell us:
+
+* It won't tell us **how many** boards there are, they all render on top of each other.
+* It won't show us **the state of the board**, since we aren't rendering crosses yet.
+* It won't help us realise **why we should love the game of Notakto**.
+
+## Multiple boards
+
+Let's address this issue of not being able to see multiple boards. There's two ways I can think of for going about this:
+
+* We could create a new component representing the origin of the board in 3D space.
+* We could count the number of boards and distribute them evenly along the x-axis.
+
+Since at some point we're going to have to do raycasting, I'd rather keep things simple (for now) and keep them along the x-axis. That way, we can do some maths to see which cell the player is looking at.
+
+```hs
+renderBoards :: System World ()
+renderBoards = do
+
+  -- Now we count how many entities have a BoardComponent using cfold
+  numBoards <- cfold (\c (Board{}) -> c + 1) 0
+
+  -- We provide the count to renderBoard
+  -- Also, we want to FOLD now, since we're iterating through boards
+  cfoldM_ (renderBoard numBoards) 0
+
+
+-- We now know the total number of boards as well as the current board
+renderBoard :: Int -> Int -> BoardComponent -> System World Int
+renderBoard total i b = liftIO $ do
+
+  -- Each of our cubes are now offset using a function we define below
+  RL.drawCube (addVectors origin $ Vector3 0.5    0 0) t 3 t RL.white
+  RL.drawCube (addVectors origin $ Vector3 (-0.5) 0 0) t 3 t RL.white
+  RL.drawCube (addVectors origin $ Vector3 0 0.5 0) 3 t t RL.white
+  RL.drawCube (addVectors origin $ Vector3 0 (-0.5) 0) 3 t t RL.white
+
+  -- Return the next index (so we can track progress through iteration)
+  pure $ i + 1
+
+  -- Determine the origin of the board (4.5 = length of board (3) + padding (1.5))
+  where offset = fromIntegral (total - 1) * 0.5
+        origin = Vector3 (CFloat (fromIntegral i - offset) * 4.5) 1.5 0
+
+        -- Convenience function for adding a vector to the origin, used above
+        offset p = addVectors p $ Vector3 (CFloat origin) 0 0
+        t = 0.05
+
+
+-- Raylib bindings need love; we need to make a function for adding vectors
+addVectors :: Vector3 -> Vector3 -> Vector3
+addVectors a b = Vector3
+    (vector3'x a + vector3'x b)
+    (vector3'y a + vector3'y b)
+    (vector3'z a + vector3'z b)
+```
+
+The biggest change we've made here is the use of `cfold` and `cfoldM_`. Our first use of `cfold` is given a pure function that doesn't use monads, therefore we use `cfold`. The second one does use monads, and since we don't care about a return value we use `cfoldM_`. Folding is a generic way of doing things like accumulation or filtering; you iterate through the list as well as another parameter, be it a 'count', 'total' or an entirely different list. In this case, we used folds to firstly count the number of entities satisfying a condition (whether they had a `BoardComponent`), then we used another fold to iterate through the same set of entities, except this time we used the iteration value (`index`) as a way of knowing how far through we are, kind of like a `for` loop in imperative languages.
+
+:::{.warning header="Using the entity ID"}
+An entity is just a wrapper for an integer value; in theory you could just use the entity's ID itself to work out where the boards need to go. However, this will become problematic if you initialise other entities before or in the middle of your boards, as now your boards' IDs won't be sequential in the way you expect!
+:::
+
+With that out of the way, let's instantiate more entities!
+
+```hs
+-- Let's make 3 boards!
+newEntity_ newBoard
+newEntity_ newBoard
+newEntity_ newBoard
+```
+
+Objective complete! Even though the components of each of these boards have the exact same date, the fact that there are multiple entities now reveals itself visually!
+
+:::{.figure
+  image="https://res.cloudinary.com/aas-sh/image/upload/v1668357984/blog/2022/11/13-11-2022_16_46_16_g6uf5j.png"
+  caption="Now we can render as many boards as we like, distributed along the x-axis."
+  source="Notakto"
+  sourceUrl="https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e"
+}
+:::
+
+## Board state
+
+Time for the final piece of the puzzle: rendering a representation of what marks have been placed on each board! We're almost there, I promise. This is more of the same kind of stuff.
+
+```hs
+renderBoard :: Int -> Int -> BoardComponent -> System World Int
+renderBoard total i b = do
+
+  -- Render crosses as part of renderBoard
+  -- We provide the origin value as well as the component
+  renderCrosses origin b
+
+  liftIO $ do
+    RL.drawCube (addVectors origin $ Vector3 0.5    0 0) t 3 t RL.white
+    -- <...>
+
+-- Given an origin, render a cross for each cell
+renderCrosses :: Vector3 -> BoardComponent -> System World ()
+renderCrosses origin b = do
+
+  -- This function's job is to geometrically define what 'top left' etc means
+  renderCross origin (-1)   1  (_tl b)
+  renderCross origin   0    1  (_tc b)
+  renderCross origin   1    1  (_tr b)
+  renderCross origin (-1)   0  (_ml b)
+  renderCross origin   0    0  (_mc b)
+  renderCross origin   1    0  (_mr b)
+  renderCross origin (-1) (-1) (_bl b)
+  renderCross origin   0  (-1) (_bc b)
+  renderCross origin   1  (-1) (_br b)
+
+
+-- Now we have an origin as well as a horizontal + vertical offset and a cell
+renderCross :: Vector3 -> Float -> Float -> Cell -> System World ()
+
+-- If the cell is empty, we just do nothing (pure nothingness, pretty metal!)
+renderCross _ _ _ Empty = pure ()
+
+-- If the cell is filled, we render a cross
+renderCross origin i j Filled = liftIO $ do
+
+  -- We simply draw 2 lines, bottom left to top right...
+  RL.drawLine3D (f (-0.4) (-0.4)) (f 0.4 0.4) RL.red
+
+  -- ... and then bottom right to top left
+  RL.drawLine3D (f 0.4 (-0.4)) (f (-0.4) 0.4) RL.red
+
+  -- We have some helper values here, center being the center of the cell
+  -- calculated using the origin and offsets
+  where center = addVectors origin $ Vector3 (CFloat i) (CFloat j) 0
+
+        -- As well as a helper function to create start and end points
+        f x y = addVectors center $ Vector3 x y 0
+```
+
+Ready to test it out? Let's ammend our initialisation for one of the boards:
+
+```hs
+  newEntity_ $ Board
+    Filled Empty Empty
+    Empty Empty Empty
+    Empty Empty Empty
+  newEntity_ newBoard
+  newEntity_ newBoard
+```
+
+And now we see that the first board has the top-left cell filled! We can now visualise both the amount of boards and the content of each one! Chapter over!
+
+:::{.figure
+  image="https://res.cloudinary.com/aas-sh/image/upload/v1668362726/blog/2022/11/13-11-2022_18_05_04_kqweul.png"
+  caption="We can now visualise the state of each board."
+  source="Notakto"
+  sourceUrl="https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e"
 }
 :::
