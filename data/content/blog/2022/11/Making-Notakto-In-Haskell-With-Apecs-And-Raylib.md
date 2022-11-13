@@ -503,7 +503,7 @@ Let's address this issue of not being able to see multiple boards. There's two w
 * We could create a new component representing the origin of the board in 3D space.
 * We could count the number of boards and distribute them evenly along the x-axis.
 
-Since at some point we're going to have to do raycasting, I'd rather keep things simple (for now) and keep them along the x-axis. That way, we can do some maths to see which cell the player is looking at.
+Honestly, we'll probably end up doing option one eventually, but because I like the idea of boards being automatically arranged I'm going to go with option 2 for now. I think the end game is a mixture of both approaches, where we automatically generate positions for each board, for instance in a circle or something.
 
 ```hs
 renderBoards :: System World ()
@@ -647,3 +647,67 @@ And now we see that the first board has the top-left cell filled! We can now vis
   sourceUrl="https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e"
 }
 :::
+
+# Interaction
+
+## Handling the raycast
+
+:::{.gitrepo header="Notakto"}
+A link to the repository for this section can be found [here](https://github.com/Ashe/Notakto/tree/d85cd87ad2ebe77e14c572f1db43fec0c9120059).
+:::
+
+Okay, it's time to speed up and do some gameplay code. In order to make moves, players will need to shoot a ray out from the camera into the boards so that they can precisely specify where they want to place their cross. Let's start by adding a new component responsible for storing the player's current aim. We don't have to give it a default value as it'll be written during our update frame anyway.
+
+```hs
+-- New component to add (Types.hs) and add to World
+newtype PlayerAimComponent = Aim RL.Ray
+
+
+-- New update system to add (Lib.hs) and be called from update system
+handlePlayerAim :: System World ()
+handlePlayerAim = do
+
+  -- Determine window size so that we can cast from center of screen
+  windowWidth <- liftIO RL.getScreenWidth
+  windowHeight <- liftIO RL.getScreenHeight
+
+  - Retrieve the camera (will have just been updated)
+  Camera camera <- get global
+
+  -- Create a ray to be cast later
+  ray <- liftIO $ RL.getMouseRay (RL.Vector2
+    (CFloat $ fromIntegral windowWidth / 2)
+    (CFloat $ fromIntegral windowHeight / 2)) camera
+  set global $ Aim ray
+
+
+-- New render system to add (Rendering.hs) and be called from render system
+renderAimRay :: System World ()
+renderAimRay = do
+
+  -- Retrieve player aim component
+  Aim ray <- get global
+
+  -- Determine endpoints of a line to draw
+  -- Note that we slightly offset the start location since we are drawing
+  -- from the camera, and if we didn't offset then the line would appear
+  -- as a dot!
+  let lineStart = addVectors (RL.ray'position ray) (Vector3 0 (-0.05) 0)
+      lineEnd = addVectors (RL.ray'position ray) $ multiplyVector (RL.ray'direction ray) 10
+
+  -- Render the line
+  liftIO $ RL.drawLine3D lineStart lineEnd RL.yellow
+
+
+-- New utility function
+multiplyVector :: Vector3 -> Float -> Vector3
+multiplyVector a b = let b' = CFloat b in Vector3
+  (vector3'x a * b')
+  (vector3'y a * b')
+  (vector3'z a * b')
+
+```
+
+We have momentum now! We haven't done anything gameplay related really yet, but we're blasting through the basics and now we're ready to try and cherry-pick a cell from a board. This yellow line will be really helpful for making sure that the selected cell we're going to calculate is in the approximate area of the ray.
+
+This is where having each cross as its own entity has a benefit; each cross could easily check if it the raycast strikes it and our picking system would be done in a matter of minutes. However, the drawbacks of this is then connecting it back to the board and making changes to the game state. Instead, we're going to see if the raycast collides with the board, and use the position it strikes the board to determine which cell the player is aiming at.
