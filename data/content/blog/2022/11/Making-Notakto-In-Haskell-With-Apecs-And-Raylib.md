@@ -1,7 +1,7 @@
 ---
 title: Making Notakto in Haskell with Apecs and Raylib
 date: 2022-11-13
-subtitle: My return to the Apecs, 4 years later
+subtitle: My return to the Apecs, 4 years later.
 description: My previous post on Apecs was very well received, but I've seen a lot of people using the now-out-of-date code and somewhat struggling. Time to dive back in!
 tags:
   - Haskell
@@ -78,10 +78,6 @@ You may also notice that I am using [Nix](https://nixos.org/) to build and run t
 At this point in time, running the project should print `Hello, Notakto`.
 
 ## Introducing libraries
-
-:::{.gitrepo header="Notakto"}
-A link to the repository's commit for the following section can be found [here](https://github.com/Ashe/Notakto/tree/0852350c18071b6332899639055d3c38c1976963).
-:::
 
 After setting up the repository, my next step with any project is adding the libraries I know I'll be using and getting a modified example running to demonstrate that things are working correctly. Lets begin by updating our cabal file to include the `h-raylib` and `apecs`.
 
@@ -270,11 +266,11 @@ After what feels like an eternity (it has taken me 2 hours to write this!), here
 }
 :::
 
-# Visualising the state of the game
-
 :::{.gitrepo header="Notakto"}
-A link to the repository's commit for the following section can be found [here](https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e).
+A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/0852350c18071b6332899639055d3c38c1976963).
 :::
+
+# Visualising the state of the game
 
 ## What should be an entity?
 
@@ -648,13 +644,13 @@ And now we see that the first board has the top-left cell filled! We can now vis
 }
 :::
 
+:::{.gitrepo header="Notakto"}
+A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e).
+:::
+
 # Interaction
 
-## Handling the raycast
-
-:::{.gitrepo header="Notakto"}
-A link to the repository for this section can be found [here](https://github.com/Ashe/Notakto/tree/d85cd87ad2ebe77e14c572f1db43fec0c9120059).
-:::
+## Preparing the raycast
 
 Okay, it's time to speed up and do some gameplay code. In order to make moves, players will need to shoot a ray out from the camera into the boards so that they can precisely specify where they want to place their cross. Let's start by adding a new component responsible for storing the player's current aim. We don't have to give it a default value as it'll be written during our update frame anyway.
 
@@ -710,4 +706,55 @@ multiplyVector a b = let b' = CFloat b in Vector3
 
 We have momentum now! We haven't done anything gameplay related really yet, but we're blasting through the basics and now we're ready to try and cherry-pick a cell from a board. This yellow line will be really helpful for making sure that the selected cell we're going to calculate is in the approximate area of the ray.
 
-This is where having each cross as its own entity has a benefit; each cross could easily check if it the raycast strikes it and our picking system would be done in a matter of minutes. However, the drawbacks of this is then connecting it back to the board and making changes to the game state. Instead, we're going to see if the raycast collides with the board, and use the position it strikes the board to determine which cell the player is aiming at.
+This is where having each cross as its own entity has a benefit; each cross could easily check if it the raycast strikes it and our picking system would be done in a matter of minutes. However, the drawbacks of this is the task of connecting it back to the board and making changes to the game state. Instead, we're going to see if the raycast collides with the board, and use the position it strikes the board to determine which cell the player is aiming at.
+
+:::{.gitrepo header="Notakto"}
+A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/d85cd87ad2ebe77e14c572f1db43fec0c9120059).
+:::
+
+## Identifying the looked-at cell
+
+I knew it was coming; the problem with writing the blog post as I go means that I get stuff wrong. I initially thought it would be a good idea to simply count the entities and render the board in a position dependent on it's index, however this is just going to be so annoying to calculate each time. That's okay though, as both Haskell and Apecs are really easy to experiment with and try new things. Here's a quick correction to our project:
+
+```hs
+-- New component for tracking positions in 3D space
+newtype PositionComponent = Position RL.Vector3 deriving (Show, Eq)
+
+
+-- Function for automatically creating n boards across the x axis, call from intialisation
+-- Note: Thanks to our position component, you could create all sorts of patterns!
+createBoards :: Int -> System World ()
+createBoards n = do
+
+  -- forM_ is standard library, it's equivalent to flip mapM
+  -- Also notice that to create an entity with multiple components we use a tuple
+  forM_ positions $ \p -> newEntity_ (newBoard, Position p)
+  where newBoard = Board Empty Empty Empty Empty Empty Empty Empty Empty Empty
+
+        -- List comprehension to dynamically generate a list of x coordinates
+        positions = [Vector3 x' 1.5 0 | x <- [0..n - 1],
+          let x' = (fromIntegral x - (fromIntegral (n - 1) / 2)) * 4.5]
+
+
+-- Forget cfoldM_, we're back to cmapM_
+renderBoards :: System World ()
+renderBoards = cmapM_ renderBoard
+
+
+-- Notice the tuple - this is how you select entities that contain both components
+-- Note: You can use the 'Not' type to ensure the entity DOES NOT have that type
+renderBoard :: (BoardComponent, PositionComponent) -> System World ()
+renderBoard (b, Position p) = do
+  renderCrosses p b
+  liftIO $ do
+    RL.drawCube (addVectors p $ Vector3 0.5    0 0) t 3 t RL.white
+    RL.drawCube (addVectors p $ Vector3 (-0.5) 0 0) t 3 t RL.white
+    RL.drawCube (addVectors p $ Vector3 0 0.5 0) 3 t t RL.white
+    RL.drawCube (addVectors p $ Vector3 0 (-0.5) 0) 3 t t RL.white
+  where t = 0.05
+
+```
+
+@TODO: Document up to https://github.com/Ashe/Notakto/tree/dc5ddbca2d120be8534c922d3ca4860284e37644
+
+This next section is where things get tricky... I've actually had to file a bug report since the raycasting and collision of Raylib don't seem to be working great. If all else fails we'll have to control raycasting another way! [Here](https://github.com/Anut-py/h-raylib/issues/5) is the bug report I filed in case you're interested about what happened.
