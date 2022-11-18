@@ -296,7 +296,7 @@ After heeding that warning, let's create an action plan. What should consist of 
 |:-:|:-:|:-------------:|
 | Player | Maybe | The player won't have much data of their own; they can be represented elsewhere. If it turns out we want things like customisable player names and colours then they could become entities. |
 | 'Game' | Global | The global entity can contain a component with the information for who's turn it is (either player one or player two). |
-| Cross | No | Crosses don't have much of their own data other than their location, which is dependent on the board. Standard Haskell data types will suffice. |
+| Cross | No | Crosses don't have much of their own data other than their location, which is dependent on the board. Standard Haskell data types will suffice. If they were their own entity, we could potentially have more than nine crosses assigned to a signle board. |
 | Board | Yes | Boards contain the state of crosses placed on them, as well as whether they are 'dead' or not. Their state will need to be rendered. |
 :::
 
@@ -689,7 +689,8 @@ renderAimRay = do
   -- from the camera, and if we didn't offset then the line would appear
   -- as a dot!
   let lineStart = addVectors (RL.ray'position ray) (Vector3 0 (-0.05) 0)
-      lineEnd = addVectors (RL.ray'position ray) $ multiplyVector (RL.ray'direction ray) 10
+      lineEnd = addVectors (RL.ray'position ray) $
+        multiplyVector (RL.ray'direction ray) 10
 
   -- Render the line
   liftIO $ RL.drawLine3D lineStart lineEnd RL.yellow
@@ -755,6 +756,27 @@ renderBoard (b, Position p) = do
 
 ```
 
-@TODO: Document up to https://github.com/Ashe/Notakto/tree/dc5ddbca2d120be8534c922d3ca4860284e37644
+This is where things get tricky... I've actually had to file a [bug report](https://github.com/Anut-py/h-raylib/issues/5) since the raycasting and collision of Raylib don't seem to be working great. It seems that data that we're receiving isn't what we expect and is slightly unreliable unless we do some IO before accessing it. Raylib wasn't written in Haskell, and so even though our programming can easily be reasoned about, there's a bit of a grey area where bindings to libraries written in other languages are. For now though, I'm just going to pretend the bug doesn't exist and try to implement more of the program.
 
-This next section is where things get tricky... I've actually had to file a bug report since the raycasting and collision of Raylib don't seem to be working great. If all else fails we'll have to control raycasting another way! [Here](https://github.com/Anut-py/h-raylib/issues/5) is the bug report I filed in case you're interested about what happened.
+Before we continue, we need to ask ourselves what we actually want to do. Right now, my goal is to make it so that when you aim at a cell, we see a 'ghost' of a cross that will appear if you hit the left mouse button. The biggest question is, how do we want to store this bit of state?
+
+1. We could change our `Cell` type to be either `Empty | Filled | Chosen`, however that will require us to make sure that only one cell is chosen at most, which is more work.
+2. We could specify a new variable on the `BoardComponent` to keep track on which cell is chosen, but that would mean that we could have multiple chosen cells across multiple boards.
+3. We could update the `PlayerAimComponent` to contain both the ray and the looked-at cell --- while this would work, it would be assuming that we're only interested in players looking at cells, and wouldn't be very good if your game had multiple things players could interact with.
+4. We could try to avoid writing state altogether, but this would mean that every cell will need to crunch the numbers to work out if you're looking at it *every rendering loop*. This would also mean that we have to test cells in isolation, meaning that there could be a situation where you're technically looking at multiple cells at once.
+
+Isn't gamedev fun? I believe that I'm going to go for **option 3**. Note that if you were doing a look-at system in a different type of game, you'd most likely just record which `Entity` you're looking at. The only reason we are in this scenario is because we avoided making crosses be their own `Entity`.
+
+:::{.help header="Thinking of alternatives"}
+If you are looking to improve yourself as a programmer it's always a good idea to think about all the different ways you could solve a problem *before* you get started. You (or your team) could begin to spot glaring issues before they manifest, and they also reassure you that if things go wrong you have other ways of solving things. Of course, don't spend *ages* planning as you can't always capture every potential problem without giving things a go.
+
+If you're struggling with thinking of approaches (and believe me, there are *always* better ways of writing things and numerous things that could be improved), try some of the following methods:
+
+* **Start making a list ---** Sometimes, by simply writing '1.' and arranging your thoughts into a list, you naturally start thinking of new entries to pad it out. I literally did this in the section above! Give yourself a space to prove to yourself you can do this!
+
+* **Take your initial approach and make small adjustments ---** Sometimes you can quickly create alternative approaches by simply taking your first idea and altering it slightly; option 2 could be the same as option 1 with an addition or exception. For example, if your idea was to add a new variable to something, maybe consider if it could also be added somewhere else or added in a different way such that it has multiple uses.
+
+* **Pretend to be a super-villain ---** Let's say that it's become your job to sabotage your code in some way, whether that's by misusing the code or using the application in unintended ways. What would you do, and what kinds of things could you break? Now come back to reality and think about the likelihood of any of those scenarios, the risks they present and the cost of prevention.
+
+* **Consider not doing it ---** Lack of action is itself an action, and so questionning whether you need to implement your feature in the first place isn't a bad question to ask. Sometimes it exposes how many drawbacks there are versus the benefits, and perhaps what you might consider a workaround turns into one of your alternative approaches. What is the requirement that is driving this decision? If there isn't one, then maybe we need to understand our requirements first.
+:::
