@@ -648,7 +648,7 @@ And now we see that the first board has the top-left cell filled! We can now vis
 A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/e71210405272674b49929c70cca0e2006df3888e).
 :::
 
-# Interaction
+# Making moves
 
 ## Preparing the raycast
 
@@ -942,4 +942,181 @@ And with this, it's game over! From now on it's mostly gameplay code, and hopefu
 A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/38d84524d96e21050e8dca6f1ec944f675d966d4).
 :::
 
-## Making moves
+## Placing crosses dynamically
+
+I don't know about you, but I really hate the fact that this blog post so far has been mostly rendering! Isn't this meant to be a blog about [Apecs](https://hackage.haskell.org/package/apecs)?! Well, let's fix that by finishing our game and coming up with more entities, components and systems! First up are a set of systems to handle playing the game.
+
+So far, our game has been doing all of our systems every single frame --- we need to have some logic ran conditionally:
+
+* **Obviously, we need to place crosses when we click:** We wouldn't want this running every frame as the game would be unplayable!
+* **When we get three-in-a-row we need to kill the board:** The state of the game only changes when moves are made, so this can also be ran on left click; it would be redundant otherwise!
+* **We need to check for game-over when a board is killed:** When there are no boards remaining, the current player is the loser and the winner is decided. Again, this relies on state being changed, so we're slowly moving away from frames to turns.
+* **We need to switch players:** We have no concept of players yet, but when we do, we will be switching who's turn it is as well as incrementing stats of whatever sort after checking for game-over and it being decided that play should be continued.
+
+```hs
+update :: System World ()
+update = do
+  updateCamera
+  handlePlayerAim
+
+  -- After aiming, we want to handle clicking
+  clicked <- liftIO $ RL.isMouseButtonPressed 0
+  when clicked $ do
+    handleLeftClick
+
+
+-- Handles everything that may happen following a left-click
+handleLeftClick :: System World ()
+handleLeftClick = do
+
+  -- Try and place a cross, and print a message when successful
+  moveMade <- tryPlaceCross
+  when moveMade $ do
+
+    -- Note: This is where we'll check for game-over later
+    liftIO $ putStrLn "Move Made!"
+
+
+-- This system returns true if a new cross is placed on the board
+tryPlaceCross :: System World Bool
+tryPlaceCross = do
+
+  -- Get the player's target
+  Aim _ target <- get global
+  case target of
+
+    -- Do nothing if there is no target
+    NoTarget -> pure False
+
+    -- If there is a target, try to mutate the state of the board
+    Target e i -> do
+      board <- get e
+      if getCell board i == Empty then do
+
+        -- We set the component on the entity here directly,
+        -- if you're doing this on lots of entities you should be using cmap
+        set e $ setCell board i Filled
+        pure True
+      else
+        pure False
+
+
+-- Convenience function for retrieving a cell by-index
+getCell :: BoardComponent -> Int -> Cell
+getCell b 0 =_tl b
+getCell b 1 =_tc b
+getCell b 2 =_tr b
+-- ...
+
+
+-- Convenience function for setting a cell by-index
+setCell :: BoardComponent -> Int -> Cell -> BoardComponent
+setCell b 0 c = b { _tl = c }
+setCell b 1 c = b { _tc = c }
+setCell b 2 c = b { _tr = c }
+-- ...
+```
+
+If you give the game a try now, you'll be happy to see that, as expected, we can now place crosses when we click the mouse button. We have a lot of momentum now, let's not stop here and move onto finishing the game loop itself!
+
+:::{.gitrepo header="Notakto"}
+A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/c740a55ee514d1d7d93dda38f4cdfd9a2a079fcb).
+:::
+
+# Completing the loop
+
+## Killing boards
+
+The rules of Notakto state that when a three-in-a-row is detected, a board is declared 'dead' and can no longer be played on; when there are no boards remaining, the game is over and the current player loses. Killing boards is just as important as making moves on a single board, however fortunately for us this won't be difficult at all to pull off with the tools we have.
+
+1. **We will create a new component that we attach to boards to render them dead:** We *could* calculate if a board is dead every time we need to know, but this will add up especially if we want to render this somehow. If we use a component, we can trivially iterate through alive and dead boards.
+2. **We will count the dead boards:** We will use `cfold` to count the number of boards that are alive, and if this number is 0 we will declare the game to be over.
+3. **We will *not* render dead boards:** I'm stick of doing rendering in this tutorial. I'm going to force the players to manually check the state of the board for whether they're playable --- it's not a *missing feature*, it's a ***skill check***.
+
+```hs
+-- New component with a unary data constructor
+-- Note: To test for absense, we will be using the type Not DeathComponent
+data DeathComponent = Dead deriving (Show, Eq)
+
+
+-- New system that will kill any boards with three-in-a-row and
+-- then return if there's a game-over
+checkForGameOver :: System World Bool
+checkForGameOver = do
+
+  -- Map a function onto all entities with boards, killing them if possible
+  cmap tryKillBoard
+
+  -- Count the number of boards that are alive (lack of death component)
+  let countAlive :: Int -> (BoardComponent, Not DeathComponent) -> Int
+      countAlive c (_, _) = c + 1
+
+  -- Perform the counting and return true if all boards dead
+  count <- cfold countAlive 0
+  pure $ count <= 0
+
+
+-- Note the type signature; we use 'Not' to exclude dead boards
+-- Another thing to note is that we return 'Maybe DeathComponent',
+-- this hints that we may or may not be adding a component to the entity
+tryKillBoard :: (BoardComponent, Not DeathComponent) -> Maybe DeathComponent
+
+-- Just Dead will add the DeathComponent, Nothing will add nothing
+tryKillBoard (bc, _) = if check cellCombos then Just Dead else Nothing
+
+  -- Fold through a list of combos and check if any are threes-in-a-row
+  where check = foldl (\dead (a, b, c) -> dead || checkCombo a b c) False
+
+        -- Check if all cells in a combination are filled, meaning a win
+        checkCombo a b c = checkCell a && checkCell b && checkCell c
+        checkCell c = getCell bc c == Filled
+
+
+-- A list of all cell combinations in index form (to be used with getCell)
+cellCombos :: [(Int, Int, Int)]
+cellCombos = [
+  -- Horizontal
+  (0, 1, 2),
+  (3, 4, 5),
+  (6, 7, 8),
+  -- Vertical
+  (0, 3, 6),
+  (1, 4, 7),
+  (2, 5, 8),
+  -- Diagonal
+  (0, 4, 8),
+  (2, 4, 6)
+  ]
+```
+
+You may think that's it, but now we need to sprinkle mention of the `DeathComponent` to places where we don't want interactions with dead boards. After looking through the code, I can only think of one place, but you might have more:
+
+```hs
+findLookAtTarget :: RL.Ray -> LookAtTarget -> (BoardComponent,
+                    PositionComponent, Not DeathComponent, Entity) ->
+                    System World LookAtTarget
+```
+
+If you want to special rendering for dead boards, now is the time! You might even want to update the death component to contain data regarding the winning combination for easy access!
+
+Let's now use our new system in the game and print a message if the game is over:
+
+```hs
+handleLeftClick :: System World ()
+handleLeftClick = do
+  moveMade <- tryPlaceCross
+  when moveMade $ do
+    isGameOver <- checkForGameOver
+    if isGameOver then
+      liftIO $ putStrLn "Game over!"
+    else
+      liftIO $ putStrLn "Next turn!"
+```
+
+:::{.figure
+  image="https://res.cloudinary.com/aas-sh/image/upload/v1668969610/blog/2022/11/20-11-2022_18_39_47_svchfm.png"
+  caption="We can now detect a game over --- it's all coming together!"
+  source="Notakto"
+  sourceUrl="https://github.com/Ashe/Notakto/tree/e6f589f3661fd8070ef977021174edb3ca808188"
+}
+:::
