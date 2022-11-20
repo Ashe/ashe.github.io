@@ -780,3 +780,166 @@ If you're struggling with thinking of approaches (and believe me, there are *alw
 
 * **Consider not doing it ---** Lack of action is itself an action, and so questionning whether you need to implement your feature in the first place isn't a bad question to ask. Sometimes it exposes how many drawbacks there are versus the benefits, and perhaps what you might consider a workaround turns into one of your alternative approaches. What is the requirement that is driving this decision? If there isn't one, then maybe we need to understand our requirements first.
 :::
+
+Huzzah, after a few days that [bug](https://github.com/Anut-py/h-raylib/issues/5) was fixed! Let's get on with approach number three:
+
+```hs
+-- New data type representing the player's current looked-at cell
+data LookAtTarget = NoTarget | Target Entity Int deriving (Show, Eq)
+
+
+-- Update the aim component to make use of our new type
+data PlayerAimComponent = Aim RL.Ray LookAtTarget deriving (Show, Eq)
+
+
+-- Update the player aim function to calculate the currently looked-at cell
+handlePlayerAim :: System World ()
+handlePlayerAim = do
+  windowWidth <- liftIO RL.getScreenWidth
+  windowHeight <- liftIO RL.getScreenHeight
+  Camera camera <- get global
+  ray <- liftIO $ RL.getMouseRay (RL.Vector2
+    (CFloat $ fromIntegral windowWidth / 2)
+    (CFloat $ fromIntegral windowHeight / 2)) camera
+
+  -- Use the ray we generated to find a target
+  target <- cfoldM (findLookAtTarget ray) NoTarget
+  set global $ Aim ray target
+
+
+-- Look for closest board that the player is looking at
+findLookAtTarget :: RL.Ray -> LookAtTarget ->
+                    (BoardComponent, PositionComponent, Entity) ->
+                    System World LookAtTarget
+findLookAtTarget ray target (_, Position p, e) = do
+
+  -- If our raycast hits the current board
+  if RL.rayCollision'hit hitInfo > 0 then
+
+    -- Check if this new target is closer than our current target
+    getClosestTarget ray target $ Target e (findCell hitPos)
+
+  -- Otherwise, use the current best target
+  else
+    pure target
+
+  -- Determine where to place the hitbox for raycast, and check hit location
+  where from = addVectors p $ Vector3 (-1.5) (-1.5) (-0.05)
+        to = addVectors p $ Vector3 1.5 1.5 0.05
+        hitInfo = RL.getRayCollisionBox ray $ RL.BoundingBox from to
+        hitPos = subtractVectors (RL.rayCollision'point hitInfo) p
+
+
+-- Checks two targets and returns the closest one
+getClosestTarget :: RL.Ray -> LookAtTarget -> LookAtTarget ->
+                    System World LookAtTarget
+
+-- If both variables are valid targets
+getClosestTarget ray a@(Target eA _) b@(Target eB _) = do
+
+  -- Note: We could have passed in the position of the prospective target,
+  -- but felt a bit rubbish today and just thought I'd keep it simple
+  Position posA <- get eA
+  Position posB <- get eB
+
+  -- Calculate distances to ray origin
+  let p = RL.ray'position ray
+      distA = magnitudeVector $ subtractVectors posA p
+      distB = magnitudeVector $ subtractVectors posB p
+
+  -- Return closest target
+  pure $ if distA <= distB then a else b
+
+-- Handle cases where invalid targets present
+getClosestTarget _ a NoTarget = pure a
+getClosestTarget _ NoTarget b = pure b
+
+
+-- Takes a hit position and determines the looked-at cell
+findCell :: Vector3 -> Int
+findCell (Vector3 x y _)
+  | y > 0.5 = findCol 0 1 2
+  | y < -0.5 = findCol 6 7 8
+  | otherwise = findCol 3 4 5
+  where findCol left center right
+          | x < -0.5 = left
+          | x > 0.5 = right
+          | otherwise = center
+
+
+-- Another utility function to get the length / magnitude of a vector3
+magnitudeVector :: Vector3 -> Float
+magnitudeVector (Vector3 x y z) =
+  let CFloat f = sqrt $ (x * x) + (y * y) + (z * z) in f
+```
+
+Our `PlayerAimComponent` is now primed! Let's render it to prove to ourselves that we've completed a major hurdle. As an extra spin, I only want to render these markings if the cell isn't already filled. We're going to be pretty much updating all of our rendering logic to accept the `LookAtTarget` as a new parameter:
+
+```hs
+renderBoards :: System World ()
+renderBoards = do
+  -- Give the target from our aim component to renderBoard
+  Aim _ target <- get global
+  cmapM_ (renderBoard target)
+
+
+-- Accept a new parameter and forward it to renderCrosses
+renderBoard :: LookAtTarget -> (BoardComponent, PositionComponent, Entity) ->
+               System World ()
+renderBoard target (b, Position p, e) = do
+  renderCrosses p (b, e) target
+  -- ...
+
+
+-- Each cross now has an index - we need to check if each cross is being
+-- aimed at and pass that to renderCross. We have a new function to handle
+-- that: isAimingAtCell
+renderCrosses :: Vector3 -> (BoardComponent, Entity) -> LookAtTarget ->
+                 System World ()
+renderCrosses origin (b, e) target = do
+  renderCross origin (-1)   1  (_tl b) (isAimingAtCell e 0 target)
+  renderCross origin   0    1  (_tc b) (isAimingAtCell e 1 target)
+  -- ...
+
+
+-- Checks if the target is valid, and returns true if entity and cell matches
+isAimingAtCell :: Entity -> Int -> LookAtTarget -> Bool
+isAimingAtCell (Entity e) i (Target (Entity e') i') = e == e' && i == i'
+isAimingAtCell _ _ _ = False
+
+
+-- This function has another pattern to it depending on whether its aimed at
+renderCross :: Vector3 -> Float -> Float -> Cell -> Bool -> System World ()
+
+-- Empty, non-aimed at cells have nothing rendered
+renderCross _ _ _ Empty False = pure ()
+
+-- Filled cells are rendered as crosses, regardless of aim
+renderCross origin i j Filled _ = liftIO $ do
+  RL.drawLine3D (f (-0.4) (-0.4)) (f 0.4 0.4) RL.red
+  RL.drawLine3D (f 0.4 (-0.4)) (f (-0.4) 0.4) RL.red
+  where center = addVectors origin $ Vector3 (CFloat i) (CFloat j) 0
+        f x y = addVectors center $ Vector3 x y 0
+
+-- Otherwise, if we have an empty cell that's aimed at, render a circle
+renderCross origin i j Empty True = liftIO $ do
+    RL.drawCircle3D center 0.4 (Vector3 0 1 0) 0 RL.yellow
+  where center = addVectors origin $ Vector3 (CFloat i) (CFloat j) 0
+
+```
+
+And with this, it's game over! From now on it's mostly gameplay code, and hopefully everything we do can is reflected by our rendering! Well done if you've made it this far; like with most games, the rendering can easily eat up a lot of our time. I'm sure the only rendering we'll do from now on will be trivial.
+
+:::{.figure
+  image="https://res.cloudinary.com/aas-sh/image/upload/v1668959570/blog/2022/11/20-11-2022_15_52_00_njlrim.png"
+  caption="We can now aim at cells, rendering the game is pretty much complete!"
+  source="Notakto"
+  sourceUrl="https://github.com/Ashe/Notakto/tree/38d84524d96e21050e8dca6f1ec944f675d966d4"
+}
+:::
+
+:::{.gitrepo header="Notakto"}
+A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/38d84524d96e21050e8dca6f1ec944f675d966d4).
+:::
+
+## Making moves
