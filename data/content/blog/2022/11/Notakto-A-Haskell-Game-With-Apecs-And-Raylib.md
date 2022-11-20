@@ -1,14 +1,24 @@
 ---
-title: Making Notakto in Haskell with Apecs and Raylib
-date: 2022-11-13
+title: "Notakto: A Haskell game with Apecs and Raylib"
+date: 2022-11-20
 subtitle: My return to the Apecs, 4 years later.
 description: My previous post on Apecs was very well received, but I've seen a lot of people using the now-out-of-date code and somewhat struggling. Time to dive back in!
 tags:
   - Haskell
   - Functional
   - Raylib
-image: /assets/images/logo-splash.png
+images:
+  - https://res.cloudinary.com/aas-sh/image/upload/v1668980383/blog/2022/11/logo_dctghd.png
+  - https://res.cloudinary.com/aas-sh/image/upload/v1668977503/blog/2022/11/20-11-2022_20_51_32_keas6a.png
+  - https://res.cloudinary.com/aas-sh/image/upload/v1668959570/blog/2022/11/20-11-2022_15_52_00_njlrim.png
+  - https://res.cloudinary.com/aas-sh/image/upload/v1668357984/blog/2022/11/13-11-2022_16_46_16_g6uf5j.png
+  - https://res.cloudinary.com/aas-sh/image/upload/v1668335749/blog/2022/11/13-11-2022_10_35_33_e1xmdy.png
+status: published
 ---
+
+:::{.gitrepo header="Notakto"}
+A link to the repository can be found [here](https://github.com/Ashe/Notakto/).
+:::
 
 # Previously on Apecs
 
@@ -1023,8 +1033,6 @@ If you give the game a try now, you'll be happy to see that, as expected, we can
 A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/c740a55ee514d1d7d93dda38f4cdfd9a2a079fcb).
 :::
 
-# Completing the loop
-
 ## Killing boards
 
 The rules of Notakto state that when a three-in-a-row is detected, a board is declared 'dead' and can no longer be played on; when there are no boards remaining, the game is over and the current player loses. Killing boards is just as important as making moves on a single board, however fortunately for us this won't be difficult at all to pull off with the tools we have.
@@ -1120,3 +1128,182 @@ handleLeftClick = do
   sourceUrl="https://github.com/Ashe/Notakto/tree/e6f589f3661fd8070ef977021174edb3ca808188"
 }
 :::
+
+## Restarting the game
+
+Before we finish this chapter, let's handle restarting the game as it's very related to the previous section! Firstly, even though we named the function `checkForGameOver`, this function is also responsible for killing boards. Let's do this elsewhere so that this function is purely a check, this way we can reuse it without worry!
+
+```hs
+handleLeftClick :: System World ()
+handleLeftClick = do
+
+  -- Check if the game is already over before making a move
+  needsRestart <- checkForGameOver
+
+  -- Only make moves if the game isn't over
+  if not needsRestart then do
+    moveMade <- tryPlaceCross
+    when moveMade $ do
+      cmap tryKillBoard
+      isGameOver <- checkForGameOver
+      if isGameOver then
+        liftIO $ putStrLn "Game over!"
+      else
+        liftIO $ putStrLn "Next turn!"
+
+  -- Otherwise, restart the game
+  else do
+    newGame
+    liftIO $ putStrLn "Restarted game!"
+
+-- New initialisation function that deletes all entities
+newGame :: System World ()
+newGame = do
+  cmapM_ deleteBoard
+  createBoards 3
+
+  -- You can't really 'delete' entities in Apecs since entities are just ints;
+  -- you have to delete their components. We use a convenience function.
+  where deleteBoard (Board{}, e) = destroyEntity e
+
+
+-- We make a type combining all types for miscellaneous use
+type AllComponents = (PositionComponent, CameraComponent, BoardComponent,
+  DeathComponent, PlayerAimComponent)
+
+
+-- Trivial deletion function
+destroyEntity :: Entity -> System World ()
+destroyEntity e = destroy e (Proxy :: Proxy AllComponents)
+```
+
+Deletion in Apecs can be a little tricky, but as the author writes in [this comment](https://github.com/jonascarpay/apecs/issues/13#issuecomment-392630286), as long as we obliterate any components on an entity it will stop having any effect on the application!
+
+:::{.caption
+  caption="Apecs author Jonascarpay talking about deletion in Apecs."
+  source="Github"
+  sourceUrl="https://github.com/jonascarpay/apecs/issues/13#issuecomment-392630286"
+}
+> You can't destroy an entity, you can only destroy each of its components. An Entity is just an integer that may or may not some components associated with it. There is currently no way to destroy all components for a given entity.
+>
+> I might add some support for this in the future, but if you use type synonyms for common tuples, it shouldn't be an issue.
+:::
+
+Well done, you can now play, complete and restart games! If you were to track turns and play with a friend, you could call this the end and enjoy it! There's one final thing I want to do before I call quits and leave the rest up to you: creating the notion of players!
+
+:::{.gitrepo header="Notakto"}
+A link to the corresponding commit for the previous section can be found [here](https://github.com/Ashe/Notakto/tree/63f686a4ae9fcba150c04b0605c2b4d781af2012).
+:::
+
+## Making players take turns
+
+The game is essentially complete, but we don't really track the current player anywhere! I'm going to leave out the rendering and purely focus on the components and systems as I'm sure anyone reading this can fill in the gaps.
+
+```hs
+-- New component for tracking the current player
+data PlayerComponent = Red | Blue deriving (Show, Eq)
+
+
+-- Initialise the current player when we initialise the camera
+set global $ (Camera camera, Red)
+
+
+-- Switch players when a non-winning move is made
+handleLeftClick :: System World ()
+handleLeftClick = do
+
+  -- Grab current player
+  player <- get global
+  needsRestart <- checkForGameOver
+  if not needsRestart then do
+    moveMade <- tryPlaceCross
+    when moveMade $ do
+      cmap tryKillBoard
+      isGameOver <- checkForGameOver
+      if isGameOver then
+
+        -- Print that the current player lost
+        liftIO $ putStrLn $ "Game over! " ++ show player ++ " loses!"
+      else do
+
+        -- Swap players and print who's turn it is
+        let nextPlayer = if player == Red then Blue else Red
+        set global nextPlayer
+        liftIO $ putStrLn $ "It's " ++ show nextPlayer ++ "'s turn!"
+  else do
+    newGame
+    liftIO $ putStrLn $ "Restarted game! It's " ++ show player ++ "'s turn!"
+
+
+-- Change colour of things for different players
+playerColour :: PlayerComponent -> RL.Color
+playerColour Red = RL.red
+playerColour Blue = RL.skyBlue
+
+
+-- Example of changing colour of ray to suit player
+renderAimRay :: System World ()
+renderAimRay = do
+
+  -- Notice that we aren't annotating the type for player; we infer it!
+  (Aim ray _, player) <- get global
+  let lineStart = addVectors (RL.ray'position ray) (Vector3 0 (-0.05) 0)
+      lineEnd = addVectors (RL.ray'position ray) $
+        multiplyVector (RL.ray'direction ray) 10
+  liftIO $ RL.drawLine3D lineStart lineEnd $ playerColour player
+```
+
+Firstly, how cool is it that we can add features to the game this easily when using both Haskell and Apecs? It's really during the iterations on your project where Haskell shines, and Apecs complements it perfectly. Secondly, notice that **we didn't annotate** the type for `player` --- again, thanks to Haskell, we can infer the types of components from their *usage*, so as long as you use your components for things you typically don't have to be explicit with what the result of `get` needs to be. We've been mostly explicit up until now as we wanted to pattern match, but the `PlayerComponent` is very simple.
+
+Here is where I set my first **challenge** --- this blog post is becoming way too long, and so I'm going to make a change and show you how cool the result is, and you'll have to make the changes yourself! Of course, the repository can be found at the end of the section with a link to the commit, so if you get stuck you can look up how I managed it. These changes are small and numerous; too boring to put write up. Have fun and see you in the next section!
+
+```hs
+-- We are going to annotate each cell with the player who placed the cross
+data Cell = Empty | Filled PlayerComponent deriving (Show, Eq)
+
+-- CHALLENGE:
+-- 1. Change colour of crosses to be dependent on player
+-- 2. Change circular 'aim' indicator to match player colour
+-- 3. Have fun!
+```
+
+:::{.figure
+  image="https://res.cloudinary.com/aas-sh/image/upload/v1668977503/blog/2022/11/20-11-2022_20_51_32_keas6a.png"
+  caption="It's heating up; it's *red* vs *blue*!"
+  source="Notakto"
+  sourceUrl="https://github.com/Ashe/Notakto/tree/f6b41756cf4f2e166d087b0b9c4487da6f996dff"
+}
+:::
+
+:::{.gitrepo header="Notakto"}
+A link to the final section can be found [here](https://github.com/Ashe/Notakto/tree/f6b41756cf4f2e166d087b0b9c4487da6f996dff).
+:::
+
+# Wrapping up
+
+**Congratulations!** I'm hoping that the content of this post, although long, has been useful as a gateway into the world of Haskell game development. I really enjoyed making this post and I'm hoping my readers enjoyed this new format even if it is a little wordy.
+
+There are no more sections for this blog post, although honestly I wanted to go wild and do things like:
+
+* **Projectiles:** When you click, you shoot a cube and you have to land it in a cell for it to mark. Would be interesting to make it so that you can only shoot if no projectile currently exists, and making the actions that happen when you click the mouse delayed until the projectile lands. Good luck finding that shot when it goes out of bounds!
+
+* **Moving boards:** We have a `PositionComponent` but the data never really changes once created. Wouldn't it be fun to make the boards fly around?
+
+* **Rotated boards:** Right now we assume all boards face the same way. Adding a rotation would be fun but a little bit of work since you may need to write your own vector math functions unless you use another library (I wanted the dependency count to be low for this post).
+
+* **Forced distance:** I wanted to make it so that you could only take a turn if you were stood in an area, so that you had to aim. Would be cool making a little environment with player colouring!
+
+* **AI:** Here's an easy peasy one --- make it so that when you make your move, you can get an AI to play as the other person! Start off by just randomising the entity and cell index, and once you you've got a very basic AI you can move up to implementing the [Negamax algorithm](https://en.wikipedia.org/wiki/Negamax)!
+
+These things all sound fun, but I believe that the important thing is to teach the basics of Apecs and Raylib so that we get more projects popping up in the Haskell gamedev space. I've seen a lot of cool projects like [Keid](https://hackage.haskell.org/package/keid-core), but admittedly I just love Apecs too much, and now I can love Raylib also (even if I haven't explored its limits too much).
+
+***Big thankyous*** to:
+
+* [Jonas Carpay](https://jonascarpay.com/), author of [Apecs](https://hackage.haskell.org/package/apecs),
+* [Anand Swaroop (Anut-py)](https://github.com/Anut-py) for creating the [h-raylib bindings](https://hackage.haskell.org/package/h-raylib),
+* the authors of [Raylib](https://www.raylib.com/),
+* and finally, the [Nix community](https://nixos.org/community/index.html) for helping me with all my problems whenever I go crying to them about something not working. Really, thanks guys!
+
+If anyone wants anything from this blog revised, has feedback, or just wants to talk, you can get in touch via [contact@aas.sh](mailto:contact@aas.sh). Looking forward to hearing from you!
+
+And with that, I'm signing off. Thank you for reading!
