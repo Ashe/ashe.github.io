@@ -153,6 +153,41 @@ makeWorldAndComponents "World" [''Camera]
 main :: IO ()
 main = initWorld >>= runSystem (initialise >> run >> terminate)
 ```
+The big important function here is `makeWorldAndComponents`. In Apecs, there are multiple template-Haskell functions you can use to create your `World` and associated components:
+
+* `makeWorld` takes your components and constructs your `World` and component associations, but it doesn't assume anything about your component's storage mechanisms.
+* `makeWorldAndComponents` calls `makeWorld`, but then also calls `makeMapComponents` which takes all of your components and defines `Component` instances with a `Map` store. In simple terms, it sets up your components with the most common storage mechanism, `Map`.
+
+In this tutorial, I'll be using `makeWorldAndComponents` to keep things simple, but if you ever want components that have specific constraints you might want to consider `makeWorld` and defining your mechanisms manually like I did [in my previous post](/blog/making-a-game-with-haskell-and-apecs/#creating-components).
+
+:::{.note
+  header="Manual storage definitions"
+  caption="For more information, [check out the documentation](https://hackage.haskell.org/package/apecs-0.9.4/docs/Apecs-Stores.html) and maybe even [my previous post](/blog/making-a-game-with-haskell-and-apecs/#creating-components)."
+}
+You probably want to use `makeWorld` if you want to be cool so that you have full control. Here's how components would look if you want things to be done manually:
+```hs
+-- 'Map' storage: standard storage where any entity can have one
+-- e.g. Every entity may have a name
+newtype Name = Name String deriving Show
+instance Component Name where type Storage Name = Map Name
+
+-- 'Unique' storage: only one entity can have this component at maximum
+-- e.g. Only zero or one entities can be marked as a player at any given time
+data Player = Player
+instance Component Player where type Storage Player = Unique Player
+
+-- 'Global' storage: exactly one component exists for the lifetime of the game
+-- e.g. There only needs to be one definition of the game's configuration
+-- Note that querying for this on ANY entity will yield the global one,
+-- effectively sharing the component between all entities
+-- Also note that globals need instances for Monoid and Semigroup
+data Config = Config String Int
+instance Monoid Config where mempty = Config "Foo" 0
+instance Semigroup Config where (<>) = mappend
+instance Component Config where type Storage Config = Global Config
+```
+So even though I'm going to be lazy on this post so I can say 'make a new component', I I really do encourage people reading this to **try and use `makeWorld` instead**.
+:::
 
 So, what are the `initialise`, `run` and `terminate` systems? Well, they are just functions with the type `System World ()`!
 
@@ -732,7 +767,7 @@ I knew it was coming; the problem with writing the blog post as I go means that 
 newtype PositionComponent = Position RL.Vector3 deriving (Show, Eq)
 
 
--- Function for automatically creating n boards across the x axis, call from intialisation
+-- Initialisation system for automatically creating n boards across the x axis
 -- Note: Thanks to our position component, you could create all sorts of patterns!
 createBoards :: Int -> System World ()
 createBoards n = do
