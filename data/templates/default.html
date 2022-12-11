@@ -62,7 +62,12 @@
     <script src="/assets/scripts/darkmode.js"></script>
     <script src="/assets/scripts/navbar-menu.js"></script>
     <script src="/assets/scripts/navbar-toc.js"></script>
-    <script src="/assets/thirdparty/mathjax/tex-chtml.js"></script>
+    <link rel="stylesheet" href="/assets/thirdparty/katex/katex.min.css">
+    <script defer src="/assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="/assets/thirdparty/katex/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body);">
+    </script>
+
     $if(toc)$
       <script src="/assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
       <script src="/assets/scripts/init-scrollspy.js"></script>

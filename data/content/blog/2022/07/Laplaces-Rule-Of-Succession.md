@@ -104,7 +104,7 @@ Now the question you might have is, 'how is this value any better than just taki
 Laplace's rule of succession handles this gracefully; by adding two extra reviews, one positive and one negative, we can somewhat 'balance' the review scores with the amount of reviews. Let's see an example:
 
 $$
-P(\text{5 star experience with } A) = \frac{2 + 1}{2 + 2}=\frac{3}{4}=0.75 \\
+P(\text{5 star experience with } A) = \frac{2 + 1}{2 + 2}=\frac{3}{4}=0.75
 $$
 $$
 P(\text{5 star experience with } B) = \frac{350 + 1}{400 + 2}=\frac{351}{402}=0.87313

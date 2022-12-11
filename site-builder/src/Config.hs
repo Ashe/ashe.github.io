@@ -124,6 +124,7 @@ siteReaderExtensions = extensionsFromList
   , Ext_latex_macros
   , Ext_tex_math_dollars
   , Ext_tex_math_double_backslash
+  , Ext_inline_code_attributes
 
   -- Default hakyll reader extensions
   , Ext_smart

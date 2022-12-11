@@ -12,10 +12,6 @@
       url = "git+https://github.com/icons8/line-awesome/";
       flake = false;
     };
-    mathjax = {
-      url = "git+https://github.com/mathjax/MathJax/";
-      flake = false;
-    };
     revealjs = {
       url = "git+https://github.com/hakimel/reveal.js/";
       flake = false;
@@ -35,6 +31,10 @@
         url = "https://registry.npmjs.org/swiper/-/swiper-8.3.2.tgz";
         sha256 = "1bn2zfg668zaj3sacqqnqn7df82801yq11wgx34xrd5qh6297x68";
       });
+      katex = (builtins.fetchTarball {
+        url = "https://github.com/KaTeX/KaTeX/releases/download/v0.16.4/katex.tar.gz";
+        sha256 = "0pgajj8vqfvgws3wnn5bfy4h3w75n4dz8jvjsxcw8s80jnp0md8c";
+      });
       website = pkgs.callPackage ./site.nix {
         inherit pkgs;
         thirdparty = [
@@ -47,8 +47,8 @@
             path = "${inputs.line-awesome}/dist/line-awesome";
           }
           {
-            name = "mathjax";
-            path = "${inputs.mathjax}/es5";
+            name = "katex";
+            path = "${katex}";
           }
           {
             name = "revealjs";

@@ -47,22 +47,6 @@
         "url": "https://github.com/icons8/line-awesome/"
       }
     },
-    "mathjax": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1654710011,
-        "narHash": "sha256-RIHI2qigotGqbwO09rUfmjkYzmkhYeEX+4B/F+Q6094=",
-        "ref": "master",
-        "rev": "600692ad9d3552cc25f85510d5797bc942ecc9f7",
-        "revCount": 3346,
-        "type": "git",
-        "url": "https://github.com/mathjax/MathJax/"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://github.com/mathjax/MathJax/"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1655753060,
@@ -99,7 +83,6 @@
         "bulma": "bulma",
         "flake-utils": "flake-utils",
         "line-awesome": "line-awesome",
-        "mathjax": "mathjax",
         "nixpkgs": "nixpkgs",
         "revealjs": "revealjs",
         "vanillajs-scrollspy": "vanillajs-scrollspy"
