@@ -4,22 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
-    bulma = {
-      url = "git+https://github.com/jgthms/bulma/";
-      flake = false;
-    };
-    line-awesome = {
-      url = "git+https://github.com/icons8/line-awesome/";
-      flake = false;
-    };
-    revealjs = {
-      url = "git+https://github.com/hakimel/reveal.js/";
-      flake = false;
-    };
-    vanillajs-scrollspy = {
-      url = "git+https://github.com/ederssouza/vanillajs-scrollspy/";
-      flake = false;
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, flake-utils, ... }:
@@ -27,6 +11,22 @@
     let
       pkgs = import nixpkgs { inherit system; };
       toApp = drv: { type = "app"; program = "${drv}";};
+      bulma = (builtins.fetchTarball {
+        url = "https://github.com/jgthms/bulma/archive/refs/tags/0.9.4.tar.gz";
+        sha256 = "0j12iv99xx3mvyqpqa8k3grhdyp8061b74k61g54cmdyfm3gqdmm";
+      });
+      line-awesome = (builtins.fetchTarball {
+        url = "https://github.com/icons8/line-awesome/archive/refs/tags/v1.2.1.tar.gz";
+        sha256 = "1m69lzlvjdpldpqqxhh2ylgjc0sz119yq4mlcz12c314kgpiv90f";
+      });
+      revealjs = (builtins.fetchTarball {
+        url = "https://github.com/hakimel/reveal.js/archive/refs/tags/4.4.0.tar.gz";
+        sha256 = "1pirbc65fvajnnakni1x038jfy7av59xaihpkbpgfn7s2il618vf";
+      });
+      vanillajs-scrollspy = (builtins.fetchTarball {
+        url = "https://github.com/ederssouza/vanillajs-scrollspy/archive/refs/tags/3.0.3.tar.gz";
+        sha256 = "0g4p7jqwp7isd22lwaxqygi5sal5cpwmcqmm48jbngzv99pqc0r3";
+      });
       swiperjs = (builtins.fetchTarball {
         url = "https://registry.npmjs.org/swiper/-/swiper-8.3.2.tgz";
         sha256 = "1bn2zfg668zaj3sacqqnqn7df82801yq11wgx34xrd5qh6297x68";
@@ -40,11 +40,11 @@
         thirdparty = [
           {
             name = "bulma";
-            path = "${inputs.bulma}/sass";
+            path = "${bulma}/sass";
           }
           {
             name = "line-awesome";
-            path = "${inputs.line-awesome}/dist/line-awesome";
+            path = "${line-awesome}/dist/line-awesome";
           }
           {
             name = "katex";
@@ -52,7 +52,7 @@
           }
           {
             name = "revealjs";
-            path = "${inputs.revealjs}";
+            path = "${revealjs}";
           }
           {
             name = "swiperjs";
@@ -60,7 +60,7 @@
           }
           {
             name = "vanillajs-scrollspy";
-            path = "${inputs.vanillajs-scrollspy}/dist";
+            path = "${vanillajs-scrollspy}/dist";
           }
         ];
       };

@@ -45,8 +45,10 @@ footer {
 
 .caption-frame {
   background-color: #273146;
-  .caption-source a:not(:hover) {
-    color: #8cabe6;
+  .caption-source {
+    &, a:not(:hover) {
+      color: #8cabe6;
+    }
   }
 }
 

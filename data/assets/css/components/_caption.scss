@@ -24,15 +24,13 @@
   // Source text underneath caption
   .caption-source {
     padding-top: 0.5rem;
-    a {
+    &, a:not(:hover) {
       font-family: 'Ubuntu', sans-serif;
       text-transform: uppercase;
       text-decoration: none;
       font-size: 0.75rem;
       font-weight: 500;
-      &:not(:hover) {
-        color: #999999;
-      }
+      color: #999999;
     }
   }
 
