@@ -163,3 +163,14 @@ article {
     background-color: #273146;
   }
 }
+
+/////////////////
+// Source code //
+/////////////////
+
+article {
+  :not(pre) > code {
+    background-color: #282a36;
+    color: #ff79c6;
+  }
+}
