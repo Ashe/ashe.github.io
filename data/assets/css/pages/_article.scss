@@ -1,6 +1,7 @@
 // Rules that only apply to article content
 & {
   font-family: 'Crimson Pro', serif;
+  text-align: justify;
   @include tablet {
     font-size: 1.25rem;
   }
