@@ -6,4 +6,25 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  // Positioning
+  margin: 2em 0em;
+
+  // Appearance
+  border-radius: 0.25rem;
+
+  // Shadows
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--ring-offset-shadow, 0 0 #0000), var(--ring-shadow, 0 0 #0000), var(--shadow);
+
+  // Sizing
+
+  &.is-small {
+    min-height: 200px;
+  }
+
+  // Small sizes
+  &.is-medium {
+    min-height: 400px;
+  }
 }

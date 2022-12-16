@@ -1,10 +1,6 @@
-<header class="p-2">
-  <h1 class="title">$title$</h1>
-</header>
+<article id="about-page-content">
 
-<article id="about-page-content" class="is-max-widescreen">
-
-  <div id="profile" class="columns my-8">
+  <section id="profile" class="columns my-8">
     <div class="column is-two-fifths p-3">
       <div id="about-profile-image-container" class="apply-shadow">
         <img src="$profile-photo$" alt="Photo of myself">
@@ -14,33 +10,102 @@
       </div>
     </div>
     <div class="column is-three-fifths p-3">
-      <h1 class="title is-4">$description$</h1>
+      <h1 class="title">$profile-title$</h1>
+      <h2 class="title is-4">$profile-description$</h2>
       <p class="is-size-5">$description-extension$</p>
       <p>$read-md("description-detail")$</p>
     </div>
-  </div>
+  </section>
 
-  <div class="entry columns is-vcentered my-8">
-    <div class="column is-two-fifths p-3">
-      <img class="apply-shadow" src="$jagex-img$" alt="Jagex entry image">
-    </div>
-    <div class="column is-three-fifths p-3">
-      <h1 class="title is-4">$jagex-title$</h1>
-      <h2 class="subtitle is-5"><b>$jagex-subtitle$</b></h2>
-      <p>$read-md("jagex-body")$</p>
-    </div>
-  </div>
+  <section>
 
-  <div class="entry columns is-vcentered my-8">
-    <div class="column is-two-fifths p-3">
-      <img class="apply-shadow" src="$dsd-img$" alt="Deep Silver Dambuster entry image">
+    <div class="parallax is-medium" style="background-image:url('$section-jagex-parallax$')"></div>
+    <h2 class="title is-2">$section-jagex-title$</h2>
+    <h3 class="subtitle is-4">$section-jagex-subtitle$</h3>
+
+    <div class="entries">
+
+      <div class="entry columns is-vcentered my-8">
+        <div class="column is-two-fifths p-3">
+          <img class="apply-shadow" src="$jagex-3-img$" alt="Jagex entry image">
+        </div>
+        <div class="column is-three-fifths p-3">
+          <h1 class="title is-4">$jagex-3-title$</h1>
+          <h2 class="subtitle is-5"><b>$jagex-3-subtitle$</b></h2>
+          <p>$read-md("jagex-3-body")$</p>
+        </div>
+      </div>
+
+      <div class="entry columns is-vcentered my-8">
+        <div class="column is-two-fifths p-3">
+          <img class="apply-shadow" src="$jagex-2-img$" alt="Jagex entry image">
+        </div>
+        <div class="column is-three-fifths p-3">
+          <h1 class="title is-4">$jagex-2-title$</h1>
+          <h2 class="subtitle is-5"><b>$jagex-2-subtitle$</b></h2>
+          <p>$read-md("jagex-2-body")$</p>
+        </div>
+      </div>
+
+      <div class="entry columns is-vcentered my-8">
+        <div class="column is-two-fifths p-3">
+          <img class="apply-shadow" src="$jagex-1-img$" alt="Jagex entry image">
+        </div>
+        <div class="column is-three-fifths p-3">
+          <h1 class="title is-4">$jagex-1-title$</h1>
+          <h2 class="subtitle is-5"><b>$jagex-1-subtitle$</b></h2>
+          <p>$read-md("jagex-1-body")$</p>
+        </div>
+      </div>
+
     </div>
-    <div class="column is-three-fifths p-3">
-      <h1 class="title is-4">$dsd-title$</h1>
-      <h2 class="subtitle is-5"><b>$dsd-subtitle$</b></h2>
-      <p>$read-md("dsd-body")$</p>
+
+  </section>
+
+  <section class="reverse">
+
+    <div class="parallax is-medium" style="background-image:url('$section-graduation-parallax$')"></div>
+    <h2 class="title is-2">$section-graduation-title$</h2>
+    <h3 class="subtitle is-4">$section-graduation-subtitle$</h3>
+
+    <div class="entries">
+
+      <div class="entry columns is-vcentered my-8">
+        <div class="column is-two-fifths p-3">
+          <img class="apply-shadow" src="$dsd-img$" alt="Deep Silver Dambuster entry image">
+        </div>
+        <div class="column is-three-fifths p-3">
+          <h1 class="title is-4">$dsd-title$</h1>
+          <h2 class="subtitle is-5"><b>$dsd-subtitle$</b></h2>
+          <p>$read-md("dsd-body")$</p>
+        </div>
+      </div>
+
+      <div class="entry columns is-vcentered my-8">
+        <div class="column is-two-fifths p-3">
+          <img class="apply-shadow" src="$hogs-img$" alt="Deep Silver Dambuster entry image">
+        </div>
+        <div class="column is-three-fifths p-3">
+          <h1 class="title is-4">$hogs-title$</h1>
+          <h2 class="subtitle is-5"><b>$hogs-subtitle$</b></h2>
+          <p>$read-md("hogs-body")$</p>
+        </div>
+      </div>
+
+      <div class="entry columns is-vcentered my-8">
+        <div class="column is-two-fifths p-3">
+          <img class="apply-shadow" src="$uni-img$" alt="Deep Silver Dambuster entry image">
+        </div>
+        <div class="column is-three-fifths p-3">
+          <h1 class="title is-4">$uni-title$</h1>
+          <h2 class="subtitle is-5"><b>$uni-subtitle$</b></h2>
+          <p>$read-md("uni-body")$</p>
+        </div>
+      </div>
+
     </div>
-  </div>
+
+  </section>
 
   $body$
 </article>
