@@ -10,7 +10,6 @@ tags:
   - Game
   - Unity
   - C#
-  - Uni
 images:
   - https://res.cloudinary.com/aas-sh/image/upload/v1623433580/projects/vect/Vect_uuvvc1.png
   - https://img.itch.zone/aW1hZ2UvMjY4ODY2LzEyOTc2OTguZ2lm/original/1JSiVP.gif

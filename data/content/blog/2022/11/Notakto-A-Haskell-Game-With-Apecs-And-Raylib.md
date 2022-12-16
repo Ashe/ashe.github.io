@@ -5,6 +5,7 @@ subtitle: My return to the Apecs, 4 years later.
 description: My previous post on Apecs was very well received, but I've seen a lot of people using the now-out-of-date code and somewhat struggling. Time to dive back in!
 tags:
   - Tutorial
+  - Game
   - Haskell
   - Functional
 images:

@@ -5,6 +5,7 @@ subtitle: A prototype roguelike in the functional language, Haskell.
 description: My first attempt at game development in the functional language, Haskell, as well as a description of the challenges I had to overcome to get things working.
 tags:
   - Haskell
+  - Game
   - Functional
   - OpenGL
 image: https://raw.githubusercontent.com/Ashe/HSRogue/master/img/preview.png

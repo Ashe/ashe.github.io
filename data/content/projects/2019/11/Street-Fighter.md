@@ -4,9 +4,9 @@ date: 2019-11-29
 subtitle: A fun revisit of the GameMaker engine.
 description: A university assignment where the goal was to study and recreate Street Fighter's mechanics in our own clone of the game.
 tags:
-  - GameMaker
   - Game
   - Uni
+  - GameMaker
 image: https://github.com/Ashe/Streetfighter/blob/master/img/streetfighter_preview.gif?raw=true
 status: published
 ---
@@ -17,7 +17,7 @@ GitHub repository for Street Fighter Clone can be found [here](https://github.co
 
 # What is this?
 
-This project was made as part of an assignment for Sheffield Hallam University in November, 2019. Since GMS is proprietary software, I've taken the liberty of compiling the project into a `.exe` file that you can find [here](https://github.com/Ashe/Streetfighter/releases/). The point of this project was to try and mimic StreetFighter as closely as possible and understand not only *what* mechanics were programmed but also *why*. 
+This project was made as part of an assignment for Sheffield Hallam University in November, 2019. Since GMS is proprietary software, I've taken the liberty of compiling the project into a `.exe` file that you can find [here](https://github.com/Ashe/Streetfighter/releases/). The point of this project was to try and mimic StreetFighter as closely as possible and understand not only *what* mechanics were programmed but also *why*.
 
 This assignment was set up as a competition; we all went around the room and played everyone's games (where everyone had chosen a different character to start with) to see which was the most fun and complete. Additionally, we were given the opportunity to guess whose was the best, and if we got it right, we got an extra mark. The person with the most votes also got extra credit.
 
@@ -43,9 +43,9 @@ Simply download and extract [the latest release](https://github.com/Ashe/Streetf
 }
 :::
 
-I made this game controller-only because we were all using controllers anyway and there were no extra marks for fully implementing KBM. To get around the issue of 'who plays who', I made it so that at the start of the round, both players need to press 'Start' on their gamepads. The characters are then assigned on a first-come, first-served basis. 
+I made this game controller-only because we were all using controllers anyway and there were no extra marks for fully implementing KBM. To get around the issue of 'who plays who', I made it so that at the start of the round, both players need to press 'Start' on their gamepads. The characters are then assigned on a first-come, first-served basis.
 
-:::{.help 
+:::{.help
   header="Controls"
   caption="Taken from the [notes file](https://github.com/Ashe/Streetfighter/blob/master/notes/hints.txt) I wrote for the assignment."
 }
@@ -81,4 +81,4 @@ I made this game controller-only because we were all using controllers anyway an
 
 # Credits
 
-Obviously, the artwork used in this game isn't mine. It's taken from various spritesheets I've found on the internet. 
+Obviously, the artwork used in this game isn't mine. It's taken from various spritesheets I've found on the internet.
