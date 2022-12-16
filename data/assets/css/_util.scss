@@ -4,7 +4,7 @@
 
 .hidden-on-mobile {
   display: none;
-  @include desktop {
+  @include tablet {
     display: block;
   }
 }

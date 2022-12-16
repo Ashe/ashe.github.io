@@ -3,6 +3,10 @@
 
   // Sizing
   height: 24rem;
+  @include widescreen {
+    height: 28rem;
+  }
+
   padding: 1.25rem 1.25rem 2.5rem;
   box-sizing: border-box;
 
@@ -30,10 +34,13 @@
     }
 
     // When on desktop
-    @include desktop {
+    @include tablet {
 
       // Ensure height matches preview
       height: 24rem;
+      @include widescreen {
+        height: 28rem;
+      }
 
       // Rearrange grids to be side-by-side
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -50,14 +57,25 @@
       margin-bottom: 0.8rem;
     }
 
+    // Hide authors unless in widescreen mode
+    .authors {
+      display: none;
+      @include widescreen {
+        display: block;
+      }
+    }
+
     // All images within post preview
     img, .swiper {
       width: 100%;
       height: 16rem;
 
       // Make height limiting factor only on mobile
-      @include desktop {
+      @include tablet {
         height: 24rem;
+        @include widescreen {
+          height: 28rem;
+        }
       }
     }
 

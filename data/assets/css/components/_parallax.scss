@@ -1,0 +1,9 @@
+// A way of creating a parallax image for a div
+.parallax {
+
+  // Standard parallax variables
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

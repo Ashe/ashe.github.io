@@ -4,10 +4,10 @@
 
     // Sizing
     width: 100%;
-    @include desktop {
+    @include tablet {
       width: 50%;
     }
-    @include fullhd {
+    @include widescreen {
       width: 33%;
     }
   }
