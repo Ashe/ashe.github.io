@@ -186,7 +186,7 @@ instance Monoid Config where mempty = Config "Foo" 0
 instance Semigroup Config where (<>) = mappend
 instance Component Config where type Storage Config = Global Config
 ```
-So even though I'm going to be lazy on this post so I can say 'make a new component', I I really do encourage people reading this to **try and use `makeWorld` instead**.
+So even though I'm going to be lazy on this post so I can say 'make a new component', I really do encourage people reading this to **try and use `makeWorld` instead**.
 :::
 
 So, what are the `initialise`, `run` and `terminate` systems? Well, they are just functions with the type `System World ()`!
@@ -603,7 +603,7 @@ newEntity_ newBoard
 newEntity_ newBoard
 ```
 
-Objective complete! Even though the components of each of these boards have the exact same date, the fact that there are multiple entities now reveals itself visually!
+Objective complete! Even though the components of each of these boards have the exact same state, the fact that there are multiple entities now reveals itself visually!
 
 :::{.figure
   image="https://res.cloudinary.com/aas-sh/image/upload/v1668357984/blog/2022/11/13-11-2022_16_46_16_g6uf5j.png"
