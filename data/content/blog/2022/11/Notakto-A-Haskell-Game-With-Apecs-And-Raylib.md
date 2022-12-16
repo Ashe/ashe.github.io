@@ -4,9 +4,9 @@ date: 2022-11-20
 subtitle: My return to the Apecs, 4 years later.
 description: My previous post on Apecs was very well received, but I've seen a lot of people using the now-out-of-date code and somewhat struggling. Time to dive back in!
 tags:
+  - Tutorial
   - Haskell
   - Functional
-  - Raylib
 images:
   - https://res.cloudinary.com/aas-sh/image/upload/v1668980383/blog/2022/11/logo_dctghd.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1668977503/blog/2022/11/20-11-2022_20_51_32_keas6a.png
