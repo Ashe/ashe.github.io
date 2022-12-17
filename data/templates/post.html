@@ -12,7 +12,7 @@ $if(related-project)$
 $endif$
 
 <div id="post-links">
-  <div class="columns">
+  <div class="columns is-desktop">
 
     <div class="column left">
       $if(previous-post)$
@@ -20,10 +20,10 @@ $endif$
           <div class="post-link apply-shadow hover">
             <div class="w-full is-flex is-flex-direction-row">
               <img src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
-              <div class="p-3 w-full">
-                <small class="uppercase text-sm">Previous Post</small>
-                <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
-                $if(subtitle)$<small class="subtitle">$subtitle$</small>$endif$
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="$url$" class="no-underline">$title$</a></h3>
+                $if(subtitle)$<h6 class="subtitle is-6">$subtitle$</h6>$endif$
               </div>
             </div>
           </div>
@@ -36,10 +36,10 @@ $endif$
         $for(next-post)$
           <div class="post-link apply-shadow hover">
             <div class="w-full is-flex is-flex-direction-row">
-              <div class="p-3 w-full">
-                <small class="uppercase text-sm">Next Post</small>
-                <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
-                $if(subtitle)$<small class="subtitle">$subtitle$</small>$endif$
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="$url$" class="no-underline">$title$</a></h3>
+                $if(subtitle)$<h6 class="subtitle is-6">$subtitle$</h6>$endif$
               </div>
               <img src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
             </div>

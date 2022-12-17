@@ -6,14 +6,18 @@
     padding: 0rem;
     margin: 3rem;
     &.left {
-      text-align: left;
       margin-left: 0rem;
+      * {
+        text-align: left;
+      }
     }
     &.right {
-      text-align: right;
       margin-right: 0rem;
       .post-link {
         margin-left: auto;
+      }
+      * {
+        text-align: right;
       }
     }
   }
@@ -48,11 +52,28 @@
       }
     }
 
-    // Text
-    .subtitle {
-      font-family: 'Crimson Pro', serif;
-      font-size: 1rem;
-      margin-top: 0rem;
+    // Textual content
+    .link-info {
+
+      // Position in middle of box on mobile
+      margin: auto 0;
+      @include tablet {
+        margin: 0;
+      }
+
+      // 'Previous post' / 'Next post'
+      small {
+        color: #999999;
+      }
+
+      // Subtitle text
+      .subtitle {
+        margin-top: 0rem;
+        display: none;
+        @include tablet {
+          display: inline;
+        }
+      }
     }
   }
 }
