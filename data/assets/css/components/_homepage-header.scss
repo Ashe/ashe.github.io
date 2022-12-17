@@ -5,8 +5,10 @@
   .title {
 
     // Sizing
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 4rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 6rem;
+    line-height: 0.8;
+    font-weight: 600;
     width: fit-content;
 
     // Centre text on mobile
@@ -14,7 +16,7 @@
       margin: auto;
     }
     @include tablet {
-      margin-left: 2rem;
+      margin-left: 4rem;
     }
 
     // Appearance
