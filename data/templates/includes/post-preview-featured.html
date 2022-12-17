@@ -22,9 +22,9 @@
     <div class="right p-5">
       <header class="mb-4">
 
-        <h4 class="title is-5"><a href="$url$">$title$</a></h4>
+        <h4 class="title is-4"><a href="$url$">$title$</a></h4>
 
-        <h5 class="is-monospace is-size-7 mt-0 $if(tags)$$else$mb-2$endif$">
+        <div class="is-monospace is-size-7 mt-0 $if(tags)$$else$mb-2$endif$">
           <ul>
             <li class="mt-1">
               <i class="las la-calendar-day"></i> $date$
@@ -55,10 +55,12 @@
               </li>
             $endif$
           </ul>
-        </h5>
+        </div>
         <p class="description">$description$</p>
       </header>
-      <a class="is-uppercase is-size-7 no-underline" href="$url$">Read more</a>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="$url$">
+        Read more
+      </a>
     </div>
 
   </div>

@@ -40,8 +40,11 @@
 
   // Site description
   .description {
-    font-family: 'Crimson Pro', serif;
-    font-size: 1.2rem;
+    text-align: center;
+    @include tablet {
+      text-align: left;
+      font-size: 1.3rem;
+    }
   }
 
   // Profile image

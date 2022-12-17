@@ -1,6 +1,6 @@
 <div class="post-preview-small">
   <div class="internal apply-shadow hover">
-    <img  src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$" 
+    <img  src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$"
           alt="Preview image for post '$title$'">
 
     <div class="information p-5">
@@ -8,7 +8,7 @@
 
         <h4 class="title is-5"><a href="$url$">$title$</a></h4>
 
-        <h5 class="is-monospace is-size-7 mt-0 $if(tags)$$else$mb-2$endif$">
+        <div class="is-monospace is-size-7 mt-0 $if(tags)$$else$mb-2$endif$">
           <ul>
             <li class="mt-1">
               <i class="las la-calendar-day"></i> $date$
@@ -27,10 +27,12 @@
               </li>
             $endif$
           </ul>
-        </h5>
+        </div>
         <p class="description">$description$</p>
       </header>
-      <a class="is-uppercase is-size-7 no-underline" href="$url$">Read more</a>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="$url$">
+        Read more
+      </a>
     </div>
   </div>
 </div>

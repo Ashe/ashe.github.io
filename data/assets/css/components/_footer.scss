@@ -24,8 +24,11 @@ footer {
   }
 
   // Git hash text
-  #git-hash, #git-hash *:not(:hover) {
-    color: rgba(153, 153, 153, 1);
+  #git-hash {
+    text-align: left;
+    & *:not(:hover) {
+      color: rgba(153, 153, 153, 1);
+    }
   }
 
   // Site logo

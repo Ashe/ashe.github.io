@@ -84,11 +84,13 @@
       object-fit: cover;
     }
 
-    // Make description use sans-serif
+    // Adjust font size of description depending on device
     .description {
-      font-family: 'Crimson Pro', serif;
-      font-size: 1.1rem;
       margin-top: 0rem;
+      font-size: 1rem;
+      @include tablet {
+        font-size: 1.1rem;
+      }
     }
   }
 }

@@ -6,6 +6,62 @@ body {
   color: #252525;
   font-size: 1rem;
   font-family: 'Ubuntu', sans-serif;
+  text-align: justify;
+
+  // Use serif fonts when not on mobile
+  @include tablet {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.25rem;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: left;
+  @include tablet {
+    font-weight: 500;
+  }
+}
+
+h1, .title.is-1, .subtitle.is-1 {
+  font-size: 1.625rem;
+  @include tablet {
+    font-size: 2.5rem;
+  }
+}
+
+h2, .title.is-2, .subtitle.is-2 {
+  font-size: 1.375rem;
+  @include tablet {
+    font-size: 2rem;
+  }
+}
+
+h3, .title.is-2, .subtitle.is-3 {
+  font-size: 1.25rem;
+  @include tablet {
+    font-size: 1.75rem;
+  }
+}
+
+h4, .title.is-4, .subtitle.is-4 {
+  font-size: 1.125rem;
+  @include tablet {
+    font-size: 1.5rem;
+  }
+}
+
+h5, .title.is-5, .subtitle.is-5 {
+  font-size: 1.1rem;
+  @include tablet {
+    font-size: 1.3rem;
+  }
+}
+
+h6, .title.is-6, .subtitle.is-6 {
+  font-size: 1.05rem;
+  @include tablet {
+    font-size: 1.15rem;
+  }
 }
 
 strong {
@@ -14,22 +70,6 @@ strong {
 
 header {
   font-size: 110%;
-}
-
-h1 {
-  font-size: 1.625rem;
-}
-
-h2 {
-  font-size: 1.375rem;
-}
-
-h3 {
-  font-size: 1.25rem;
-}
-
-h4 {
-  font-size: 1.125rem;
 }
 
 a:hover, a:hover > * {

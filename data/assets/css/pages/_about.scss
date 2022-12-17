@@ -4,6 +4,7 @@
   // First section is special
   section#profile {
 
+    // Positioning
     margin-top: 4rem;
 
     // Actual profile image
@@ -13,6 +14,9 @@
       width: 100%;
       @include tablet {
         height: 24rem;
+        @include widescreen {
+          height: 26rem;
+        }
       }
 
       // Appearance
@@ -26,11 +30,25 @@
     flex-direction: row-reverse;
   }
 
+  // Section headers
+  section .section-header {
+    .title, .subtitle {
+      text-align: center;
+      padding: 0rem 3rem;
+      @include tablet {
+        text-align: left;
+      }
+    }
+  }
+
   // Subsequent entries
   .entry {
 
     // Images
     img {
+
+      // Positioning
+      display: block;
 
       // Sizing
       margin: auto;

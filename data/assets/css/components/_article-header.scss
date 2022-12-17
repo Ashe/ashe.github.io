@@ -6,14 +6,22 @@
 
   // Make subtitles more compact
   .subtitle {
-    font-size: 1.25rem;
     margin-top: -1.2rem;
+    text-align: left;
+    @include tablet {
+      text-align: justify;
+    }
   }
 
   // Raise description up
   .description {
-    font-family: 'Crimson Pro', serif;
     margin-top: -1rem;
+    font-size: 1rem;
+    text-align: left;
+    @include tablet {
+      font-size: 1.25rem;
+      text-align: justify;
+    }
   }
 
   // Article authors

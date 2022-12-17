@@ -1,37 +1,8 @@
 // Rules that only apply to article content
-& {
-  font-family: 'Crimson Pro', serif;
-  text-align: justify;
-  @include tablet {
-    font-size: 1.25rem;
-  }
-}
-
 h1, h2, h3, h4, h5, h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
-
-h1 {
-  font-size: 2.5rem;
-  font-weight: 500;
-}
-
-h2 {
-  font-size: 2rem;
-  font-weight: 500;
-}
-
-h3 {
-  font-size: 1.75rem;
-  font-weight: 500;
-}
-
-h4 {
-  font-size: 1.5rem;
-  font-weight: 500;
-}
-
 
 *+p, *+ul, *+ol, *+dl, *+pre, *+address, *+fieldset, *+figure {
   margin-top: 1rem;
