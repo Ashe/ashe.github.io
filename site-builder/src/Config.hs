@@ -75,7 +75,7 @@ socialName :: String
 socialName = "Ashley Smith"
 
 socialProfilePicture :: String
-socialProfilePicture = "https://res.cloudinary.com/aas-sh/image/upload/v1623408029/site/profile_square.jpg"
+socialProfilePicture = "https://res.cloudinary.com/aas-sh/image/upload/v1693409630/site/profile_photo_square_nykgj0.jpg"
 
 socialEmail :: String
 socialEmail = "contact@aas.sh"
