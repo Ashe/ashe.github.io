@@ -21,6 +21,15 @@ status: published
 A link to the repository can be found [here](https://github.com/Ashe/Notakto/).
 :::
 
+:::{.note
+  header="Out of date, but not to worry!"
+}
+
+I wrote this post as I made the project, but to make things easier for newer readers I have been updating the codebase so that it takes advantage of some of the newer features of [h-raylib](https://hackage.haskell.org/package/h-raylib) and removes depreciated code. Check out the git repository for the latest updates and be careful when copy-pasting code --- unless you're running my repository or you're using the exact same versions of libraries, some of this code may not work.
+
+The biggest change was that I've manually implemented the first person camera, which has the added bonus of showing how we can handle input and make changes to our ECS world.
+:::
+
 # Previously on Apecs
 
 Roughly 4 years ago, I wrote the post [An introduction to game development to game development in Haskell using Apecs](/blog/making-a-game-with-haskell-and-apecs/). I like to think it was one of my most well-received blog posts [considering it is featured on the Apecs repository itself](https://github.com/jonascarpay/apecs#links), as well as being a common topic across emails and communications I receive.
@@ -1314,6 +1323,64 @@ data Cell = Empty | Filled PlayerComponent deriving (Show, Eq)
 :::{.gitrepo header="Notakto"}
 A link to the final section can be found [here](https://github.com/Ashe/Notakto/tree/f6b41756cf4f2e166d087b0b9c4487da6f996dff).
 :::
+
+## Bonus: Manually implementing first-person camera
+
+Okay, so I've spied online that this post is actually being read and people are posting it around on Reddit (thankyou!). With that in mind, I thought I'd update the repository so that newer Haskellers can use the code without as many issues. One of the biggest things I found is that the camera was no longer moving on its own.
+
+This was actually something that worried me when using Raylib at first, as it felt too 'magical' that their demo just baked in the first person camera movement. Fortunately, this isn't hard to do, and so here's the code:
+
+```hs
+-- Had to update this system to return the window we create
+-- Also note that we disable the cursor straight away for free look
+initialise :: System World RL.WindowResources
+initialise = do
+  let camera = RL.Camera3D (Vector3 0 1 6) (Vector3 0 1 0) (Vector3 0 1 0) 90
+        RL.CameraPerspective
+  set global (Camera camera, Red)
+  newGame
+  liftIO $ do
+    window <- RL.initWindow 1920 1080 "App"
+    RL.setTargetFPS 60
+    RL.disableCursor
+    pure window
+
+-- Also changed terminate to close the specific window we created
+terminate :: RL.WindowResources -> System World ()
+terminate window = liftIO $ RL.closeWindow window
+
+-- We now manually manipulate the camera's location and rotation
+updateCamera :: System World ()
+updateCamera = do
+  Camera c <- get global
+  newCam <- liftIO $ do
+    dt <- RL.getFrameTime
+    forward <- checkKey RL.KeyW RL.KeyUp
+    left <- checkKey RL.KeyA RL.KeyLeft
+    backward <- checkKey RL.KeyS RL.KeyDown
+    right <- checkKey RL.KeyD RL.KeyRight
+    Vector2 i j <- RL.getMouseDelta
+    let speed = 5.0
+        turnspeed = 1
+        Vector3 x _ z =
+          (RL.getCameraForward c |* (forward - backward)) |+|
+          (RL.getCameraRight c |* (right - left))
+        c' = RL.cameraMove c $ safeNormalize (Vector3 x 0 z) |* (speed * dt)
+        c'' = RL.cameraYaw c' (-i * turnspeed * dt) False
+    pure $ RL.cameraPitch c'' (-j * turnspeed * dt) False False False
+  set global $ Camera newCam
+  where checkKey a b =
+          liftA2 (\x y -> if x || y then 1 else 0) (RL.isKeyDown a) (RL.isKeyDown b)
+        safeNormalize v
+          | magnitude v == 0 = v
+          | otherwise = vectorNormalize v
+```
+
+Some things to note here is that a lot of our vector math functions are [built into the h-raylib bindings](https://hackage.haskell.org/package/h-raylib-4.6.0.6/docs/Raylib-Util-Math.html#g:3) now, so `|+|` lets you add two vectors together, `|*|` lets you multiply two vectors together, `|*` lets you multiply a vector with a normal scalar value and so on.
+
+So with that in mind, we now retrieve the state of several keyboard inputs one by one and determine which direction we want to move in by combining the player's net input as well as the camera's forward and right directions. We then normalize that (I had to make a `safeNormalize` function for cases when magnituded is zero, this will probably get fixed soon) and multiply it by some speed value and delta time to make it frame independent. Looking around is similar; Raylib already gives us the mouse delta so we can put the right into the look direction logic.
+
+Make sure to check out [the diff](https://github.com/Ashe/Notakto/commit/dc35e711dbc48703ff827dedbd2969c54e826d48) for all the changes I made in this update. I hope this helps!
 
 # Wrapping up
 
