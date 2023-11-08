@@ -722,7 +722,7 @@ handlePlayerAim = do
   windowWidth <- liftIO RL.getScreenWidth
   windowHeight <- liftIO RL.getScreenHeight
 
-  - Retrieve the camera (will have just been updated)
+  -- Retrieve the camera (will have just been updated)
   Camera camera <- get global
 
   -- Create a ray to be cast later
