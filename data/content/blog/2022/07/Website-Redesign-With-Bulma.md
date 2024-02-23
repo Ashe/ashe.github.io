@@ -7,7 +7,7 @@ tags:
   - aas.sh
   - Web
   - Slides
-image: https://res.cloudinary.com/aas-sh/image/upload/v1657296351/blog/2022/07/08-07-2022_17_03_41_zcwdj2.png
+image: https://res.cloudinary.com/aas-sh/image/upload/v1708713163/blog/2022/07/ntst2z.png
 project: aassh
 status: published
 slides: |
@@ -25,7 +25,7 @@ slides: |
 
   ## Yes we have slides
 
-  I've always enjoyed putting slides on my website, but now they are located conveniently as the same place as their related blog posts. 
+  I've always enjoyed putting slides on my website, but now they are located conveniently as the same place as their related blog posts.
 
   No more having to decide whether slides or blogs are more appropriate!
 
@@ -129,7 +129,7 @@ The old tag appearance was quite ugly to be honest. This was the [default implem
 
 ## Code cleanup
 
-One of the barriers I had to writing more content was how long Hakyll took to compile my website. As per usual, this was user error. After being spoilt by frameworks like [Hugo](https://gohugo.io/) in the past, I chalked all of the slowness found in building the site up to [Haskell](https://www.haskell.org/)'s compilation times and Hakyll's programming. 
+One of the barriers I had to writing more content was how long Hakyll took to compile my website. As per usual, this was user error. After being spoilt by frameworks like [Hugo](https://gohugo.io/) in the past, I chalked all of the slowness found in building the site up to [Haskell](https://www.haskell.org/)'s compilation times and Hakyll's programming.
 
 Fortunately, I spotted a lot of places in the code base that could have been optimised and as part of the refresh I fixed them. In the past, I had to recompile every page whenever anything was saved, but this was actually my fault and Hakyll does in fact have the ability to only recompile what's necessary so long as you take the time to understand each step of the building process. That, and making sure your indents are as you expect so that you don't do expensive processes inside loops...
 

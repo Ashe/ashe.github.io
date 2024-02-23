@@ -4,7 +4,7 @@ date: 2017-02-23
 subtitle: Best-of-show winning puzzle game for Sheffield Hallam Uni.
 description: Alacrity is a tile-based puzzle game where you have to collect pickups before time expires. We won an award for this game and got the opportunity to showcase our game next to Sumo Digital's 'Snake Pass'.
 authors:
-  - Ashley Smith
+  - Ashley Rose
   - Holly Savin
   - Elliott Hill
 tags:

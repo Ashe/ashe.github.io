@@ -63,7 +63,7 @@ siteRepo :: String
 siteRepo = "https://github.com/ashe/ashe.github.io"
 
 siteDescription :: String
-siteDescription = "Hey there! My name is Ashley Smith and I'm a software engineer from the UK. I love working on challenging projects and trying new things — I try to never stop learning."
+siteDescription = "Hey there! My name is Ashley and I'm a software engineer from the UK. I love working on challenging projects and trying new things — I try to never stop learning."
 
 siteLogo :: String
 siteLogo = "/assets/images/logo.png"
@@ -72,10 +72,10 @@ siteLogo = "/assets/images/logo.png"
 --------------------------------------------------------------------------------
 
 socialName :: String
-socialName = "Ashley Smith"
+socialName = "Ashley Rose"
 
 socialProfilePicture :: String
-socialProfilePicture = "https://res.cloudinary.com/aas-sh/image/upload/v1693409630/site/profile_photo_square_nykgj0.jpg"
+socialProfilePicture = "https://res.cloudinary.com/aas-sh/image/upload/v1693409630/site/profile_photo_square_hbb34d.jpg"
 
 socialEmail :: String
 socialEmail = "contact@aas.sh"

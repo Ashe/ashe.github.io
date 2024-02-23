@@ -4,7 +4,7 @@ date: 2018-08-25
 subtitle: A simple puzzle game made in Unity.
 description: Made during Summer 2018 as a part of an enterprise scheme to test not only our programming skills but our teamwork.
 authors:
-  - Ashley Smith
+  - Ashley Rose
   - Cameron Terras
 tags:
   - Game
@@ -33,4 +33,4 @@ Vect is a simple puzzler with the goal of getting coloured cubes sitting on top 
 * Easy concept, difficult levels
 * Low computer requirements
 
-Made by [Ashley Smith](/) and [Cameron Terras](https://twitter.com/chumtin1).
+Made by [Ashley Rose](/) and [Cameron Terras](https://twitter.com/chumtin1).

@@ -102,7 +102,7 @@ In order to test and observe this experimental AI, I decided to build a simple, 
 
 :::{.caption
   caption="A screenshot, UML diagram and flowchart of the strategy game for this project."
-  source="The path to the right decision - Ashley Smith 2020"
+  source="The path to the right decision - Ashley Rose 2020"
   sourceUrl="https://github.com/Ashe/Thesis/blob/master/Docs/thesis.pdf"
 }
 :::{.gallery-wall}
@@ -120,7 +120,7 @@ A player has a set amount of MP and AP (movement and action points) per turn, an
 
 :::{.caption
   caption="A table comparing the units used in the strategy game."
-  source="The path to the right decision - Ashley Smith 2020"
+  source="The path to the right decision - Ashley Rose 2020"
   sourceUrl="https://github.com/Ashe/Thesis/blob/master/Docs/thesis.pdf"
 }
 

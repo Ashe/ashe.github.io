@@ -9,7 +9,6 @@ tags:
   - Nix
   - Haskell
 images:
-  - https://res.cloudinary.com/aas-sh/image/upload/v1641635303/blog/2022/01/gza7tz.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1641635336/blog/2022/01/yl008c.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1641636014/blog/2022/01/cpngcp.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1641645844/blog/2022/01/rgxf4f.png
@@ -103,7 +102,7 @@ I've seen on a few people's websites that they have a nice smooth way of navigat
 
 ## Project posts
 
-Some people have a notion of a 'series' of posts and I wanted to include something similar to that in my website. I'd rather have the page of a project be a timeless record of the project, and the historical records be encapsulated in blog posts. This very post is a project-post --- the project is [aas.sh](/project/aas-sh), and any updates I make to the website will be detailed in the posts! 
+Some people have a notion of a 'series' of posts and I wanted to include something similar to that in my website. I'd rather have the page of a project be a timeless record of the project, and the historical records be encapsulated in blog posts. This very post is a project-post --- the project is [aas.sh](/project/aas-sh), and any updates I make to the website will be detailed in the posts!
 
 This does mean there might be some duplicated information, but the information in the project itself will be 100% correct, whereas the project posts are allowed to be no longer correct yet still stand as a record of what was previously the case.
 

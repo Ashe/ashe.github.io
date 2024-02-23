@@ -2,7 +2,7 @@
 title: About Me
 
 profile-title: Hi, I'm Ashley!
-description: Hey! My name is Ashley Smith and I am a systems engineer for Old School RuneScape at Jagex!
+description: Hey! My name is Ashley Rose and I am a systems engineer for Old School RuneScape at Jagex!
 profile-description: I'm a systems engineer for Old School RuneScape at Jagex!
 description-extension: I love to undertake personal projects to challenge, adapt and extend my evolving skillset — I try to never stop learning.
 profile-featured-image: https://res.cloudinary.com/aas-sh/image/upload/v1623265358/site/profile.jpg

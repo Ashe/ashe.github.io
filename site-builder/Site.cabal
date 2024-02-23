@@ -11,7 +11,7 @@ version:            0.3.3.0
 license:            MIT
 license-file:       LICENSE
 maintainer:         me@aas.sh
-author:             Ashley Smith
+author:             Ashley Rose
 
 executable site
     main-is: Main.hs
