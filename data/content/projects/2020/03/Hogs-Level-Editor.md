@@ -9,7 +9,6 @@ tags:
   - C++
   - OpenGL
 images:
-  - https://res.cloudinary.com/aas-sh/image/upload/v1617296706/projects/hogs_of_war_level_editor/thumbnail_qiom9m.png
   - https://res.cloudinary.com/aas-sh/image/upload/v1617296743/projects/hogs_of_war_level_editor/screenshot_uk6iiq.png
 featured: true
 status: published
@@ -19,7 +18,7 @@ status: published
 
 In my final year of university, we had an assignment to make either a game or a tool, and so I took tried something new and made a cross-platform tool that allows for the visualisation and manipulation of Hogs of War map files. This was around the same time I was working on the [4D Geometry Viewer](/project/4d-geometry-viewer) and so I re-used parts of the code base to speed up the process so I could focus on the meat of both projects.
 
-At the time, the games course for [Sheffield Hallam University](https://www.shu.ac.uk/) was blessed by [Dr Jacob Habgood](https://www.shu.ac.uk/about-us/our-people/staff-profiles/jacob-habgood), one of the programmers for [Hogs of War](https://en.wikipedia.org/wiki/Hogs_of_War). I was lucky enough to get to know him, learn from him, and have him as my supervisor for my [thesis](/project/thesis) and I am very grateful for the time I spent in his sessions. When this assignment was revealed, there was discussion that there could be an opportunity to work with the source code for Hogs of War and maybe make some kind of tool, and so I decided to take on that challenge. 
+At the time, the games course for [Sheffield Hallam University](https://www.shu.ac.uk/) was blessed by [Dr Jacob Habgood](https://www.shu.ac.uk/about-us/our-people/staff-profiles/jacob-habgood), one of the programmers for [Hogs of War](https://en.wikipedia.org/wiki/Hogs_of_War). I was lucky enough to get to know him, learn from him, and have him as my supervisor for my [thesis](/project/thesis) and I am very grateful for the time I spent in his sessions. When this assignment was revealed, there was discussion that there could be an opportunity to work with the source code for Hogs of War and maybe make some kind of tool, and so I decided to take on that challenge.
 
 The other students worked on games in groups, but I was on my own for this assignment, and so to keep things fair it was decided that I'd be assessed slightly differently to factor in the need to fully communicate and plan the project to others. One of the just-graduated masters students who is now a lecturer at the university, Luke Melville, was considered my 'client' for the assignment as he had also done work with the Hogs of War source code and was working with the university's in-house studio [Steel Minions](http://steelminions.com/). My objective was to listen to the kinds of things he'd find useful, translate his requirements into milestones and then use [HacknPlan](https://hacknplan.com/) to manage the project so that he could see my progress.
 
