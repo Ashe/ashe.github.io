@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="What even is Haskell?">
+    <meta property="og:description" content="In this post, I'd like to write a beginner-friendly summary in layman's terms with regards to why I have taken such an interest in a language I've only started using. Hopefully this will inspire some people to consider using alternate languages to the ones they're used to.">
+    <meta property="og:url" content="https://aas.sh/blog/what-even-is-haskell/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1617292285/blog/2018/03/haskell_code_umjeh2.png">
+    <title>What even is Haskell?</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#what-is-haskell">What is Haskell?</a></li><li><a href="#functional-programming">Functional programming</a></li><li><a href="#pure-functions">Pure functions</a></li><li><a href="#laziness">Laziness</a></li><li><a href="#static-typing">Static Typing</a></li><li><a href="#polymorphism">Polymorphism</a></li><li><a href="#wrapping-things-up">Wrapping things up</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://res.cloudinary.com/aas-sh/image/upload/v1617292285/blog/2018/03/haskell_code_umjeh2.png" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">What even is Haskell?</h1>
+      
+        <h2 class="subtitle is-4">An introduction to the functional language known as Haskell.</h2>
+      
+      
+        <div class="description">
+          In this post, I'd like to write a beginner-friendly summary in layman's terms with regards to why I have taken such an interest in a language I've only started using. Hopefully this will inspire some people to consider using alternate languages to the ones they're used to.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> March 18, 2018
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 30 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Tutorial" href="../../tag/Tutorial/">Tutorial</a>
+                
+                  <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                
+                  <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/b7c1df1">b7c1df1: Added OpenGL and DirectX tags to better reflect experience</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#what-is-haskell">What is Haskell?</a></li><li><a href="#functional-programming">Functional programming</a></li><li><a href="#pure-functions">Pure functions</a></li><li><a href="#laziness">Laziness</a></li><li><a href="#static-typing">Static Typing</a></li><li><a href="#polymorphism">Polymorphism</a></li><li><a href="#wrapping-things-up">Wrapping things up</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <p>You may have noticed that I have been talking a lot about Haskell lately. In this post, I’d like to write a beginner-friendly summary in layman’s terms with regards to why I have taken such an interest in a language I’ve only started using. Hopefully this will inspire some people to consider using alternate languages to the ones they’re used to.</p>
+<section id="what-is-haskell" class="article-section">
+<h1><span>What is Haskell?</span><a href="#what-is-haskell" class="anchor las la-link" title="what-is-haskell"></a></h1>
+<blockquote>
+<p>Taken from the <a href="https://wiki.haskell.org/Introduction">wiki</a>, <em><a href="https://haskell.org">Haskell</a> is a <a href="https://wiki.haskell.org/Polymorphism">polymorphic</a>, <a href="https://wiki.haskell.org/Typing">statically typed</a>, <a href="https://wiki.haskell.org/Lazy_evaluation">lazy</a> and <a href="https://wiki.haskell.org/Functional_programming">purely-functional</a> language</em>.</p>
+</blockquote>
+<p>Hopefully by the end of this post that sentence will be broken down bit by bit. One of the reasons I started wanting to learn Haskell was because people promised me that learning Haskell will improve your programming skills in general. For reasons we will go into, Haskell has a fairly steep learning curve but a huge payoff. As soon as you can get your head around it not only will you be able to produce elegant code in Haskell but also you will be thinking about new concepts that are important to functional programming that are also applicable to other languages. It’s important to note that while Haskell is a purely functional language, <strong><em>some languages such as JavaScript are capable of being functional too</em></strong>, so it would be good to understand FP even if you aren’t going to use Haskell, as it may help you in a language you will use later.</p>
+</section>
+<section id="functional-programming" class="article-section">
+<h1><span>Functional programming</span><a href="#functional-programming" class="anchor las la-link" title="functional-programming"></a></h1>
+<p>Let’s start with what functional programming actually is with a few examples. In essence, functional programming is a mind shift from <a href="https://en.wikipedia.org/wiki/Imperative_programming">Imperative</a> programming (the one most people are used to), where additional emphasis is placed on the manipulation and transformation of data through functions. Someone who’s more of an expert in Haskell or FP in general could give a better answer, but I’m rolling with this explanation for people like my past self. It can be hard to imagine the differences between the two when you haven’t really used any functional languages, so just try to keep up and hopefully I can make this relatively painless.</p>
+<p>To explain what I mentioned above, I want to start talking about what we mean when we say ‘function’. In mathematics, you can imagine the ‘number machine’ teaching methods they use early on. You place some numbers or some form of data inside the function, and it spits out different numbers or data. However, when you start learning programming you quickly forget this idea and instead imagine functions as a set of instructions — you are telling the computer to do something in an order in which operations are executed. There are loops, there are if statements, but at the end of the day there is some explicit instruction set that your program is following. The entirety of a game is within a loop that keeps going until the game closes — you pass in movement and every frame the character moves, the world reacts and finally the world is drawn.</p>
+<p>When we talk about imperative vs functional programming, forget concepts of <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">Object Oriented</a> and <a href="https://en.wikipedia.org/wiki/Procedural_programming">Procedural</a> programming etc. We aren’t talking about the ways of programming in a language, we’re talking about the <em>type</em> of programming the language itself is capable of doing. They are independent and so you shouldn’t dwell on them for this post. Just wanted to clear this up in case you then start questioning the differences between procedural and imperative when you usually do procedural programming inside an imperative language.</p>
+<p>Back on topic. Functional programming is an entirely different ball game. It’s very difficult to translate imperative code into functional because of the way things are done. There’s a wealth of information and discussion on the topic so I won’t go into too much detail, but rather try to navigate the simplest aspects so that people who haven’t given it a go can still understand it. Below is an example of imperative programming:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cs"><code class="sourceCode cs"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A class in C# which will represent the player in the game:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> Player <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The player's current location</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    Vector2 position <span class="op">=</span> <span class="fu">Vector2</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Function to move the player</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">MovePlayer</span><span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Ensure that the player will always be in-bounds (0-1000)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> <span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="fu">x</span> <span class="op">+</span> x <span class="op">&gt;</span> <span class="dv">1000</span><span class="op">)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">.</span><span class="fu">x</span> <span class="op">=</span> <span class="dv">1000</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="kw">this</span><span class="op">.</span><span class="fu">x</span> <span class="op">+</span> x <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">.</span><span class="fu">x</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="kw">this</span><span class="op">.</span><span class="fu">x</span> <span class="op">+=</span> x<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Imagine the same for Y:</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="co">// ...</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>So in this example, we have a very simple class <code>Player</code> which has a single function <code>MovePlayer</code>. This function returns absolutely nothing, it is a set of instructions detailing how the player will respond to some form of input. When we call the function like so: <code>MovePlayer(1, 2);</code> when the program has just started, we should expect the coordinates of the player to then be <code>(1, 2)</code> assuming that the rest of the function is completed. Calling it twice will move the player to <code>(2, 4)</code> and so forth. This is a simple example of <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">Object Oriented Programming</a> and is very effective whilst also being easy to read.</p>
+<p>When looking at <code>MovePlayer</code>, you start at the top and read it downwards — why wouldn’t you? This feels natural and it actually looks like a list of instructions — you can role-play as the computer and do everything in your head step by step. When navigating <code>if</code> statements it’s easy to see the flow of the function and which line is executed next.</p>
+<p>Time to bring in some FP. The fact that this function returns nothing (well, <code>Void</code>, as you can actually return <code>Nothing</code> in Haskell!) shows that this function ‘does’ something, it doesn’t transform your data in any way, it just stores it away and accumulates it. The structure of this function doesn’t exactly translate cleanly into a functional language at all. Only a few functions in Haskell ‘do’ things — think of it in a sense that one function will be impure that will use all the pure functions to get things done.</p>
+<p>With imperative programming, states can be found everywhere. There is a sense of ‘state’ for every instance of the player class as they each hold data that details where they are at any moment in time. In Haskell, without getting into advanced techniques, there’s not really a sense of state anymore. We will go into what purity means in the next chapter, so we will ignore the sense of state (the <code>Player</code> class) and instead look at a function that <code>MovePlayer</code> function.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- A function in Haskell:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">calculateNewCoords ::</span> (<span class="dt">Int</span>, <span class="dt">Int</span>) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, <span class="dt">Int</span>) <span class="ot">-&gt;</span> (<span class="dt">Int</span>, <span class="dt">Int</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>calculateNewCoords (x, y) (i, j) <span class="ot">=</span> (calc x i, calc y j)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> calc a b</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="op">|</span> a <span class="op">+</span> b <span class="op">&gt;</span> <span class="dv">1000</span> <span class="ot">=</span> <span class="dv">1000</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="op">|</span> a <span class="op">+</span> b <span class="op">&lt;</span> <span class="dv">0</span> <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> a <span class="op">+</span> b</span></code></pre></div>
+<p>Now for those who are unfamiliar with Haskell may feel a little scared over the code above. This can <em>definitely</em> be cleaned up to be more elegant, but I feel this version demonstrates quite a few features of Haskell. Firstly, we have defined almost a ‘mini-function’ called <code>calc</code>. We are no longer reading the function from top to bottom as in order to understand the second line we need to have read <code>calc</code> first. Haskell is very mathematics based, and so you need to imagine that you are writing a mathematical function rather than a set of instructions. In this case, we defined a function which investigates two vectors and adds their components together and ensure that they are within 0 and 1000. Obviously, if the bounds were to be any different, we either need to hard code them in (by replacing <code>1000</code> and <code>0</code>) or by passing them in.</p>
+<p>Secondly, let’s address what the first line actually means. The first line is the type declaration of the function — in this case, we are passing in two tuples (pairs in this case) containing two <code>Int</code>s each, and then finally returning a tuple. As you can expect, this function takes a vector to represent <strong><em>a position</em></strong> and a vector in which to translate by. The parameters are split up by <code>-&gt;</code> where the last section is the return value. By following the rules we established in the previous example, this function should hopefully spit out another tuple of <code>Int</code>s where the position will eventually be. The reason I placed emphasis on the fact it is <em>a position</em> is because this function does not belong to any class or instance; anything can call it. Because of the fact that we pass in the position we are manipulating and also returning the result, we are able to call this a <strong><em>pure</em></strong> function that is completely free from side effects and does not depend on anything else to be called. If you are into <a href="https://en.wikipedia.org/wiki/Parallel_computing">Parallel Computing</a>, this is a very good thing as it means that two functions cannot touch the same data at the same time.</p>
+<p>Following from the previous point — the fact that you are always operating and returning data means that another strength of Haskell and other functional languages is that data is <a href="https://en.wikipedia.org/wiki/Immutable_object">immutable</a>; once data is created it cannot be changed. If you use data properly and wisely, this can lead to saving memory. It is also more secure — unless you overwrite your variable (which is usually done in <code>do</code> syntax, a bit out of scope of this blog), your data will always be the same. You don’t usually overwrite data a lot in Haskell, but if you did it would be a lot like overwriting a variable passed by value where you are only messing with the copy.</p>
+</section>
+<section id="pure-functions" class="article-section">
+<h1><span>Pure functions</span><a href="#pure-functions" class="anchor las la-link" title="pure-functions"></a></h1>
+<p>Let’s look into <code>Pure</code> functions closely. As described earlier, a pure function has no side effects. By side effect, we mean something which is done as a consequence of calling a function. This could be changing values that aren’t a part of the function or simply using them. Here’s an imperative example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cs"><code class="sourceCode cs"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C# Example 1 -</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">// This function can be called from anywhere:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">int</span> <span class="fu">addem</span><span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> a <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>That’s a very simplistic function written in C#. It doesn’t take much to realise that there isn’t much of a point to this function when you can use <code>+</code> to make it completely redundant. Let’s mix it up a bit.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cs"><code class="sourceCode cs"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C# Example 2 -</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Imagine this is a function in some sort of class to store 'c':</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> c <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="dt">int</span> <span class="fu">addem</span><span class="op">(</span><span class="dt">int</span> a<span class="op">,</span> <span class="dt">int</span> b<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> a <span class="op">+</span> b <span class="op">+</span> c<span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>So what’s different between these two functions? Well, again, it doesn’t require a high IQ to see that there’s now an external variable named <code>c</code> which is going to be added to whatever we pass to our function. What’s important to note here, is that passing in <code>a = 1</code> and <code>b = 2</code> may not always return <code>8</code> with this function so long as <code>c</code> is visible outside the function. This is where the word <code>pure</code> comes from: a pure function will <strong><em>always</em></strong> return the same outputs for the same set of given inputs. When doing functional programming, the majority of your functions will follow this pattern. You should be rubbing your head right now if you’re a more involved programmer — how the hell do you ever get anything done?</p>
+<p>The answer is to divide your program into pure and impure parts. You begin to look at what computations actually require a sense of state and filter down your functionality into small, focused functions that only focus on manipulating data. When you wrap things up, you will likely have a few or even just one impure function that ties everything together. The key to FP is to really evaluate the purity of every function to ensure that you can have as many pure functions as possible.</p>
+</section>
+<section id="laziness" class="article-section">
+<h1><span>Laziness</span><a href="#laziness" class="anchor las la-link" title="laziness"></a></h1>
+<p>Now it’s time to look into the other buzzwords that are tagged in Haskell’s description. <a href="https://wiki.haskell.org/Lazy_evaluation">Lazy Evaluation</a> means that you can actually utilise lists of infinite length without crashing the program. Haskell will only evaluate expressions when it needs to, so taking the 32132nd number from an infinite list only requires the list to be calculated to that point. Here’s a few examples of some infinite lists written in different ways:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Haskell time:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This is a list of one through ten</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span><span class="op">..</span><span class="dv">10</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- The same list as above, but with a 'step' to make it odd only</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span>,<span class="dv">3</span><span class="op">..</span><span class="dv">10</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- This is a list like the first but doesn't stop at ten</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span><span class="op">..</span>]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- Being able to create infinite lists easily like this simply relies</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- on the 'Ord' typeclass. Basically, if you have a type that can be</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- ordered, you can make infinite lists like we've shown here!</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- Note that it doesn't exist until you actually use it</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span><span class="op">..</span>] <span class="op">!!</span> <span class="dv">5</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">5</span> [<span class="dv">1</span><span class="op">..</span>]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">-- A list like the second, but infinite</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span>, <span class="dv">3</span><span class="op">..</span>]</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co">-- Now when we use the lists</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="dv">1</span>, <span class="dv">3</span><span class="op">..</span>] <span class="op">!!</span> <span class="dv">5</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="dv">9</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">10</span> [<span class="dv">1</span>, <span class="dv">3</span><span class="op">..</span>]</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">13</span>, <span class="dv">15</span>, <span class="dv">17</span>, <span class="dv">19</span>]</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">-- Going down</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">10</span> [<span class="dv">5</span>, <span class="dv">4</span><span class="op">..</span>]</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>[<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="dv">4</span>]</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co">-- Creating an infinite list through recursion</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="kw">let</span> someList <span class="ot">=</span> <span class="dv">1</span> <span class="op">:</span> <span class="fu">map</span> (<span class="op">+</span><span class="dv">1</span>) someList</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co">-- Every iteration prepends '1' and then maps (+1) onto every element in the list as follows:</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co">-- [1]</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co">-- 1 : [2]</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="co">-- 1 : [2, 3]</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co">-- 1 : [2, 3, 4]</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co">-- Using the recursive endless loop will not break</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">5</span> someList</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">5</span> [x<span class="op">*</span><span class="dv">2</span> <span class="op">|</span> x <span class="ot">&lt;-</span> someList]</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>]</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="co">-- Try to work out how this infinite list is computed, what number is next?</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="co">-- This is called 'List Comprehension'</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">12</span> [x<span class="op">*</span><span class="dv">3</span> <span class="op">+</span> y <span class="op">|</span> x <span class="ot">&lt;-</span> someList, y <span class="ot">&lt;-</span> [<span class="dv">10</span>,<span class="dv">9</span><span class="op">..</span><span class="dv">7</span>]]</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>[<span class="dv">13</span>, <span class="dv">12</span>, <span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">16</span>, <span class="dv">15</span>, <span class="dv">14</span>, <span class="dv">13</span>, <span class="dv">19</span>, <span class="dv">18</span>, <span class="dv">17</span>, <span class="dv">16</span>]</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="co">-- Here is a filter with list comprehension</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">5</span> [x <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">5</span>, <span class="dv">6</span><span class="op">..</span>], x <span class="ot">`mod`</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>[<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">14</span>]</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="co">-- Ready to get your mind blown?</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">5</span> [<span class="kw">if</span> x <span class="ot">`mod`</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span> <span class="kw">then</span> <span class="st">&quot;EVEN!&quot;</span> <span class="kw">else</span> <span class="st">&quot;ODD!&quot;</span> <span class="op">|</span> x <span class="ot">&lt;-</span> [<span class="dv">1</span><span class="op">..</span>]]</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>[<span class="st">&quot;ODD!&quot;</span>,<span class="st">&quot;EVEN!&quot;</span>,<span class="st">&quot;ODD!&quot;</span>,<span class="st">&quot;EVEN!&quot;</span>,<span class="st">&quot;ODD!&quot;</span>]</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="co">-- Note that I've taken out the floating point errors here</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">5</span> [<span class="dv">0</span>, <span class="fl">0.1</span><span class="op">..</span>]</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>]</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">5</span> [<span class="ch">'l'</span><span class="op">..</span>]</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>[<span class="ch">'l'</span>, <span class="ch">'m'</span>, <span class="ch">'n'</span>, <span class="ch">'o'</span>, <span class="ch">'p'</span>]</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="co">-- Actually, in Haskell, a string is actually just a list of characters, so..</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;lmnop&quot;</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="co">-- Note that the above example isn't constrained to the alphabet</span></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="co">-- and will never loop back round to the alpha-numeric ascii characters</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="co">-- Not to worry though! A function called cycle can loop a list infinitely!</span></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> [<span class="ch">'A'</span><span class="op">..</span><span class="ch">'Z'</span>]</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="kw">let</span> alphaBetty <span class="ot">=</span> <span class="fu">cycle</span> [<span class="ch">'A'</span><span class="op">..</span><span class="ch">'Z'</span>]</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="co">-- Now alphaBetty is a list of the alphabet cycling infinitely</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">take</span> <span class="dv">6</span> (<span class="fu">drop</span> <span class="dv">23</span> alphaBetty)</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;XYZABC&quot;</span></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="co">-- Note that cycle doesn't require Ord at all, as it uses a pre-made list</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="co">-- Also note, that [1..] is simply syntactic sugar for the method we used for</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="co">-- 'someList'</span></span></code></pre></div>
+<p>I guess you could say I was pretty lazy in this area as I just demonstrated infinite lists rather than really talking about them, but who cares?</p>
+</section>
+<section id="static-typing" class="article-section">
+<h1><span>Static Typing</span><a href="#static-typing" class="anchor las la-link" title="static-typing"></a></h1>
+<p>This subject isn’t specific to Haskell, but I’ll give you the run down anyway as you may not be clear on it in the first place. Essentially, in <a href="https://wiki.haskell.org/Typing">Static Typing</a> the type of every variable is known at compile time. Usually, this means that the programmer must explicitly say what type a variable is before you can use it. This is obvious in C++:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum<span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> number <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>sum <span class="op">=</span> number <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span></code></pre></div>
+<p>In Haskell, there’s something called ‘type inference’ which means that you don’t necessarily have to define all of your variable types because the language is very smart. You should still explicitly label your functions though to make sure the compiler is on the same stage as yourself. C++ and Haskell are both statically typed languages, including (but not exclusive to) Java, C and Scala.</p>
+<p>So what is <em>dynamic typing</em>? Well, it is the opposite of static typing. JavaScript and Python (a language I am unfamiliar with) are both examples of dynamically typed languages. You don’t have to write out that your variable is an <code>Int</code>, for instance. Remember that some statically typed languages are capable of this, but that’s just the compiler being clever and doing the work for you. People say JS is ‘untyped’, but I’m just going to call it dynamic typing as it is most definitely not static. Now, at the risk of confusing you, I’m going to talk about dynamic typing with regards to <a href="https://en.wikipedia.org/wiki/Strong_and_weak_typing">Strong and Weak typing</a>. These are two different concepts and so you shouldn’t get mixed up between them — just because a language is dynamically typed doesn’t necessarily mean it’s strong (or weak) typed.</p>
+<p>If you are working with a strongly typed language, then once you have bound a variable to a type then you must ensure that it is always that type. For instance, does concatenating (joining) a <code>String</code> with an <code>Int</code> work? Does <code>"High " + 5</code> compile somehow? If it does, is there an explicit method for it, or is it a feature of your language that allows types to mingle like this? A weakly typed language will easily allow it, resulting in <code>"High 5"</code>. This is a really simple example and isn’t so important, but it’s hard to talk about dynamic typing without mentioning it.</p>
+</section>
+<section id="polymorphism" class="article-section">
+<h1><span>Polymorphism</span><a href="#polymorphism" class="anchor las la-link" title="polymorphism"></a></h1>
+<p>No, it’s not the <a href="http://www.wowhead.com/spell=118/polymorph">spell in World of Warcraft</a>, however, the meaning behind the two go together. Essentially, <a href="https://wiki.haskell.org/Polymorphism">Polymorphism</a> allows a variable to have more than one type. Once the type is bound then it must remain consistent through every call to said variable or parameter, but until that point it can be anything you like within reason. Haskell has multiple ways to do this, the first is very simple to demonstrate. If you have ever heard of an identity function, then this will quickly make sense:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Haskell's identity function:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">id</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+<p>Note that in Haskell, we read <code>::</code> as ‘<em>has type of</em>’ as in ‘<em>The function <code>id</code> has a type of <code>a -&gt; a</code></em>’. This isn’t really saying what the function actually does, however, given the type, there’s not a lot it <em>could</em> do. So what is <code>a</code>? Well, we don’t know — it’s <strong><em>polymorphic</em></strong>. Since we have no idea what it actually is or what it could be, we can’t really pass it to any functions <em>unless</em> the function also takes a parameter of <code>a</code>, meaning that it accepts anything. <code>a -&gt; a</code> means that this function will take a variable of any type and will return a variable <em>of the same type</em>. If you aren’t sure what an identity function is, it is simply a function that, in context, does nothing to it’s arguments. <code>1</code> is the identity for multiplication and division because anything <code>*1</code> or <code>/1</code> equals itself — <code>x * 1 = x</code>. In addition (and subtraction), <code>0</code> is the identity because <code>x + 0 = x</code>. In this case, <code>id</code> is an identity function which does nothing to it’s parameters and simply returns them. It might not make sense now, but it does have it’s uses.</p>
+<p>Anyway, <code>id</code> is a polymorphic function because it accepts literally <strong><em>any</em></strong> type. It doesn’t need any information on what the thing it accepts is — it could be a list or even another function — that’s for another blog post ;). The function will always return something of the same type and will be bound as soon as you pass in a parameter. Here’s an example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Usage of id in Haskell:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">id</span> <span class="dv">1</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- The type of that first id call was Int -&gt; Int</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- ... or was it? We'll get onto that next!</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">id</span> <span class="st">&quot;hello&quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;hello&quot;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- The type of id here was [Char] -&gt; [Char], or String -&gt; String</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- as string is essentially an alias of [char]</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">id</span> [<span class="ch">'A'</span>, <span class="ch">'B'</span>, <span class="ch">'C'</span>]</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;ABC&quot;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- This third call is exactly the same as the example above,</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">-- Haskell prefers to specify that it's a [Char], but then</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">-- writes it as a string to be friendly to read for us, thanks HS!</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">id</span> [(<span class="dv">1</span>, <span class="st">&quot;Hello&quot;</span>), (<span class="dv">2</span>, <span class="st">&quot;there&quot;</span>), (<span class="dv">3</span>, <span class="st">&quot;mate!&quot;</span>)]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>[(<span class="dv">1</span>, <span class="st">&quot;Hello&quot;</span>), (<span class="dv">2</span>, <span class="st">&quot;there&quot;</span>), (<span class="dv">3</span>, <span class="st">&quot;mate!&quot;</span>)]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">-- The type of id here in the fourth call was</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">-- [(Int, [Char])] -&gt; [(Int, [Char])]</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">-- Again, not really Int, but that's coming up next</span></span></code></pre></div>
+<p>As we went through before, the <code>-&gt;</code> symbol separates the parameters from each other, where the last one on the line is the return value. The type of <code>id</code> binds itself to whatever variable type we pass in. It is also important to remember that <code>a</code> is just easy to use as it’s the first letter of the alphabet, but the name doesn’t matter. Types start with an uppercase letter, such as <code>Int</code>, <code>Bool</code>, <code>Char</code> or <code>String</code>. Anything lowercase can be seen as a variable of any type. <code>a -&gt; b</code> means we have a function returning something that <strong><em>could</em></strong> be a different type to the one we passed in. <code>a -&gt; b -&gt; c</code> means that we pass in two parameters that aren’t necessarily the same type, and get back another type that could be different, or the same as <code>a</code> or <code>b</code>. Remember, these letters could be <em>anything</em>. Just because <code>a</code> and <code>b</code> indicate that there are uses of two independent types in our function doesn’t mean that they <em>have</em> to be different, just that they <em>could</em> be.</p>
+<p>So what was I going on about, surely that first call was <code>Int -&gt; Int</code>, I nailed that Ashley! I had it guessed! Well, in this case, you are actually a bit too specific. It’s time to introduce <code>=&gt;</code> in the context of type declarations.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">--Haskell identity function again:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="fu">id</span> <span class="dv">1</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;:</span>t <span class="fu">id</span> <span class="dv">1</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dt">Num</span> a <span class="ot">=&gt;</span> a</span></code></pre></div>
+<p>So when we use Haskell in a terminal to evaluate expressions we can use <code>:t</code> to query the type of something. This is querying the type of the <em>result</em> of <code>id 1</code>, so don’t get confused. Our answer was <code>Num a =&gt; a</code>, which is a little different to what I’ve shown so far. <code>=&gt;</code> describes the thing on the right with the definitions on the left — it’s saying that the <code>a</code> after the arrow is deriving the typeclass <code>Num</code>. As I was saying, we asked for the <em>result</em> of the function, and so our compiler is telling us that the result is <code>a</code>, where <code>a is part of the Num</code> typeclass. Therefore, the specialised type of our function <code>id</code> <em>before the function was applied</em> became as follows:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">Num</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+<p>You can still see the original <code>a -&gt; a</code> type declaration coming through, but now we know that the <code>a</code> sent in and <code>a</code> retrieved, which are both the same type, are now a <code>Num</code>. What is <code>Num</code>? The second way Haskell is polymorphic is less generic than the previous. As you get more specific, you get more functionality at a cost of being general — it makes sense really, as you can’t attach functionality to something without defining some basic principles to manipulate.</p>
+<p>Enter <code>Num</code>, a typeclass for a number. When something derives <code>Num</code>, we mean that whatever the type is it has to have some core functions. Put it this way, when you derive <code>Num</code>, you have to then fill in some functions for your type showing how they operate — if you make some whacky type that derives <code>Num</code>, you need to work out how things like <code>+</code>, <code>-</code> and <code>*</code> work (you can research why you don’t define <code>/</code>). <a href="http://hackage.haskell.org/package/base-4.11.0.0/docs/Prelude.html#t:Num">The functions can be found here on Hackage</a> — just make sure you let the page load and scroll to the <code>Num</code> section or you’ll get confused. Let’s have a look at the functions from that page:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Haskell Num functions:</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">+</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ot">(+) ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- If you have followed everything so far, you should</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- be able to see that addition takes two Nums and returns a Num</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t (<span class="op">*</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ot">(*) ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Remember, we are working with Num here, not Int</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- We don't know how this function is implemented, just that types</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- like Int are compatible with these functions.</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>t <span class="fu">abs</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span><span class="ot"> ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- Note that here we only have one parameter and one return value</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- that's because getting the absolute value simply makes the number positive</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- and it doesn't need any other parameters to operate</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">-- Let's query what typeclasses Int actually derives, so you can see how much Int can do!</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>λ<span class="op">&gt;</span> <span class="op">:</span>i <span class="dt">Int</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Int</span> <span class="ot">=</span> <span class="dt">GHC.Types.I</span><span class="op">#</span> <span class="dt">GHC.Prim.Int</span><span class="op">#</span>   <span class="co">-- Defined in `GHC.Types'</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Bounded</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Enum'</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Enum</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Enum'</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Eq</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Classes'</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Integral</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Real'</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Num</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Num'</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Ord</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Classes'</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Read</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Read'</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Real</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Real'</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Show</span> <span class="dt">Int</span> <span class="co">-- Defined in `GHC.Show'</span></span></code></pre></div>
+<p>As you can see from that last demonstration, <code>Int</code> actually has a lot of functionality! If we have a function that has a declaration such as <code>Eq a =&gt; a -&gt; a -&gt; Bool</code>, we can start thinking about the types of things it could do. <code>Eq</code> is the typeclass of equality — in terms of checking if things are equal. If we have a function which takes two variables of the same type that have the ability to be compared to see if they are equal or not, we can see how we would get a <code>Bool</code> out of this (where <code>Bool</code> is either <code>True</code> or <code>False</code>). This function would still be polymorphic as we don’t know what type we are being given, all we know is that they can be compared. It isn’t 100% generic, but neither is it 100% specific, therefore qualifying as polymorphic.</p>
+<p>You may already know how your current language implements polymorphism, whether it is through inheritance of other classes or some other method. This is simply how Haskell does it, and it is very, <strong><em>very</em></strong> powerful.</p>
+</section>
+<section id="wrapping-things-up" class="article-section">
+<h1><span>Wrapping things up</span><a href="#wrapping-things-up" class="anchor las la-link" title="wrapping-things-up"></a></h1>
+<p>I hope this little adventure has been a fun read and that I actually convince some of you to dive into Haskell a little bit. Learning Haskell has been a huge help to my challenge-craving brain and I am in love with how mathematical everything is. If you are interested to start learning, take a look at <a href="http://learnyouahaskell.com/">Learn you a Haskell for a Great Good (LYAH)</a> which is free, or the <a href="http://haskellbook.com/">Haskellbook</a> which is more thorough, more complex and more expensive. If you want to get serious, go for the <a href="http://haskellbook.com/">Haskellbook</a>, but I would advise that you have a look at <a href="http://learnyouahaskell.com/">LYAH</a> first for a quick overview of what you can do. It’ll get you up and running to the point of playing around with code, but the more academic of you will probably need something more.</p>
+<p>If you want something else too look at, go and take a look at <a href="https://www.youtube.com/channel/UC9-y-6csu5WGm29I7JiwpnA">ComputerPhile on YouTube</a>, they’ve done some great videos on not just Haskell and not just on Functional Programming, but on computing in general. Definitely check out the Haskell videos though. If you need some help getting started (or even when you’re an expert!) or want to talk to some Haskell pros, go to the <a href="http://webchat.freenode.net/?channels=haskell">#Haskell IRC on Freenode</a> or the <a href="https://discord.me/fp">Functional Programming Discord Server</a>.</p>
+<p>Thanks for reading, this was really fun to write!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1617291991/blog/2018/03/git_commit_graphs_af28w0.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/lets-try-this-again/" class="no-underline">Let's try this again!</a></h3>
+                <h6 class="subtitle is-6">An update of what happened when we tried starting our own studio.</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/of-boxes-and-threads/" class="no-underline">Of Boxes and Threads: Game development in Haskell</a></h3>
+                <h6 class="subtitle is-6">A discussion about games development in Haskell.</h6>
+              </div>
+              <img src="https://raw.githubusercontent.com/Ashe/FirstGameHS/master/img/preview.gif">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

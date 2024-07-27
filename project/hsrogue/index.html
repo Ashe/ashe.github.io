@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="HSRogue: A roguelike in Haskell">
+    <meta property="og:description" content="My first attempt at game development in the functional language, Haskell, as well as a description of the challenges I had to overcome to get things working.">
+    <meta property="og:url" content="https://aas.sh/project/hsrogue/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/preview.png">
+    <title>HSRogue: A roguelike in Haskell</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#what-is-this">What is this?</a></li><li><a href="#how-did-i-make-this">How did I make this?</a></li><li><a href="#how-do-i-play">How do I play?</a></li><li><a href="#why-did-development-stop">Why did development stop</a></li><li><a href="#mechanics">Mechanics</a><ul class><li><a href="#pathfinding">Pathfinding</a></li><li><a href="#ai-factions">AI &amp; Factions</a></li><li><a href="#stats-energy-system">Stats &amp; Energy system</a></li></ul></li><li><a href="#will-development-continue">Will development continue?</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/preview.png" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">HSRogue: A roguelike in Haskell</h1>
+      
+        <h2 class="subtitle is-4">A prototype roguelike in the functional language, Haskell.</h2>
+      
+      
+        <div class="description">
+          My first attempt at game development in the functional language, Haskell, as well as a description of the challenges I had to overcome to get things working.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> March  8, 2019
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 6 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                
+                  <a class="tag Game" href="../../tag/Game/">Game</a>
+                
+                  <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                
+                  <a class="tag OpenGL" href="../../tag/OpenGL/">OpenGL</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/dbd934a">dbd934a: Corrected tags across posts</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#what-is-this">What is this?</a></li><li><a href="#how-did-i-make-this">How did I make this?</a></li><li><a href="#how-do-i-play">How do I play?</a></li><li><a href="#why-did-development-stop">Why did development stop</a></li><li><a href="#mechanics">Mechanics</a><ul class><li><a href="#pathfinding">Pathfinding</a></li><li><a href="#ai-factions">AI &amp; Factions</a></li><li><a href="#stats-energy-system">Stats &amp; Energy system</a></li></ul></li><li><a href="#will-development-continue">Will development continue?</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - HSRogue
+</div>
+<p>A link to the repository can be found <a href="https://github.com/Ashe/HSRogue/">here</a>.</p>
+</div>
+<section id="what-is-this" class="article-section">
+<h1><span>What is this?</span><a href="#what-is-this" class="anchor las la-link" title="what-is-this"></a></h1>
+<p>This is an attempt at a game in Haskell in the form of a short demo. It uses an ECS library called <a href="https://hackage.haskell.org/package/apecs">Apecs</a> along with a wrapper for <a href="https://hackage.haskell.org/package/sdl2">SDL2</a>. I wanted to experience first hand the benefits and shortcomings of using a functional programming language for video games.</p>
+</section>
+<section id="how-did-i-make-this" class="article-section">
+<h1><span>How did I make this?</span><a href="#how-did-i-make-this" class="anchor las la-link" title="how-did-i-make-this"></a></h1>
+<p>I blogged heavily about my use of Apecs in this demo. You can find it on my blog <a href="../../blog/making-a-game-with-haskell-and-apecs">here</a>.</p>
+</section>
+<section id="how-do-i-play" class="article-section">
+<h1><span>How do I play?</span><a href="#how-do-i-play" class="anchor las la-link" title="how-do-i-play"></a></h1>
+<p>You can use the Vim keys (<code>HJKL</code> for left, down, up and right, with <code>YUBN</code> for diagonals), arrow keys and the mouse to move around. Right click or use the <code>;</code> key to look around and examine things. If you bump into a hostile entity, you will attack. Attacks are simply random and the system didn’t go very deep into it, so it’s just luck of the draw whether you win the fight or not. There is no objective, this is a demo.</p>
+</section>
+<section id="why-did-development-stop" class="article-section">
+<h1><span>Why did development stop</span><a href="#why-did-development-stop" class="anchor las la-link" title="why-did-development-stop"></a></h1>
+<p>I decided to release the code to the public because of the performance issues I’m having. If you render a lot of text or render more wall tiles to draw <em>X</em>s all over the screen, FPS drops dramatically. This limits the scope of the game quite a bit unfortunately. I believe this is for a number of things, but I suspect that SDL2’s lack of sprite batching is to blame along with Haskell not being as fast as C++. Still, there may be a way to fix this, and maybe I’ll start development again privately if there’s some light shed. Until then, I’m going to make non-graphical Haskell projects.</p>
+<div class="note infobox fill-horizontal">
+<div class="header">
+<span class="las la-info-circle mr-3"></span>Note - To reproduce performance issues
+</div>
+<p>Head to <code>Main.hs</code> line 37. Instead of the function <code>generateIdentityMap</code>, instead use <code>generateBlankMap</code> and pass in <code>Solid</code> to fill the entire map with walls and therefore create more things to render. Function definitions shown below for more info.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Easy function for a blank map</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">generateBlankMap ::</span> <span class="dt">V2</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Tile</span> <span class="ot">-&gt;</span> <span class="dt">Matrix</span> <span class="dt">Tile</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>generateBlankMap (<span class="dt">V2</span> w h) t <span class="ot">=</span> matrix w h (<span class="fu">const</span> t)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Identity map</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ot">generateIdentityMap ::</span> <span class="dt">V2</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Matrix</span> <span class="dt">Tile</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>generateIdentityMap (<span class="dt">V2</span> w h) <span class="ot">=</span> matrix w h (\(x, y) <span class="ot">-&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> x <span class="op">==</span> y <span class="kw">then</span> <span class="dt">Solid</span> <span class="kw">else</span> <span class="dt">Empty</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="mechanics" class="article-section">
+<h1><span>Mechanics</span><a href="#mechanics" class="anchor las la-link" title="mechanics"></a></h1>
+<section id="pathfinding" class="article-section">
+<h2><span>Pathfinding</span><a href="#pathfinding" class="anchor las la-link" title="pathfinding"></a></h2>
+<p>Simply click with the mouse to pathfind to a destination using <a href="https://hackage.haskell.org/package/astar">AStar pathfinding</a>. Works nicely if you don’t know how to use the Vim keybindings.</p>
+</section>
+<section id="ai-factions" class="article-section">
+<h2><span>AI &amp; Factions</span><a href="#ai-factions" class="anchor las la-link" title="ai-factions"></a></h2>
+<p>There is a small but functional relationship system, and the spawning of the three entities in <code>Main.hs</code> is where you declare their faction. The faction <em>Edgelords</em> are hostile to the player and with the entity named Tum being aggressive he will hunt you down if you get within it’s sensing range. Chum, however, is defensive, and will only attack if you attack him first or if a friend of his needs help. Tum will actually share his current target with Chum if he collides with him, making it so that you cannot hide behind Chum to get away from Tum.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- For defining relationships with people</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Faction: Who the character aligns with</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Attitude: For defining how a faction reacts to another</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Nature: How an individual acts (whether they fight or not)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Faction</span> <span class="ot">=</span> <span class="dt">String</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Attitude</span> <span class="ot">=</span> <span class="dt">Friendly</span> <span class="op">|</span> <span class="dt">Neutral</span> <span class="op">|</span> <span class="dt">Hostile</span> <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Eq</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Nature</span> <span class="ot">=</span> <span class="dt">Passive</span> <span class="op">|</span> <span class="dt">Defensive</span> <span class="op">|</span> <span class="dt">Aggressive</span> <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Eq</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">RelationshipTable</span> <span class="ot">=</span> <span class="dt">HM.HashMap</span> <span class="dt">Faction</span> (<span class="dt">HM.HashMap</span> <span class="dt">Faction</span> <span class="dt">Attitude</span>)</span></code></pre></div>
+</section>
+<section id="stats-energy-system" class="article-section">
+<h2><span>Stats &amp; Energy system</span><a href="#stats-energy-system" class="anchor las la-link" title="stats-energy-system"></a></h2>
+<p>Every character starts with <code>initialStats</code>, 10 in everything. However, increasing your <code>Speed</code> stat will give you more energy regen per round. This works in a similar way to other roguelikes, where you <em>spend</em> energy when you attempt to do something like move or attack. <em>Spending</em> here, actually means accumilating debt in this system though. Moving or attacking uses 100 energy, meaning that you cannot do any new actions until your energy hits 0. Your <code>speed</code> stat is how much energy you regain a round, meaning that a higher speed stat will allow you to do more actions in the time it takes for someone else to regain their energy (a speed stat of 20 instead of 10 would allow you to attack every 5 rounds rather than 10, given that an attack costs 100 energy).</p>
+<p>Note that rounds are skipped, so a fast enemy will simply attack twice instantaneously — 10 rounds goes by in a single keypress.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Generic character stats</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Dictates character abilities and combat stats</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Stats</span> <span class="ot">=</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Stats</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    {<span class="ot"> strength ::</span> <span class="dt">Int</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ,<span class="ot"> agility ::</span> <span class="dt">Int</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ,<span class="ot"> toughness ::</span> <span class="dt">Int</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ,<span class="ot"> speed ::</span> <span class="dt">Int</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>} <span class="kw">deriving</span> <span class="dt">Show</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- Calculate combat stats based on stats, equipment, skills and auras</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ot">calculateCombatStats ::</span> <span class="dt">Stats</span> <span class="ot">-&gt;</span> <span class="dt">CombatStats</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>calculateCombatStats s <span class="ot">=</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">CombatStats</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    { healthRegen <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    , energyRegen <span class="ot">=</span> speed s</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    , maxHealth <span class="ot">=</span> <span class="dv">20</span> <span class="op">*</span> toughness s</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    , criticalChance <span class="ot">=</span> agility s</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    , criticalMult <span class="ot">=</span> <span class="fl">1.5</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    , bonusDamage <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    , visionRange <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">-- Make a character spend energy</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="ot">spendEnergy ::</span> <span class="dt">Entity</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>spendEnergy e cost <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Character</span> c <span class="ot">&lt;-</span> get e</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>set e <span class="op">$</span> <span class="dt">Character</span> <span class="op">$</span> c {energy <span class="ot">=</span> cost}</span></code></pre></div>
+</section>
+</section>
+<section id="will-development-continue" class="article-section">
+<h1><span>Will development continue?</span><a href="#will-development-continue" class="anchor las la-link" title="will-development-continue"></a></h1>
+<p>Seeing as Haskell is my favourite language, I really hope it does. It all depends on whether the performance of my SDL bindings as well as Apecs and Haskell as a whole is up to the tasks I have in mind for a roguelike.</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+  <section class="container is-max-desktop">
+    <h3 class="title">Related posts</h3>
+    <div class="swiper project-post-swiper small-slides px-5 pb-6">
+      <div class="swiper-wrapper pb-12">
+        
+          <div class="swiper-slide">
+            <div class="post-preview-small">
+  <div class="internal apply-shadow hover">
+    <img src="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/gameplay.gif" alt="Preview image for post 'An Introduction to game development in Haskell using Apecs'">
+
+    <div class="information p-5">
+      <header class="mb-4">
+
+        <h4 class="title is-5"><a href="../../blog/making-a-game-with-haskell-and-apecs/">An Introduction to game development in Haskell using Apecs</a></h4>
+
+        <div class="is-monospace is-size-7 mt-0 ">
+          <ul>
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> September 10, 2018
+            </li>
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 50 Minutes
+            </li>
+            
+              <li class="mt-1 break-words has-text-left">
+                <i class="las la-tags"></i>
+                <div class="tags" style="display:inline;">
+                  
+                    <a class="tag Tutorial" href="../../tag/Tutorial/">Tutorial</a>
+                  
+                    <a class="tag Game" href="../../tag/Game/">Game</a>
+                  
+                    <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                  
+                    <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                  
+                </div>
+              </li>
+            
+          </ul>
+        </div>
+        <p class="description">There have been so many attempts to pioneer gamedev in Haskell, and yet still no commercial releases. In this post I hope to clear the air a little bit and encourage new developers to try Haskell.</p>
+      </header>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="../../blog/making-a-game-with-haskell-and-apecs/">
+        Read more
+      </a>
+    </div>
+  </div>
+</div>
+
+          </div>
+        
+          <div class="swiper-slide">
+            <div class="post-preview-small">
+  <div class="internal apply-shadow hover">
+    <img src="https://raw.githubusercontent.com/Ashe/FirstGameHS/master/img/preview.gif" alt="Preview image for post 'Of Boxes and Threads: Game development in Haskell'">
+
+    <div class="information p-5">
+      <header class="mb-4">
+
+        <h4 class="title is-5"><a href="../../blog/of-boxes-and-threads/">Of Boxes and Threads: Game development in Haskell</a></h4>
+
+        <div class="is-monospace is-size-7 mt-0 ">
+          <ul>
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> June  9, 2018
+            </li>
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 21 Minutes
+            </li>
+            
+              <li class="mt-1 break-words has-text-left">
+                <i class="las la-tags"></i>
+                <div class="tags" style="display:inline;">
+                  
+                    <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                  
+                    <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                  
+                    <a class="tag Thoughts" href="../../tag/Thoughts/">Thoughts</a>
+                  
+                </div>
+              </li>
+            
+          </ul>
+        </div>
+        <p class="description">My experiences of making a game in Haskell and how I think it's is a pioneering process. Despite a wiki and subreddit dedicated to gamedev in Haskell, not many people have actually succeeded making anything close to current games.</p>
+      </header>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="../../blog/of-boxes-and-threads/">
+        Read more
+      </a>
+    </div>
+  </div>
+</div>
+
+          </div>
+        
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <script>
+      var swiper = new Swiper(".project-post-swiper", {
+        slidesPerView: "auto",
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
+
+  </section>
+
+
+<div id="post-links">
+  <div class="columns">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1623433580/projects/vect/Vect_uuvvc1.png">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Previous Project</small>
+                <h3 class="m-0"><a href="../../project/vect/" class="no-underline">Vect</a></h3>
+                <small class="subtitle">A simple puzzle game made in Unity.</small>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Next Project</small>
+                <h3 class="m-0"><a href="../../project/relocate-engine/" class="no-underline">Relocate Engine</a></h3>
+                <small class="subtitle">A prototype engine built to learn how to integrate Lua and physics.</small>
+              </div>
+              <img src="https://raw.githubusercontent.com/Ashe/Relocate-Engine/master/img/engine-preview.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

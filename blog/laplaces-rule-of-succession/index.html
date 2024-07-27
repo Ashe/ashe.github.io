@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Laplace's rule of succession">
+    <meta property="og:description" content="I find myself talking to many people about this bit of maths simply because I've actually been able to apply it in my life and work. Hopefully in this post I can explain how!">
+    <meta property="og:url" content="https://aas.sh/blog/laplaces-rule-of-succession/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1658332892/blog/2022/07/sunrise_qo1y8n.jpg">
+    <title>Laplace's rule of succession</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#the-sunrise-problem">The sunrise problem</a><ul class><li><a href="#a-scientific-certainty">A scientific certainty</a></li><li><a href="#the-real-question">The real question</a></li><li><a href="#laplaces-answer-to-the-sunrise-problem">Laplace’s answer to the sunrise problem</a></li></ul></li><li><a href="#my-experience-with-the-rule-of-succession">My experience with the rule of succession</a><ul class><li><a href="#reviews">Reviews</a><ul class><li><a href="#the-question">The question</a></li><li><a href="#the-math">The math</a></li><li><a href="#why-is-this-value-useful">Why is this value useful?</a></li></ul></li><li><a href="#challenge-nudger">Challenge nudger</a></li></ul></li><li><a href="#wrapping-things-up">Wrapping things up</a></li><li><a href="#references">References</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://res.cloudinary.com/aas-sh/image/upload/v1658332892/blog/2022/07/sunrise_qo1y8n.jpg" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">Laplace's rule of succession</h1>
+      
+        <h2 class="subtitle is-4">A post on one of my favourite mathematical theorems.</h2>
+      
+      
+        <div class="description">
+          I find myself talking to many people about this bit of maths simply because I've actually been able to apply it in my life and work. Hopefully in this post I can explain how!
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> July 20, 2022
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 10 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Maths" href="../../tag/Maths/">Maths</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/d3990f3">d3990f3: Replaced mathjax with katex</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#the-sunrise-problem">The sunrise problem</a><ul class><li><a href="#a-scientific-certainty">A scientific certainty</a></li><li><a href="#the-real-question">The real question</a></li><li><a href="#laplaces-answer-to-the-sunrise-problem">Laplace’s answer to the sunrise problem</a></li></ul></li><li><a href="#my-experience-with-the-rule-of-succession">My experience with the rule of succession</a><ul class><li><a href="#reviews">Reviews</a><ul class><li><a href="#the-question">The question</a></li><li><a href="#the-math">The math</a></li><li><a href="#why-is-this-value-useful">Why is this value useful?</a></li></ul></li><li><a href="#challenge-nudger">Challenge nudger</a></li></ul></li><li><a href="#wrapping-things-up">Wrapping things up</a></li><li><a href="#references">References</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <section id="the-sunrise-problem" class="article-section">
+<h1>
+<span>The sunrise problem</span><a href="#the-sunrise-problem" class="anchor las la-link" title="the-sunrise-problem"></a>
+</h1>
+<section id="a-scientific-certainty" class="article-section">
+<h2>
+<span>A scientific certainty</span><a href="#a-scientific-certainty" class="anchor las la-link" title="a-scientific-certainty"></a>
+</h2>
+<p>
+In 1840, <a href="https://en.wikipedia.org/wiki/Pierre-Simon_Laplace">Pierre-Simon Laplace</a><span class="citation" data-cites="laplace1840essai"><span class="citation" data-cites="laplace1840essai">[1]</span></span> posed the following question:
+</p>
+<blockquote>
+<p>
+What is the probability that the sun will rise tomorrow?
+</p>
+</blockquote>
+<p>
+This is the <em><a href="https://en.wikipedia.org/wiki/Sunrise_problem">Sunrise Problem</a></em>. It’s a bit of a peculiar one, and at first glance one might think that either the question is trivial, stupid, or both, but let’s dive a little deeper into what it is the question is asking.
+</p>
+<p>
+Through observation, we can say with confidence that there hasn’t ever been a day where the sun hasn’t risen. It is a scientific certainty that it’ll rise and this very fact is taken as the truth by most if not all of the population — just look up at the sky and one can indeed see the sun rising each morning. After so much time, there is not one doubt that the sun does indeed rise every day.
+</p>
+<p>
+But… What if it <em>didn’t</em>?
+</p>
+</section>
+<section id="the-real-question" class="article-section">
+<h2>
+<span>The real question</span><a href="#the-real-question" class="anchor las la-link" title="the-real-question"></a>
+</h2>
+<p>
+The reason the sunrise problem is even worth considering can be discovered by simply asking <em>what if it didn’t?</em> — what is it we’re really asking? If the chance of the sun rising is 100%, then what is the purpose of contemplating the scenario where it didn’t?
+</p>
+<p>
+What we’re actually questioning here is not whether the sun rises, but in fact whether the <em>probability</em> of the sun rising is actually what we expect — this is a question of the probability of another probability!
+</p>
+</section>
+<section id="laplaces-answer-to-the-sunrise-problem" class="article-section">
+<h2>
+<span>Laplace’s answer to the sunrise problem</span><a href="#laplaces-answer-to-the-sunrise-problem" class="anchor las la-link" title="laplaces-answer-to-the-sunrise-problem"></a>
+</h2>
+<div class="note infobox fill-horizontal">
+<div class="header">
+<p><span class="las la-info-circle mr-3"></span>Note - Simplification ahead!</p>
+</div>
+<p>
+I’m going to be the first to say I learned about this stuff online — while I did further mathematics in sixth form, that is not where I learned about this. Someone with a better education could write this part a lot better, with a full history of how it was deduced and the impact it has had. This post is mostly <em>my</em> experience in understanding and using the theorem.
+</p>
+</div>
+<p>
+So, what was Laplace’s answer, and why was it interesting? Let’s go back to the sunrise problem: if human life had existed for 99 days exactly and the sun failed to rise on day 100, then one could argue that the probability is 99/100, as in, it happened 99 days in 100. However, on day 99, the observed probability would have been 99/99, or 1, which isn’t too useful in the context of the problem. If only there was a way to think in a similar way that’s as simple, while also giving us an answer of worth.
+</p>
+<p>
+Laplace’s rule states that, for any event that has occurred multiple times until now, the probability of it happening again is equal one plus to this number divided by the number of times plus two. Obviously, words aren’t the best way of showing this, so here’s some fancy math:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(X_n+1=1|X_1+...+X_n=s)=\frac{s + 1}{n + 2}
+$$</span></span>
+</p>
+<p>
+Maybe this doesn’t help either.. The part to focus on is the last part on the right side of the equation — take the number of times where the sun has risen and add 1, and divide that number by the number of total days and add 2. What this is essentially doing is ‘simulating’ what the probability would be <em>if</em> there was one more day where the sun had risen, and another where it didn’t. In our example, this would be equivalent to:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(\text{Sun rises on 100th day})=\frac{99 + 1}{99 + 2}=\frac{100}{101}
+$$</span></span>
+</p>
+<p>
+While simple, and indeed slightly weird, this does provide us a tangible value which we can use, which is a whole lot better than ‘always.. I think’.
+</p>
+<p>
+I can understand why one would think that this piece of knowledge isn’t very useful, however it’s important to remember what Laplace’s rule is telling us: it’s giving us a probability of a probability in a fairly quick and easy way: all you need to do is add 1 to the numerator and 2 to the denominator!
+</p>
+<p>
+Finally, remember that in maths there can be multiple ways of doing things; you can get the average of a bunch of values via mean, median <em>or</em> mode, as a quick example. So while this does give us <em>something</em>, you should think of it as <em>an</em> answer rather than <em>the</em> answer.
+</p>
+</section>
+</section>
+<section id="my-experience-with-the-rule-of-succession" class="article-section">
+<h1>
+<span>My experience with the rule of succession</span><a href="#my-experience-with-the-rule-of-succession" class="anchor las la-link" title="my-experience-with-the-rule-of-succession"></a>
+</h1>
+<p>
+So I learned about this theorem from <a href="https://www.youtube.com/watch?v=8idr1WZ1A7Q&amp;">Grant’s video on Binomial Distributions</a><span class="citation" data-cites="sanderson2020binomial"><span class="citation" data-cites="sanderson2020binomial">[2]</span></span>. While the main topic of this not Laplace’s theorem, it did use it as a quick introduction to the video those 30 seconds truly struck me as something useful. Here’s the video if you’re curious:
+</p>
+<div class="w-full caption-frame apply-shadow">
+<iframe src="https://www.youtube.com/embed/8idr1WZ1A7Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<div class="caption">
+<p>
+Grant Sanderson talks about Binomial Distributions, mentioning Laplace’s rule of succession.
+</p>
+<div class="caption-source">
+<p><a href="https://www.youtube.com/watch?v=8idr1WZ1A7Q&amp;feature=emb_title" title="3Blue1Brown, YouTube">3Blue1Brown, YouTube</a></p>
+</div>
+</div>
+</div>
+<p>
+Ever since I saw that video, I’ve had the rule of succession flash into my mind whenever I see a situation I might be able to apply it to. In the next section hopefully I can show you how!
+</p>
+<section id="reviews" class="article-section">
+<h2>
+<span>Reviews</span><a href="#reviews" class="anchor las la-link" title="reviews"></a>
+</h2>
+<section id="the-question" class="article-section">
+<h3>
+<span>The question</span><a href="#the-question" class="anchor las la-link" title="the-question"></a>
+</h3>
+<p>
+Admittedly I stole this idea from <a href="https://www.youtube.com/watch?v=8idr1WZ1A7Q&amp;?t=98">Grant’s video</a>, but it deserves its own section nonetheless. Unfortunately, fake reviews have recently begun to run rampant and so the effectiveness of applying Laplace’s rule of succession is diminished in these scenarios.
+</p>
+<p>
+So, let’s imagine that you’re wanting to purchase something and you can see two similarly rated products. The question we’re trying to answer is the following:
+</p>
+<blockquote>
+<p>
+Given that numerous people have had positive experiences, what is the probability that my own experience is also going to be positive?
+</p>
+</blockquote>
+<p>
+This looks nothing like the rising sun problem! Where in this problem is there an element of ‘probabilities of probabilities’? Let’s start making some assumptions:
+</p>
+<ol type="1">
+<li>
+<p>
+When we say positive experience, we mean an experience that we could comfortably rate 5/5 stars in the same way that others have done previously.
+</p>
+</li>
+<li>
+<p>
+Each review is a binary representation of someone’s experience; they either had a 5 star experience, or they didn’t.
+</p>
+</li>
+</ol>
+<p>
+So with that, we can start viewing this problem in the same way as the sunrise problem, except the probability of someone giving a 5 star review is not 100%.
+</p>
+</section>
+<section id="the-math" class="article-section">
+<h3>
+<span>The math</span><a href="#the-math" class="anchor las la-link" title="the-math"></a>
+</h3>
+<p>
+Let’s say that 87% of 957 people gave a product 5 stars, meaning that 832/957 people had a 5 star experience. What is the probability that the next experience (yours) is also going to be positive? Let’s do the math:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(\text{5 star experience})=\frac{832 + 1}{957 + 2}=\frac{833}{959}=0.86861
+$$</span></span>
+</p>
+<p>
+We now have a result! <code>0.86861</code>! You could do the same maths on another product and then compare these values to see which one is more likely to satisfy you. Now like I said before, this is <em>an</em> answer, not <em>the</em> answer. There are many other ways you could compare two products, but if you can’t be bothered going full math-mode, this is a nice trick.
+</p>
+</section>
+<section id="why-is-this-value-useful" class="article-section">
+<h3>
+<span>Why is this value useful?</span><a href="#why-is-this-value-useful" class="anchor las la-link" title="why-is-this-value-useful"></a>
+</h3>
+<p>
+Now the question you might have is, ‘how is this value any better than just taking the raw 87% value?’ The answer lies in the <em>amount</em> of reviews. We’ve always been skeptical of products with 100% 5 star reviews when only 2 people have reviewed it, but why? I believe it’s because deep down we simply don’t trust these two people to have experienced the product enough to represent our own experience, and so we are filled with distrust.
+</p>
+<p>
+Laplace’s rule of succession handles this gracefully; by adding two extra reviews, one positive and one negative, we can somewhat ‘balance’ the review scores with the amount of reviews. Let’s see an example:
+</p>
+<p>
+<span class="math display"><span class="math display">$$
+P(\text{5 star experience with } A) = \frac{2 + 1}{2 + 2}=\frac{3}{4}=0.75
+$$</span></span>
+<span class="math display"><span class="math display">$$
+P(\text{5 star experience with } B) = \frac{350 + 1}{400 + 2}=\frac{351}{402}=0.87313
+$$</span></span>
+</p>
+<p>
+In this completely arbitrary example, Laplace’s rule of succession tells us to trust product <span class="math inline"><em>B</em></span> more than product <span class="math inline"><em>A</em></span> despite <span class="math inline"><em>B</em></span> only having an 87.5% review score and <span class="math inline"><em>A</em></span> having a 100% review score; the low amount of reviews on product <span class="math inline"><em>A</em></span> meant that the adjustments made by the succession rule impact the score more significantly than they did in product <span class="math inline"><em>B</em></span>!
+</p>
+</section>
+</section>
+<section id="challenge-nudger" class="article-section">
+<h2>
+<span>Challenge nudger</span><a href="#challenge-nudger" class="anchor las la-link" title="challenge-nudger"></a>
+</h2>
+<p>
+Another time I’ve used Laplace’s rule of succession was while I was at work! I was working on a piece of UI that ‘nudged’ the player towards content in the game. Players had vast amounts of challenges going on simultaneously, such as ‘kill 50 players’, ‘win 4 matches’ and ‘walk 1000km’. The problem: determining which challenge has the highest probability of being relevant to the player.
+</p>
+<p>
+After the review chapter, I’m sure you can figure out why I chose to apply the rule here; how do we compare the player’s progress on these challenges when they have completely different requirements in terms of difficulty and time to complete?
+</p>
+<blockquote>
+<p>
+Quiz time! Which challenge would you consider to be closest to completion?
+</p>
+<ol type="1">
+<li>
+<p>
+<strong>Win 5 matches —</strong> Player has won 4.
+</p>
+</li>
+<li>
+<p>
+<strong>Kill 50 players —</strong> Player has killed 40 players.
+</p>
+</li>
+<li>
+<p>
+<strong>Destroy 100 barrels —</strong> Player has destroyed 80.
+</p>
+</li>
+<li>
+<p>
+<strong>Walk 1000km —</strong> Player has walked 800km.
+</p>
+</li>
+</ol>
+</blockquote>
+<p>
+Regardless of which one you <em>think</em> is more relevant to players, it may be difficult to pick between them especially when their progress percentages are all 80%! However, once again, Laplace’s rule gives us <em>an</em> answer to this question (not <em>the</em> answer). Applying Laplace’s rule here not only allows us to consistently rank challenges by a common metric, but it also allows us to stop caring about details — we <em>know</em> there is not one right answer to this problem, so let’s just lean on statistics and move on!
+</p>
+</section>
+</section>
+<section id="wrapping-things-up" class="article-section">
+<h1>
+<span>Wrapping things up</span><a href="#wrapping-things-up" class="anchor las la-link" title="wrapping-things-up"></a>
+</h1>
+<p>
+I hope you enjoyed reading this post; this is the first time I’ve written about something other than programming specifically, but I personally have found if very handy for more things than I’ve listed. I hope that after giving it some thought, you too might find the answer’s that Laplace provides useful!
+</p>
+<p>
+Make it a good one!
+</p>
+</section>
+<section id="references" class="article-section">
+<h1><span>References</span><a href="#references" class="anchor las la-link" title="references"></a></h1>
+<div class="references csl-bib-body infobox fill-horizontal" role="doc-bibliography">
+<div class="header">
+<span class="las la-pencil-alt mr-3"></span>References
+</div>
+<div id="ref-laplace1840essai" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">P. S. marquis de Laplace <em>et al.</em>, <em>Essai philosophique sur les probabilit<span>é</span>s</em>. Bachelier, 1840.</div>
+</div>
+<div id="ref-sanderson2020binomial" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">G. Sanderson, <span>“Binomial distributions | probabilities of probabilities, part 1,”</span> 2020. <a href="https://youtu.be/8idr1WZ1A7Q?t=98">https://youtu.be/8idr1WZ1A7Q?t=98</a></div>
+</div>
+</div>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1708713163/blog/2022/07/ntst2z.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/website-redesign-with-bulma/" class="no-underline">Website redesign with Bulma CSS</a></h3>
+                <h6 class="subtitle is-6">An update about the new look to my website (again).</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/notakto-a-haskell-game-with-apecs-and-raylib/" class="no-underline">Notakto: A Haskell game with Apecs and Raylib</a></h3>
+                <h6 class="subtitle is-6">My return to the Apecs, 4 years later.</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1668980383/blog/2022/11/logo_dctghd.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

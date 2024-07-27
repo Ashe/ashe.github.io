@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="HexagonalHS">
+    <meta property="og:description" content="I've been playing around with Haskell for quite a while and I wanted to have a play around with a purely-functional graphics pipeline.">
+    <meta property="og:url" content="https://aas.sh/project/hexagonalhs/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1617296340/projects/hexagonal_hs/preview_q8b8w2.gif">
+    <title>HexagonalHS</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#what-is-this">What is this?</a></li><li><a href="#how-do-i-use-it">How do I use it?</a></li><li><a href="#how-does-it-work">How does it work?</a></li><li><a href="#building">Building</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://res.cloudinary.com/aas-sh/image/upload/v1617296340/projects/hexagonal_hs/preview_q8b8w2.gif" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">HexagonalHS</h1>
+      
+        <h2 class="subtitle is-4">A quick demo rendering 3D hexagonal prisms in Haskell with OpenGL.</h2>
+      
+      
+        <div class="description">
+          I've been playing around with Haskell for quite a while and I wanted to have a play around with a purely-functional graphics pipeline.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> June 25, 2020
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 14 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                
+                  <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                
+                  <a class="tag OpenGL" href="../../tag/OpenGL/">OpenGL</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/b7c1df1">b7c1df1: Added OpenGL and DirectX tags to better reflect experience</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#what-is-this">What is this?</a></li><li><a href="#how-do-i-use-it">How do I use it?</a></li><li><a href="#how-does-it-work">How does it work?</a></li><li><a href="#building">Building</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - HexagonalHS
+</div>
+<p>GitHub repository for HexagonalHS can be found <a href="https://github.com/Ashe/HexagonalHS">here</a>.</p>
+</div>
+<section id="what-is-this" class="article-section">
+<h1><span>What is this?</span><a href="#what-is-this" class="anchor las la-link" title="what-is-this"></a></h1>
+<p>This is just a simple 3D demo of some hexagonal prisms being rendered with code written in Haskell. Each prism is a hexagonal tile with a discrete, randomly generated height, to give the appearance of a simplified heightmap. I wanted to see how far I could push the program and see if a 3D game in Haskell is possible since <a href="../../project/hsrogue/">I was experiencing performance problems rendering lots of entities in SDL</a>.</p>
+<p>Initially, this project was going to be the prototype of a game I’ve been wanting to make for a while, but after getting this far, I realised that my workflow for using Haskell was a little bit too bloated and frustrating for my liking. Similarly, the next part of this project was implementing a 3D animation system, and since I program functionally for recreational purposes I really don’t want force myself to continue when I’m not prepared to do so.</p>
+<p>In the past, I’ve talked about Haskell as being my favourite language. I’ve learned a lot from it, but ultimately with my new job I’ve had less time to work on hobby projects. I’ve made the decision to move away from Haskell and explore <a href="https://lisp-lang.org/">Common Lisp</a>. One of my projects, <a href="../../project/space/">Space</a>, gave me a very colourful insight into this new world of Lisp and I’m excited to jump into new things. I want to embrace the functional paradigm without reinventing the progress we’ve already made with traditional imperative methods — you’ll see more about this in my future posts!</p>
+</section>
+<section id="how-do-i-use-it" class="article-section">
+<h1><span>How do I use it?</span><a href="#how-do-i-use-it" class="anchor las la-link" title="how-do-i-use-it"></a></h1>
+<p>The camera uses simple first-person flying controls — <code>WASD</code> to move, <code>Space</code> and <code>C</code> to ascend and descend, and <code>Right Mouse Button</code> to look around. Pressing <code>F1</code> regenerates the level instantaneously.</p>
+<p>The performance measuring widget isn’t bundled with the executable. In the preview, I used <a href="https://github.com/flightlessmango/MangoHud">MangoHud</a> because it’s a very slick way of measuring FPS and rendering times — I highly recommend its usage on projects like this where garbage collectors are involved for profiling purposes.</p>
+</section>
+<section id="how-does-it-work" class="article-section">
+<h1><span>How does it work?</span><a href="#how-does-it-work" class="anchor las la-link" title="how-does-it-work"></a></h1>
+<p>This project is largely a port of the tutorials found on <a href="https://learnopengl.com/">learnopengl.com</a>. It was very interesting seeing the problems that came from trying to replicate imperative code in a functional scope. I am especially proud of how I loaded and stored resources:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Store a resource along with a way of loading it</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Resource</span> a <span class="ot">=</span> <span class="dt">Resource</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> resource        ::</span> <span class="dt">Maybe</span> a</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  ,<span class="ot"> resourceLoader  ::</span> <span class="dt">IO</span> (<span class="dt">Maybe</span> a)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Store resources by type and name</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Resources</span> <span class="ot">=</span> <span class="dt">Resources</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> _shaders  ::</span> <span class="dt">RMap</span> <span class="dt">Shader</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  ,<span class="ot"> _meshes   ::</span> <span class="dt">RMap</span> <span class="dt">Mesh</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">-- Attempts to retrieve a loaded resource</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ot">tryGet ::</span> <span class="dt">MVar</span> <span class="dt">Resources</span> <span class="ot">-&gt;</span> <span class="dt">RInfo</span> <span class="ot">-&gt;</span> <span class="dt">RLens</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Maybe</span> a)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>tryGet mR info<span class="op">@</span>(t, name) lens <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  rs <span class="ot">&lt;-</span> readMVar mR</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> maybeRes <span class="ot">=</span> Data.Map.Strict.lookup name <span class="op">$</span> view lens rs</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> maybeRes <span class="kw">of</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    (<span class="dt">Just</span> (<span class="dt">Resource</span> r _)) <span class="ot">-&gt;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      <span class="kw">case</span> r <span class="kw">of</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        (<span class="dt">Just</span> res) <span class="ot">-&gt;</span> <span class="fu">pure</span> <span class="op">$</span> <span class="dt">Just</span> res</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        _ <span class="ot">-&gt;</span> tryLoad mR info lens</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    _ <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">putStrLn</span> <span class="op">$</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;[Error] Could not find &quot;</span> <span class="op">++</span> t <span class="op">++</span> <span class="st">&quot;: '&quot;</span> <span class="op">++</span> name <span class="op">++</span> <span class="st">&quot;'.&quot;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pure</span> <span class="dt">Nothing</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">-- Try and load an unloaded resource</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ot">tryLoad ::</span> <span class="dt">MVar</span> <span class="dt">Resources</span> <span class="ot">-&gt;</span> <span class="dt">RInfo</span> <span class="ot">-&gt;</span> <span class="dt">RLens</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> (<span class="dt">Maybe</span> a)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>tryLoad mR info<span class="op">@</span>(t, name) lens <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Declare the resource to load</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;Loading &quot;</span> <span class="op">++</span> t <span class="op">++</span> <span class="st">&quot;: '&quot;</span> <span class="op">++</span> name <span class="op">++</span> <span class="st">&quot;'..&quot;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Retrieve resources from mvar</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  rs <span class="ot">&lt;-</span> takeMVar mR</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Get the element to load and the accessor to place it</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> res<span class="op">@</span>(<span class="dt">Resource</span> _ l) <span class="ot">=</span> view lens rs <span class="op">!</span> name</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Use the loading function to try and load the resource</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  maybeRes <span class="ot">&lt;-</span> l</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> maybeRes <span class="kw">of</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- If a resource was loaded, update collection</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    (<span class="dt">Just</span> r) <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> newRs <span class="ot">=</span> over lens (insert name res { resource <span class="ot">=</span> maybeRes }) rs</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>      putMVar mR newRs</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pure</span> maybeRes</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- If nothing was done, do nothing</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    _ <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>      <span class="fu">putStrLn</span> <span class="op">$</span> <span class="st">&quot;[Error] Failed to load &quot;</span> <span class="op">++</span> t <span class="op">++</span> <span class="st">&quot;: '&quot;</span> <span class="op">++</span> name <span class="op">++</span> <span class="st">&quot;'.&quot;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>      putMVar mR rs</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pure</span> <span class="dt">Nothing</span></span></code></pre></div>
+<p>Resources are stored with a loading function specialised to the specific resource — when loading a texture <code>foo.png</code>, the filepath is curried with the texture loading function and stored so that it can be loaded and retrieved upon request:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Display the scene</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">onRender ::</span> <span class="dt">GameScene</span> <span class="ot">-&gt;</span> [<span class="dt">Uniform</span>] <span class="ot">-&gt;</span> <span class="dt">App</span> ()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>onRender gs uniforms <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Retrieve map shader</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Env</span> { envResources <span class="ot">=</span> rs } <span class="ot">&lt;-</span> ask</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  mapShader  <span class="ot">&lt;-</span> liftIO <span class="op">$</span> getShader rs <span class="st">&quot;map&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Render the map with global uniforms</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  R.render (gameSceneMap gs) mapShader uniforms</span></code></pre></div>
+<p>That snippet also showcases my <code>Uniform</code> implementation in use. In graphics, a uniform is a parameter that can be passed onto shaders. Data that doesn’t belong to a specific vertex such as the camera’s location and direction can then be passed and used to render the scene.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Easy representation of uniform data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Uniform</span> <span class="ot">=</span> <span class="dt">Uniform</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> uniformName   ::</span> <span class="dt">String</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  ,<span class="ot"> uniformData   ::</span> <span class="dt">UniformData</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- Easy representation of uniform data</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">UniformData</span> <span class="kw">where</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">UniformData</span><span class="ot"> ::</span> <span class="dt">GL.Uniform</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">UniformData</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">UniformDataMulti</span><span class="ot"> ::</span> (<span class="dt">GL.Uniform</span> a, <span class="dt">Storable</span> a) <span class="ot">=&gt;</span> <span class="dt">Vector</span> a <span class="ot">-&gt;</span> <span class="dt">UniformData</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Provide a list of uniforms to the supplied shader for rendering</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ot">applyUniforms ::</span> <span class="dt">Shader</span> <span class="ot">-&gt;</span> [<span class="dt">Uniform</span>] <span class="ot">-&gt;</span> <span class="dt">App</span> ()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>applyUniforms shader uniforms <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  GL.currentProgram <span class="op">$=</span> <span class="dt">Just</span> shader</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  liftIO <span class="op">$</span> <span class="fu">mapM_</span> f uniforms</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> f (<span class="dt">Uniform</span> name d) <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            location <span class="ot">&lt;-</span> GL.uniformLocation shader name</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="kw">case</span> d <span class="kw">of</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>              <span class="dt">UniformData</span> u <span class="ot">-&gt;</span> GL.uniform location <span class="op">$=</span> u</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>              <span class="dt">UniformDataMulti</span> v <span class="ot">-&gt;</span> unsafeWith v <span class="op">$</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                  GL.uniformv location (<span class="fu">fromIntegral</span> <span class="op">$</span> <span class="fu">length</span> v)</span></code></pre></div>
+<p>Uniforms attach a <code>String</code> to a piece of data that OpenGL can read, such as a floating point value, a vector or a matrix. The location of the uniform in shader code is found and provided with the <code>Uniform</code>’s value.</p>
+<p>Inside the <code>Map</code>’s rendering function, you can see these <code>Uniform</code>s are applied to the loaded <code>Shader</code> resources. The map’s shader was bound in the <code>GameScene</code> snippet and given to this rendering function as <code>shader</code> — the map shader uses instanced rendering to render all those hexagonal prisms in one draw call.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Allow maps to be rendered</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Renderable</span> <span class="dt">Map</span> <span class="kw">where</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  render <span class="ot">=</span> renderMap</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Create the relevant uniforms for a given tile</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ot">makeUniforms ::</span> <span class="dt">Index</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> [<span class="dt">Uniform</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>makeUniforms pos height <span class="ot">=</span> [transform]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> transform <span class="ot">=</span> <span class="dt">Uniform</span> <span class="st">&quot;transform&quot;</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>          (<span class="dt">UniformData</span> <span class="op">$</span> makeTransform pos height)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- Render every tile on the map</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ot">renderMap ::</span> <span class="dt">Map</span> <span class="ot">-&gt;</span> <span class="dt">Shader</span> <span class="ot">-&gt;</span> [<span class="dt">Uniform</span>] <span class="ot">-&gt;</span> <span class="dt">App</span> ()</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>renderMap <span class="fu">map</span> shader globalUniforms <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Retrieve resources</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Env</span> { envResources <span class="ot">=</span> rs } <span class="ot">&lt;-</span> ask</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Obtain the mesh from resources (or crash)</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  mesh <span class="ot">&lt;-</span> liftIO <span class="op">$</span> getMesh rs <span class="st">&quot;hexagonal_prism&quot;</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Apply global uniforms to all tiles (this also binds the shader)</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  applyUniforms shader globalUniforms</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Bind VAO of mesh</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  GL.bindVertexArrayObject <span class="op">$=</span> <span class="dt">Just</span> (meshVAO mesh)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Prepare to render the map</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tiles <span class="ot">=</span> assembleTile <span class="op">&lt;$&gt;</span> toList (mapTiles <span class="fu">map</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      tileInfo <span class="ot">=</span> <span class="dt">Uniform</span> <span class="st">&quot;tiles&quot;</span> (<span class="dt">UniformDataMulti</span> <span class="op">$</span> fromList tiles)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>      offset <span class="ot">=</span> bufferOffset <span class="op">$</span> meshFirstIndex mesh</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Provide tile information to the shaders for instanced rendering</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  applyUniforms shader [tileInfo]</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Render the map via instances of the hexagonal mesh</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  liftIO <span class="op">$</span> GL.drawElementsInstanced </span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>      <span class="dt">GL.Triangles</span> (meshNumIndices mesh) <span class="dt">GL.UnsignedInt</span> </span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>      offset (<span class="fu">fromIntegral</span> <span class="op">$</span> <span class="fu">length</span> tiles)</span></code></pre></div>
+<p>The function <code>GL.drawElementsInstanced</code> is featured in <a href="https://learnopengl.com/Advanced-OpenGL/Instancing">this tutorial</a> and is used to render multiple things in a single draw call. Essentially, when the map shader renders the <code>hexagonal_prism</code> mesh, it will do so multiple times (one time per instance). Each instance is then given an ID number, which is the only detail that differs between each tile. This ID number is used to find the details of the tile in the <code>tiles</code> uniform parameter, as an array of vectors of three. You can see how the details of each tile is used in the shader code below:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode glsl"><code class="sourceCode glsl"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// map.vertex.glsl</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#version 430 core</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">layout</span><span class="op">(</span><span class="dt">location</span> <span class="op">=</span> <span class="dv">0</span><span class="op">)</span> <span class="dt">in</span> <span class="dt">vec3</span> inPosition<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">uniform</span> <span class="dt">mat4</span> transform<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">uniform</span> <span class="dt">mat4</span> view<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">uniform</span> <span class="dt">mat4</span> projection<span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">uniform</span> <span class="dt">vec3</span> tiles<span class="op">[</span><span class="dv">1000</span><span class="op">];</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">main</span><span class="op">()</span> <span class="op">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Get the position of the vertex</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vec4</span> vPosition <span class="op">=</span> <span class="dt">vec4</span><span class="op">(</span>inPosition<span class="op">,</span> <span class="fl">1.0</span><span class="op">);</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calculate translation matrix for current primitive</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vec3</span> tile <span class="op">=</span> tiles<span class="op">[</span><span class="bu">gl_InstanceID</span><span class="op">];</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> visible <span class="op">=</span> <span class="bu">clamp</span><span class="op">(</span>tile<span class="op">.</span><span class="fu">z</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">mat4</span> tileM <span class="op">=</span> <span class="dt">mat4</span><span class="op">(</span><span class="fl">1.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                    visible<span class="op">,</span> tile<span class="op">.</span><span class="fu">z</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">0.0</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span> visible<span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                    tile<span class="op">.</span><span class="fu">x</span><span class="op">,</span> <span class="fl">0.0</span><span class="op">,</span> tile<span class="op">.</span><span class="fu">y</span><span class="op">,</span> <span class="fl">1.0</span><span class="op">);</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calculate final position</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="bu">gl_Position</span> <span class="op">=</span> projection <span class="op">*</span> view <span class="op">*</span> transform <span class="op">*</span> tileM <span class="op">*</span> vPosition<span class="op">;</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="building" class="article-section">
+<h1><span>Building</span><a href="#building" class="anchor las la-link" title="building"></a></h1>
+<p>As with any other standard Haskell project, you can install <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a> and build it like so:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">stack</span> build</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">stack</span> run</span></code></pre></div>
+</section>
+<section id="conclusion" class="article-section">
+<h1><span>Conclusion</span><a href="#conclusion" class="anchor las la-link" title="conclusion"></a></h1>
+<p>This was a lot of fun to make, but ultimately it is a long way away from anything playable. 3D animations, line-to-plane intersection and networking are all things this prototype needed in order to get to what I wanted, and while it’s certainly possible I have to be realistic with how I spend my free time.</p>
+<p>I love Haskell, I really do, but I often think about it like becomming a monk in the mountains. You escape the imperative world, forcing yourself to be pure and functional. It is a lot of fun and a great learning experience, and while I’m sure there’s still more to learn, I’m very comfortable with my abilities and I’m ready to move on to the next venture.</p>
+<p>As mentioned, <a href="https://lisp-lang.org/">Common Lisp</a> is my next destination. I wanted to use Haskell as a way of proving that functional gamedev is possible, however, I think that cutting out imperative programming isn’t the right thing to do especially in an industry where quick-and-dirty implementations are often used for testing purposes. Haskell requires careful planning and patience in order to pass the type checker and produce something worthwhile, and even though this is great, I feel like something a little less rigid like Common Lisp might be more fun for me personally. I do believe though that if one day we have a large Haskell ecosystem filled with game programming libraries, that it actually would be incredible to create a game purely in Haskell where everything was typed perfectly and safe.</p>
+<p>Thanks for reading!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1617295182/projects/4d_geometry_viewer/preview_g92hon.gif">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Previous Project</small>
+                <h3 class="m-0"><a href="../../project/4d-geometry-viewer/" class="no-underline">4D Geometry Viewer</a></h3>
+                <small class="subtitle">A tool to visualise and interact with the fourth dimension.</small>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Next Project</small>
+                <h3 class="m-0"><a href="../../project/aas-sh/" class="no-underline">My Website: aas.sh</a></h3>
+                <small class="subtitle">My website, portfolio, and blog: aas.sh.</small>
+              </div>
+              <img src="../../assets/images/logo-splash.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

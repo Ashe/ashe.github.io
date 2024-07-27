@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Website redesign with Bulma CSS">
+    <meta property="og:description" content="There were a lot of teething issues I had with my website, and so I decided to start from scratch and redesign the appearance of my website using Bulma for common components.">
+    <meta property="og:url" content="https://aas.sh/blog/website-redesign-with-bulma/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1708713163/blog/2022/07/ntst2z.png">
+    <title>Website redesign with Bulma CSS</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+      <link rel="stylesheet" href="../../assets/thirdparty/revealjs/reveal.css">
+      
+        <link rel="stylesheet" href="../../assets/thirdparty/revealjs/theme/black.css">
+      
+      
+        <link rel="stylesheet" href="../../assets/css/themes/code/rose-pine.css">
+      
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+      <script src="../../assets/thirdparty/revealjs/reveal.js"></script>
+      <script src="../../assets/thirdparty/revealjs/plugin/highlight/highlight.js"></script>
+      <script src="../../assets/thirdparty/revealjs/plugin/markdown/markdown.js"></script>
+      <script src="../../assets/thirdparty/revealjs/plugin/math/math.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#introduction">Introduction</a></li><li><a href="#changes">Changes</a><ul class><li><a href="#there-are-now-slides">There are now slides</a></li><li><a href="#we-now-use-bulma">We now use Bulma!</a></li><li><a href="#refreshed-appearance-of-tags">Refreshed appearance of tags</a></li><li><a href="#code-cleanup">Code cleanup</a></li></ul></li><li><a href="#wrapping-up">Wrapping up</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="slideshow" class="reveal reset-style">
+    <div class="slides">
+      <section data-markdown>
+        <textarea data-template>
+
+# Hello!
+(Please click the slideshow and press `Space` to continue!)
+
+---
+
+<!-- .slide: data-background="aquamarine" -->
+Nice job! Here's some cake!
+# 🍰
+
+---
+
+## Yes we have slides
+
+I've always enjoyed putting slides on my website, but now they are located conveniently as the same place as their related blog posts.
+
+No more having to decide whether slides or blogs are more appropriate!
+
+---
+
+## Apologies
+
+The upcoming slides have two uses:
+1. I get to flex a new feature ~~(sorry not sorry)~~
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+2. I can use these slides for future reference
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
+
+# Lets look at hello world
+
+```cpp [1|2|1-4]
+void HelloWorld() {
+  printf("Hello World!");
+}
+// --> By the way, ligature support == true!
+```
+
+---
+
+## Oh no! Surprise math!
+`\begin{aligned}
+  \dot{x} &amp; = \sigma(y-x) \\
+  \dot{y} &amp; = \rho x - y - xz \\
+  \dot{z} &amp; = -\beta z + xy \\
+\end{aligned}`
+
+(These are [The Lorenz Equations](https://en.wikipedia.org/wiki/Lorenz_system))
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+<!-- .slide: data-background-image="https://c.tenor.com/Zrl5ACCRF6cAAAAC/morbius-sense.gif" -->
+> "Hello my name is Morbius"
+
+Morbius, 2022
+
+---
+
+## Have fun?
+
+Go check out [revealjs.com](https://revealjs.com) and go insert slideshows into your website!
+
+---
+
+## Thanks for watching
+(Now go read the blog for actual changes to the site)
+
+---
+
+<!-- .slide: data-background-image="/assets/images/logo-splash.png" -->
+
+        </textarea>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    const slides = new Reveal( document.querySelector( '#slideshow' ), {
+      embedded: true,
+      keyboardCondition: 'focused',
+      plugins: [ RevealMath, RevealMarkdown, RevealHighlight ]
+    } );
+    slides.initialize();
+  </script>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">Website redesign with Bulma CSS</h1>
+      
+        <h2 class="subtitle is-4">An update about the new look to my website (again).</h2>
+      
+      
+        <div class="description">
+          There were a lot of teething issues I had with my website, and so I decided to start from scratch and redesign the appearance of my website using Bulma for common components.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> July  7, 2022
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 4 Minutes
+            </li>
+          
+          
+            
+              <li class="mt-1">
+                <i class="las la-hashtag"></i> <a href="../../project/aas-sh/">My Website: aas.sh</a>
+              </li>
+            
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag aas.sh" href="../../tag/aas.sh/">aas.sh</a>
+                
+                  <a class="tag Web" href="../../tag/Web/">Web</a>
+                
+                  <a class="tag Slides" href="../../tag/Slides/">Slides</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/e7bcaa0">e7bcaa0: Added new blog post: burned out</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#introduction">Introduction</a></li><li><a href="#changes">Changes</a><ul class><li><a href="#there-are-now-slides">There are now slides</a></li><li><a href="#we-now-use-bulma">We now use Bulma!</a></li><li><a href="#refreshed-appearance-of-tags">Refreshed appearance of tags</a></li><li><a href="#code-cleanup">Code cleanup</a></li></ul></li><li><a href="#wrapping-up">Wrapping up</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - aas.sh
+</div>
+<p>GitHub repository for this website can be found <a href="https://github.com/Ashe/ashe.github.io">here</a>.</p>
+</div>
+<section id="introduction" class="article-section">
+<h1><span>Introduction</span><a href="#introduction" class="anchor las la-link" title="introduction"></a></h1>
+<p>As stated in my <a href="../../blog/new-year-new-website/">previous website post</a>, I have a weird habit of redesigning my website every so often. This is always fueled by nitpicks and ambitions, however this time feels different. The last change was the move to <a href="https://nixos.org">Nix</a> and <a href="https://jaspervdj.be/hakyll/">Hakyll</a>, and this time I have kept those foundations and focused solely on the appearance.</p>
+<p>The result, and I hope you’ll agree, is a cleaner, smoother website with an appearance I have more control over. In my mission to inspire and share, I want to make things as frictionless as possible!</p>
+</section>
+<section id="changes" class="article-section">
+<h1><span>Changes</span><a href="#changes" class="anchor las la-link" title="changes"></a></h1>
+<section id="there-are-now-slides" class="article-section">
+<h2><span>There are now slides</span><a href="#there-are-now-slides" class="anchor las la-link" title="there-are-now-slides"></a></h2>
+<p>As you may have noticed, there is now a slideshow embedded into the blog post. How cool is that?!</p>
+<p>Slides are located as a replacement for the gallery at the top of the page for any blogs with slides enabled. I used to have a section of my website dedicated to slides, but I could never decide if a given post should be in slide format or in blog format. Sometimes I want to go into detail on a specific part of a presentation, whereas other times I want to just do a slideshow. Now I don’t need to choose!</p>
+<p>If you haven’t seen it yet, check the top of this page!</p>
+</section>
+<section id="we-now-use-bulma" class="article-section">
+<h2><span>We now use Bulma!</span><a href="#we-now-use-bulma" class="anchor las la-link" title="we-now-use-bulma"></a></h2>
+<p><a href="https://bulma.io">Bulma</a> is a CSS framework. I was previously using <a href="https://tailwindcss.com">Tailwind</a>, but unfortunately I leaned on it too much and became controlled by it since I found it very difficult to change the appearance of parts of my site to my liking.</p>
+<p><a href="https://bulma.io">Bulma</a> is simpler and is purely CSS. My strategy was to use Bulma for the foundations of the website, and then hand-crafting elements I had a particular interest in. It worked out really well and I feel really comfortable in the fact that I’ve had a hand in every aspect of the website now.</p>
+<p>Another advantage of changing framework is that it gave me an opportunity to simplify my <a href="https://nixos.org">Nix</a> code, speeding up iteration and simplifying dependencies. Bulma, along with all of my personal styling, is compiled into a single <code>main.css</code> file via <a href="https://sass-lang.com/">Sass</a>. I’m hoping that this strategy also alleviates pressure on your browser since it’s all in a single file, but I don’t know enough about web technologies to provide any evidence.</p>
+</section>
+<section id="refreshed-appearance-of-tags" class="article-section">
+<h2><span>Refreshed appearance of tags</span><a href="#refreshed-appearance-of-tags" class="anchor las la-link" title="refreshed-appearance-of-tags"></a></h2>
+<p>The old tag appearance was quite ugly to be honest. This was the <a href="https://hackage.haskell.org/package/hakyll-4.15.1.1/docs/Hakyll-Web-Tags.html#v:renderTagCloud">default implementation of Hakyll</a>. I decided to reimplement this function and use the actual number of uses per tag as part of the design. The result is a nice new tag list sorted by popularity!</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1657296459/blog/2022/07/08-07-2022_17_07_25_tpdkvt.png" title="New appearance of tag cloud." class="w-full object-cover" alt="New appearance of tag cloud." />
+<div class="caption">
+<p>New appearance of tag cloud.</p>
+<div class="caption-source">
+<a href="https://aas.sh" title="aas.sh">aas.sh</a>
+</div>
+</div>
+</div>
+</section>
+<section id="code-cleanup" class="article-section">
+<h2><span>Code cleanup</span><a href="#code-cleanup" class="anchor las la-link" title="code-cleanup"></a></h2>
+<p>One of the barriers I had to writing more content was how long Hakyll took to compile my website. As per usual, this was user error. After being spoilt by frameworks like <a href="https://gohugo.io/">Hugo</a> in the past, I chalked all of the slowness found in building the site up to <a href="https://www.haskell.org/">Haskell</a>’s compilation times and Hakyll’s programming.</p>
+<p>Fortunately, I spotted a lot of places in the code base that could have been optimised and as part of the refresh I fixed them. In the past, I had to recompile every page whenever anything was saved, but this was actually my fault and Hakyll does in fact have the ability to only recompile what’s necessary so long as you take the time to understand each step of the building process. That, and making sure your indents are as you expect so that you don’t do expensive processes inside loops…</p>
+</section>
+</section>
+<section id="wrapping-up" class="article-section">
+<h1><span>Wrapping up</span><a href="#wrapping-up" class="anchor las la-link" title="wrapping-up"></a></h1>
+<p>It’s been a good few weeks working on my website — if only I put as much love and effort into myself as I do my online presence; perhaps this could be said for lots of people.</p>
+<p>I hope the redesign helps provide a more enjoyable experience so that I can receive more comments and questions via email as I really enjoyed <a href="../../blog/qna-1/">responding to you all in the Q and A!</a>.</p>
+<p>As always, I hope to participate more in the blog-writing space in the coming months, but don’t hold me to it. If you have any questions about what you see, feel free to get in touch at <a href="mailto:contact@aas.sh">contact@aas.sh</a>!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+  <section class="container is-max-desktop">
+    <h3 class="title">Related project</h3>
+    
+      <div class="swiper-slide post-preview-featured">
+  <div class="internal apply-shadow">
+
+    <div class="left">
+      
+        <img src="../../assets/images/logo-splash.png" alt="Preview image for post 'My Website: aas.sh'">
+      
+    </div>
+
+    <div class="right p-5">
+      <header class="mb-4">
+
+        <h4 class="title is-4"><a href="../../project/aas-sh/">My Website: aas.sh</a></h4>
+
+        <div class="is-monospace is-size-7 mt-0 ">
+          <ul>
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> December  1, 2021
+            </li>
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 1 Minutes
+            </li>
+            <li class="mt-1 authors">
+              <i class="las la-user-circle"></i>
+              <span class="is-size-7">
+                
+                  Ashley Rose
+                
+              </span>
+            </li>
+            
+              <li class="mt-1 break-words has-text-left">
+                <i class="las la-tags"></i>
+                <div class="tags" style="display:inline;">
+                  
+                    <a class="tag aas.sh" href="../../tag/aas.sh/">aas.sh</a>
+                  
+                    <a class="tag Web" href="../../tag/Web/">Web</a>
+                  
+                    <a class="tag Nix" href="../../tag/Nix/">Nix</a>
+                  
+                    <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                  
+                </div>
+              </li>
+            
+          </ul>
+        </div>
+        <p class="description">This website is more than just a landing page for people looking to contact me, it's a trophy cabinet for all of my digital achievements, it's a canvas for thinking out loud and a place for me to tinker.</p>
+      </header>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="../../project/aas-sh/">
+        Read more
+      </a>
+    </div>
+
+  </div>
+</div>
+
+    
+  </section>
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1655579357/blog/2022/05/qna.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/qna-1/" class="no-underline">First ever QNA!</a></h3>
+                <h6 class="subtitle is-6">Responses to questions I've received via email!</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/laplaces-rule-of-succession/" class="no-underline">Laplace's rule of succession</a></h3>
+                <h6 class="subtitle is-6">A post on one of my favourite mathematical theorems.</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1658332892/blog/2022/07/sunrise_qo1y8n.jpg">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

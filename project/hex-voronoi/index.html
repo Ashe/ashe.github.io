@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Hex Voronoi">
+    <meta property="og:description" content="After spending a while wandering the internet in search of something new to learn, I found something I somehow missed: the language, Haxe, and the game framework, Heaps. This was the result of my learning.">
+    <meta property="og:url" content="https://aas.sh/project/hex-voronoi/">
+    <meta property="og:image" content="https://github.com/Ashe/Hex-Voronoi/blob/master/docs/preview/1.png?raw=true">
+    <title>Hex Voronoi</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#what-is-this">What is this?</a></li><li><a href="#how-was-it-made">How was it made?</a><ul class><li><a href="#generating-hexagonal-tiles">Generating hexagonal tiles</a></li><li><a href="#applying-voronoi">Applying voronoi</a></li><li><a href="#smoothing">Smoothing</a></li></ul></li><li><a href="#how-do-i-use-it">How do I use it?</a></li><li><a href="#how-do-i-compile-it">How do I compile it?</a><ul class><li><a href="#visual-studio-code">Visual Studio Code:</a></li><li><a href="#command-line">Command line:</a></li></ul></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <div class="swiper featured-swiper">
+          <div class="swiper-wrapper">
+            
+              <div class="swiper-slide">
+                <img src="https://github.com/Ashe/Hex-Voronoi/blob/master/docs/preview/1.png?raw=true" alt="Featured image 0 for Hex Voronoi">
+              </div>
+            
+              <div class="swiper-slide">
+                <img src="https://github.com/Ashe/Hex-Voronoi/blob/master/docs/preview/2.png?raw=true" alt="Featured image 1 for Hex Voronoi">
+              </div>
+            
+              <div class="swiper-slide">
+                <img src="https://github.com/Ashe/Hex-Voronoi/blob/master/docs/preview/3.png?raw=true" alt="Featured image 2 for Hex Voronoi">
+              </div>
+            
+              <div class="swiper-slide">
+                <img src="https://github.com/Ashe/Hex-Voronoi/blob/master/docs/preview/4.png?raw=true" alt="Featured image 3 for Hex Voronoi">
+              </div>
+            
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        <script>
+          var swiper = new Swiper('.featured-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            slidesPerView: 1,
+            autoplay: {
+              delay: 5000,
+              disableOnInteraction: true,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+          });
+        </script>
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">Hex Voronoi</h1>
+      
+        <h2 class="subtitle is-4">An experiment with Haxe and Heaps.</h2>
+      
+      
+        <div class="description">
+          After spending a while wandering the internet in search of something new to learn, I found something I somehow missed: the language, Haxe, and the game framework, Heaps. This was the result of my learning.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> April 19, 2022
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 12 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Haxe" href="../../tag/Haxe/">Haxe</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/1996009">1996009: Made utility css class for desktop-only and fixed hex-voronoi demo not appearing on desktop</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#what-is-this">What is this?</a></li><li><a href="#how-was-it-made">How was it made?</a><ul class><li><a href="#generating-hexagonal-tiles">Generating hexagonal tiles</a></li><li><a href="#applying-voronoi">Applying voronoi</a></li><li><a href="#smoothing">Smoothing</a></li></ul></li><li><a href="#how-do-i-use-it">How do I use it?</a></li><li><a href="#how-do-i-compile-it">How do I compile it?</a><ul class><li><a href="#visual-studio-code">Visual Studio Code:</a></li><li><a href="#command-line">Command line:</a></li></ul></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <div class="live infobox fill-horizontal">
+<div class="header">
+<span class="las la-satellite-dish mr-3"></span>Live demo available
+</div>
+<p>A live demo of this project can be found <a href="https://aas.sh/Hex-Voronoi">here</a>.</p>
+</div>
+<div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - aas.sh
+</div>
+<p>GitHub repository for this website can be found <a href="https://github.com/Ashe/Hex-Voronoi">here</a>.</p>
+</div>
+<section id="what-is-this" class="article-section">
+<h1><span>What is this?</span><a href="#what-is-this" class="anchor las la-link" title="what-is-this"></a></h1>
+<p>I build this as part of my introduction to both <a href="https://haxe.org/">Haxe</a> and <a href="https://heaps.io/">Heaps</a>. I started off with their <a href="https://heaps.io/samples/">sample projects</a> and iterated until I had a good handle about what tools were available. The result is something similar to another project of mine, <a href="https://aas.sh/project/hexagonalhs/">HexagonalHS</a>.</p>
+<p>You can test this project live at <a href="https://aas.sh/Hex-Voronoi/">https://aas.sh/Hex-Voronoi</a>.</p>
+<div class="w-full h-full hidden-on-mobile caption-frame apply-shadow">
+<canvas id="webgl" style="width:100%;height:100%">
+</canvas>
+<script type="text/javascript" src="https://aas.sh/Hex-Voronoi/voronoi.js"></script>
+<div class="caption">
+<p>The live demo of Hex-Voronoi, embedded into this page. It might not work as well as the <a href="https://aas.sh/Hex-Voronoi/">full-window version</a>.</p>
+<div class="caption-source">
+<a href="https://github.com/Ashe/Hex-Voronoi" title="Hex Voronoi">Hex Voronoi</a>
+</div>
+</div>
+</div>
+</section>
+<section id="how-was-it-made" class="article-section">
+<h1><span>How was it made?</span><a href="#how-was-it-made" class="anchor las la-link" title="how-was-it-made"></a></h1>
+<p>This application features a generated mesh made up of hexagonal tiles of varying heights. This itself isn’t too difficult, especially when you follow the teachings of <a href="https://www.redblobgames.com/grids/hexagons/">Red Blob Games</a>. However, these tiles are transformed and deformed to completely alter the overall shape of the landscape.</p>
+<section id="generating-hexagonal-tiles" class="article-section">
+<h2><span>Generating hexagonal tiles</span><a href="#generating-hexagonal-tiles" class="anchor las la-link" title="generating-hexagonal-tiles"></a></h2>
+<p>You can find all the code for actually creating the hexagonal tiles <a href="https://github.com/Ashe/Hex-Voronoi/blob/master/src/Hexgrid.hx#L295-L339">here</a>. I essentially made a class to represent tiles that contain their centers and the world position of each of their 6 corners. The basics of this are described in that <a href="https://www.redblobgames.com/grids/hexagons/">Red Blob Games post</a>, but below is the entire snippet of code generating these hexagons:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">function</span> <span class="kw">new</span> (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  pos : Axial,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  height : <span class="dt">Int</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  size : <span class="dt">Float</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  padding : <span class="dt">Float</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  heightMultiplier : <span class="dt">Float</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  random : Random) {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Record variables for convenience</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.pos = pos;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.height = height;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.size = size;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.padding = padding;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">this</span>.heightMultiplier = heightMultiplier;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calculate perfect center of hexagon</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  final width = Math.sqrt(<span class="dv">3</span>) * (size + padding);</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  center = <span class="kw">new</span> Vec3(</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      (pos.q * width ) + (pos.r * width * <span class="fl">0.5</span>),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      (pos.r * (size + padding) * (<span class="dv">3</span> / <span class="dv">2</span>)),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      height * heightMultiplier);</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Generate corners of a regular hexagon</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  corners = [<span class="kw">for</span> (i <span class="kw">in</span> <span class="dv">0</span>...<span class="dv">6</span>) {</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      final angleDeg = <span class="dv">60</span> * i - <span class="dv">30</span>;</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      final angleRad = Math.PI / <span class="fl">180.0</span> * angleDeg;</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="kw">new</span> Vec3(center.x + size * Math.cos(angleRad),</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                center.y + size * Math.sin(angleRad),</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                height * heightMultiplier);</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  }];</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+<section id="applying-voronoi" class="article-section">
+<h2><span>Applying voronoi</span><a href="#applying-voronoi" class="anchor las la-link" title="applying-voronoi"></a></h2>
+<p>Next, I started to transform the grid into a voronoi pattern. In nature, voronoi patterns appear in things like bubbles, where a shape is ‘inflated’ until its boundaries collide with other boundaries. The trick is to select a point inside a shape and then ‘inflate’ from there. You can find all the code below <a href="https://github.com/Ashe/Hex-Voronoi/blob/master/src/Hexgrid.hx">here</a>.</p>
+<p>To select the location, I separated each hexagon into 3 rhombi around the centre. I then chose a point by randomly traversing the lengths of the rhombus, where each side is equal to the radius of the hexagon to any of its corners.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// The code below is appended to the 'new' function shown above</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">// Split the hexagon into 3 rhombi and choose one</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>final selectedCorner = random.randomInt(<span class="dv">0</span>, <span class="dv">2</span>) * <span class="dv">2</span>;</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>final corner = corners[selectedCorner];</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>final nextCorner = corners[selectedCorner + <span class="dv">1</span>];</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> toCenter = center.sub(corner);</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>toCenter.normalize();</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> toNext = nextCorner.sub(corner);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>toNext.normalize();</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Randomly select a feature point within the rhombus (and hexagon)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>final i = toCenter.multiply(random.random() * size);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>final j = toNext.multiply(random.random() * size);</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>featurePoint = corner.add(i).add(j);</span></code></pre></div>
+<p>After selecting these points for each hexagon, I then iterated through the list of hexagons to ‘inflate them’. Recall that each corner of a hexagonal tesselation is in contact with three hexagons, meaning that other than the current hexagon, we need to locate these other two hexagons. These hexagons may not exist if the current hexagon is on the border of your grid.</p>
+<p>We use these feature points (the name I gave to that randomly selected location we picked earlier) to distort each hexagon in relation to those closest to them. Since we started with pattern of tesselated, regular hexagons, we know that we aren’t going to get more than 3 feature points for any corner since the other corners will act as the contact points in the ‘inflation’ process. It’s hard to explain, but if you visualise the process of picking these points and drawing a line that’s equidistant between them, you’ll see that the way other corners distort results in there only ever being 3 feature points to consider per hexagon.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> (tile <span class="kw">in</span> tiles) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Hard code directions for iterating around the tile</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  final dirs = [</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial(-<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial(-<span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">0</span>,-<span class="dv">1</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">new</span> Axial( <span class="dv">1</span>,-<span class="dv">1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ];</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Iterate for each corner and direction</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">for</span> (i <span class="kw">in</span> <span class="dv">0</span> ... <span class="dv">6</span>) {</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Prepare to reposition corner</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    final prevDir = dirs[i &gt; <span class="dv">0</span> ? i - <span class="dv">1</span>: <span class="dv">5</span>];</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    final nextDir = dirs[i];</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    final prevTile = getTileAt(Axial.add(tile.pos, prevDir));</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    final nextTile = getTileAt(Axial.add(tile.pos, nextDir));</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Next, we need to find the midpoint of the three hexagons in contact’s feature points. To get the midpoint of three points, simply take the averages of their <code>x</code>, <code>y</code> and <code>z</code> (although I only wanted <code>x</code> and <code>y</code> here, since I manipulated <code>z</code> in other ways to ‘smoothen’ the map).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Find midpoint between adjacent neighbours</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> midpoint = <span class="kw">if</span> (prevTile != <span class="kw">null</span>) {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Both tiles valid - 3 way midpoint</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (nextTile != <span class="kw">null</span>) {</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        .add(prevTile.featurePoint)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        .add(nextTile.featurePoint)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">1.</span> / <span class="fl">3.</span>);</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Just previous tile valid - 2 way midpoint</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">else</span> {</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        .add(prevTile.featurePoint)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">0.5</span>);</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">else</span> {</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Just next tile valid - 2 way midpoint</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (nextTile != <span class="kw">null</span>) {</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        .add(nextTile.featurePoint)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">0.5</span>);</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">// No neighbours - do whatever</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">else</span> {</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    tile.featurePoint</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        .add(tile.corners[i])</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        .multiply(<span class="fl">0.5</span>);</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">// Apply voronoi if requested</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> (voronoi) {</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">// If tiles have padding, shift midpoint to tile center</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (tilePadding &gt; <span class="dv">0</span>) {</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    final z = midpoint.z;</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> toCenter = tile.center.sub(midpoint);</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    toCenter.normalize();</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    toCenter = toCenter.multiply(tilePadding);</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    midpoint = midpoint.add(toCenter);</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    midpoint.z = z;</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Set location of corner to resulting midpoint</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>  tile.corners[i].x = midpoint.x;</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>  tile.corners[i].y = midpoint.y;</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>And with that, we have our voronoi pattern! We don’t need to worry about the edges, since the corners are where the boundries converge, and so by handling the corners the edges just line into place.</p>
+</section>
+<section id="smoothing" class="article-section">
+<h2><span>Smoothing</span><a href="#smoothing" class="anchor las la-link" title="smoothing"></a></h2>
+<p>One of the options of this project is the ‘smoothing’ feature. This feature allows the sides of a tile to blend into the tile adjacent, forming ramps where possible. Below is a preview of how this looks:</p>
+<div class="caption-frame apply-shadow">
+<div class="gallery-wall">
+<div class="child">
+<p><img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/default.png" alt="Default" />
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/voronoi.png" alt="With voronoi enabled" /></p>
+</div>
+<div class="child">
+<p><img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/smoothing.png" alt="Smoothing enabled" />
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1655575861/projects/hex_voronoi/voronoi_smoothing.png" alt="With voronoi and smoothing enabled" /></p>
+</div>
+</div>
+<div class="caption">
+<p>Example of how smoothing effects maps with and without voronoi applied.</p>
+<div class="caption-source">
+<a href="https://github.com/Ashe/Hex-Voronoi" title="Hex Voronoi">Hex Voronoi</a>
+</div>
+</div>
+</div>
+<p>Smoothing is performed by simply taking the average Z coordinate of all tile vertices that touch. This is essentially the same as the voronoi application with three subtle differences:</p>
+<ol type="1">
+<li>Smoothing can be enabled independently of voronoi</li>
+<li>Voronoi application only cares about XY position so that there’s no gaps in the terrain</li>
+<li>You might not always want to smoothen edges</li>
+</ol>
+<p>Point 3 is interesting: take 3 tiles that touch at a single corner. One tile has height of 1, the second a height of 2 and the last a height of 3. If you smoothen the Z coordinate, nothing changes since the average height is 2. Instead, I decided to only smoothen when tiles are within a certain height range of each other (which can be chosen at runtime). This means that in that example, a ‘smoothen height’ of 1 would mean that the first and second tile get smoothed into a ramp, but the final tile remains as a cliff, since the difference between the highest and lowest tiles is greater than the smoothing value. This was done with the following snippets:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haxe"><code class="sourceCode haxe"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Smoothing logic for 3-way corners</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> (smoothen) {</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Always include current tile</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> count = <span class="dv">1</span>;</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  smoothedZ = tile.height;</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Include previous tile in smoothing if applicable</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (Math.abs(prevTile.height - tile.height) &lt;= smoothRange) {</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    smoothedZ += prevTile.height;</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    count += <span class="dv">1</span>;</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Include next tile in smoothing if applicable</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> (Math.abs(nextTile.height - tile.height) &lt;= smoothRange) {</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    smoothedZ += nextTile.height;</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    count += <span class="dv">1</span>;</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Average all applicable tile heights</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  smoothedZ /= count;</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  smoothedZ *= tileHeightMultiplier;</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co">// Smoothing logic for 2-way corners (using nextTile as an example)</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> (smoothen &amp;&amp; Math.abs(nextTile.height - tile.height) &lt;= smoothRange) {</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  smoothedZ = (tile.height + nextTile.height) *</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>      tileHeightMultiplier * <span class="fl">0.5</span>;</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</section>
+</section>
+<section id="how-do-i-use-it" class="article-section">
+<h1><span>How do I use it?</span><a href="#how-do-i-use-it" class="anchor las la-link" title="how-do-i-use-it"></a></h1>
+<p>By default, the application will rotate around the map. You can disable this orbiting mode in the top right corner. From there, you can control the camera with your mouse and zoom in with the scroll wheel.</p>
+<p>In the top left, you’ll find various settings for changing how the terrain looks. In the top right, you’ll find functions like changing the map’s colour, regenerating the map, and resetting all settings to default.</p>
+</section>
+<section id="how-do-i-compile-it" class="article-section">
+<h1><span>How do I compile it?</span><a href="#how-do-i-compile-it" class="anchor las la-link" title="how-do-i-compile-it"></a></h1>
+<p>This project was created using <a href="https://haxe.org/">Haxe</a> and can be compiled in two ways. Before attempting compilation, you’ll need to <a href="https://heaps.io/documentation/installation.html">install Haxe and Heaps</a>. Additionally, you’ll need to install <code>seedyrng</code> and <code>domkit</code> via <code>haxelib install &lt;package&gt;</code>.</p>
+<section id="visual-studio-code" class="article-section">
+<h2><span>Visual Studio Code:</span><a href="#visual-studio-code" class="anchor las la-link" title="visual-studio-code"></a></h2>
+<p><a href="https://haxe.org/">Haxe</a> works very well with <a href="https://code.visualstudio.com/">Visual Studio Code</a> when using the <a href="https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-extension-pack">Haxe Extension Pack</a>. When everything is installed, you should be able to hit <code>CTRL+SHIFT+B</code> to build the project. It’ll compile to JS and be found in the <code>docs</code> folder, which you can then test by opening <code>index.html</code> in your web browser.</p>
+</section>
+<section id="command-line" class="article-section">
+<h2><span>Command line:</span><a href="#command-line" class="anchor las la-link" title="command-line"></a></h2>
+<p>After installing dependencies, you can run <code>haxe build.hxml</code> to compile the project. A JS file will appear in the <code>docs</code> folder and you can then test it by opening <code>index.html</code> in your web browser.</p>
+</section>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="../../assets/images/logo-splash.png">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Previous Project</small>
+                <h3 class="m-0"><a href="../../project/aas-sh/" class="no-underline">My Website: aas.sh</a></h3>
+                <small class="subtitle">My website, portfolio, and blog: aas.sh.</small>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

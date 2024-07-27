@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="What is Nix?">
+    <meta property="og:description" content="I seem to be nixifying everything, from my operating system to my website. I wanted to go into a bit of detail about what it's like working with Nix.">
+    <meta property="og:url" content="https://aas.sh/blog/what-is-nix/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1641643413/blog/2021/12/tekatm.png">
+    <title>What is Nix?</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#the-build-tool-evolution">The build tool evolution</a></li><li><a href="#enter-nix">Enter Nix</a></li><li><a href="#why-do-i-use-nix">Why do I use Nix?</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://res.cloudinary.com/aas-sh/image/upload/v1641643413/blog/2021/12/tekatm.png" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">What is Nix?</h1>
+      
+        <h2 class="subtitle is-4">A build tool lots of people have heard of, but not used.</h2>
+      
+      
+        <div class="description">
+          I seem to be nixifying everything, from my operating system to my website. I wanted to go into a bit of detail about what it's like working with Nix.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> December 20, 2021
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 5 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Nix" href="../../tag/Nix/">Nix</a>
+                
+                  <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/d2d459c">d2d459c: Edit post 'what is nix' - added section about my motivation for using it</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#the-build-tool-evolution">The build tool evolution</a></li><li><a href="#enter-nix">Enter Nix</a></li><li><a href="#why-do-i-use-nix">Why do I use Nix?</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <p>Before I touched Haskell, I felt pretty savvy about using <a href="https://cmake.org/">CMake</a> for my C++ projects. My mind started expanding as I started to learn both functional programming and the tools that work declartively. I hope that this post is a good introduction to the world of Nix for beginners.</p>
+<section id="the-build-tool-evolution" class="article-section">
+<h1><span>The build tool evolution</span><a href="#the-build-tool-evolution" class="anchor las la-link" title="the-build-tool-evolution"></a></h1>
+<p>Typically when working with Haskell, you’d use something like <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a> or <a href="https://www.haskell.org/cabal/">Cabal</a> to declare dependencies and build the project. This works great most of the time, but sometimes they feel like the thorn that makes me reconsider using Haskell.</p>
+<p>I started off with <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a> since that’s what most tutorials have you install when you’re a beginner (with good reason too, as it is very nice). However, before Stack there was <a href="https://www.haskell.org/cabal/">Cabal</a> which is a lot simpler than Stack and focused on resolving dependencies. Stack introduces things like better project templates, caching of built packages and finally usage of <a href="https://www.stackage.org/">Stackage</a> to pull dependencies.</p>
+<div class="note infobox fill-horizontal">
+<div class="header">
+<span class="las la-info-circle mr-3"></span>Note - Cabal vs cabal-install
+</div>
+<p>When we mention ‘cabal’ there are actually two things we could be referring to: the <strong>library</strong> or the <strong>build tool</strong> <code>cabal-install</code>. The library is <em>used</em> by Stack to help resolve dependencies, meanwhile <code>cabal-install</code> is <em>replaced</em> by Stack. <code>cabal-install</code> pulls dependencies straight from <a href="https://hackage.haskell.org/">Hackage</a> whereas Stack pulls from <a href="https://ww.stackage.org">Stackage</a>. Stackage one-ups Hackage in usage because the packages are curated to make sure dependencies work with each other (<strong>St</strong>able H<strong>ackage</strong>).</p>
+</div>
+</section>
+<section id="enter-nix" class="article-section">
+<h1><span>Enter Nix</span><a href="#enter-nix" class="anchor las la-link" title="enter-nix"></a></h1>
+<p>There exists yet another build tool: <a href="https://nixos.org/">Nix</a>. The easiest way to describe it is that Nix is like Stack except <em>not just for Haskell</em>. Stack is built very intelligently, keeping different versions of dependencies separate from one another while also keeping track of what’s compatible.</p>
+<p>Take C++ development for example — typically, you have to download dependencies and manage them yourself. You might put them in a centralised place on your machine so that all of your programs can find them, but then you force other people to have to put them in the same place. You might consider bundling them with your project as a <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">git submodule</a>, but then you’re requiring users to download all your dependencies even if they already have them on their machines (possibly incurring additional compilation times too). Maybe you have a tool that intelligently searches for the locations of these dependencies, but then you’re requiring users to depend on that tool as well. Even if you’re a solo developer, <strong><em>you are a user of your own work</em></strong>.</p>
+<p>In this regard, Stack (along with other build tools like <a href="https://doc.rust-lang.org/cargo/">Cargo</a> for <a href="https://www.rust-lang.org/">Rust</a> is a brilliant improvement on this workflow. However, then you need to install each of these build tools for each of the languages your to-be-built programs and libraries use.</p>
+<p>This is where Nix comes in. While sometimes these tools cannot be avoided, they can at least be automated. When using Nix, all of these programs can be built, used and depended-on in the exact same way, while keeping the benefits of reproducability (or <em>bringing</em>, if the old build tools didn’t do these things first).</p>
+<div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>What is Nix?
+</div>
+<blockquote>
+<p><a href="https://nixos.org/">Nix</a> is a reproducable, declarative and reliable way of building and deploying software.</p>
+</blockquote>
+<ul>
+<li><strong>Reproducible:</strong> Nix builds packages in isolation from each other. This ensures that they are reproducible and don’t have undeclared dependencies, so <strong>if a package works on one machine, it will also work on another</strong>.</li>
+<li><strong>Declarative:</strong> Nix makes it <strong>trivial to share development and build environments</strong> for your projects, regardless of what programming languages and tools you’re using.</li>
+<li><strong>Reliable:</strong> Nix ensures that installing or upgrading one package <strong>cannot break other packages</strong>. It allows <strong>you to roll back to previous versions</strong>, and ensures that no package is in an inconsistent state during an upgrade.</li>
+</ul>
+<div class="caption">
+<p>Information taken from the official Nix website found <a href="https://nixos.org/">here</a>.</p>
+</div>
+</div>
+<p>When you use Nix, you don’t need to manually install anything related to your project. I have no traces of Rust or C++ on my machine since the only time I need them is during a project where I can let Nix do the heavy lifting. It really is wonderful when you type <code>nix develop</code> and all of a sudden your shell becomes capable of building, testing and running your work. It’s beautiful.</p>
+<p>I’ll probably write some tutorials about Nix at some point, but I’m still learning it myself and have yet to actually submit a package to the ecosystem. I just wanted to participate in some evangelism and mention it on my website.</p>
+</section>
+<section id="why-do-i-use-nix" class="article-section">
+<h1><span>Why do I use Nix?</span><a href="#why-do-i-use-nix" class="anchor las la-link" title="why-do-i-use-nix"></a></h1>
+<p>Regular readers of this blog (read: nobody) will have noticed that I’ve sneakily edited-in this last section. The reason for this addition is simple: I am not well versed enough in nix to really give an overview of its inner-workings and technicalities. What I can do is give a simple overview of my own experience and usecases.</p>
+<p>In the past, my website has caused me hassle as every time I wanted to edit it I’d have to set up <a href="https://www.haskell.org/">haskell</a> on whatever machine I was on, which at the time could have been many. It wasn’t too difficult, but was annoying enough to put me off from working on it. This feeling permeated throughout all my projects; any subtle things I did during setup of one machine lead to me needing to repeat them on the others, increasing the probability of human errors and/or unforeseen circumstances which may result in things going wrong.</p>
+<p>Nix fixes these things for me. Admittedly, there is a big up front cost whenever I start a project and more often than not you’ll see me frequent the <a href="https://nixos.org/community/">nix discord server</a> asking for tips for architecting and requesting for packages. There is a big reward associated with this though — once I’ve sucessfully set up a project, it is 100% reproducible so long as my machine has the nix package manager. Previewing my website locally is as easy as <code>nix run .</code>, and all my other projects are just as easy to execute.</p>
+<p>Recently I was given the opportunity to work with <a href="https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux">the windows subsystem for linux</a> which meant that I could open up a terminal that was running a linux distribution from within Windows. Fortunately, my <a href="https://github.com/ashe/dotfiles">dotfiles</a> were separated into system and user configurations, meaning that I could reproduce my text editor and shell experiences on Windows! A huge win!</p>
+<p>Each time I set up a new project, I gain a bit of experience as well as a template for me to reuse in future projects. Just like <a href="https://cmake.org/">CMake</a>, I’ll eventually get to the point where new projects aren’t daunting to set up at all! I’m not quite there yet, but I hope to be soon!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1636548957/blog/2021/11/2021-11-10T12_h6t8ib.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/now-on-devto/" class="no-underline">Now on dev.to!</a></h3>
+                <h6 class="subtitle is-6">I am going to be cross-posting my blog posts from now on!</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/new-year-new-website/" class="no-underline">New Year, New Website</a></h3>
+                <h6 class="subtitle is-6">An update about the new look to my website.</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1641635336/blog/2022/01/yl008c.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

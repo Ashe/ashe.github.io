@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="An Introduction to game development in Haskell using Apecs">
+    <meta property="og:description" content="There have been so many attempts to pioneer gamedev in Haskell, and yet still no commercial releases. In this post I hope to clear the air a little bit and encourage new developers to try Haskell.">
+    <meta property="og:url" content="https://aas.sh/blog/making-a-game-with-haskell-and-apecs/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/gameplay.gif">
+    <title>An Introduction to game development in Haskell using Apecs</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#background">Background</a></li><li><a href="#why-haskell-for-games">Why Haskell for Games?</a></li><li><a href="#getting-started">Getting Started</a><ul class><li><a href="#initialising">Initialising</a></li><li><a href="#loop-function">Loop function</a></li><li><a href="#ticks">Ticks</a></li></ul></li><li><a href="#apecs-components">Apecs Components</a><ul class><li><a href="#remembering-types">Remembering Types</a></li><li><a href="#creating-components">Creating Components</a></li></ul></li><li><a href="#systems">Systems</a><ul class><li><a href="#side-effects-in-monads">Side Effects in Monads</a></li><li><a href="#easy-system-type-synonym">Easy System Type Synonym</a></li><li><a href="#writing-the-initialisation-system">Writing the Initialisation System</a></li><li><a href="#writing-the-step-system">Writing the Step System</a></li><li><a href="#apecs-magic-with-systems">Apecs Magic with Systems</a></li><li><a href="#writing-the-event-handler-system">Writing the Event Handler System</a></li><li><a href="#writing-the-draw-system">Writing the Draw System</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/gameplay.gif" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">An Introduction to game development in Haskell using Apecs</h1>
+      
+        <h2 class="subtitle is-4">A post about how I used Apecs ECS framework to make 'HSRogue'.</h2>
+      
+      
+        <div class="description">
+          There have been so many attempts to pioneer gamedev in Haskell, and yet still no commercial releases. In this post I hope to clear the air a little bit and encourage new developers to try Haskell.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> September 10, 2018
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 51 Minutes
+            </li>
+          
+          
+            
+              <li class="mt-1">
+                <i class="las la-hashtag"></i> <a href="../../project/hsrogue/">HSRogue: A roguelike in Haskell</a>
+              </li>
+            
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Tutorial" href="../../tag/Tutorial/">Tutorial</a>
+                
+                  <a class="tag Game" href="../../tag/Game/">Game</a>
+                
+                  <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                
+                  <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/dbd934a">dbd934a: Corrected tags across posts</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#background">Background</a></li><li><a href="#why-haskell-for-games">Why Haskell for Games?</a></li><li><a href="#getting-started">Getting Started</a><ul class><li><a href="#initialising">Initialising</a></li><li><a href="#loop-function">Loop function</a></li><li><a href="#ticks">Ticks</a></li></ul></li><li><a href="#apecs-components">Apecs Components</a><ul class><li><a href="#remembering-types">Remembering Types</a></li><li><a href="#creating-components">Creating Components</a></li></ul></li><li><a href="#systems">Systems</a><ul class><li><a href="#side-effects-in-monads">Side Effects in Monads</a></li><li><a href="#easy-system-type-synonym">Easy System Type Synonym</a></li><li><a href="#writing-the-initialisation-system">Writing the Initialisation System</a></li><li><a href="#writing-the-step-system">Writing the Step System</a></li><li><a href="#apecs-magic-with-systems">Apecs Magic with Systems</a></li><li><a href="#writing-the-event-handler-system">Writing the Event Handler System</a></li><li><a href="#writing-the-draw-system">Writing the Draw System</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <section id="background" class="article-section">
+<h1><span>Background</span><a href="#background" class="anchor las la-link" title="background"></a></h1>
+<p>There have been so many frameworks, examples and prototypes released in an effort to pioneer games development in Haskell, and yet we still don’t really have many (if any) commercial releases we can look to for inspiration. I want to help relax the entry point into Haskell game development and show people how much fun programming your game in Haskell can be. I used to make YouTube guides for video games and generally I got positive responses, and so I figured that I could do something similar here with my blog posts or even my YouTube channel.</p>
+<p>Working with Haskell in the games industry is a little bit of a pioneering job, but I’m a firm believer that our technology is advanced enough such that we should be able to sacrifice a little bit of performance to make development easier. <a href="../../blog/of-boxes-and-threads/">My first experience wasn’t amazing</a>, but after a bit of time working on other things and a lot of thinking I decided to try again. This time, rather than researching through doing everything myself, I figured I’d try a framework made by someone else.</p>
+<p>This guide has been written by myself, who is in-between the beginner and advanced stages of Haskell — I’ve read the <a href="http://haskellbook.com/">Haskell Book</a> but I’m still learning as I apply my knowledge in practice. I’m hoping that my beginnerish perspective will help people who are less academically inclined as myself digest things easier, I simply want to create shortcuts for those people close behind!</p>
+<div class="warning infobox fill-horizontal">
+<div class="header">
+<span class="las la-exclamation-circle mr-3"></span>Warning - Some knowledge required
+</div>
+<p>Please note that while I’m not going to assume Haskell mastery I am expecting at least a little bit of Haskell or functional programming knowledge. I’m not going to go through the absolute basics, but I will walk through what I’m doing so that new Haskellers understand what’s going on. I will also not talk about how to set up a project with Stack, I will purely be focusing on Haskell.</p>
+</div>
+</section>
+<section id="why-haskell-for-games" class="article-section">
+<h1><span>Why Haskell for Games?</span><a href="#why-haskell-for-games" class="anchor las la-link" title="why-haskell-for-games"></a></h1>
+<p>You can make a game in pretty much any programming language, and whether you <em>should</em> is entirely up to you. However, there are many barricades that have got in the way of Haskell being used in games. I’ve been working on my Haskell game for about a month now, and I wanted to really feel confident in the language before I started preaching that it’s possible. It doesn’t matter what framework you choose or whether you roll your own, the language itself is the bread and butter for your game and it has to be suited to the task.</p>
+<p>One reason people choose to avoid Haskell is simply the difficulty of the language itself. Games development is as hard as you decide it to be, with many different engines, frameworks and languages to choose from. While I agree that for most people it may be difficult to get their head around Haskell, once you have the foundations set up the process of adding additional mechanics will get easier as time goes on.</p>
+<p>I would like to take a moment to praise Apecs for how many problems it alleviates when using a functional language. I’m sure that the other frameworks out there will make Haskell comfy as well, and this is by no means an argument to use Apecs, it is simply a testament to its usability. Without going into massive detail on the ins and outs of Haskell and FP languages, Haskell paired with Apecs really does make development a whole lot easier, and I can really envision a future where people may choose languages like Haskell to simplify development.</p>
+<ul>
+<li>9/10 times, if it compiles, your game will run. Maybe not as expected, but at least it won’t crash!</li>
+<li>Using <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a> and <a href="https://www.stackage.org/">Stackage</a>, all of the dependencies for your game are downloaded automatically by simply listing them, making it easy to build your projects.</li>
+<li><a href="https://github.com/ghcjs/ghcjs">GHCJS</a> allows you to compile your Haskell code to Javascript if you wanted to make a web game or something similar.</li>
+<li>Haskell’s type system ensures that you know the difference between pure and impure functions. By organising code in this way, you streamline your game’s structure making it <em>extremely easy</em> to find logical errors in your game.</li>
+<li>Important functions for <em>doing</em> things can be wrapped up in monads and take advantage of <code>do</code> syntax, meaning that you can execute multiple side effects.</li>
+<li>Functions are first class citizens, they are treated in the exact same way as values and can be stored just as easily (hooray for spell making!).</li>
+<li>People say learning and using Haskell will help you even in imperative languages. I like Haskell because it makes me feel good when I solve something, so if you enjoy Haskell then why not make a game in a language you enjoy?</li>
+</ul>
+<p>Without further ado, let’s start making a game!</p>
+</section>
+<section id="getting-started" class="article-section">
+<h1><span>Getting Started</span><a href="#getting-started" class="anchor las la-link" title="getting-started"></a></h1>
+<section id="initialising" class="article-section">
+<h2><span>Initialising</span><a href="#initialising" class="anchor las la-link" title="initialising"></a></h2>
+<p>For this project, we will start off with <a href="https://hackage.haskell.org/package/apecs">Apecs</a> and <a href="https://hackage.haskell.org/package/sdl2">SDL2</a>. Choose whatever suits you, but I will be showing off a fair bit of Apecs and I will be starting the project with SDL2, so you’ll have to research how to start your game off independently. I will also be using <a href="https://hackage.haskell.org/package/SDL-ttf">SDL-ttf</a> and <a href="https://hackage.haskell.org/package/SDL-image">SDL-image</a>, remember, if you are also using packages that have bindings to C you will also need to install them onto your system, not just the Haskell bindings. Now, let’s show some code.</p>
+<div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>Qualified imports
+</div>
+<p>I am importing SDL with <code>qualified</code>, so that every SDL function has SDL before it. I mainly do this in the main file as there’s a lot going on. Do as you wish. Also, this won’t compile yet due to us not having the <code>initialise</code> function implemented.</p>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="dt">Apecs</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">SDL</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">SDL.Image</span>(quit)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">SDL.Font</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">-- Uses templateHaskell to create the data 'World'</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">-- also creates initWorld</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>makeWorld <span class="st">&quot;World&quot;</span> []</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Initialise Apecs world</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  world <span class="ot">&lt;-</span> initWorld</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Initialise SDL</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  SDL.initialize [<span class="dt">SDL.InitVideo</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  SDL.Font.initialize</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Create a window and renderer</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  window <span class="ot">&lt;-</span> SDL.createWindow <span class="st">&quot;App&quot;</span> SDL.defaultWindow</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  renderer <span class="ot">&lt;-</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      SDL.createRenderer window (<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="dt">SDL.RendererConfig</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>          { SDL.rendererType <span class="ot">=</span> <span class="dt">SDL.AcceleratedRenderer</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>          , SDL.rendererTargetTexture <span class="ot">=</span> <span class="dt">False</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Do any initialisation here!</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  runSystem initialise world</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Display the game</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  SDL.showWindow window</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Insert loop code here!</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Delay shutdown if you like?</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  SDL.delay <span class="dv">1000</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  SDL.destroyRenderer renderer</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  SDL.destroyWindow window</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  SDL.Image.quit</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  SDL.Font.quit</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  SDL.quit</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="st">&quot;Goodbye!&quot;</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  exitSuccess</span></code></pre></div>
+<p>Okay, so here we have a basic main function that creates a world and then closes it. Nothing special. I even threw in <a href="https://hackage.haskell.org/package/sdl2-2.4.1.0/docs/SDL-Time.html#v:delay">SDL.Delay</a> so you can see the window before it closes. Note that <code>SDL.Image</code> is initialised when used unlike the core and font variations, which is why only quit is imported here. This code isn’t anything special so I should probably stop typing and move on to describing a simple game loop. But first, let’s look at <a href="https://hackage.haskell.org/package/apecs-0.5.0.0/docs/Apecs.html#v:makeWorld">Apecs’ <code>makeWorld</code> function</a>.</p>
+<div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>Template Haskell
+</div>
+<p>If you actually clicked the link above you would have noticed that it says “turns into” at some point. This function uses Template Haskell, and simply writes a lot of things for you. The reason that you will never find the <code>World</code> type is that it is actually created in the <code>makeWorld</code> function described, and so the function <code>initWorld</code> is specialised to the type created in <code>makeWorld</code>. The function <code>makeWorld</code> accepts a string which will become the type (in our case, “World” becomes <code>World</code>) along with a list of components we are yet to make. To sum it up, <code>makeWorld</code> is simply a template that creates the world type and a bunch of functions for said world for you which your entire game will revolve around.</p>
+</div>
+</section>
+<section id="loop-function" class="article-section">
+<h2><span>Loop function</span><a href="#loop-function" class="anchor las la-link" title="loop-function"></a></h2>
+<p>Now for the loop function:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> loop prevTicks secondTick fpsAcc prevFps <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      ticks <span class="ot">&lt;-</span> SDL.ticks</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      payload <span class="ot">&lt;-</span> <span class="fu">map</span> SDL.eventPayload <span class="op">&lt;$&gt;</span> SDL.pollEvents</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> quit <span class="ot">=</span> <span class="dt">SDL.QuitEvent</span> <span class="ot">`elem`</span> payload</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>          dt <span class="ot">=</span> ticks <span class="op">-</span> prevTicks</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>          calcFps <span class="ot">=</span> secondTick <span class="op">+</span> dt <span class="op">&gt;</span> <span class="dv">1000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>          newFps <span class="ot">=</span> <span class="kw">if</span> calcFps <span class="kw">then</span> fpsAcc <span class="op">+</span> <span class="dv">1</span> <span class="kw">else</span> prevFps</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>          newFpsAcc <span class="ot">=</span> <span class="kw">if</span> calcFps <span class="kw">then</span> <span class="dv">1</span> <span class="kw">else</span> fpsAcc <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          newSecondTick <span class="ot">=</span> <span class="kw">if</span> calcFps <span class="kw">then</span> <span class="fu">mod</span> (secondTick <span class="op">+</span> dt) <span class="dv">1000</span> <span class="kw">else</span> secondTick <span class="op">+</span> dt</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- React to input</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>      runSystem (handlePayload payload) world</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- Update the world</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      runSystem (step <span class="op">$</span> <span class="fu">fromIntegral</span> dt) world</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- Set the background colour and clear the screen</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      SDL.rendererDrawColor renderer <span class="op">$=</span> <span class="dt">V4</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>      SDL.clear renderer</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- Render the world</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>      join <span class="op">$</span> runSystem (draw renderer newFps) world</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      SDL.present renderer</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      unless quit <span class="op">$</span> loop ticks newSecondTick newFpsAcc newFps</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">-- Begin looping</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>loop <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span></code></pre></div>
+<p>You can either put this in a let block inside the <code>main</code> function, or you can make it it’s own thing. Up to you. What matters is that you understand that we are recursively looping almost indefinitely until the user closes the window (ie, giving SDL the <code>QuitEvent</code>). Don’t worry if there’s a lot of stuff you don’t understand, take a moment and research the functions presented to you.</p>
+<p>I could probably have named the variables better, but I’ve essentially made a simple FPS counter for this tutorial. Yes, it could probably be better and yes, there’s probably <a href="https://hackage.haskell.org/package/sdl2-gfx-0.2/docs/SDL-Framerate.html">something like this</a> that does it for you. I just wanted to illustrate how ticks and time work here.</p>
+</section>
+<section id="ticks" class="article-section">
+<h2><span>Ticks</span><a href="#ticks" class="anchor las la-link" title="ticks"></a></h2>
+<p>There are 1000 ticks in a second (1 tick is 1 millisecond), and the <code>ticks</code> function allows us to see how many ticks have passed since SDL was initialised. We can use this to work out the time since the previous frame (<code>dt</code> or <a href="https://en.wikipedia.org/wiki/Delta_timing"><em>delta time</em></a>). Here, I am using <code>secondTick</code> to time seconds, and so <code>calcFPS</code> is <code>True</code> when a second has passed. The <code>newFPS</code> value will either display the fps for the previous second (<code>prevFps</code>), or it will display the current running total + 1 stored in <code>fpsAcc</code>. Finally, the timer tracking seconds is reset. It’s a bit ugly, but this a very easy and primitive way of tracking FPS in the early days, not that we are rendering any text yet. Let’s start getting into the basics of Apecs.</p>
+</section>
+</section>
+<section id="apecs-components" class="article-section">
+<h1><span>Apecs Components</span><a href="#apecs-components" class="anchor las la-link" title="apecs-components"></a></h1>
+<section id="remembering-types" class="article-section">
+<h2><span>Remembering Types</span><a href="#remembering-types" class="anchor las la-link" title="remembering-types"></a></h2>
+<p>Okay, so there are a couple of lines that won’t compile as we haven’t implemented them yet. Let me take the time to explain the role of <a href="https://hackage.haskell.org/package/apecs-0.5.0.0/docs/Apecs.html#v:runSystem">‘runSystem’</a>. In Apecs, <code>System</code> is a monad that most of your code will produce at some point. I’m not going to talk about what a monad really is as that’s a hot topic, but I can show what they can do. To put it simply, <code>runSystem</code> <strong><em>does</em></strong> something. It can or <em>will</em> execute side effects and can produce multiple side effects at once. The <code>System</code> monad is how you will manipulate your game.</p>
+<p>Here’s a refresher on <a href="https://wiki.haskell.org/Constructor">creating types in Haskell</a>. We will need all of these if we’re going to get anywhere with Haskell.</p>
+<ul>
+<li><strong><code>type</code>:</strong> A <em>type synonym</em>. You can replace the occurrence of your type with what it represents, it does nothing else. Functions can accept types in addition to what the type represents, it’s just an alias. Example:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">String</span> <span class="ot">=</span> [<span class="dt">Char</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">LongThing</span> <span class="ot">=</span> (<span class="dt">Int</span>, <span class="dt">Int</span>, <span class="dt">Int</span>, <span class="dt">Int</span>, <span class="dt">Int</span>)</span></code></pre></div>
+<ul>
+<li><strong><code>data</code>:</strong> A <em>type constructor</em>. You can craft your own types out of other types (think classes or structs in other languages). Functions that take or return your type will not accept anything but your type, and you will have to deconstruct it to access the contents. Example:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Bool</span> <span class="ot">=</span> <span class="dt">True</span> <span class="op">|</span> <span class="dt">False</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Maybe</span> a <span class="ot">=</span> <span class="dt">Just</span> a <span class="op">|</span> <span class="dt">Nothing</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Action</span> <span class="ot">=</span> <span class="dt">MoveTo</span> (<span class="dt">V2</span> <span class="dt">Int</span>) <span class="op">|</span> <span class="dt">Attack</span> <span class="dt">Entity</span> <span class="op">|</span> <span class="dt">Cast</span> <span class="dt">Spell</span> <span class="op">|</span> <span class="dt">Wait</span> <span class="dt">Int</span></span></code></pre></div>
+<ul>
+<li><strong><code>newtype</code>:</strong> A <em>type constructor</em> that acts as a wrapper for a single type. Your type will act just like it would if you used <code>data</code>, but is more efficient. If you are simply wrapping your type around something, use this. Example:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">PositionComponent</span> <span class="ot">=</span> <span class="dt">PositionComponent</span> (<span class="dt">V2</span> <span class="dt">Double</span>)</span></code></pre></div>
+</section>
+<section id="creating-components" class="article-section">
+<h2><span>Creating Components</span><a href="#creating-components" class="anchor las la-link" title="creating-components"></a></h2>
+<p>Now, let’s create some simple components to manipulate. Examine the code below in addition to modifying our <code>makeWorld</code> call. Note that <code>V2</code> is contained within <code>SDL.Vect</code>, which re-exports the package <a href="https://hackage.haskell.org/package/linear"><code>Linear</code></a> (ie, if you are using SDL, you do not need to install <code>Linear</code> as it comes with it. <code>Linear</code> comes with lots of nice types like <code>V2</code>, <code>V3</code> and <code>V4</code>, go take a look.)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Global component, exists outside of entities</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Used for managing the passage of time</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">Time</span> <span class="ot">=</span> <span class="dt">Time</span> <span class="dt">Double</span> <span class="kw">deriving</span> <span class="dt">Show</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Semigroup</span> <span class="dt">Time</span> <span class="kw">where</span> (<span class="op">&lt;&gt;</span>) <span class="ot">=</span> <span class="fu">mappend</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Monoid</span> <span class="dt">Time</span> <span class="kw">where</span> <span class="fu">mempty</span> <span class="ot">=</span> <span class="dt">Time</span> <span class="dv">0</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Component</span> <span class="dt">Time</span> <span class="kw">where</span> <span class="kw">type</span> <span class="dt">Storage</span> <span class="dt">Time</span> <span class="ot">=</span> <span class="dt">Global</span> <span class="dt">Time</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Unique component, either one or none exists</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Player</span> <span class="ot">=</span> <span class="dt">Player</span> <span class="kw">deriving</span> <span class="dt">Show</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Component</span> <span class="dt">Player</span> <span class="kw">where</span> <span class="kw">type</span> <span class="dt">Storage</span> <span class="dt">Player</span> <span class="ot">=</span> <span class="dt">Unique</span> <span class="dt">Player</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- Position of game entities</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">Position</span> <span class="ot">=</span> <span class="dt">Position</span> (<span class="dt">V2</span> <span class="dt">Double</span>) <span class="kw">deriving</span> <span class="dt">Show</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Component</span> <span class="dt">Position</span> <span class="kw">where</span> <span class="kw">type</span> <span class="dt">Storage</span> <span class="dt">Position</span> <span class="ot">=</span> <span class="dt">Map</span> <span class="dt">Position</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- Name of game entities</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">Name</span> <span class="ot">=</span> <span class="dt">Name</span> <span class="dt">String</span> <span class="kw">deriving</span> <span class="dt">Show</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Component</span> <span class="dt">Name</span> <span class="kw">where</span> <span class="kw">type</span> <span class="dt">Storage</span> <span class="dt">Name</span> <span class="ot">=</span> <span class="dt">Map</span> <span class="dt">Name</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">-- Uses template Haskell to create the data 'World'</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">-- also creates initWorld</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>makeWorld <span class="st">&quot;World&quot;</span> ['<span class="dt">'Time</span>, '<span class="dt">'Player</span>, '<span class="dt">'Position</span>, '<span class="dt">'Name</span>]</span></code></pre></div>
+<p>So here we have three components. The first, <code>Time</code>, is a <code>Global</code> component. This means that there’s <strong><em>only one of it at any one time, and it belongs to no entity</em></strong>. This is appropriate as time is, well, global. Although, it does actually belong to an entity secretly — an entity in Apecs (and many other implementations) is just an integer to reference components together. Global components are stored on entity <em>-2</em>, which will never be interfered with with normal usage of apecs.</p>
+<p>Time is a newtype — we would have liked to use just a <code>Double</code>, but because we need to provide our own instances of typeclasses, we need to <code>newtype</code> it as type synonyms don’t have their own implementations. We implement the <code>Component</code> typeclass so that apecs knows what kind of component it is. You can see the different kinds of entities <a href="https://hackage.haskell.org/package/apecs-0.5.0.0/docs/Apecs-Stores.html">here</a>. It also needs to implement instances of <code>Semigroup</code> (usually you can just specify <code>mappend</code>, it’s worked for me this far!), and <code>Monoid</code> (specify what an ‘empty’ component looks like, as this is the initial state of the component as it exists from the beginning of the game).</p>
+<p>Second, we have the <code>Player</code> component. This type has only one data constructor, <code>Player</code>. The purpose of this component is to simply mark which entity is the player — <strong><em>there can only be unique entity at once, giving it to a new entity removes it from the previous</em></strong>. Nothing much else to say about this for now, but it will come into play later.</p>
+<p>Finally, we have <code>Position</code>. Again, this is a newtype so that we can create instances of <code>Component</code> — <em>every component in Apecs needs this instance, so try to provide these to prevent <a href="https://wiki.haskell.org/Orphan_instance">Orphan Instances</a>.</em> Even though that the implementation of <code>V2</code> is the following..</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">V2</span> a <span class="ot">=</span> <span class="dt">V2</span> a a</span></code></pre></div>
+<p>.. It is still a single piece of data in the same way that <code>(a,b)</code> is also a single piece of data (a tuple containing two fields of possibly different types).</p>
+<p>As a final note, notice how <code>makeWorld</code> now contains components. This piece of template Haskell is going to take what we’ve done and allow our component types to be used within the Apecs <code>World</code>. This means that everything found in <a href="https://hackage.haskell.org/package/apecs-0.5.0.0/docs/Apecs-System.html">Apecs.System</a> will now be compatible with your types.</p>
+<p>Okay, so maybe that was a tough section, maybe it wasn’t. Maybe you’re learning something or maybe you’re upset that I’ve done something in a beginnerish way. Either way, this code should be close to compilation and should be enough to demonstrate some basics of Apecs.</p>
+</section>
+</section>
+<section id="systems" class="article-section">
+<h1><span>Systems</span><a href="#systems" class="anchor las la-link" title="systems"></a></h1>
+<section id="side-effects-in-monads" class="article-section">
+<h2><span>Side Effects in Monads</span><a href="#side-effects-in-monads" class="anchor las la-link" title="side-effects-in-monads"></a></h2>
+<p>In an <a href="https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system">Entity Component System</a> such as Apecs, <em>systems</em> are what make the world go round. Normally in C++ or C#, I’d make my ECS seperate from a few things baked into the engine, but with Apecs I have to imagine a lot of things as a global component instead. The game’s map, texture caches and other assets will most likely manifest as a global component here, if you wouldn’t already have implemented things in this way.</p>
+<p>Up to this point in the tutorial, I’ve given code examples that haven’t given much room for flexibility and I assume that you’ve been following along with me. For this area though, I’m going derail a little bit and just try to show off what apecs can do. I’ll provide usable, relevant code, but obviously what you choose to do depends on your game. This section is going to be fairly lengthy and have a lot of code, but if you follow along and understand the methodology I’m sure that you can apply what I give to your own code.</p>
+<p>Firstly, some usage. Apecs has a function that I’ve touched on already called <a href="https://hackage.haskell.org/package/apecs-0.5.0.0/docs/Apecs.html#v:runSystem">‘runSystem’</a>. This function will execute side effects contained within the monad and therefore strip away the <code>System</code> part. Here’s an example of how this may look with the IO monad:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ot">main ::</span> <span class="dt">IO</span> ()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>main <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- The following will be executed just like how</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- runSystem would execute one of your systems</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">putStrLn</span> <span class="st">&quot;Here's a basic print function!&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- The following will NOT be run..</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> funcThatProducesIOIO <span class="ot">=</span> <span class="fu">pure</span> <span class="op">$</span> <span class="fu">putStrLn</span> <span class="st">&quot;Here's an IO(IO())!&quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  foo <span class="ot">&lt;-</span> funcThatProducesIOIO</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- ..until it is called like so</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  foo</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- That was because 'foo' has type IO (), but this</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- is simply the storage of the monad, not execution</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- pure wraps the argument inside the monad, leading to</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- IO (IO ()), which when bound to foo, creates type IO ()</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- This means that one layer of IO has been executed but</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- not the second.</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- This pattern is dumb, binding something just to call it.</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- This will work instead:</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  join funcThatProducesIOIO</span></code></pre></div>
+<p>Hopefully that code above makes some sense. Because the main thread will execute IO in order to actually make something happen with the program, anything that has type <code>IO ()</code> will be executed automatically. The final example was something I wanted to mention because of some confusion with monads that a few people have asked me. When we bind something using <code>&lt;-</code>, the monad on the right is executed to produce the thing inside it. <code>IO (String)</code> would produce a <code>String</code>, for instance (this could be reading in from the keyboard?). This means that if the thing produced is yet another monad, like IO (), the thing on the left is not executed, and <code>join</code> is a nice shortcut to save you binding and executing as demonstrated above.</p>
+<p>Why am I telling you this? Because no matter whether you use SDL or not, you will want to perform IO to make things appear on screen. If you have a system which produces IO, like a render system, then you will need to use <code>join</code> in order to execute the side effects contained within the monad you retrieved.</p>
+</section>
+<section id="easy-system-type-synonym" class="article-section">
+<h2><span>Easy System Type Synonym</span><a href="#easy-system-type-synonym" class="anchor las la-link" title="easy-system-type-synonym"></a></h2>
+<p>Next up, a simple type synonym. The following will make using Apecs a lot easier:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Easy type synonym for systems</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">System'</span> a <span class="ot">=</span> <span class="dt">System</span> <span class="dt">World</span> a</span></code></pre></div>
+<p>Remember, this is a type synonym, it doesn’t actually affect your code in any way. It simply saves you from typing and keeps reading type signatures easier. All <code>System World a</code> means is that, assuming your world from your <code>makeWorld</code> function was named <code>"World"</code>, that this system operates within your world and can make a change in some way.</p>
+</section>
+<section id="writing-the-initialisation-system" class="article-section">
+<h2><span>Writing the Initialisation System</span><a href="#writing-the-initialisation-system" class="anchor las la-link" title="writing-the-initialisation-system"></a></h2>
+<p>If we scroll up to our initialisation code, you will see we do:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Do any initialisation here!</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>runSystem initialise world</span></code></pre></div>
+<p>It is now time to write our <code>initialise</code> system. This system is simply going to act as our kickstart to the game, add our player, do things. I’m sure you can guess what your game will need to do to set things up. One final thing I need to mention is that <a href="https://hackage.haskell.org/package/apecs-0.5.0.0/docs/Apecs-Core.html#t:SystemT">a System has the following type</a>: <code>newtype SystemT w m a</code>. This may not mean anything at first, but the documentation clearly states that the monad <code>m</code> used in a system is in fact compatible with IO. Anything to do with IO can be performed as a part of a system, which may help with debugging.</p>
+<p>Lets go! Here’s a sample initialisation system:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- The type of this function is System' (), so when we open up</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- a 'do' block, we are allowing us to bind the contents of System' monads</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- as well as executing side effects of any other System' () easily.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ot">initialise ::</span> <span class="dt">System'</span> ()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>initialise <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Make sure you use liftIO to get the following to compile,</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- we are returning System' (), not IO (), hence the lift.</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Lift is used to lift a function producing a</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- monad of one type (IO) into another (System'()).</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  liftIO <span class="op">$</span> <span class="fu">putStrLn</span> <span class="st">&quot;Let's do some IO just to prove we can!&quot;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Let's initialise the time monad, even though we don't</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- really have to as Apecs handles that for us.</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- 'set' produces a System' (), which means this line</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- will be executed as part of this system.</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  set global <span class="op">$</span> <span class="dt">Time</span> <span class="dv">0</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Another two System' ()s, this time we're creating entities</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  newEntity (<span class="dt">Player</span>, <span class="dt">Name</span> <span class="st">&quot;Lola&quot;</span>, <span class="dt">Position</span> <span class="op">$</span> <span class="dt">V2</span> <span class="dv">0</span> <span class="dv">0</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  newEntity (<span class="dt">Name</span> <span class="st">&quot;Harold&quot;</span>, <span class="dt">Position</span> <span class="op">$</span> <span class="dt">V2</span> <span class="dv">0</span> <span class="dv">0</span>)</span></code></pre></div>
+<p>Remember, we’re looking at the functions <a href="https://hackage.haskell.org/package/apecs-0.5.0.0/docs/Apecs-System.html">on the Apecs Hackage docs</a> for all of our inspiration on what functions to use. It is pretty self explanatory when you get the hang of it I promise. Make sure you’re looking at the most up to date version of all your documentation.</p>
+<p>Honestly, if you understand how these all work, how we compose monads to execute side effects and how Apecs allows us to run these System’s from the main thread to play our game, things will get much easier. If not, fear not, you’ll get there. Hopefully some more examples will help.</p>
+</section>
+<section id="writing-the-step-system" class="article-section">
+<h2><span>Writing the Step System</span><a href="#writing-the-step-system" class="anchor las la-link" title="writing-the-step-system"></a></h2>
+<p>Recall that we call the following during our main game loop:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Update the world</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>runSystem (step <span class="op">$</span> <span class="fu">fromIntegral</span> dt) world</span></code></pre></div>
+<p>This is our second system. This will be more important than the previous, with this being a collection of every system you require execution of each frame. Notice how we are calling this <code>runSystem</code> — the system we pass to it has some extra parameters inside. When that parameter is evaluated, <code>step</code> will accept <code>dt</code> and evaluate into a <code>System' ()</code> as you’d expect of any programming language in the same way that passing <code>(1 + 1)</code> would be equivalent to an <code>Int</code>, as the function:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">(+) ::</span> <span class="dt">Num</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a</span></code></pre></div>
+<p>has been fully evaluated.</p>
+<p>This means that our new system looks similar to the following:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Okay, so we have access to delta time now.</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- This allows us to animate or simulate stuff.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">-- Notice how we can execute other systems inside</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- this system with no problems.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ot">step ::</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>step dT <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  moveCharacters dT</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  rootPlayer</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- The function cmap below finds every entity with a Position</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">-- and rewrites it with new values - adding dT to the x and y values.</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- 'cmap' is another function producing System' ()</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="ot">moveCharacters ::</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>moveCharacters dT <span class="ot">=</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  cmap (\(<span class="dt">Position</span> (<span class="dt">V2</span> x y)) <span class="ot">-&gt;</span> <span class="dt">Position</span> <span class="op">$</span> <span class="dt">V2</span> (x <span class="op">+</span> dT) (y <span class="op">+</span> dT))</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- Apecs has a lot of magic involved, look at this:</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="ot">rootPlayer ::</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  cmap (\(<span class="dt">Player</span>, <span class="dt">Position</span> _) <span class="ot">-&gt;</span> <span class="dt">Position</span> <span class="op">$</span> <span class="dt">V2</span> <span class="dv">0</span> <span class="dv">0</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">-- This iterates on all entities with both a Player component and</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">-- Position component, however, Player is unique, so this is only</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">-- applied to the player.</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co">-- This is actually a bit dumb, as we're operating on the player twice,</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co">-- so let's rewrite that first call:</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="co">-- Not is an Apecs Data Constructor used for the exclusion of a component.</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co">-- We have to specify the type of Not as GHC cannot infer this on its own.</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co">-- This will operate on entities without a Player component.</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="ot">moveNonPlayerCharacters ::</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>moveNonPlayerCharacters dT <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>  cmap (\(<span class="dt">Position</span> (<span class="dt">V2</span> x y), <span class="dt">Not</span><span class="ot"> ::</span> <span class="dt">Not</span> <span class="dt">Player</span>) <span class="ot">-&gt;</span> <span class="dt">Position</span> <span class="op">$</span> <span class="dt">V2</span> (x <span class="op">+</span> dT) (y <span class="op">+</span> dT))</span></code></pre></div>
+</section>
+<section id="apecs-magic-with-systems" class="article-section">
+<h2><span>Apecs Magic with Systems</span><a href="#apecs-magic-with-systems" class="anchor las la-link" title="apecs-magic-with-systems"></a></h2>
+<p>In the above examples, the function <code>cmap</code> allowed us to read components and overwrite them. There’s a lot more to it, and once you get used to the different approaches you’ll have to commend Apecs for the amount of work put into it.</p>
+<p>Any of the functions in the Apecs documentation that take or write <code>Components</code> (or <code>c</code>, as the documentation uses types and magic to make things polymorphic) can take a variety of different forms. As you saw above, you can read multiple components as we did with <code>(Player, Position _)</code> (note that in that case we used <code>_</code> to ignore the parameter, as we were overwriting the position). You can actually write to multiple components too! As long as the components are produced as a tuple, just like the example just given, then you can return multiple components too. Not that ignoring any input components will leave them alone — we didn’t need to write <code>Player</code> again to preserve it on the entity.</p>
+<p>I’m going to just throw some examples that I can think of at you now. I’ll talk about what they do after each segment. I’m going to be calling functions and using Components that we haven’t defined, the idea being that these are just to demonstrate different methods of using Apecs.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ot">everyoneChasePlayer ::</span> <span class="dt">System'</span> ()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>everyoneChasePlayer <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  [(<span class="dt">Player</span>, <span class="dt">Position</span> p)] <span class="ot">&lt;-</span> getAll</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  cmap (\(<span class="dt">Position</span> p', <span class="dt">Not</span><span class="ot"> ::</span> <span class="dt">Not</span> <span class="dt">Player</span>) <span class="ot">-&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Position</span> <span class="op">$</span> moveTowards p' p)</span></code></pre></div>
+<p>Here, using <code>do</code> syntax, we can get components attached to the <code>player</code> very easily. When there’s only one element in the list we can pattern match on it just like a tuple, but this may crash your program if the <code>Player</code> does not exist or if you don’t grab a unique component and therefore have more than one entity. By grabbing the player’s position, we can pass that to a function called <code>moveTowards</code> which is in charge of manipulating the first argument so that it gets closer to the second. This function is pure, as <code>cmap</code> is the function producing the <code>System' ()</code> monad, so you can forget about Apecs and focus on your logic when writing it.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ot">debugCharacters ::</span> <span class="dt">System'</span> ()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>debugCharacters <span class="ot">=</span> cmapM_ (\(<span class="dt">Name</span> n, <span class="dt">Entity</span> e) <span class="ot">-&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  liftIO <span class="op">$</span> <span class="fu">putStrLn</span> (<span class="st">&quot;Entity &quot;</span> <span class="op">++</span> <span class="fu">show</span> e <span class="op">++</span> <span class="st">&quot; is named: &quot;</span> <span class="op">++</span> n))</span></code></pre></div>
+<p>Here’s a simple template you can use for debugging. As previously mentioned, <code>System' ()</code> supports <code>MonadIO</code>, allowing you to perform <code>IO</code> inside it. <code>cmapM</code> allows us to read components and iterate over them monadically (basically we can treat each iteration as another <code>System' ()</code>), which allows us to perform side effects instead of being locked into a pure environment like with the previous example. If we used <code>do</code> here, we could even call another system too!</p>
+<p>Also, notice how we found the <code>Entity</code> here — whenever we use <code>getAll</code> or <code>cmap</code> or anything that gets components (other than <code>get</code>), we can allocate bindings for the <code>Entity</code> these components belong to. <code>Entity</code> is just a newtype for <code>Int</code>, so <code>e :: Int</code> in this case, hence why we <code>show</code> it. The <code>n</code> is simply a string which doesn’t require the use of <code>show</code>. If we want to actually use the <code>Entity</code>, be sure to wrap the <code>Int</code> back in an <code>Entity</code> or simply grab the entity as <code>e :: Entity</code> rather than pattern matching as we did here.</p>
+<p>Finally, the <code>cmapM_</code> function (notice the <code>_</code>) that we used is the same as <code>cmapM</code>, but it doesn’t write anything. It’s job is to read and provide the a way of monadically iterating. If we wanted to change the name of the entity, using <code>cmapM</code> instead would allow us to return something out of the monadic iteration to write the entity with. Here’s an example of writing components with <code>cmapM</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ot">applyGravity ::</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>applyGravity dT <span class="ot">=</span> cmapM (\(<span class="dt">Position</span> (<span class="dt">V2</span> x y),<span class="ot"> e ::</span> <span class="dt">Entity</span>) <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> gY <span class="ot">=</span> y <span class="op">+</span> (dT <span class="op">*</span> <span class="fl">0.5</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>      y' <span class="ot">=</span> <span class="fu">max</span> gY <span class="dv">0</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  liftIO <span class="op">$</span> <span class="fu">putStrLn</span> (<span class="st">&quot;Entity &quot;</span> <span class="op">++</span> <span class="fu">show</span> e <span class="op">++</span> <span class="st">&quot; moved from &quot;</span> <span class="op">++</span> <span class="fu">show</span> y <span class="op">++</span> <span class="st">&quot; to &quot;</span> <span class="op">++</span> <span class="fu">show</span> y')</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pure</span> <span class="op">$</span> <span class="dt">Position</span> (<span class="dt">V2</span> x y'))</span></code></pre></div>
+<p>So here we have an example of using <code>let</code> to make calculations easier, along with some <code>IO</code>, getting the <code>Entity</code> and finally overwriting <code>Position</code> components to apply gravity (in SDL and many other frameworks, the top left is <code>(0,0)</code>, so positive <code>y</code> moves things down).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ot">fireWeapon ::</span> <span class="dt">V2</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fireWeapon (<span class="dt">V2</span> i j) <span class="ot">-&gt;</span> speed <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  [(<span class="dt">Player</span>,<span class="ot"> p ::</span> <span class="dt">Position</span>, <span class="dt">Weapon</span> ammo,<span class="ot"> e ::</span> <span class="dt">Entity</span>)] <span class="ot">&lt;-</span> getAll</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  when (ammo <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">$</span> void <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> ammoLeft <span class="ot">=</span> <span class="fu">max</span> <span class="dv">0</span> <span class="op">$</span> ammo <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    set e (<span class="dt">Weapon</span> ammoLeft)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    newEntity (<span class="dt">Velocity</span> (i <span class="op">*</span> speed) (j <span class="op">*</span> speed), p)</span></code></pre></div>
+<p>Here’s an example of making a new entity while producing <code>System' ()</code>. When the side effects of this system are performed, we begin by grabbing the <code>Entity</code> with the <code>Player</code> component along with some other components. Remember, we need to make sure beforehand the player has these components otherwise the pattern matching will fail, and we can only pattern match here because we know we are only going to have one element in this list.</p>
+<p>We then set the <code>Weapon</code> component on the player to a new value. The function <code>set</code> can be used regardless of if it already exists on the entity or not, and so can be a better option than <code>cmap</code>. Additionally, <code>set</code> requires you to provide the entity you’re modifying, meaning that if we weren’t operating on a unique entity then <code>cmap</code> wouldn’t be as good — <code>cmap</code> iterates over <strong><em>every</em></strong> entity with the matching components. You have more control with <code>set</code>, just make sure that you’re not wasting your time when you could use <code>cmap</code> or any other Apecs function.</p>
+<p>Lastly, notice our use of <code>when</code> and <code>void</code>. The function <code>when</code> is exported by <code>Control.Monad</code>, and is pretty much equivalent to the following:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ot">when' ::</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> m () <span class="ot">-&gt;</span> m ()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>when bool func <span class="ot">=</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> bool</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">then</span> func</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="fu">pure</span> ()</span></code></pre></div>
+<p>Basically, <code>when</code> will do <strong><em>nothing</em></strong> when it’s logic is false. There’s the reverse of when too, called <code>unless</code>. The other function, <code>void</code> will execute execute the side effects of the monad passed to it, but discard the value returned. When we use <code>newEntity</code> to create a new Entity, the Entity created is returned as <code>System' (Entity)</code>. Since we want this function to return a blank <code>System' ()</code>, we need to just ignore what is returned (don’t worry, the entity is not deleted) so that the whole thing type checks.</p>
+</section>
+<section id="writing-the-event-handler-system" class="article-section">
+<h2><span>Writing the Event Handler System</span><a href="#writing-the-event-handler-system" class="anchor las la-link" title="writing-the-event-handler-system"></a></h2>
+<p>Okay, this section is going to start combining SDL code with Apecs. There are plenty of guides on how to use SDL, so I’m going to show the code first and mention anything important after. Remember that SDL gives you a list of all the events that have occurred since the last poll and you need to handle them all individually. I have not yet implemented any code to check for modifier keys like <code>shift</code> or <code>ctrl</code>. This will use many of the techniques shown in the previous section so hopefully you can follow along easily.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Global component used for changing gamestates</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">GameMode</span> <span class="ot">=</span> <span class="dt">Standard</span> <span class="op">|</span> <span class="dt">Look</span> <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Eq</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">GameState</span> <span class="ot">=</span> <span class="dt">Game</span> <span class="dt">GameMode</span> <span class="op">|</span> <span class="dt">Interface</span> <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Eq</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Semigroup</span> <span class="dt">GameState</span> <span class="kw">where</span> (<span class="op">&lt;&gt;</span>) <span class="ot">=</span> <span class="fu">mappend</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Monoid</span> <span class="dt">GameState</span> <span class="kw">where</span> <span class="fu">mempty</span> <span class="ot">=</span> <span class="dt">Game</span> <span class="dt">Standard</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Component</span> <span class="dt">GameState</span> <span class="kw">where</span> <span class="kw">type</span> <span class="dt">Storage</span> <span class="dt">GameState</span> <span class="ot">=</span> <span class="dt">Global</span> <span class="dt">GameState</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co">-- Handle the entire event payload</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="ot">handlePayload ::</span> [<span class="dt">EventPayload</span>] <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>handlePayload <span class="ot">=</span> <span class="fu">mapM_</span> handleEvent</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">-- The main event handler function for dealing with keypresses</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="ot">handleEvent ::</span> <span class="dt">EventPayload</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>handleEvent (<span class="dt">KeyboardEvent</span> ev) <span class="ot">=</span> handleKeyEvent ev</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>handleEvent _ <span class="ot">=</span> <span class="fu">pure</span> ()</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co">-- For the handling keyboard events only</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="ot">handleKeyEvent ::</span> <span class="dt">KeyboardEventData</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>handleKeyEvent ev <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  (<span class="ot">state ::</span> <span class="dt">GameState</span>) <span class="ot">&lt;-</span> get global</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> code <span class="ot">=</span> keysymKeycode <span class="op">$</span> keyboardEventKeysym ev</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> keyboardEventKeyMotion ev <span class="kw">of</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Pressed</span> <span class="ot">-&gt;</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>      <span class="kw">case</span> state <span class="kw">of</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Game</span> mode <span class="ot">-&gt;</span> gameAction mode code</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">Interface</span> <span class="ot">-&gt;</span> postMessage <span class="st">&quot;Interface state not implemented yet&quot;</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Released</span> <span class="ot">-&gt;</span> <span class="fu">pure</span> ()</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="co">-- For keyboard events that  take place in the game</span></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="ot">gameAction ::</span> <span class="dt">GameMode</span> <span class="ot">-&gt;</span> <span class="dt">Keycode</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> ()</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>gameAction mode k <span class="ot">=</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> intents <span class="ot">=</span> <span class="fu">lookup</span> k defaultGameIntents <span class="kw">in</span></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">case</span> mode <span class="kw">of</span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">Standard</span> <span class="ot">-&gt;</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> intents <span class="kw">of</span></span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Just</span> (<span class="dt">Navigate</span> dir) <span class="ot">-&gt;</span> navigate dir</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Just</span> <span class="dt">ToggleLook</span> <span class="ot">-&gt;</span> toggleLook mode</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Just</span> <span class="dt">Wait</span> <span class="ot">-&gt;</span> <span class="kw">do</span></span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>            postMessage <span class="st">&quot;You wait..&quot;</span></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>            playerActionStep <span class="dv">100</span></span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>          _ <span class="ot">-&gt;</span> <span class="fu">pure</span> ()</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>      <span class="dt">Look</span> <span class="ot">-&gt;</span></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>        <span class="kw">case</span> intents <span class="kw">of</span></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Just</span> (<span class="dt">Navigate</span> dir) <span class="ot">-&gt;</span> moveReticule dir</span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>          <span class="dt">Just</span> <span class="dt">ToggleLook</span> <span class="ot">-&gt;</span> toggleLook mode</span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>          _ <span class="ot">-&gt;</span> <span class="fu">pure</span> ()</span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="co">-- Initial bindings for intents</span></span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a><span class="ot">defaultGameIntents ::</span> [(<span class="dt">Keycode</span>, <span class="dt">GameIntent</span>)]</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>defaultGameIntents <span class="ot">=</span></span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>  [ (<span class="dt">KeycodeUp</span> , <span class="dt">Navigate</span> <span class="dt">C.Up</span>)</span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>  , (<span class="dt">KeycodeLeft</span> , <span class="dt">Navigate</span> <span class="dt">C.Left</span>)</span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>  , (<span class="dt">KeycodeDown</span> , <span class="dt">Navigate</span> <span class="dt">C.Down</span>)</span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>  , (<span class="dt">KeycodeRight</span> , <span class="dt">Navigate</span> <span class="dt">C.Right</span>)</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>  , (<span class="dt">KeycodeSemicolon</span>, <span class="dt">ToggleLook</span>)</span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>  , (<span class="dt">KeycodeW</span>, <span class="dt">Wait</span>)</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>  ]</span></code></pre></div>
+<p>I first have created a component called <code>GameState</code>, maybe that’s not the best name. This <code>Global</code> component is basically going to help us work out the context of what’s on screen. For instance, our inputs on the arrow keys may move the player in game, but on a menu it will do something else. I haven’t done any of the interface stuff yet, but I have two different modes for the actual game. I’m making an Roguelike RPG, and one requirement is that the player can look at things without moving and interacting with anything. This component allows me to firstly see whether we’re in game or not and secondly, if we are in game, what we are doing. These things are very likely to change to suit whatever game you’re making, but I’m hoping for the purposes of this tutorial you can see what I’m getting at.</p>
+<p>The <code>handlePayload</code> function itself starts by taking the entire payload and performing <code>mapM_</code> on it — <code>mapM_</code> is not an Apecs function but rather one that is found in <code>Control.Monad</code>. If you were following what the <code>cmapM_</code> function did earlier, this might already be clear. This function is very similar except that instead of iterating over Apecs components, it iterates over whatever <code>Traversable</code> class you pass it, in this case, a list. We are using the <code>mapM_</code> version of map because a normal <code>map</code> function doesn’t give us the monadic context we need to do this cleanly, whereas <code>mapM_</code> allows us to produce a <code>System' ()</code> for each element of the list, and the <code>_</code> simply discards any data that isn’t a side effect, as we aren’t using anything. This takes us into the <code>handleEvent</code> function, which now only has to worry about a single <code>SDL.Event</code>.</p>
+<p>The <code>handleEvent</code> system I’ve written does simple pattern matching on the type of event it is given. If the event is a <code>KeyboardEvent</code>, it is opened up to expose the event itself and is then passed on to <code>handleKeyEvent</code>. I haven’t thought about other <code>SDL.Event</code>s yet, as our main loop already handles checking for the <code>QuitEvent</code>, which means everything I deem important has been handled. Maybe you want something to happen when the screen is resized or if the mouse is clicked, you should go and check out <a href="https://hackage.haskell.org/package/sdl2-2.4.1.0/docs/SDL-Event.html#t:EventPayload">the docs</a> to find what kind of events you might need, and what data those events contain.</p>
+<p>Our <code>handleKeyEvent</code>’s job is to direct the flow of the program to where it needs to go next. This is now getting to the point where different games will do different things. My game isn’t interested in any key releases, so if the type of <code>keyboardEventKeyMotion ev</code> matches <code>Released</code> I don’t do anything. Otherwise, I call my own function, <code>gameAction</code> along with the current mode and the keycode. Remember that anywhere inside any of these functions you can call as many <code>System' ()</code> functions as you like to compose the monad. Apecs has allowed us to keep our code clean and healthy while also giving us room to do whatever we like as long as we construct <code>System' ()</code> as the output, which as we know, is really easy when you know how.</p>
+</section>
+<section id="writing-the-draw-system" class="article-section">
+<h2><span>Writing the Draw System</span><a href="#writing-the-draw-system" class="anchor las la-link" title="writing-the-draw-system"></a></h2>
+<p>Recall that the draw system interacts with the <code>IO</code> monad. I’ve shown already how you can use <code>liftIO</code> to execute <code>IO</code> from within a <code>System' ()</code>, but I’ve also shown how returning <code>System (IO ())</code> can also be used to draw when the <code>join</code> function (found in <code>Control.Monad</code>) is used. You should have enough information to get a basic drawing system going.</p>
+<p>One of the hardest challenges you’ll face early on is managing your textures, fonts and other assets. It’s easy to create a <code>Texture</code> component and give each <code>Entity</code> the texture it’s going to render with, however, this means that having five entities that show the same thing will have the same texture loaded five times over.</p>
+<p>I’ve created <code>Global</code> components for <code>Textures</code> and <code>Fonts</code> which implement <code>HashMap</code>s (found in <code>Data.HashMap</code>). A <code>HashMap</code> is like a normal map but it runs a lot faster as it isn’t ordered. My <code>draw</code> system then passes the assets found inside these components to whatever functions need them. You can of course, just use <code>IO</code> in the main loop and pass everything to the <code>draw</code> system to avoid loading things multiple times, but this would mean having all of your assets loaded at once. Eventually, I plan on scanning all of my <code>Sprite</code> components and loading / unloading assets inside the hashmap depending on what textures are required. Here’s the current code:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Turns a list of key value pairs into a hashmap for a resource component</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ot">createResourceMap ::</span> [(<span class="dt">String</span>, a)] <span class="ot">-&gt;</span> <span class="dt">HM.Map</span> <span class="dt">String</span> a</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>createResourceMap <span class="ot">=</span> <span class="fu">foldl</span> (\m (k, v) <span class="ot">-&gt;</span> insert k v m) empty</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Types for creating textures</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">TexResource</span> <span class="ot">=</span> (<span class="dt">String</span>, <span class="dt">Texture</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">TextureMap</span> <span class="ot">=</span> <span class="dt">HM.Map</span> <span class="dt">String</span> <span class="dt">Texture</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Create a TextureMap with initial filepaths</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="ot">loadTextures ::</span> <span class="dt">Renderer</span> <span class="ot">-&gt;</span> [<span class="dt">FilePath</span>] <span class="ot">-&gt;</span> <span class="dt">IO</span> [<span class="dt">TexResource</span>]</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>loadTextures r <span class="ot">=</span> <span class="fu">traverse</span> getTex</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> getTex p <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>          tex <span class="ot">&lt;-</span> loadTexture r p</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>          <span class="fu">pure</span> (p, tex)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- Types for creating fonts</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">FontResource</span> <span class="ot">=</span> (<span class="dt">String</span>, <span class="dt">Font</span>)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">FontMap</span> <span class="ot">=</span> <span class="dt">HM.Map</span> <span class="dt">String</span> <span class="dt">Font</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">-- Create a FontMap using initial filepaths</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="ot">loadFonts ::</span> [(<span class="dt">FilePath</span>, <span class="dt">PointSize</span>)] <span class="ot">-&gt;</span> <span class="dt">IO</span> [<span class="dt">FontResource</span>]</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>loadFonts <span class="ot">=</span> <span class="fu">traverse</span> getFont</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> getFont (p, s) <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>          font <span class="ot">&lt;-</span> load p s</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>          <span class="fu">pure</span> (p, font)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="co">-- Global store of all textures</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">Textures</span> <span class="ot">=</span> <span class="dt">Textures</span> <span class="dt">TextureMap</span></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Component</span> <span class="dt">Textures</span> <span class="kw">where</span> <span class="kw">type</span> <span class="dt">Storage</span> <span class="dt">Textures</span> <span class="ot">=</span> <span class="dt">Global</span> <span class="dt">Textures</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Semigroup</span> <span class="dt">Textures</span> <span class="kw">where</span> (<span class="op">&lt;&gt;</span>) <span class="ot">=</span> <span class="fu">mappend</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Monoid</span> <span class="dt">Textures</span> <span class="kw">where</span> <span class="fu">mempty</span> <span class="ot">=</span> <span class="dt">Textures</span> HM.empty</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="co">-- Global store of all fonts</span></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="kw">newtype</span> <span class="dt">Fonts</span> <span class="ot">=</span> <span class="dt">Fonts</span> <span class="dt">FontMap</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Component</span> <span class="dt">Fonts</span> <span class="kw">where</span> <span class="kw">type</span> <span class="dt">Storage</span> <span class="dt">Fonts</span> <span class="ot">=</span> <span class="dt">Global</span> <span class="dt">Fonts</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Semigroup</span> <span class="dt">Fonts</span> <span class="kw">where</span> (<span class="op">&lt;&gt;</span>) <span class="ot">=</span> <span class="fu">mappend</span></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">Monoid</span> <span class="dt">Fonts</span> <span class="kw">where</span> <span class="fu">mempty</span> <span class="ot">=</span> <span class="dt">Fonts</span> HM.empty</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="co">-- Create System' (IO ()) for everything depending on item drawn</span></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a><span class="ot">draw ::</span> <span class="dt">SDL.Renderer</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> (<span class="dt">IO</span> ())</span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>draw renderer fps <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Textures</span> texs <span class="ot">&lt;-</span> get global</span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Fonts</span> fonts <span class="ot">&lt;-</span> get global</span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> uiFont <span class="ot">=</span> HM.lookup <span class="st">&quot;Assets/Roboto-Regular.ttf&quot;</span> fonts</span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sequence_</span> <span class="op">&lt;$&gt;</span> <span class="fu">sequence</span></span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a>    [ drawComponents <span class="op">$</span> renderSprite renderer texs</span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>    , drawComponents <span class="op">$</span> renderReticule renderer</span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a>    , displayFps renderer fps uiFont</span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="co">-- Produce a system used for drawing</span></span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a><span class="ot">drawComponents ::</span> <span class="dt">Get</span> <span class="dt">World</span> c <span class="ot">=&gt;</span> (c <span class="ot">-&gt;</span> <span class="dt">Position</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()) <span class="ot">-&gt;</span> <span class="dt">System'</span> (<span class="dt">IO</span> ())</span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>drawComponents f <span class="ot">=</span> cfold (\img (p, comp) <span class="ot">-&gt;</span> img <span class="op">&lt;&gt;</span> f comp p) <span class="fu">mempty</span></span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a><span class="co">-- Render textures</span></span>
+<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a><span class="ot">renderSprite ::</span> <span class="dt">SDL.Renderer</span> <span class="ot">-&gt;</span> <span class="dt">TextureMap</span> <span class="ot">-&gt;</span> <span class="dt">Sprite</span> <span class="ot">-&gt;</span> <span class="dt">Position</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a>renderSprite r ts (<span class="dt">Sprite</span> fp rect) (<span class="dt">Position</span> p) <span class="ot">=</span></span>
+<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a>  <span class="kw">case</span> HM.lookup fp ts <span class="kw">of</span></span>
+<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Just</span> tex <span class="ot">-&gt;</span> SDL.copyEx r tex (<span class="dt">Just</span> <span class="op">$</span> toCIntRect rect) (<span class="dt">Just</span> (<span class="dt">SDL.Rectangle</span> (<span class="dt">P</span> <span class="op">$</span> toCIntV2 p) tileSize')) <span class="dv">0</span> <span class="dt">Nothing</span> (<span class="dt">V2</span> <span class="dt">False</span> <span class="dt">False</span>)</span>
+<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a>    _ <span class="ot">-&gt;</span> <span class="fu">pure</span> ()</span>
+<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a><span class="co">-- Render the target reticule</span></span>
+<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a><span class="ot">renderReticule ::</span> <span class="dt">SDL.Renderer</span> <span class="ot">-&gt;</span> <span class="dt">Reticule</span> <span class="ot">-&gt;</span> <span class="dt">Position</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a>renderReticule r (<span class="dt">Reticule</span> on) (<span class="dt">Position</span> p)</span>
+<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">not</span> on <span class="ot">=</span> <span class="fu">pure</span> ()</span>
+<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> on <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a>    rendererDrawColor r <span class="op">$=</span> <span class="dt">V4</span> <span class="dv">255</span> <span class="dv">255</span> <span class="dv">255</span> <span class="dv">20</span></span>
+<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a>    fillRect r <span class="op">$</span> <span class="dt">Just</span> <span class="op">$</span> <span class="dt">Rectangle</span> (<span class="dt">P</span> <span class="op">$</span> toCIntV2 p) tileSize'</span>
+<span id="cb21-69"><a href="#cb21-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a><span class="co">-- Display FPS</span></span>
+<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a><span class="ot">displayFps ::</span> <span class="dt">SDL.Renderer</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">SDL.Font.Font</span> <span class="ot">-&gt;</span> <span class="dt">System'</span> (<span class="dt">IO</span> ())</span>
+<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a>displayFps r fps <span class="dt">Nothing</span> <span class="ot">=</span> <span class="fu">pure</span> <span class="op">$</span> <span class="fu">pure</span> ()</span>
+<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a>displayFps r fps (<span class="dt">Just</span> f) <span class="ot">=</span></span>
+<span id="cb21-74"><a href="#cb21-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pure</span> <span class="op">$</span> renderSolidText r f (<span class="dt">V4</span> <span class="dv">255</span> <span class="dv">255</span> <span class="dv">255</span> <span class="dv">255</span>) (<span class="st">&quot;FPS: &quot;</span> <span class="op">++</span> <span class="fu">show</span> fps) (<span class="dt">V2</span> <span class="dv">0</span> <span class="dv">0</span>) <span class="dt">False</span></span>
+<span id="cb21-75"><a href="#cb21-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-76"><a href="#cb21-76" aria-hidden="true" tabindex="-1"></a><span class="co">-- Render solid text</span></span>
+<span id="cb21-77"><a href="#cb21-77" aria-hidden="true" tabindex="-1"></a><span class="ot">renderSolidText ::</span> <span class="dt">SDL.Renderer</span> <span class="ot">-&gt;</span> <span class="dt">SDL.Font.Font</span> <span class="ot">-&gt;</span> <span class="dt">SDL.Font.Color</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">V2</span> <span class="dt">Double</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb21-78"><a href="#cb21-78" aria-hidden="true" tabindex="-1"></a>renderSolidText r fo c s p <span class="ot">=</span> renderText r fo (SDL.Font.solid fo) c s (toCIntV2 p)</span>
+<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-80"><a href="#cb21-80" aria-hidden="true" tabindex="-1"></a><span class="co">-- Render text to the screen easily</span></span>
+<span id="cb21-81"><a href="#cb21-81" aria-hidden="true" tabindex="-1"></a><span class="co">-- renderSolidText calls this</span></span>
+<span id="cb21-82"><a href="#cb21-82" aria-hidden="true" tabindex="-1"></a><span class="ot">renderText ::</span> <span class="dt">SDL.Renderer</span> <span class="ot">-&gt;</span> <span class="dt">SDL.Font.Font</span> <span class="ot">-&gt;</span> (<span class="dt">SDL.Font.Color</span> <span class="ot">-&gt;</span> <span class="dt">Data.Text.Text</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> <span class="dt">SDL.Surface</span>) <span class="ot">-&gt;</span></span>
+<span id="cb21-83"><a href="#cb21-83" aria-hidden="true" tabindex="-1"></a>           <span class="dt">SDL.Font.Color</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">V2</span> <span class="dt">CInt</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</span>
+<span id="cb21-84"><a href="#cb21-84" aria-hidden="true" tabindex="-1"></a>renderText r fo fu c t (<span class="dt">V2</span> x y) center <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb21-85"><a href="#cb21-85" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> text <span class="ot">=</span> Data.Text.pack t</span>
+<span id="cb21-86"><a href="#cb21-86" aria-hidden="true" tabindex="-1"></a>  surface <span class="ot">&lt;-</span> fu c text</span>
+<span id="cb21-87"><a href="#cb21-87" aria-hidden="true" tabindex="-1"></a>  texture <span class="ot">&lt;-</span> SDL.createTextureFromSurface r surface</span>
+<span id="cb21-88"><a href="#cb21-88" aria-hidden="true" tabindex="-1"></a>  SDL.freeSurface surface</span>
+<span id="cb21-89"><a href="#cb21-89" aria-hidden="true" tabindex="-1"></a>  fontSize <span class="ot">&lt;-</span> SDL.Font.size fo text</span>
+<span id="cb21-90"><a href="#cb21-90" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> (w, h) <span class="ot">=</span> (<span class="fu">fromIntegral</span> <span class="op">***</span> <span class="fu">fromIntegral</span>) fontSize</span>
+<span id="cb21-91"><a href="#cb21-91" aria-hidden="true" tabindex="-1"></a>  unless center <span class="op">$</span></span>
+<span id="cb21-92"><a href="#cb21-92" aria-hidden="true" tabindex="-1"></a>    SDL.copy r texture <span class="dt">Nothing</span> (<span class="dt">Just</span> (<span class="dt">Rectangle</span> (<span class="dt">P</span> <span class="op">$</span> <span class="dt">V2</span> x y) (<span class="dt">V2</span> w h)))</span>
+<span id="cb21-93"><a href="#cb21-93" aria-hidden="true" tabindex="-1"></a>  when center <span class="op">$</span> <span class="kw">do</span></span>
+<span id="cb21-94"><a href="#cb21-94" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> x' <span class="ot">=</span> x <span class="op">-</span> <span class="fu">fromIntegral</span> (<span class="fu">fst</span> fontSize <span class="ot">`div`</span> <span class="dv">2</span>)</span>
+<span id="cb21-95"><a href="#cb21-95" aria-hidden="true" tabindex="-1"></a>    SDL.copy r texture <span class="dt">Nothing</span> (<span class="dt">Just</span> (<span class="dt">Rectangle</span> (<span class="dt">P</span> <span class="op">$</span> <span class="dt">V2</span> x' y) (<span class="dt">V2</span> w h)))</span>
+<span id="cb21-96"><a href="#cb21-96" aria-hidden="true" tabindex="-1"></a>  SDL.destroyTexture texture</span></code></pre></div>
+<div class="warning infobox fill-horizontal">
+<div class="header">
+<span class="las la-exclamation-circle mr-3"></span>Warning - Rough Draft
+</div>
+<p>This code is just a rough draft just so that I can see things on screen. While I recommend beginners using this so that they can start having fun with Haskell, I <strong><em>deeply encourage</em></strong> you to make optimisations wherever you can and tailor everything to your game. The <code>renderText</code> function is severely inefficient and so I’m going to be trying to batch all of the text onto one surface before creating a texture out of it. This code is <strong><em>not good</em></strong>.</p>
+</div>
+<p>Oh my gosh, what a lot of code. I’m sorry for just dumping so much, but at the same time there’s no better way to illustrate how I try to do things. This might be pretty complex and hard to read for the beginners reading this, but all I can say is that you should begin by looking at the function types for each block of code and understanding how the functions use each other. Most importantly, see how we go from producing <code>IO ()</code> in <code>renderText</code> and <code>renderSolidText</code> to producing <code>System' (IO ())</code> when bundled with <code>displayFPS</code> or <code>drawComponents</code>. The <code>drawComponents</code> function simply uses <code>cfold</code> to combine all of the <code>IO ()</code> monads into one, before wrapping <code>System' ()</code> around it like all the other Apecs functions do.</p>
+</section>
+</section>
+<section id="conclusion" class="article-section">
+<h1><span>Conclusion</span><a href="#conclusion" class="anchor las la-link" title="conclusion"></a></h1>
+<p>I’m sorry for the huge amount of code pastes, but hopefully there’s at least something written in this blog post that will teach someone something. My real intent is to encourage the usage of Haskell for the creation of small games where we no longer need performance as much as we used to. Hopefully this inspires of more programmers and more frameworks to use Haskell so that writing in a functional language becomes less of an alien idea. I want to see indie developers start embracing the power of high-level languages to make development easier on their already-difficult lives. If people can make <a href="https://store.steampowered.com/app/497800/Golden_Krone_Hotel/">cool games in JavaScript</a>, then why not Haskell?</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+  <section class="container is-max-desktop">
+    <h3 class="title">Related project</h3>
+    
+      <div class="swiper-slide post-preview-featured">
+  <div class="internal apply-shadow">
+
+    <div class="left">
+      
+        <img src="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/preview.png" alt="Preview image for post 'HSRogue: A roguelike in Haskell'">
+      
+    </div>
+
+    <div class="right p-5">
+      <header class="mb-4">
+
+        <h4 class="title is-4"><a href="../../project/hsrogue/">HSRogue: A roguelike in Haskell</a></h4>
+
+        <div class="is-monospace is-size-7 mt-0 ">
+          <ul>
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> March  8, 2019
+            </li>
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 6 Minutes
+            </li>
+            <li class="mt-1 authors">
+              <i class="las la-user-circle"></i>
+              <span class="is-size-7">
+                
+                  Ashley Rose
+                
+              </span>
+            </li>
+            
+              <li class="mt-1 break-words has-text-left">
+                <i class="las la-tags"></i>
+                <div class="tags" style="display:inline;">
+                  
+                    <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                  
+                    <a class="tag Game" href="../../tag/Game/">Game</a>
+                  
+                    <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                  
+                    <a class="tag OpenGL" href="../../tag/OpenGL/">OpenGL</a>
+                  
+                </div>
+              </li>
+            
+          </ul>
+        </div>
+        <p class="description">My first attempt at game development in the functional language, Haskell, as well as a description of the challenges I had to overcome to get things working.</p>
+      </header>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="../../project/hsrogue/">
+        Read more
+      </a>
+    </div>
+
+  </div>
+</div>
+
+    
+  </section>
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://raw.githubusercontent.com/Ashe/FirstGameHS/master/img/preview.gif">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/of-boxes-and-threads/" class="no-underline">Of Boxes and Threads: Game development in Haskell</a></h3>
+                <h6 class="subtitle is-6">A discussion about games development in Haskell.</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/clojure-another-fp-language/" class="no-underline">Clojure: Another functional programming language</a></h3>
+                <h6 class="subtitle is-6">An insight into my experiences with Clojure.</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1617292812/blog/2019/07/brave_clojure_hiwogp.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

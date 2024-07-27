@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Let's try this again!">
+    <meta property="og:description" content="A reflection of what happened when running my own games studio during placement year, as well as an update for what I'm up to now after that rough experience.">
+    <meta property="og:url" content="https://aas.sh/blog/lets-try-this-again/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1617291991/blog/2018/03/git_commit_graphs_af28w0.png">
+    <title>Let's try this again!</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#bestinslot-studios-what-happened">BestInSlot Studios, what happened?</a></li><li><a href="#lets-try-this-again">Let’s try this again</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://res.cloudinary.com/aas-sh/image/upload/v1617291991/blog/2018/03/git_commit_graphs_af28w0.png" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">Let's try this again!</h1>
+      
+        <h2 class="subtitle is-4">An update of what happened when we tried starting our own studio.</h2>
+      
+      
+        <div class="description">
+          A reflection of what happened when running my own games studio during placement year, as well as an update for what I'm up to now after that rough experience.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> March 14, 2018
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 9 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Uni" href="../../tag/Uni/">Uni</a>
+                
+                  <a class="tag Life" href="../../tag/Life/">Life</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/dbd934a">dbd934a: Corrected tags across posts</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#bestinslot-studios-what-happened">BestInSlot Studios, what happened?</a></li><li><a href="#lets-try-this-again">Let’s try this again</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <p>If anyone has actually been following me then you may have noticed that some blogs have disappeared. Here’s an update on how my year of running my own games studio has gone and what I’m up to now. Note that this blog has been repurposed to show off some differences between now and last year as I shouldn’t be using assets from the old studio in this blog.</p>
+<section id="bestinslot-studios-what-happened" class="article-section">
+<h1><span>BestInSlot Studios, what happened?</span><a href="#bestinslot-studios-what-happened" class="anchor las la-link" title="bestinslot-studios-what-happened"></a></h1>
+<p>My studio, BestInSlot, didn’t exactly go the way I planned it to. Two members remain of the original six as a result of us splitting up. I will say that I was under a lot of pressure from personal things going on in life, but I really tried my best to keep everything together and keep people motivated and productive until I realised that this mentality wasn’t shared by everyone. In a university assignment, you get slammed into a team and if you want to get a better grade you have to work for it. The mark scheme is never fair, and so while you do the majority of work people you carry will still achieve the same grade. However, this year was different — we were a team of five programmers and one artist who were challenging themselves to make something. The task at hand wasn’t something you could push through in a week, so if someone didn’t do their bit then simply doing it for them won’t cut it.</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1617291991/blog/2018/03/git_commit_graphs_af28w0.png" title="GitHub statistics showing commit activity on our first game." class="w-full object-cover" alt="GitHub statistics showing commit activity on our first game." />
+<div class="caption">
+<p>GitHub statistics showing commit activity on our first game.</p>
+<div class="caption-source">
+GitHub insights
+</div>
+</div>
+</div>
+<p>In this sense, this was my first time leading a team where I couldn’t simply micromanage everyone to get results. When we started having problems, I had to try different methods to motivate people. As time went on the pressure built up on me, and during one of our meetings it became apparent that the quality of communication wasn’t of the standard I’d have liked. Things that were on GitHub weren’t read, and people’s opinions had to be worked through in order to be made clear. We met up with our tutors from university for a scheduled half-way review of the year. It was a shitshow. The tutors know that I’m hard working, and so when I was transparent with the GitHub analytics it was clear who was and wasn’t working. I can confidently say that I tried my very best to do my bit and further myself, and that I can’t say the same for anyone else in the team other than one. In the end, I decided that removing myself from the equation will make benefit not just me, but everyone. While they were angry at first, I like to think that my departure gave them a reason to start fresh and should hopefully thrive from it.</p>
+<p>I can’t say I’m not at fault — I made several severe mistakes with regards to the planning of the project. Following an experience from our previous year of university, we hated <a href="https://trello.com/">Trello</a> due to the fact that we were forced to use Trello+ which felt unnatural and over the top for the project we used it with. Looking back, I now know exactly how important it is to use project management tools such as Trello in order to push through the development cycle and actually get something out there. While I’m on this topic, I heavily suggest you go take a look at <a href="https://taiga.io">Taiga.io</a>. Taiga has just announced a new pricing scheme which may make things more interesting to those short on cash (just take note that right now it’s per person — if you invite someone to your project then you’ll have to pay. Their support says that they <strong><em>are</em></strong> planning to release a plan where you pay just for yourself and other people have to pay for their own membership).</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1617292161/blog/2018/03/taiga_screenshot_e9prnh.jpg" title="Taiga.io: an agile project management tool" class="w-full object-cover" alt="Taiga.io: an agile project management tool" />
+<div class="caption">
+<p>Taiga.io: an agile project management tool</p>
+<div class="caption-source">
+<a href="https://taiga.io" title="taiga.io">taiga.io</a>
+</div>
+</div>
+</div>
+<p>Anyway, I went off topic, damn you <a href="https://taiga.io">Taiga.io</a> for being so good! While people <em>said</em> that they weren’t interested in Trello, I am now aware that the team didn’t always speak their mind. I should have really thought things through in greater detail as to how we were going to plan our project. I knew that voting on absolutely everything was going to take a long time, so after the game was discussed in a meeting my right hand man joined me on an all nighter drafting a GDD. We colour coded it to differentiate things that we had discussed and things that we thought were a cool idea and wanted people to think about. After setting it to read-only, we let it loose on the team to see what they think. However, as the months went by it turned out that the team disliked the way things were done, and bottled up their opinions until things escalated. I didn’t realise that the game I was thoroughly enjoying making wasn’t the game that the others wanted it to be.</p>
+<p>I delegated roles to the people that wanted them. I told the artist that they had complete control over the art direction as they know better than I did, and that they can use funds to look for freelancers to hire or assets to buy etc. With five programmers, I figured that we could burn through a lot of boilerplate code quickly and get onto the fun stuff. I wanted people to take their desired domain and really make it their own — with my area (which I shared with my right hand man) I quickly had something resembling a level editor where the player could create rooms and assemble them together, changing the wall, door and object locations and appearances as they go. I made it moddable, serializing absolutely everything — <em>even the art</em>. I was proud to have learned so much about <a href="https://unity3d.com/">Unity</a> in such a short space of time, even if I hadn’t really touched the editor as much as I did the scripting system.</p>
+<p>I miscalculated. I work in my own time, I will take days and weeks off if I need to as I trust myself absolutely to get work done. I live and breathe code, and I chose to do this for this year, why would I goof off when this is my aspiration — to do something I didn’t think I could? This didn’t translate with everyone else though. Without any funds to pay ourselves, the only reason we really had to invest our time was our own motivation. I am a motivated person, but it came to light that not everyone else was. People put part time jobs before the studio and <a href="https://play.euw.leagueoflegends.com/en_GB">League of Legends</a> took over crunch time. I was murdering my sleeping schedule and free time for this studio. Granted, I enjoyed it, but the point is that I had to leave as the snags were caused by people simply not working.</p>
+</section>
+<section id="lets-try-this-again" class="article-section">
+<h1><span>Let’s try this again</span><a href="#lets-try-this-again" class="anchor las la-link" title="lets-try-this-again"></a></h1>
+<p>To summarise, I split up with the studio because I scoped the project for six ambitious individuals and I was punished for thinking that people making games at university would work hard on a personal project for no money. I have learned so much from the experience though, and I do not regret anything at all. To my knowledge, their studio is going along just fine, and I know that the small game we’re making to test the waters of <a href="https://store.steampowered.com">Steam</a> is doing well. With not long left to go, I am writing this blog to warp back in time to before the studio went south — <em>taking the knowledge with me of course</em>. When I go back to university next year, I will be going harder on the studying than I have done previously knowing that I took those two years for granted.</p>
+<p>I’m going to be blogging again as it is quite therapeutic and now that I don’t have the stress of a large(r) team on my shoulders I can find the time to do fun things again. For instance, I currently learning <a href="https://haskell.org">Haskell</a> and it is now my favourite language. To quote myself from earlier today, <em>I feel like I’m going vegan but in the programming world; I can’t help trying but trying to convince people to try it</em>. If you wish to learn it, you should look into buying the <a href="http://haskellbook.com/">HaskellBook</a> or simply trying to hack <a href="http://learnyouahaskell.com/">Learn You a Haskell for a Great Good</a>. It is completely different from <a href="https://en.wikipedia.org/wiki/Imperative_programming">imperative programming</a> and will benefit you even if you don’t use it in the end. I’m currently furthering my Haskell skills via games development as I know <a href="https://www.libsdl.org/index.php">SDL2</a> pretty well. I am moving away from Unity again purely to encounter and overcome more challenges, much like I did when testing out both <a href="https://www.libsdl.org/index.php">SDL2</a> and <a href="https://www.sfml-dev.org/">SFML</a> (<em>the latter pictured below</em>).</p>
+<div class="caption-frame apply-shadow">
+<img src="https://raw.githubusercontent.com/Ashe/Deus_Vult/master/img/preview.gif" title="A simple SFML game I made from scratch featuring Spine animation support." class="w-full object-cover" alt="A simple SFML game I made from scratch featuring Spine animation support." />
+<div class="caption">
+<p>A simple SFML game I made from scratch featuring Spine animation support.</p>
+<div class="caption-source">
+<a href="../../project/deus-vult/" title="Deus Vult">Deus Vult</a>
+</div>
+</div>
+</div>
+<p>As I said, I don’t regret anything, but this experience has given me an incredible insight into how games development actually goes. What would be a first (highest grade) in a university assignment is simply a prototype, and there’s a lot of work that goes into a game from that point onwards in order to prepare for release. Sometimes, this polishing stage is actually more effort and or more time consuming than the game itself — our current game was made in a 48 hour personal game-jam where I was the participant. Now we are just adding levels, UI and quality of life updates. <strong><em>I hate it</em></strong>. The fun of programming for me is the challenge; to implement something that previously wasn’t there. I’ve already done the fun part, and the stuff that designers and artists would probably love I <strong><em>loathe</em></strong>.</p>
+<p>While my aspiration is to own a games studio where I have a large hand in fleshing out the mechanics and context of the game, I now know that without employees on a salary I’m going to really struggle. Following this, my perspective has shifted, and I will now appreciate being in a games team a lot more now that I know the amount of work that goes in overall. I do not want to be stuck with the non-maths work after this game, I can assure you! It is on this note, that I conclude that learning Haskell in an attempt to be employable in fields other than games development is definitely my takeaway from this year along with the experience of handling a team I didn’t evaluate correctly.</p>
+<p>Thanks for reading!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1617291619/blog/2017/05/blueprint_scripting_fiwfcl.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/make-games-not-engines/" class="no-underline">Make games, not engines</a></h3>
+                <h6 class="subtitle is-6">My thoughts on game vs engine development for indie devs.</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/what-even-is-haskell/" class="no-underline">What even is Haskell?</a></h3>
+                <h6 class="subtitle is-6">An introduction to the functional language known as Haskell.</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1617292285/blog/2018/03/haskell_code_umjeh2.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

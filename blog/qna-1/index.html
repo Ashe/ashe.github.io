@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="First ever QNA!">
+    <meta property="og:description" content="I've been corresponding with some of my readers over the past few months, and I've sent so many emails that I might as well make a post about it!">
+    <meta property="og:url" content="https://aas.sh/blog/qna-1/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1655579357/blog/2022/05/qna.png">
+    <title>First ever QNA!</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#introduction">Introduction</a></li><li><a href="#questions">Questions</a><ul class><li><a href="#daily-schedule">Daily schedule</a></li><li><a href="#programming-and-loneliness">Programming and loneliness</a></li><li><a href="#passion-and-programming">Passion and programming</a></li></ul></li><li><a href="#wrapping-up">Wrapping up</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://res.cloudinary.com/aas-sh/image/upload/v1655579357/blog/2022/05/qna.png" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">First ever QNA!</h1>
+      
+        <h2 class="subtitle is-4">Responses to questions I've received via email!</h2>
+      
+      
+        <div class="description">
+          I've been corresponding with some of my readers over the past few months, and I've sent so many emails that I might as well make a post about it!
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> May  1, 2022
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 9 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Life" href="../../tag/Life/">Life</a>
+                
+                  <a class="tag QNA" href="../../tag/QNA/">QNA</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/d7e5583">d7e5583: Removed all notion of 'categories' from site</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#introduction">Introduction</a></li><li><a href="#questions">Questions</a><ul class><li><a href="#daily-schedule">Daily schedule</a></li><li><a href="#programming-and-loneliness">Programming and loneliness</a></li><li><a href="#passion-and-programming">Passion and programming</a></li></ul></li><li><a href="#wrapping-up">Wrapping up</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>Want to ask a question?
+</div>
+<p>There’s no such thing as a stupid question, and I’m no where near important enough to be able to ignore anyone! If you have anything you want to ask, feel free to email me at <a href="mailto:contact@aas.sh">contact@aas.sh</a>.</p>
+</div>
+<section id="introduction" class="article-section">
+<h1><span>Introduction</span><a href="#introduction" class="anchor las la-link" title="introduction"></a></h1>
+<p>Wow! People actually read my website — who knew? I have been speaking to some delightful people over the past few months, and I realised that their questions and my answers would make for a great post on my website, especially when I haven’t been posting much!</p>
+<p>I’ve asked the people who contacted me whether they’d be comfortable with me sharing their sides of the conversation. I’ll only be writing their initials just to keep it anonymous.</p>
+</section>
+<section id="questions" class="article-section">
+<h1><span>Questions</span><a href="#questions" class="anchor las la-link" title="questions"></a></h1>
+<section id="daily-schedule" class="article-section">
+<h2><span>Daily schedule</span><a href="#daily-schedule" class="anchor las la-link" title="daily-schedule"></a></h2>
+<blockquote>
+<p>Hello,</p>
+<p>Idealization is very common for humans, and internet incentives this behavior. After reading most of your blog, you appear to me as an insatiable knowledge sponge capable of working for days straight without rest. (this is not an attempt at flattery)</p>
+<p>If I’m not asking too much, would you be able to share your general daily schedule? How much time you dedicate to programming and to entertainment? Maybe to a person such as yourself entertainment IS programming? :)</p>
+<p>I apologize for any grammar mistake.</p>
+<p>Good day!</p>
+<p><strong>— LX, 23/03/2022</strong></p>
+</blockquote>
+<p>Perhaps I am a bit of a sponge, but I think it’s mostly just a drive to do more. While at university, I had this feeling like I wasn’t prepared to go into the industry, that there was something they weren’t telling us. After doing stuff in my spare time, people started noticing that I just became more competent at programming seemingly overnight, which motivated me more.</p>
+<p>The goal at first was simply to get a job in the industry, since I didn’t really have a backup plan for what to do if I failed. I’ve always been confident in myself and never really failed at exams or tests, so I truly believed I can achieve whatever I put my mind to. I am currently working at Jagex, a company my younger self described as ‘if I worked there, I’d know I’d have won at life’. Never really expected to achieve it so soon if I’m honest!</p>
+<p>I can’t really give you my schedule, because I simply don’t have one. When I was doing the bulk of my projects that you have seen, I basically became nocturnal. I’d go to sleep, think of a cool idea for a game (or a mechanic for a game I’m making), then become unable to sleep until I acted on it. I’d boot up my computer and start programming until I achieved it and fell asleep. It was very unhealthy, but I felt alive.</p>
+<p>If I wasn’t making games, I was playing them, or watching someone on twitch play them. I’m very much obsessed, and maybe that’s unattractive or a bit repulsive to some, but it’s these very qualities that allowed me to overtake my peers at uni as well as perform my best at work. Even as a junior, I was heavily relied on as an instrumental part of the team — not for my programming but for my ideas and insight into products, demographics and companies in the games industry.</p>
+<p>Since getting my job, I don’t do as many personal projects anymore, since I learn just as many things from simply attending work. Right now I’m learning soft skills and leadership skills; how to create and participate in a good team of engineers to make something as a group. This is something I couldn’t have learned on my own and is vital for my career, and so I’m comfortable with simply finishing work and then relaxing. I do get the drive to make games sometimes, but I don’t act on them like I used to.</p>
+<p>To answer your question about how much time did I dedicate to entertainment, I basically never stop doing something game related. I’m what you’d call sedentary, I basically am always on my computer. I put my education and career first before my physical health, which in turn has started to hit me mentally too. I wouldn’t reccomend having such an unhealthy balance, but I will say that making video games rather than going clubbing as a student will definitely be a better use of your time!</p>
+<p>At the end of the day, you have to ask yourself what YOU want to do. I’ve had plenty of people want to learn programming for the sake of getting a job in STEM and getting a job etc. That’s all well and good, but you have to actually be interested, if you’re not then the people who are interested will have the edge on you. This might not be the case as you get more experienced, but since we’re talking about learning to program, having an interest makes all the difference in the world. So many of my student peers didn’t actually care about why one algorithm is different to another, what the applications of the algorithms are, or even how the implementation of that algorithm changes with different languages.</p>
+<p>Ask yourself why you’re wanting to program, and more specifically what it is you want to program. Get excited, start simple, but work towards learning enough to start another project which matters a lot to you. Before you know it, you’ll have learned from 2-3 projects and be in the same position I was where you start to get a feel for your own progress and start to enjoy it.</p>
+<p>I hope this has been useful, and don’t hesitate to ask for more!</p>
+</section>
+<section id="programming-and-loneliness" class="article-section">
+<h2><span>Programming and loneliness</span><a href="#programming-and-loneliness" class="anchor las la-link" title="programming-and-loneliness"></a></h2>
+<blockquote>
+<p>Your readers might be interested in the following question:
+Programming often leads to isolation, how to deal with loneliness and lack of social interaction?</p>
+<p><strong>— LX, 24/03/2022</strong></p>
+</blockquote>
+<p>I wouldn’t say programming leads to isolation, but it is true that loneliness is an issue I’m facing just personally.</p>
+<p>As with most things — everything in moderation. Just because you’re learning programming doesn’t mean that you can’t go see your friends!</p>
+<p>In terms of jobs, yeah maybe programming is quite a lonely job since you need to do a lot of thinking and sometimes that requires a bit of peace and quiet. Additionally you don’t really share a computer (although you can do ‘pair programming’ when you work together on the same thing for a bit). Nothing much you can do about that, but at the same time this is considered a positive by a lot of people.</p>
+<p>If you work in an office, I guess things become a little bit more social since you’re next to other people, really depending on the job and the project / product.</p>
+<p>Hope this helps!</p>
+</section>
+<section id="passion-and-programming" class="article-section">
+<h2><span>Passion and programming</span><a href="#passion-and-programming" class="anchor las la-link" title="passion-and-programming"></a></h2>
+<blockquote>
+<p>Hello, I couldn’t resist the temptation to write to your email and tell you that in each of your posts I feel more inspired to learn from the wonderful world of programming.</p>
+<p>I have more than 8 years in the world of technology (azure, dns AD, Vmware) but I have always wanted to learn to program in a language that will generate excitement and thanks to you Haskell seems to be the choice</p>
+<p>I would just like to have your opinion on what could be the best way forward for someone like me to have the passion and knowledge that you have (at least 10 percent).</p>
+<p>Sorry again for contacting you like this, but thank you for contributing to a world so full of information, with real data of value.</p>
+<p><strong>— HLC, 15/05/2022</strong></p>
+</blockquote>
+<p>Hello, and thank you for your kind words!</p>
+<p>It’s a tough question since a lot of my posts were written when I was at university, where my energy and enthusiasm came from a rebellious phase of trying to convince the university that they weren’t doing enough (they didn’t teach students about source control or build systems etc).</p>
+<p>Since starting my career in the games industry, my enthusiasm has certainly degraded and I’m trying to rekindle the same spark that you’re searching for. I think there comes a point in most people’s lives where you have to soul search for what it is you really want. When you spend a lot of your time programming professionally, do you really have the energy to then start working on your own projects? This is the question I’m asking myself.</p>
+<p>A lot of what drove me was that everything felt useful. Haskell was the door to functional programming, and forcing myself to do the things I enjoyed (games) in this new context was fascinating. My end goal wasn’t to make a game, it was to learn. Now though, everything is about trying to be more employable, trying to get that new position, trying to keep relevant. Hobby projects that don’t really produce anything won’t be as interesting as say, 5 years in the industry. When viewing my own projects through this lens, I feel like I should be doing more and that line of thinking is exhausting.</p>
+<p>I’m currently considering a career change so that what I program professionally doesn’t clash with what I do recreationally. I love programming games and messing with functional languages, so having to then go to work on a video game means that my creative capacity is expended on work rather than myself. By hopefully moving to a job in software, I should be able to work on hobby projects without feeling the way I do now.</p>
+<p>Right now, my interest is captivated in a project I’m doing with a colleague, and it’s a ‘slow burn’ project because we’re both worried about taking too much at once. It’s in ‘Haxe’, a language which is kind of in the middle of traditional imperative languages and functional. It’s fun for games, and was used to make games like Dead Cells and Northgard. It allows me to make something (and hopefully release it), while also doing some systems functionally. It’s been over a year since a project has made me excited enough to work on it after work and so I’m grateful to find the strength to start this. Starting is always the hardest bit.</p>
+<p>Sorry if that wasn’t the answer you’re looking for, but that’s the position I’m in. You can also see my drop of energy being reflected in the frequency of posts on my site. I have tons of posts planned, but mental health / energy is really limiting me.</p>
+<p>Thanks!</p>
+</section>
+</section>
+<section id="wrapping-up" class="article-section">
+<h1><span>Wrapping up</span><a href="#wrapping-up" class="anchor las la-link" title="wrapping-up"></a></h1>
+<p>That seems like a lot of writing, but actually I did 0 work for this post since I just skimmed through what I was talking to people about over email! I really appreciate people’s questions and thoughts and my inbox is always open if more people want to get in touch!</p>
+<p>In terms of improving this type of post… I might need to either ask people to ask specific questions, or perhaps come up with a better name than Q&amp;A! I don’t care that the questions are a little longer and my responses are lengthy, but perhaps it doesn’t make for a very good blog post. Maybe making a distinction between conversations with readers and Q&amp;A posts might be the answer, but that all hinges on the kinds of reader interaction I get in the future!</p>
+<p>Let me know if you have any feedback, and if you have any questions or thoughts, feel free to email me: <a href="mailto:contact@aas.sh">contact@aas.sh</a>.</p>
+<p>Thanks for reading!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1641635336/blog/2022/01/yl008c.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/new-year-new-website/" class="no-underline">New Year, New Website</a></h3>
+                <h6 class="subtitle is-6">An update about the new look to my website.</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/website-redesign-with-bulma/" class="no-underline">Website redesign with Bulma CSS</a></h3>
+                <h6 class="subtitle is-6">An update about the new look to my website (again).</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1708713163/blog/2022/07/ntst2z.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

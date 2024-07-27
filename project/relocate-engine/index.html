@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Relocate Engine">
+    <meta property="og:description" content="Relocate is a physics is an experiment with Box2D physics, Lua scripting, ImGui debugging and the SFML framework, and has been used as a starting point for a few of my other C++ projects.">
+    <meta property="og:url" content="https://aas.sh/project/relocate-engine/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Ashe/Relocate-Engine/master/img/engine-preview.png">
+    <title>Relocate Engine</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#background">Background</a></li><li><a href="#relocate-engine">Relocate Engine</a><ul class><li><a href="#ecs">ECS</a></li><li><a href="#physics">Physics</a></li><li><a href="#lua">Lua</a><ul class><li><a href="#setup">Setup</a></li><li><a href="#scripts">Scripts</a></li><li><a href="#scenes">Scenes</a></li><li><a href="#resources">Resources</a></li></ul></li><li><a href="#debugging">Debugging</a></li><li><a href="#final-thoughts">Final thoughts</a></li></ul></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <div class="swiper featured-swiper">
+          <div class="swiper-wrapper">
+            
+              <div class="swiper-slide">
+                <img src="https://raw.githubusercontent.com/Ashe/Relocate-Engine/master/img/engine-preview.png" alt="Featured image 0 for Relocate Engine">
+              </div>
+            
+              <div class="swiper-slide">
+                <img src="https://raw.githubusercontent.com/Ashe/Relocate-Engine/master/img/relocate-demo.gif" alt="Featured image 1 for Relocate Engine">
+              </div>
+            
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        <script>
+          var swiper = new Swiper('.featured-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            slidesPerView: 1,
+            autoplay: {
+              delay: 5000,
+              disableOnInteraction: true,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+          });
+        </script>
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">Relocate Engine</h1>
+      
+        <h2 class="subtitle is-4">A prototype engine built to learn how to integrate Lua and physics.</h2>
+      
+      
+        <div class="description">
+          Relocate is a physics is an experiment with Box2D physics, Lua scripting, ImGui debugging and the SFML framework, and has been used as a starting point for a few of my other C++ projects.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> April 28, 2019
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 21 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag C++" href="../../tag/C%2B%2B/">C++</a>
+                
+                  <a class="tag Lua" href="../../tag/Lua/">Lua</a>
+                
+                  <a class="tag SFML" href="../../tag/SFML/">SFML</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/b7c1df1">b7c1df1: Added OpenGL and DirectX tags to better reflect experience</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#background">Background</a></li><li><a href="#relocate-engine">Relocate Engine</a><ul class><li><a href="#ecs">ECS</a></li><li><a href="#physics">Physics</a></li><li><a href="#lua">Lua</a><ul class><li><a href="#setup">Setup</a></li><li><a href="#scripts">Scripts</a></li><li><a href="#scenes">Scenes</a></li><li><a href="#resources">Resources</a></li></ul></li><li><a href="#debugging">Debugging</a></li><li><a href="#final-thoughts">Final thoughts</a></li></ul></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - Relocate Engine
+</div>
+<p>GitHub repository for the Relocate Engine can be found <a href="https://github.com/Ashe/Relocate-Engine">here</a>.</p>
+</div>
+<section id="background" class="article-section">
+<h1><span>Background</span><a href="#background" class="anchor las la-link" title="background"></a></h1>
+<p>Indie games like <a href="https://www.darkestdungeon.com/">Darkest Dungeon</a> and <a href="https://www.klei.com/games/dont-starve">Don’t Starve</a> interest me on many levels because of how they’re built as well as how good they are. My favourite games tend to have their own ‘feel’, something which typically comes from having a custom game engine.</p>
+<p>After reading <a href="https://eliasdaler.github.io/using-imgui-with-sfml-pt1/">a blog by Elias Daler</a>, I became interested in trying to make my own engine for creating a game featuring nice debugging and an ECS system. This was where the idea for the Relocate game came from — I wanted to play around with lua scripting and physics to make a little demo in my own engine. The idea wasn’t to recreate the rendering, physics and ECS frameworks, but to simply put them all together for my own projects.</p>
+<div class="caption-frame apply-shadow">
+<video src="https://raw.githubusercontent.com/Ashe/Relocate-Engine/master/img/relocate-demo.webm" controls>
+</video>
+<div class="caption">
+<p>Footage of a prototype engine with physics, scripting and debugging systems.</p>
+<div class="caption-source">
+<a href="https://github.com/Ashe/Relocate-Engine" title="Relocate Engine">Relocate Engine</a>
+</div>
+</div>
+</div>
+</section>
+<section id="relocate-engine" class="article-section">
+<h1><span>Relocate Engine</span><a href="#relocate-engine" class="anchor las la-link" title="relocate-engine"></a></h1>
+<p>The core of the game is found in <a href="https://github.com/Ashe/Relocate-Engine/blob/master/src/Game.h"><code>Game.h</code></a> and handles the startup and shutdown of the executable. <code>Game</code> is a static class so that any other class used in the game has the ability to manipulate the game. The function <code>start()</code> contains the game loop and also handles multithreading by putting the render functionality on a seperate thread to the logic, if requested. The enum <code>Status</code> represents the current state of the game to ensure the following:</p>
+<ol type="1">
+<li><code>Game</code> can only be <code>initialise()</code>d when it is completely not in use. This makes the game <code>Ready</code> to start.</li>
+<li><code>Game</code> isn’t <code>start()</code>ed unless its <code>Status</code> is <code>Ready</code>, and will begin the main game loop and process the current <code>Scene</code> as long as one has been provided.</li>
+<li>Any class can call <code>quit()</code> on <code>Game</code> to give it the <code>Quitting</code> status. This is so that all systems in the game can begin to stop what they’re doing while they still can (ie, save game data). After the current scene has been <code>quit()</code>, <code>terminate()</code> gets called which attempts to close the window (if it hasn’t been closed already) and sets the <code>Status</code> to <code>ShuttingDown</code>.</li>
+<li>When <code>ShuttingDown</code>, the game loop is broken and all elements in the game stop processing fully.</li>
+<li>After <code>start()</code> has finished execution, <code>Game</code> must be <code>shutdown()</code> to release all resources and set <code>Status</code> back to <code>Uninitialised</code>.</li>
+</ol>
+<p>This handling of the game makes it easy to start and manage the game in <a href="https://github.com/Ashe/Relocate-Engine/blob/master/src/main.cpp"><code>main.cpp</code></a> like so:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Create and start the game</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">int</span> argc<span class="op">,</span> <span class="dt">char</span><span class="op">*</span> argv<span class="op">[])</span> <span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Set up whether we should multi thread or not</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span> multiThread <span class="op">=</span> <span class="kw">true</span><span class="op">,</span> multiThreadSuccess <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef WIN32</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Multithreading 'just works' on Windows</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  multiThreadSuccess <span class="op">=</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef linux</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">// @TODO: More investigation is required to see if this will work on all Linux distros</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">const</span> <span class="dt">int</span> i <span class="op">=</span> XInitThreads<span class="op">();</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>i <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span> multiThreadSuccess <span class="op">=</span> <span class="kw">true</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> <span class="op">{</span> printf<span class="op">(</span><span class="st">&quot;Error: Failed to call XInitThreads, code </span><span class="sc">%d\n</span><span class="st">&quot;</span><span class="op">,</span> i<span class="op">);</span> <span class="op">}</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Initialise and start the game</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  Game<span class="op">::</span>initialise<span class="op">(</span>sf<span class="op">::</span>VideoMode<span class="op">(</span><span class="dv">1920</span><span class="op">,</span> <span class="dv">1080</span><span class="op">),</span> <span class="st">&quot;Game&quot;</span><span class="op">,</span> multiThread <span class="op">&amp;&amp;</span> multiThreadSuccess<span class="op">);</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">auto</span><span class="op">&amp;</span> scene <span class="op">=</span> ResourceManager<span class="op">::</span>getResource<span class="op">(</span><span class="st">&quot;BasicScene&quot;</span><span class="op">);</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>scene<span class="op">.</span>getType<span class="op">()</span> <span class="op">==</span> Resource<span class="op">::</span>Type<span class="op">::</span>SCENE<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    Game<span class="op">::</span>switchScene<span class="op">((</span>Scene<span class="op">*)</span>scene<span class="op">.</span>get<span class="op">());</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    Game<span class="op">::</span>start<span class="op">();</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  Game<span class="op">::</span>shutdown<span class="op">();</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<section id="ecs" class="article-section">
+<h2><span>ECS</span><a href="#ecs" class="anchor las la-link" title="ecs"></a></h2>
+<p>For the ECS system I chose <a href="https://github.com/redxdev/ECS">Redxdev’s single-header ECS</a>. A quick read of <code>README.md</code> is more than enough of an introduction to the framework and was easy to implement as I was using it from the beginning. This engine makes use of a <a href="https://github.com/Ashe/Relocate-Engine/blob/master/src/Scene.h"><code>Scene</code></a> class, where each <code>Scene</code> contains its own ECS <code>World</code> and all the <code>System</code>s that are enabled for the scene. Each <code>Scene</code> also contains it’s own environment of <code>Lua</code> along with minimum functionality, so that <code>System</code>s in the <code>Scene</code>‘s <code>World</code> are unique (in the sense that referring to <code>System</code> foo will only interact with the current <code>Scene</code>’s ’foo’).</p>
+</section>
+<section id="physics" class="article-section">
+<h2><span>Physics</span><a href="#physics" class="anchor las la-link" title="physics"></a></h2>
+<p><a href="https://box2d.org/">Box2D</a> is used for the game’s physics and <a href="https://github.com/Ashe/Relocate-Engine/blob/master/src/PhysicsSystem.h"><code>PhysicsSystem.h</code></a> was implemented with the ECS framework’s <code>System</code> class. I learned that when implementing physics into a game engine, everything gets more complex if you use <em>variable</em> rather than <em>fixed</em> timestep. I accumulate delta time so that when enough time has elapsed and the timestep has been reached, the physics is simulated with <code>singleStep()</code>. The physics is interpolated in between steps so that the physics looks like it’s updating as often as it can while also being accurate at least every timestep. The code is too long to place all in this blog, so instead <a href="https://github.com/Ashe/Relocate-Engine/blob/d0fa569f5127545030dd7e34ef1fe1513b093c1a/src/PhysicsSystem.cpp#L75">here’s the link to the PhysicsSystem’s <code>update()</code> function</a>.</p>
+</section>
+<section id="lua" class="article-section">
+<h2><span>Lua</span><a href="#lua" class="anchor las la-link" title="lua"></a></h2>
+<section id="setup" class="article-section">
+<h3><span>Setup</span><a href="#setup" class="anchor las la-link" title="setup"></a></h3>
+<p><a href="https://github.com/ThePhD/sol2">Sol2</a> was used to integrate <a href="https://www.lua.org/">Lua</a> with the engine. Functions and classes written in C++ can be created and manipulated through Lua, allowing Lua scripts to create functionality that works with the ECS framework. Every <code>Scene</code> and <code>System</code> registers functions to the <code>sol::State</code> so that they can be used in scripts and on-the-fly console commands.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// The minimal setup function for providing knowledge of the world to Lua</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Scene<span class="op">::</span>registerFunctions<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Set up environment</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">lua_</span> <span class="op">=</span> sol<span class="op">::</span>environment<span class="op">(</span>Game<span class="op">::</span>lua<span class="op">,</span> sol<span class="op">::</span>create<span class="op">,</span> Game<span class="op">::</span>lua<span class="op">.</span>globals<span class="op">());</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  Script<span class="op">::</span>registerSceneFunctions<span class="op">(</span><span class="va">lua_</span><span class="op">,</span> <span class="va">world_</span><span class="op">);</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Expose the world in the scene</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  Game<span class="op">::</span>lua<span class="op">[</span><span class="st">&quot;World&quot;</span><span class="op">]</span> <span class="op">=</span> <span class="va">lua_</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Add to autocomplete</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  Console<span class="op">::</span>addCommand<span class="op">(</span><span class="st">&quot;[Class] World&quot;</span><span class="op">);</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  Console<span class="op">::</span>addCommand<span class="op">(</span><span class="st">&quot;World.createEntity&quot;</span><span class="op">);</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">// An example of how the PhysicsSystem adds commands</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">// This system also calls 'register' on any components to be registered</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>PhysicsSystem<span class="op">::</span>registerPhysicsSystem<span class="op">(</span>sol<span class="op">::</span>environment<span class="op">&amp;</span> env<span class="op">,</span> ECS<span class="op">::</span>World<span class="op">*</span> world<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Create and install physics system</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  env<span class="op">.</span>set_function<span class="op">(</span><span class="st">&quot;usePhysicsSystem&quot;</span><span class="op">,</span> <span class="op">[&amp;</span>env<span class="op">,</span> world<span class="op">]()</span> <span class="op">{</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ...</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Allow the system's manipulation through lua</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    env<span class="op">.</span>set<span class="op">(</span><span class="st">&quot;Physics&quot;</span><span class="op">,</span> newPS<span class="op">);</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    env<span class="op">.</span>new_usertype<span class="op">&lt;</span>PhysicsSystem<span class="op">&gt;(</span><span class="st">&quot;PhysicsSystem&quot;</span><span class="op">,</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;gravity&quot;</span><span class="op">,</span> sol<span class="op">::</span>property<span class="op">(</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span>PhysicsSystem<span class="op">::</span>getGravity<span class="op">,</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="op">&amp;</span>PhysicsSystem<span class="op">::</span>setGravityVec<span class="op">),</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;setGravityMult&quot;</span><span class="op">,</span> <span class="op">&amp;</span>PhysicsSystem<span class="op">::</span>setGravityMult<span class="op">,</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;bodyCount&quot;</span><span class="op">,</span> sol<span class="op">::</span>property<span class="op">(</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="op">[](</span><span class="at">const</span> PhysicsSystem<span class="op">&amp;</span> self<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> self<span class="op">.</span><span class="va">world_</span><span class="op">.</span>GetBodyCount<span class="op">();</span> <span class="op">}),</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;showHitboxes&quot;</span><span class="op">,</span> sol<span class="op">::</span>property<span class="op">(</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">[](</span><span class="at">const</span> PhysicsSystem<span class="op">&amp;</span> self<span class="op">)</span> <span class="op">{</span> <span class="cf">return</span> self<span class="op">.</span><span class="va">showRigidBodies_</span><span class="op">;</span> <span class="op">},</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">[](</span><span class="dt">bool</span> enable<span class="op">)</span> <span class="op">{</span> PhysicsSystem<span class="op">::</span><span class="va">showRigidBodies_</span> <span class="op">=</span> enable<span class="op">;</span> <span class="op">})</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">);</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Add global commands to auto complete</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">::</span>addCommand<span class="op">(</span><span class="st">&quot;[Class] Physics&quot;</span><span class="op">);</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">::</span>addCommand<span class="op">(</span><span class="st">&quot;Physics.gravity&quot;</span><span class="op">);</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">::</span>addCommand<span class="op">(</span><span class="st">&quot;Physics:setGravityMult&quot;</span><span class="op">);</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">::</span>addCommand<span class="op">(</span><span class="st">&quot;Physics.bodyCount&quot;</span><span class="op">);</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">::</span>addCommand<span class="op">(</span><span class="st">&quot;Physics.showHitboxes&quot;</span><span class="op">);</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Allow the use of RigidBodies</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    RigidBody<span class="op">::</span>registerRigidBodyType<span class="op">(</span>env<span class="op">,</span> physicsWorld<span class="op">);</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="op">});</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="scripts" class="article-section">
+<h3><span>Scripts</span><a href="#scripts" class="anchor las la-link" title="scripts"></a></h3>
+<p>Scripts are stored in the <a href="https://github.com/Ashe/Relocate-Engine/tree/master/Assets"><code>Assets</code> folder</a> to be loaded during runtime with the exception of <a href="https://github.com/Ashe/Relocate-Engine/blob/master/GameConfig.lua"><code>GameConfig.lua</code></a> which is used to run one-off commands and set the game up. In this case, <code>GameConfig.lua</code> defines the function <code>spawnCharacter</code> for spawning a generic character into a scene.</p>
+</section>
+<section id="scenes" class="article-section">
+<h3><span>Scenes</span><a href="#scenes" class="anchor las la-link" title="scenes"></a></h3>
+<p><code>Scene</code>s are created from <code>Lua</code> files — at the start of the game all assets are indexed and prepared for use by the <a href="https://github.com/Ashe/Relocate-Engine/blob/master/src/ResourceManager.h"><code>ResouceManager</code></a>. When a <code>Scene</code> is requested, the script is read and a <code>Scene</code> is constructed using this data and is returned for the current and all future requests for the given <a href="https://github.com/Ashe/Relocate-Engine/blob/master/src/Resource.cpp"><code>Resource</code></a>. <a href="https://github.com/Ashe/Relocate-Engine/blob/master/Assets/Scenes/BasicScene.lua"><code>BasicScene.lua</code></a> is an example of a <code>Scene</code> in <code>Lua</code>. Before any logic, all <code>System</code>s need to be declared in the <code>onBegin</code> function so that the relevant ECS <code>Component</code>s and functions used in these <code>System</code>s are defined and processed in the current <code>Scene</code>. After that, the script can hook onto some C++ functionality by defining functions such as <code>onUpdate</code> or <code>onWindowEvent</code>. After all the functions are defined, they need to be attached to a <code>Scene</code> that is created and returned at the end of the script as shown below:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- BasicScene.lua</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Lua file for the default scene</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- When the scene is shown for the first time</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="kw">function</span> onBegin<span class="op">()</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- onBegin() is just a formal function that runs AFTER the file is ready</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span><span class="op">(</span><span class="st">&quot;Executing begin&quot;</span><span class="op">)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- We define what systems we want to use</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- These are parsed when the file is read and activated</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>usePhysicsSystem<span class="op">()</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>useControlSystem<span class="op">()</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>useCameraSystem<span class="op">()</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>useRenderSystem<span class="op">()</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>useExpirySystem<span class="op">()</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>useStatSystem<span class="op">()</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>useCombatSystem<span class="op">()</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="cn">W</span>orld<span class="op">.</span>useSpellSystem<span class="op">()</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Get window size</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  size <span class="op">=</span> <span class="cn">G</span>ame<span class="op">.</span>displaySize</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Spawn bottom of map</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span><span class="op">(</span><span class="st">&quot;Spawning ground..&quot;</span><span class="op">)</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> ground <span class="op">=</span> <span class="cn">W</span>orld<span class="op">:</span>createEntity<span class="op">()</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> groundTrans <span class="op">=</span> ground<span class="op">:</span>assignTransform<span class="op">()</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> groundBody <span class="op">=</span> ground<span class="op">:</span>assignRigidBody<span class="op">()</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  groundTrans<span class="op">.</span>position <span class="op">=</span> <span class="cn">V</span>ector2f<span class="op">.</span>new<span class="op">(</span>size<span class="op">.</span>x <span class="op">*</span> <span class="dv">0.5</span><span class="op">,</span> size<span class="op">.</span>y <span class="op">*</span> <span class="dv">0.9</span><span class="op">)</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> sprite <span class="op">=</span> ground<span class="op">:</span>assignSprite<span class="op">()</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  sprite<span class="op">.</span>size <span class="op">=</span> <span class="cn">V</span>ector2f<span class="op">.</span>new<span class="op">(</span><span class="dv">4000</span><span class="op">,</span> <span class="dv">10</span><span class="op">)</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  sprite<span class="op">.</span>origin <span class="op">=</span> <span class="cn">V</span>ector2f<span class="op">.</span>new<span class="op">(</span><span class="dv">0.5</span><span class="op">,</span> <span class="dv">0</span><span class="op">)</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  sprite<span class="op">:</span>setSprite<span class="op">(</span><span class="st">&quot;BoxTexture&quot;</span><span class="op">)</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> fixture <span class="op">=</span> <span class="cn">F</span>ixtureDef<span class="op">.</span>new<span class="op">()</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  fixture<span class="op">:</span>setShape<span class="op">(</span>LineShape<span class="op">(-</span><span class="dv">2000</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2000</span><span class="op">,</span> <span class="dv">0</span><span class="op">))</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  groundBody<span class="op">:</span>addFixture<span class="op">(</span>fixture<span class="op">)</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Spawn the player</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span><span class="op">(</span><span class="st">&quot;Spawning player..&quot;</span><span class="op">)</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> pos <span class="op">=</span> <span class="cn">V</span>ector2f<span class="op">.</span>new<span class="op">(</span>size<span class="op">.</span>x <span class="op">*</span> <span class="dv">0.5</span><span class="op">,</span> size<span class="op">.</span>y <span class="op">*</span> <span class="dv">0.5</span><span class="op">)</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  player <span class="op">=</span> spawnCharacter<span class="op">(</span>pos<span class="op">,</span> <span class="st">&quot;MageTexture&quot;</span><span class="op">,</span> <span class="dv">100</span><span class="op">)</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> size <span class="op">=</span> player<span class="op">:</span>getSprite<span class="op">().</span>size</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  player<span class="op">:</span>getSprite<span class="op">().</span>spritesheetAnchor <span class="op">=</span> <span class="cn">V</span>ector2i<span class="op">.</span>new<span class="op">(</span><span class="dv">0</span><span class="op">,</span> size<span class="op">.</span>y <span class="op">*</span> <span class="dv">5</span><span class="op">)</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> possession <span class="op">=</span> player<span class="op">:</span>assignPossession<span class="op">()</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> camera <span class="op">=</span> player<span class="op">:</span>assignCamera<span class="op">()</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> stats <span class="op">=</span> player<span class="op">:</span>getStats<span class="op">()</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> combat <span class="op">=</span> stats<span class="op">.</span>combat</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  combat<span class="op">.</span>deleteAfterAnimation <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="kw">local</span> abilities <span class="op">=</span> player<span class="op">:</span>assignAbilities<span class="op">()</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  abilities<span class="op">:</span>addAbility<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="st">&quot;LaunchBox&quot;</span><span class="op">)</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  abilities<span class="op">:</span>addAbility<span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="st">&quot;Levitate&quot;</span><span class="op">)</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  abilities<span class="op">:</span>addAbility<span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="st">&quot;Flight&quot;</span><span class="op">)</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Make healthbar</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- ...</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Spawn some example characters</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span><span class="op">(</span><span class="st">&quot;Spawning plebs..&quot;</span><span class="op">)</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">10</span> <span class="cf">do</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">local</span> char <span class="op">=</span> spawnCharacter<span class="op">(</span><span class="cn">V</span>ector2f<span class="op">.</span>new<span class="op">(-</span><span class="dv">2000</span> <span class="op">+</span> <span class="op">(</span><span class="dv">400</span> <span class="op">*</span> i<span class="op">),</span> <span class="cn">G</span>ame<span class="op">.</span>displaySize<span class="op">.</span>y <span class="op">*</span> <span class="dv">0.2</span><span class="op">),</span> <span class="st">&quot;OrcTexture&quot;</span><span class="op">,</span> <span class="dv">50</span><span class="op">)</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">local</span> size <span class="op">=</span> <span class="fu">char</span><span class="op">:</span>getSprite<span class="op">().</span>size</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="kw">local</span> rand <span class="op">=</span> randomInt<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">char</span><span class="op">:</span>getSprite<span class="op">().</span>spritesheetAnchor <span class="op">=</span> <span class="cn">V</span>ector2i<span class="op">.</span>new<span class="op">(</span><span class="dv">0</span><span class="op">,</span> size<span class="op">.</span>y <span class="op">*</span> rand <span class="op">*</span> <span class="dv">5</span><span class="op">)</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Spawn text here ...</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="co">-- On Update</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="kw">function</span> onUpdate<span class="op">(</span>dt<span class="op">)</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>healthbarSprite <span class="op">~=</span> <span class="kw">nil</span> <span class="kw">and</span> player <span class="op">~=</span> <span class="kw">nil</span> <span class="kw">and</span> player<span class="op">:</span>hasCombat<span class="op">())</span> <span class="cf">then</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>    <span class="kw">local</span> length <span class="op">=</span> player<span class="op">:</span>getCombat<span class="op">().</span>currentHealth</span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> length <span class="op">&lt;</span> <span class="dv">0</span> <span class="cf">then</span> length <span class="op">=</span> <span class="dv">0</span> <span class="cf">end</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>    healthbarSprite<span class="op">.</span>size<span class="op">.</span>x <span class="op">=</span> <span class="op">(</span>length <span class="op">*</span> <span class="op">(</span><span class="cn">G</span>ame<span class="op">.</span>displaySize<span class="op">.</span>x <span class="op">*</span> <span class="dv">0.3</span> <span class="op">-</span> <span class="dv">50</span><span class="op">))</span> <span class="op">/</span> <span class="dv">100</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>    healthbarSprite<span class="op">:</span>updateSprite<span class="op">()</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="co">-- On Window events</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> <span class="kw">function</span> onWindowEvent<span class="op">(</span>ev<span class="op">)</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>  <span class="co">-- Key pressed</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ev<span class="op">.</span>type <span class="op">==</span> <span class="cn">E</span>ventType_KeyPressed <span class="cf">then</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Toggle debug on F1</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ev<span class="op">.</span>key<span class="op">.</span>code <span class="op">==</span> <span class="cn">K</span>ey_F1 <span class="cf">then</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>      <span class="cn">G</span>ame<span class="op">.</span>debug <span class="op">=</span> <span class="kw">not</span> <span class="cn">G</span>ame<span class="op">.</span>debug</span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    <span class="co">-- Open console on F2</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elseif</span> ev<span class="op">.</span>key<span class="op">.</span>code <span class="op">==</span> <span class="cn">K</span>ey_F2 <span class="cf">then</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>      <span class="cn">G</span>ame<span class="op">:</span>openDevConsole<span class="op">()</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="co">-- Make and return the scene</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> scene <span class="op">=</span> <span class="cn">S</span>cene<span class="op">.</span>new<span class="op">()</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>scene<span class="op">.</span>onBegin <span class="op">=</span> onBegin</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>scene<span class="op">.</span>onUpdate <span class="op">=</span> onUpdate</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>scene<span class="op">.</span>onWindowEvent <span class="op">=</span> onWindowEvent</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="cn">R</span>esource_SCENE<span class="op">,</span> <span class="st">&quot;BasicScene&quot;</span><span class="op">,</span> scene</span></code></pre></div>
+</section>
+<section id="resources" class="article-section">
+<h3><span>Resources</span><a href="#resources" class="anchor las la-link" title="resources"></a></h3>
+<p>Another about <code>Lua</code> is every asset, not just <code>Scene</code>s, use a <code>Lua</code> script to customise how they are set up. The <code>ResourceManager</code> firstly scans for these <code>.lua</code> files, and the actual resources such as images or sound would be referenced in these files. Here’s an example of the texture script <a href="https://github.com/Ashe/Relocate-Engine/blob/master/Assets/Textures/Humanoids/MageTexture.lua"><code>MageTexture.lua</code></a>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- MageTexture.lua</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- Spritesheet for the mage character</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> mageTexture <span class="op">=</span> <span class="cn">T</span>exture<span class="op">.</span>new<span class="op">(</span><span class="st">&quot;Assets/Textures/Humanoids/Mage.png&quot;</span><span class="op">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="cn">R</span>esource_TEXTURE<span class="op">,</span> <span class="st">&quot;MageTexture&quot;</span><span class="op">,</span> mageTexture</span></code></pre></div>
+<p>And here’s an example of the animation <a href="https://github.com/Ashe/Relocate-Engine/blob/master/Assets/Animations/Walk.lua"><code>Walk.lua</code></a>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode lua"><code class="sourceCode lua"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Walk.lua</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- General walking animation</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">local</span> walkAnimation <span class="op">=</span> <span class="cn">A</span>nimation<span class="op">.</span>new<span class="op">()</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">9</span> <span class="cf">do</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  walkAnimation<span class="op">:</span>addFrame<span class="op">(</span><span class="cn">I</span>ntRect<span class="op">.</span>new<span class="op">(</span>i <span class="op">*</span> <span class="dv">32</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> <span class="dv">32</span><span class="op">,</span> <span class="dv">32</span><span class="op">,</span> <span class="dv">32</span><span class="op">))</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="cn">R</span>esource_ANIMATION<span class="op">,</span> <span class="st">&quot;GenericWalk&quot;</span><span class="op">,</span> walkAnimation</span></code></pre></div>
+<p>Finally, scripts themselves are assets too. The ability to create the boxes in the demo is actually a spell contained in the script <a href="https://github.com/Ashe/Relocate-Engine/blob/master/Assets/Spells/LaunchBox.lua"><code>LaunchBox.lua</code></a>. The code is fairly long so I won’t include that here.</p>
+</section>
+</section>
+<section id="debugging" class="article-section">
+<h2><span>Debugging</span><a href="#debugging" class="anchor las la-link" title="debugging"></a></h2>
+<p>Debugging functionality is the final aspect of this engine. <a href="https://github.com/ocornut/imgui">ImGui</a> is perfect for building interfaces for tools like this. The debugging interface is shown when the <code>F1</code> key is pressed the console can be shown with <code>F2</code>; this is defined in the <code>BasicScene</code> snippet above and is not a forced keybinding.</p>
+<p>Every <code>System</code> is allowed to have its own debug interface that can be found under the <code>View</code> menu in the main <code>Debug</code> window. The <code>Entity Viewer</code> and <code>Console</code> are always available, however. The <code>Entity Viewer</code> is perfect for viewing and modifying the components on the ECS framework’s <code>Entities</code>. Just like how functions are registered to <code>Lua</code>, every <code>Component</code> also has it’s own debugging function so that the information exposed when debugging is completely up to the programmer making new <code>Component</code>s easy to set up. The following snippet is from <a href="https://github.com/Ashe/Relocate-Engine/blob/master/src/Transform.h"><code>Transform.h</code></a>, the component responsible for positioning <code>Entities</code> in the game world. The position and rotation of this component gets overwritten by many systems, such as the <code>PhysicsSystem</code>, and therefore doesn’t need to be edited — it is just used to store the position the <code>Entity</code> should be rendered at.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Shows the debug information to ImGui</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> showDebugInformation<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>NextColumn<span class="op">();</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>Text<span class="op">(</span><span class="st">&quot;Position: </span><span class="sc">%f</span><span class="st">, </span><span class="sc">%f</span><span class="st">&quot;</span><span class="op">,</span> position<span class="op">.</span>x<span class="op">,</span> position<span class="op">.</span>y<span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>Text<span class="op">(</span><span class="st">&quot;Rotation: </span><span class="sc">%f</span><span class="st">&quot;</span><span class="op">,</span> rotation<span class="op">);</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>PushItemWidth<span class="op">(-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>PopItemWidth<span class="op">();</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>NextColumn<span class="op">();</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p><code>System</code>s are a little trickier to debug as they can be so unique. The ECS framework contains a messaging system to generically call functions on any <code>System</code>, and so the <code>PhysicsSystem</code> can be debugged when receiving an <code>addDebugInfoEvent</code> in a message. Similarly, <code>System</code>s can add entries to the main menu with the <code>addDebugMenuEntryEvent</code> message. The <code>PhysicsSystem</code>’s debugging functions are featured below — this allows the user to see a count of how many physics bodies are in play and manipulate gravity using a slider.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Add physics entry to the main menu</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>PhysicsSystem<span class="op">::</span>receive<span class="op">(</span>ECS<span class="op">::</span>World<span class="op">*</span> w<span class="op">,</span> <span class="at">const</span> addDebugMenuEntryEvent<span class="op">&amp;</span> e<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>MenuItem<span class="op">(</span><span class="st">&quot;Physics System&quot;</span><span class="op">,</span> NULL<span class="op">,</span> <span class="op">&amp;</span><span class="va">showPhysicsWindow_</span><span class="op">);</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Add information to debug window</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>PhysicsSystem<span class="op">::</span>receive<span class="op">(</span>ECS<span class="op">::</span>World<span class="op">*</span> w<span class="op">,</span> <span class="at">const</span> addDebugInfoEvent<span class="op">&amp;</span> e<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Add to default window</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>Begin<span class="op">(</span><span class="st">&quot;Debug&quot;</span><span class="op">);</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>Text<span class="op">(</span><span class="st">&quot;Physics bodies: </span><span class="sc">%d</span><span class="st">&quot;</span><span class="op">,</span> <span class="va">world_</span><span class="op">.</span>GetBodyCount<span class="op">());</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  ImGui<span class="op">::</span>End<span class="op">();</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Make a physics window</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span><span class="va">showPhysicsWindow_</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> <span class="kw">auto</span> gravityVec <span class="op">=</span> getGravity<span class="op">();</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> gravity <span class="op">=</span> gravityVec<span class="op">.</span>y <span class="op">/</span> <span class="fl">10.</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    ImGui<span class="op">::</span>Begin<span class="op">(</span><span class="st">&quot;Physics System&quot;</span><span class="op">,</span> <span class="op">&amp;</span><span class="va">showPhysicsWindow_</span><span class="op">);</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    ImGui<span class="op">::</span>DragFloat<span class="op">(</span><span class="st">&quot;Gravity&quot;</span><span class="op">,</span> <span class="op">&amp;</span>gravity<span class="op">,</span> <span class="fl">2.</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ImGui<span class="op">::</span>End<span class="op">();</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>gravity <span class="op">*</span> <span class="fl">10.</span><span class="bu">f</span> <span class="op">!=</span> gravityVec<span class="op">.</span>y<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>      setGravity<span class="op">(</span>gravityVec<span class="op">.</span>x<span class="op">,</span> gravity <span class="op">*</span> <span class="fl">10.</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+</section>
+<section id="final-thoughts" class="article-section">
+<h2><span>Final thoughts</span><a href="#final-thoughts" class="anchor las la-link" title="final-thoughts"></a></h2>
+<p>This engine was very fun to make and has been useful in a few projects such as the development of the test harness for my master’s dissertation. It certainly isn’t the best, but I’m now in the best position to make another engine if I decide to improve it.</p>
+<p>For improvements, I’d definitely prefer to make <code>Game</code> a non-static class but still preserve the two-way communication that allows for a lua script to use <code>Game</code>s public members such as <code>quit()</code> and the debug flag. This would allow a developer to run two games from one <code>main.cpp</code>, possibly useful for testing the game with automation on multiple threads at once and collecting data without requiring having to restart the program or have lots of instances going at once.</p>
+<p>Another improvement would be to clean the debugging interface and make more useful tools such as a level editor and a neater inspector for entities. The way <code>Scene</code>s are handled are also a little too black-boxy and it’d be nice to handle it more like <code>Godot</code> so that I don’t need to decide between having all game levels dynamically loaded using one <code>Scene</code> and re-initialising all my <code>System</code>s again to load another level in a seperate <code>Scene</code>. These are things I wouldn’t have really learned about if I hadn’t have made this engine, and the results so far have been very satisfying.</p>
+</section>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/preview.png">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Previous Project</small>
+                <h3 class="m-0"><a href="../../project/hsrogue/" class="no-underline">HSRogue: A roguelike in Haskell</a></h3>
+                <small class="subtitle">A prototype roguelike in the functional language, Haskell.</small>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Next Project</small>
+                <h3 class="m-0"><a href="../../project/space/" class="no-underline">Space</a></h3>
+                <small class="subtitle">An open-source forum that I was making in order to learn Clojure.</small>
+              </div>
+              <img src="https://raw.githubusercontent.com/Ashe/Space/master/img/logo.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

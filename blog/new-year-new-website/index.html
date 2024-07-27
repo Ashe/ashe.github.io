@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="New Year, New Website">
+    <meta property="og:description" content="My website has gone through many iterations but I wanted to truly make it my own and have control of every aspect. My website is just as much for me as it is for the rest of the world and I enjoy tinkering with it now and again.">
+    <meta property="og:url" content="https://aas.sh/blog/new-year-new-website/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1641635336/blog/2022/01/yl008c.png">
+    <title>New Year, New Website</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#why-the-redesign">Why the redesign?</a><ul class><li><a href="#inspiration">Inspiration</a></li></ul></li><li><a href="#tools">Tools</a><ul class><li><a href="#nix">Nix</a></li><li><a href="#haskell-hakyll">Haskell + Hakyll</a></li><li><a href="#tailwind">Tailwind</a></li></ul></li><li><a href="#new-features">New features</a><ul class><li><a href="#dark-mode">Dark mode</a></li><li><a href="#table-of-contents">Table of contents</a></li><li><a href="#project-posts">Project posts</a></li><li><a href="#image-galleries">Image galleries</a></li></ul></li><li><a href="#wrap-up">Wrap up</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <div class="swiper featured-swiper">
+          <div class="swiper-wrapper">
+            
+              <div class="swiper-slide">
+                <img src="https://res.cloudinary.com/aas-sh/image/upload/v1641635336/blog/2022/01/yl008c.png" alt="Featured image 0 for New Year, New Website">
+              </div>
+            
+              <div class="swiper-slide">
+                <img src="https://res.cloudinary.com/aas-sh/image/upload/v1641636014/blog/2022/01/cpngcp.png" alt="Featured image 1 for New Year, New Website">
+              </div>
+            
+              <div class="swiper-slide">
+                <img src="https://res.cloudinary.com/aas-sh/image/upload/v1641645844/blog/2022/01/rgxf4f.png" alt="Featured image 2 for New Year, New Website">
+              </div>
+            
+              <div class="swiper-slide">
+                <img src="../../assets/images/logo-splash.png" alt="Featured image 3 for New Year, New Website">
+              </div>
+            
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        <script>
+          var swiper = new Swiper('.featured-swiper', {
+            direction: 'horizontal',
+            loop: true,
+            slidesPerView: 1,
+            autoplay: {
+              delay: 5000,
+              disableOnInteraction: true,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+          });
+        </script>
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">New Year, New Website</h1>
+      
+        <h2 class="subtitle is-4">An update about the new look to my website.</h2>
+      
+      
+        <div class="description">
+          My website has gone through many iterations but I wanted to truly make it my own and have control of every aspect. My website is just as much for me as it is for the rest of the world and I enjoy tinkering with it now and again.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> January  1, 2022
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 7 Minutes
+            </li>
+          
+          
+            
+              <li class="mt-1">
+                <i class="las la-hashtag"></i> <a href="../../project/aas-sh/">My Website: aas.sh</a>
+              </li>
+            
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag aas.sh" href="../../tag/aas.sh/">aas.sh</a>
+                
+                  <a class="tag Web" href="../../tag/Web/">Web</a>
+                
+                  <a class="tag Nix" href="../../tag/Nix/">Nix</a>
+                
+                  <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/e7bcaa0">e7bcaa0: Added new blog post: burned out</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#why-the-redesign">Why the redesign?</a><ul class><li><a href="#inspiration">Inspiration</a></li></ul></li><li><a href="#tools">Tools</a><ul class><li><a href="#nix">Nix</a></li><li><a href="#haskell-hakyll">Haskell + Hakyll</a></li><li><a href="#tailwind">Tailwind</a></li></ul></li><li><a href="#new-features">New features</a><ul class><li><a href="#dark-mode">Dark mode</a></li><li><a href="#table-of-contents">Table of contents</a></li><li><a href="#project-posts">Project posts</a></li><li><a href="#image-galleries">Image galleries</a></li></ul></li><li><a href="#wrap-up">Wrap up</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - aas.sh
+</div>
+<p>GitHub repository for this website can be found <a href="https://github.com/Ashe/ashe.github.io">here</a>.</p>
+</div>
+<section id="why-the-redesign" class="article-section">
+<h1><span>Why the redesign?</span><a href="#why-the-redesign" class="anchor las la-link" title="why-the-redesign"></a></h1>
+<p>People who have been following my website (read: people I’ve forced to proof-read my website) will know that it has undergone several redesigns. I never truly was happy with them since I usually just used open source or even premium <a href="http://jekyllthemes.org/">Jekyll themes</a> and inserted my content into it. Now that isn’t to say I have anything against this, but I always wanted a larger sense of ownership.</p>
+<p>Another reason is that <a href="../../tag/Jagex">I got a job at Jagex</a> and now that I felt more settled in my career I wanted to make sure my website was a little better equipped for what I wanted to put on here.</p>
+<p>Instead of doing advent of code this year, I decided to rework my website and create it using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>. It’s like <a href="https://jekyllrb.com/">Jekyll</a> but can be programmed with <a href="https://www.haskell.org/">Haskell</a> to suit your needs. I’ve had a Hakyll blog in the past, but my problem was it was quite annoying to set up and work with on other machines if they weren’t set up for Haskell development.</p>
+<section id="inspiration" class="article-section">
+<h2><span>Inspiration</span><a href="#inspiration" class="anchor las la-link" title="inspiration"></a></h2>
+<p>My biggest inspiration by far for this website was <a href="https://ysndr.de">Yannik Sander’s website</a>. It was clean yet extremely functional, and best of all it took advantage of both <a href="https://nixos.org/">Nix</a> and <a href="https://haskell.org">Haskell</a>. Without his website, I wouldn’t have had the motivation or starting point to recreate my website. It is my intention to one day distinguish my site from his and really make it my own, but he’s done such a good job that it’s hard to resist using some of his visuals!</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1647537276/blog/2022/01/btndp7.png" title="A screenshot of Yannik's impressive website." class="w-full object-cover" alt="A screenshot of Yannik's impressive website." />
+<div class="caption">
+<p>A screenshot of Yannik’s impressive website.</p>
+<div class="caption-source">
+<a href="https://ysndr.de" title="Yannik Sander's homepage">Yannik Sander's homepage</a>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="tools" class="article-section">
+<h1><span>Tools</span><a href="#tools" class="anchor las la-link" title="tools"></a></h1>
+<section id="nix" class="article-section">
+<h2><span>Nix</span><a href="#nix" class="anchor las la-link" title="nix"></a></h2>
+<p>Since I’ve been nixifying my operating system and the way I work in my free time, it was a no-brainer to use Nix. I’ve tried using Haskell and Hakyll in the past, but having to set up my environment for Haskell development each time I wanted to write a post was beyond tiresome. If you want to learn more about Nix, <a href="../../blog/what-is-nix">I wrote a post about it specifically title ‘what is nix?’</a></p>
+<div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>What is Nix?
+</div>
+<blockquote>
+<p><a href="https://nixos.org/">Nix</a> is a reproducable, declarative and reliable way of building and deploying software.</p>
+</blockquote>
+<ul>
+<li><strong>Reproducible:</strong> Nix builds packages in isolation from each other. This ensures that they are reproducible and don’t have undeclared dependencies, so <strong>if a package works on one machine, it will also work on another</strong>.</li>
+<li><strong>Declarative:</strong> Nix makes it <strong>trivial to share development and build environments</strong> for your projects, regardless of what programming languages and tools you’re using.</li>
+<li><strong>Reliable:</strong> Nix ensures that installing or upgrading one package <strong>cannot break other packages</strong>. It allows <strong>you to roll back to previous versions</strong>, and ensures that no package is in an inconsistent state during an upgrade.</li>
+</ul>
+<div class="caption">
+<p>Information taken from the official Nix website found <a href="https://nixos.org/">here</a>.</p>
+</div>
+</div>
+<p>Now that the website is running Nix, I have no worries about using Haskell. I never have to worry about which GHC version I need to install, or what tooling is now the best choice to use for my text editor when writing Haskell code. If I ever need to work on a new machine, I just need to do three things:</p>
+<ol type="1">
+<li>Acquire <code>Nix</code> (I run NixOS, so this is already done!)</li>
+<li>Clone repository</li>
+<li><code>nix develop</code></li>
+</ol>
+<p>And boom, I can continue working on my website!</p>
+</section>
+<section id="haskell-hakyll" class="article-section">
+<h2><span>Haskell + Hakyll</span><a href="#haskell-hakyll" class="anchor las la-link" title="haskell-hakyll"></a></h2>
+<p>Of course this website uses Haskell! Thanks to <a href="https://jaspervdj.be/hakyll/">Hakyll</a>, I have full control over how posts are curated, how markdown is translated to html, and even the URLs. It can be confusing at first but once you have a simple site going (that you can probably steal from the docs) you can iterate on it very easily to experiment with how you can make changes.</p>
+</section>
+<section id="tailwind" class="article-section">
+<h2><span>Tailwind</span><a href="#tailwind" class="anchor las la-link" title="tailwind"></a></h2>
+<p>I’ll be honest, I’m not a web designer and I don’t really understand what the best choices for these things are. I saw a lot of buzz about tailwind and when I saw it in use on some blogs made by other people, I thought to myself ‘this is great!’ and committed to using it in my own website. My favourite thing about tailwind is that it can be customised and extended pretty easily by it’s <code>tailwind.config.js</code> file. This means I can change the font of my website or the colourscheme all in a single place. I imagine this is possible with CSS as well, but this works well for me.</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1641645177/blog/2022/01/l2g8zg.png" title="Tailwind's website" class="w-full object-cover" alt="Tailwind's website" />
+<div class="caption">
+<p>Tailwind’s website</p>
+<div class="caption-source">
+<a href="https://tailwindcss.com" title="Tailwind CSS">Tailwind CSS</a>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="new-features" class="article-section">
+<h1><span>New features</span><a href="#new-features" class="anchor las la-link" title="new-features"></a></h1>
+<p>Below are just some of the things I’ve always wanted to put into my website</p>
+<section id="dark-mode" class="article-section">
+<h2><span>Dark mode</span><a href="#dark-mode" class="anchor las la-link" title="dark-mode"></a></h2>
+<p>In the past I had a really couldn’t decide between having a minimal white website, or a nice dark one. I decided to support dark mode from the very beginning of my website’s development, and thanks to <a href="https://tailwindcss.com/">tailwind</a> it was a fairly painless process so long as I tested every feature in both light and dark mode. All you need to do is click the sun/moon icon in the top right of my website and everything will change colour!</p>
+</section>
+<section id="table-of-contents" class="article-section">
+<h2><span>Table of contents</span><a href="#table-of-contents" class="anchor las la-link" title="table-of-contents"></a></h2>
+<p>I’ve seen on a few people’s websites that they have a nice smooth way of navigating chapters of their blog posts, and I wanted to include this on my website as well. I previously had a progress bar to indicate how far you are through a post, but it’s nicer to have a table of contents built into it! If you have a large monitor, the table of contents for a page will display on the left of the content!</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1641645844/blog/2022/01/rgxf4f.png" title="A preview of a page's table of contents." class="w-full object-cover" alt="A preview of a page's table of contents." />
+<div class="caption">
+<p>A preview of a page’s table of contents.</p>
+<div class="caption-source">
+<a href="https://aas.sh" title="aas.sh">aas.sh</a>
+</div>
+</div>
+</div>
+</section>
+<section id="project-posts" class="article-section">
+<h2><span>Project posts</span><a href="#project-posts" class="anchor las la-link" title="project-posts"></a></h2>
+<p>Some people have a notion of a ‘series’ of posts and I wanted to include something similar to that in my website. I’d rather have the page of a project be a timeless record of the project, and the historical records be encapsulated in blog posts. This very post is a project-post — the project is <a href="../../project/aas-sh">aas.sh</a>, and any updates I make to the website will be detailed in the posts!</p>
+<p>This does mean there might be some duplicated information, but the information in the project itself will be 100% correct, whereas the project posts are allowed to be no longer correct yet still stand as a record of what was previously the case.</p>
+</section>
+<section id="image-galleries" class="article-section">
+<h2><span>Image galleries</span><a href="#image-galleries" class="anchor las la-link" title="image-galleries"></a></h2>
+<p>Using <a href="https://swiperjs.com/">SwiperJS</a>, I was easily able to create smooth, slide-show like image galleries. I’ve used these to showcase featured posts, regular posts and even images of a single post. You’ll find them all across the website and they’re a very handy way of making things look clean yet still show everything I want to show!</p>
+</section>
+</section>
+<section id="wrap-up" class="article-section">
+<h1><span>Wrap up</span><a href="#wrap-up" class="anchor las la-link" title="wrap-up"></a></h1>
+<p>I’ll probably write some more blog posts that relate to cool or important updates to the website, but right now I’m very comfortable with how things have come out. I might play around with fonts and add new pages, but for now I’m going to get back to work and focus on actually putting more content on here!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+  <section class="container is-max-desktop">
+    <h3 class="title">Related project</h3>
+    
+      <div class="swiper-slide post-preview-featured">
+  <div class="internal apply-shadow">
+
+    <div class="left">
+      
+        <img src="../../assets/images/logo-splash.png" alt="Preview image for post 'My Website: aas.sh'">
+      
+    </div>
+
+    <div class="right p-5">
+      <header class="mb-4">
+
+        <h4 class="title is-4"><a href="../../project/aas-sh/">My Website: aas.sh</a></h4>
+
+        <div class="is-monospace is-size-7 mt-0 ">
+          <ul>
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> December  1, 2021
+            </li>
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 1 Minutes
+            </li>
+            <li class="mt-1 authors">
+              <i class="las la-user-circle"></i>
+              <span class="is-size-7">
+                
+                  Ashley Rose
+                
+              </span>
+            </li>
+            
+              <li class="mt-1 break-words has-text-left">
+                <i class="las la-tags"></i>
+                <div class="tags" style="display:inline;">
+                  
+                    <a class="tag aas.sh" href="../../tag/aas.sh/">aas.sh</a>
+                  
+                    <a class="tag Web" href="../../tag/Web/">Web</a>
+                  
+                    <a class="tag Nix" href="../../tag/Nix/">Nix</a>
+                  
+                    <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                  
+                </div>
+              </li>
+            
+          </ul>
+        </div>
+        <p class="description">This website is more than just a landing page for people looking to contact me, it's a trophy cabinet for all of my digital achievements, it's a canvas for thinking out loud and a place for me to tinker.</p>
+      </header>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="../../project/aas-sh/">
+        Read more
+      </a>
+    </div>
+
+  </div>
+</div>
+
+    
+  </section>
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1641643413/blog/2021/12/tekatm.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/what-is-nix/" class="no-underline">What is Nix?</a></h3>
+                <h6 class="subtitle is-6">A build tool lots of people have heard of, but not used.</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/qna-1/" class="no-underline">First ever QNA!</a></h3>
+                <h6 class="subtitle is-6">Responses to questions I've received via email!</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1655579357/blog/2022/05/qna.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

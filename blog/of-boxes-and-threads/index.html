@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Of Boxes and Threads: Game development in Haskell">
+    <meta property="og:description" content="My experiences of making a game in Haskell and how I think it's is a pioneering process. Despite a wiki and subreddit dedicated to gamedev in Haskell, not many people have actually succeeded making anything close to current games.">
+    <meta property="og:url" content="https://aas.sh/blog/of-boxes-and-threads/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Ashe/FirstGameHS/master/img/preview.gif">
+    <title>Of Boxes and Threads: Game development in Haskell</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#what-is-this-post-really-about">What is this post really about?</a></li><li><a href="#my-experience">My experience</a></li><li><a href="#of-boxes-and-threads">Of Boxes and Threads</a></li><li><a href="#difficulties">Difficulties</a></li><li><a href="#functional-reactive-programming">Functional Reactive Programming</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://raw.githubusercontent.com/Ashe/FirstGameHS/master/img/preview.gif" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">Of Boxes and Threads: Game development in Haskell</h1>
+      
+        <h2 class="subtitle is-4">A discussion about games development in Haskell.</h2>
+      
+      
+        <div class="description">
+          My experiences of making a game in Haskell and how I think it's is a pioneering process. Despite a wiki and subreddit dedicated to gamedev in Haskell, not many people have actually succeeded making anything close to current games.
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> June  9, 2018
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 21 Minutes
+            </li>
+          
+          
+            
+              <li class="mt-1">
+                <i class="las la-hashtag"></i> <a href="../../project/hsrogue/">HSRogue: A roguelike in Haskell</a>
+              </li>
+            
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                
+                  <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                
+                  <a class="tag Thoughts" href="../../tag/Thoughts/">Thoughts</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/b7c1df1">b7c1df1: Added OpenGL and DirectX tags to better reflect experience</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#what-is-this-post-really-about">What is this post really about?</a></li><li><a href="#my-experience">My experience</a></li><li><a href="#of-boxes-and-threads">Of Boxes and Threads</a></li><li><a href="#difficulties">Difficulties</a></li><li><a href="#functional-reactive-programming">Functional Reactive Programming</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <section id="what-is-this-post-really-about" class="article-section">
+<h1><span>What is this post really about?</span><a href="#what-is-this-post-really-about" class="anchor las la-link" title="what-is-this-post-really-about"></a></h1>
+<p>Making a game in Haskell is a pioneering process. Despite the fact that there’s a page on the <a href="https://wiki.haskell.org/Game_Development">wiki</a> and a full <a href="https://www.reddit.com/r/haskellgamedev/">subreddit</a> dedicated to the purpose of making a game in this beautiful language, not many people have actually succeeded making anything close to what current game developers can already achieve. I hope to try and communicate my experiences in this post.</p>
+<p>The most exciting thing I saw regarding Haskell in games development was <a href="https://blog.chucklefish.org/wayward-tide-technical-details/">Wayward Tide</a>, a game made by <a href="https://blog.chucklefish.org/">Chucklefish</a> that was made with Haskell. Unfortunately, the project appears to have been shelved, already giving off bad vibes around the viability of Haskell as a games language. There’s also <a href="http://keera.co.uk/blog/">Keera Studios</a> who make games and solutions in Haskell, however in my honest opinion I don’t believe there’s enough there to prove anything regarding the power of Haskell in games.</p>
+<p>Another thing that was exciting was <a href="https://www.youtube.com/watch?v=1PhArSujR_A">John Carmack’s keynote at Quakecon 2013</a>. <a href="https://en.wikipedia.org/wiki/John_Carmack">John Carmack</a> is the co-founder of <a href="https://en.wikipedia.org/wiki/Id_Software">id Software</a> and was the lead programmer for games like Doom and Quake. When someone this important starts talking about functional programming in such a positive way, it does fire up. We have all read about the payoffs of using Haskell and so this validation feels great. I’ve embedded the keynote below just in case you missed the link I provided, it really is insightful.</p>
+<div class="w-full caption-frame apply-shadow">
+<iframe src="https://www.youtube.com/embed/1PhArSujR_A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<div class="caption">
+<p>John Carmack uses Wolfenstein the way normal people use Hello World.</p>
+<div class="caption-source">
+<a href="https://www.youtube.com/watch?v=1PhArSujR_A&amp;feature=emb_title" title="John Carmack's keynote at Quakecon, YouTube">John Carmack's keynote at Quakecon, YouTube</a>
+</div>
+</div>
+</div>
+<p>So we have a few examples at best of what Haskell can do for the games industry, but the biggest question still remains at large: <strong><em>Where is everyone?</em></strong> There are lots of libraries out there for games development in Haskell, such as <a href="https://github.com/jonascarpay/apecs">Apecs</a>. Why haven’t more people made games? We have bindings to <a href="https://www.libsdl.org/download-2.0.php">SDL2</a> already available and lots of experienced programmers to help each other out.</p>
+</section>
+<section id="my-experience" class="article-section">
+<h1><span>My experience</span><a href="#my-experience" class="anchor las la-link" title="my-experience"></a></h1>
+<p>Unsatisfied with not knowing and understanding the reasons behind the lack of development, I challenged myself to learn through doing. I tried converting my knowledge of how to make a game in using a framework into one compatible with Haskell. It was hard, but I was always convincing myself that the payoff would be fantastic. Naturally, using a high level language will result in less performance than that using something like C++, but once cracked, I believe that development will become significantly easier and more rewarding. That really pushed me to work on my game.</p>
+<div class="gitrepo infobox fill-horizontal">
+<div class="header">
+<span class="lab la-github mr-3"></span>Repository - FirstGameHS
+</div>
+<p>I will be using the commit history from my project <a href="https://github.com/ashe/FirstGameHS">FirstGameHS</a> for the next few sections. Feel free to go through my commits and laugh at my mistakes as a beginner. Just be sure to remember that the take away here is that these were my thoughts coming from imperative games development, and if we’re going to make functional games development a viable thing then we need to stamp out these habits and iron the creases to get everyone thinking correctly when they enter this world.</p>
+</div>
+<p>I started small, I went through <a href="http://lazyfoo.net/tutorials/SDL/">Lazyfoo’s SDL tutorials</a> and tried to recall how every step was different. At this stage, the game loop looked very simple and didn’t contain anything interesting, so I immediately sought after something better. <a href="https://github.com/Crysikrend/FirstGameHS/commit/380789362919b55b024141fbcda935796700bd9c">This commit</a> was when things started becoming clearer. This commit contained a rectangle that could be controlled with the keyboard. Let’s dive in and take a look at some things.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- This is our game world. It only consists of one lonely guy</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- who has a position and a velocity</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">World</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="ot">=</span> <span class="dt">Guy</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    {<span class="ot"> position ::</span> <span class="dt">Point</span> <span class="dt">V2</span> <span class="dt">CDouble</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ,<span class="ot"> velocity ::</span> <span class="dt">V2</span> <span class="dt">CDouble</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    } <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Eq</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- Our initial world starts out with the guy roughly in the middle</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ot">initialGuy ::</span> <span class="dt">World</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>initialGuy <span class="ot">=</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Guy</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { position <span class="ot">=</span> <span class="dt">P</span> <span class="op">$</span> <span class="dt">V2</span> (<span class="fu">fromIntegral</span> screenWidth <span class="op">/</span> <span class="dv">2</span>) (<span class="fu">fromIntegral</span> <span class="op">$</span> screenHeight <span class="op">-</span> <span class="dv">100</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    , velocity <span class="ot">=</span> <span class="dt">V2</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<p>Forgive me for not providing complete snippets, but you can guess what exactly <code>screenWidth</code> means without me having to show the code. So in this area of our code, we begin to define the <code>World</code> of our game. Because there’s only one thing changing, instead of <code>World</code> being some sort of collection it is more of an alias for our character, <code>Guy</code>. When <code>initialGuy</code> is used to create a <code>Guy</code>, he is placed in the middle of the screen with no velocity, simple.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">processInput ::</span> <span class="dt">World</span> <span class="ot">-&gt;</span> <span class="dt">SDL.EventPayload</span> <span class="ot">-&gt;</span> <span class="dt">World</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>processInput world<span class="op">@</span>(<span class="dt">Guy</span> _ curVel) (<span class="dt">KeyPressed</span> <span class="dt">SDL.KeycodeRight</span>) <span class="ot">=</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    world { velocity <span class="ot">=</span> walkingSpeed <span class="op">+</span> curVel  }</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>processInput world<span class="op">@</span>(<span class="dt">Guy</span> _ curVel) (<span class="dt">KeyReleased</span> <span class="dt">SDL.KeycodeRight</span>) <span class="ot">=</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    world { velocity <span class="ot">=</span> curVel <span class="op">-</span> walkingSpeed  }</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>processInput w _ <span class="ot">=</span> w</span></code></pre></div>
+<p>Here’s how we are going to control our character. I have only posted a little portion of the full code which focuses on the right arrow key, but all the directions are covered. All we say here is that when you press a key, you add velocity in that direction, and when you release it the opposite happens. This function is going to be used when iterating through the payload of SDL events, meaning that everything that has happened since the last frame will go through this function, which will then check on whether the current event is relevant. If the player presses both the left and right arrow keys down, the velocity will cancel out, leaving you with either 0 or a constant velocity (<code>currentVelocity + walkingVelocity - walkingVelocity = currentVelocity</code>). Nothing out of the ordinary here. Let’s look at something more interesting.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- This function takes cares of applying things like our entities' velocities</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">-- to their positions, as well as</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ot">updateWorld ::</span> <span class="dt">CDouble</span> <span class="ot">-&gt;</span> <span class="dt">World</span> <span class="ot">-&gt;</span> <span class="dt">World</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>updateWorld delta (<span class="dt">Guy</span> (<span class="dt">P</span> pos) vel) <span class="ot">=</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> (<span class="dt">V2</span> newPosX newPosY) <span class="ot">=</span> pos <span class="op">+</span> (gravity <span class="op">+</span> vel) <span class="op">*</span> <span class="dt">V2</span> delta delta</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">-- Ensure that we stay within bounds</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        fixedX <span class="ot">=</span> <span class="fu">max</span> <span class="dv">0</span> <span class="op">$</span> <span class="fu">min</span> newPosX (<span class="fu">fromIntegral</span> screenWidth <span class="op">-</span> <span class="dv">50</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        fixedY <span class="ot">=</span> <span class="fu">max</span> <span class="dv">0</span> <span class="op">$</span> <span class="fu">min</span> (<span class="fu">fromIntegral</span> screenHeight <span class="op">-</span> <span class="dv">100</span>) newPosY</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">in</span> <span class="dt">Guy</span> (<span class="dt">P</span> <span class="op">$</span> <span class="dt">V2</span> fixedX fixedY) vel</span></code></pre></div>
+<p>Okay, here’s something more intriguing. This function takes a <code>CDouble</code> and our what will evaluate to our <code>Guy</code> and it will produce another <code>Guy</code>. This part is very important, as it’s how games in Haskell are going to work. In C++, state is held whether you like it or not. Every object in an <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">Object Oriented</a> environment will have a state. In Haskell, however, everything is just a transformation. This function takes <strong><em>a</em></strong> <code>Guy</code> and produced <strong><em>a</em></strong> <code>Guy</code>. I emphasise the <strong><em>a</em></strong> here as this function could not care less about the fact this is all a game. This function is the thing that links the current frame to the next, and everything that is going to happen to <code>Guy</code> happens here. Right now, we simply use the <code>velocity</code> value within <code>Guy</code> to manipulate his <code>position</code>. It then makes sure to keep him inside an arbitrary area.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> loop <span class="fu">last</span> world <span class="ot">=</span> <span class="kw">do</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      events <span class="ot">&lt;-</span> SDL.pollEvents</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- Need to calculate the time delta</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      now <span class="ot">&lt;-</span> SDL.getPerformanceCounter</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      freq <span class="ot">&lt;-</span> SDL.getPerformanceFrequency</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> delta <span class="ot">=</span> (<span class="fu">fromIntegral</span> now <span class="op">-</span> <span class="fu">fromIntegral</span> <span class="fu">last</span>) <span class="op">*</span> <span class="dv">1000</span> <span class="op">/</span> <span class="fu">fromIntegral</span> freq</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>          payloads <span class="ot">=</span> <span class="fu">map</span> SDL.eventPayload events</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>          quit <span class="ot">=</span> <span class="dt">SDL.QuitEvent</span> <span class="ot">`elem`</span> payloads</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- Update functions</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> worldAfterInput <span class="ot">=</span> foldl' processInput world payloads</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>          newWorld        <span class="ot">=</span> updateWorld delta worldAfterInput</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>      SDL.clear renderer</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- Render functions</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      SDL.copy renderer texture <span class="dt">Nothing</span> <span class="dt">Nothing</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- Draw our world(guy) as a white rectangle</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> drawColor <span class="ot">=</span> SDL.rendererDrawColor renderer</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      drawColor <span class="op">$=</span> <span class="dt">V4</span> <span class="dv">255</span> <span class="dv">255</span> <span class="dv">255</span> <span class="dv">0</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>      SDL.fillRect renderer <span class="op">.</span> <span class="dt">Just</span> <span class="op">$</span> <span class="dt">SDL.Rectangle</span> (<span class="fu">truncate</span> <span class="op">&lt;$&gt;</span> position newWorld) (<span class="dt">V2</span> <span class="dv">50</span> <span class="dv">100</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>      <span class="co">-- My attempt at an FPS limit. I don't write games so it is possible this is incorrect</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> frameDelay <span class="ot">=</span> <span class="dv">1000</span> <span class="op">/</span> <span class="fu">fromIntegral</span> frameLimit</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>      when (delta <span class="op">&lt;</span> frameDelay) <span class="op">$</span> SDL.delay (<span class="fu">truncate</span> <span class="op">$</span> frameDelay <span class="op">-</span> delta)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      SDL.present renderer</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>      unless quit <span class="op">$</span> loop now newWorld</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  now <span class="ot">&lt;-</span> SDL.getPerformanceCounter</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  loop now initialGuy</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  SDL.destroyWindow window</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  SDL.quit</span></code></pre></div>
+<p>Finally, here’s the game loop. We get an event payload and we work out how long it has been since the previous frame just like we would anywhere else. Let’s look into <code>newWorld</code> though. Remember that <code>loop</code> isn’t a keyword like <code>for</code> or <code>while</code>, we are simply defining a function called <code>loop</code> that takes some timing data in the variable <code>last</code> and our <code>Guy</code> in the variable <code>world</code>. Here, <code>newWorld</code> is what we call the thing that <code>world</code> transforms into after using our <code>processInput</code> and <code>updateWorld</code> functions as we have already shown. We then render things as normal below.</p>
+<p>Looking at this game loop, lots of things strike me as challenges. Firstly, everything is in one file, and so we will need a reliable way for data such as <code>Guy</code> to exist in it’s own module and to be rounded up when needed. This is a challenge every game will need to solve in any language. Secondly, the managing of a state becomes very important. Recall that <code>Guy</code> is the only thing in our <code>World</code> right now, which is why they are the same thing. Later, <code>World</code> would contain everything, and so <code>updateWorld</code> will have to change to accommodate everything. Going back to the first point, this would mean that <code>updateWorld</code> will need to transform all of it’s internal data into new data (<code>Guy</code> -&gt; <code>Guy</code>), and <code>Guy</code> would then have to implement his own function <code>updateGuy</code>. This sounds okay, as we could export <code>updateGuy</code> from the module, and then our <code>Main.hs</code> file will import it and call it whenever a <code>Guy</code> needs updating every frame. The important thing to remember is that if something changes between frames, it will need to go inside of <code>World</code> and it will need to be managed in some way.</p>
+</section>
+<section id="of-boxes-and-threads" class="article-section">
+<h1><span>Of Boxes and Threads</span><a href="#of-boxes-and-threads" class="anchor las la-link" title="of-boxes-and-threads"></a></h1>
+<p>So what is with the edgy title? After the final paragraph of the last section, I think it’s time to get to the meat of this post. What exactly do I mean by boxes and threads in this context? Beginner programmers tend to imagine a variable as a ‘box’ with a number inside of it. A number then becomes a piece of data, and data then becomes anything the programming language is capable of evaluating — functions, classes, pointers, files, days of the week, bools. If you look at the gameloop above though, the value of <code>newWorld</code> is only valid for a single frame. While in an imperative language like C++, you could argue that the value of a variable exists in the same way, but I’m trying to describe this a little differently. In C++, if you create a variable, it sticks around until it falls out of scope. This happens when the current code block ends, such as a function or loop. It is true that variables go out of scope in Haskell too, but every function is just a way of transforming data continuously, it doesn’t stick around, it <strong><em>can’t</em></strong> (this isn’t true, but for simplicity we’ll say it is).</p>
+<p>To hopefully illustrate what I’m talking about, I made two diagrams. Don’t take them literally.</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1617292470/blog/2018/06/traditional_game_structure_o3qxgm.png" title="Typical structure of a game in an imperative language." class="w-full object-cover" alt="Typical structure of a game in an imperative language." />
+<div class="caption">
+<p>Typical structure of a game in an imperative language.</p>
+<div class="caption-source">
+I drew this haha
+</div>
+</div>
+</div>
+<p>Here’s how I’m going to interpret the way traditional, imperative game structures work. In an Object oriented system, you’d probably have a game controller class containing everything in the game in some sort of structure. If you are using an <a href="https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system">Entity Component System</a>, you will simply have a list of <code>GameObjects</code> or something. These <code>GameObjects</code> will contain data for your game which you will manipulate and then render as part of your game loop.</p>
+<p>Let’s imagine that everything you use inside your game is placed inside of a <strong><em>box</em></strong>. You create the data, you put it into a box. You put that box into a collection of boxes. As long as this controller stays in scope, these boxes will exist and any <code>GameObjects</code> can manipulate any other as long as functions are made public blah blah blah. <em>The object itself doesn’t need to know about all possibilities, it only needs to export what it can do, and how it should manipulate the current object</em>.</p>
+<p>This might make more sense if I just insert the next diagram now, so you can compare:</p>
+<div class="caption-frame apply-shadow">
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1617292516/blog/2018/06/functional_game_structure_jxohms.png" title="Sample structure of a game in a functional language." class="w-full object-cover" alt="Sample structure of a game in a functional language." />
+<div class="caption">
+<p>Sample structure of a game in a functional language.</p>
+<div class="caption-source">
+I drew this haha
+</div>
+</div>
+</div>
+<p>Yes, we could have bundled up the data in the first diagram and the two would be extremely similar. What I’m trying to get at with the second diagram, is that the data travels <strong><em>with</em></strong> the flow of the program, whereas in imperative programming they exist in <strong><em>boxes</em></strong> irrespective of what happens in the game loop as long as something holds them. I imagine Haskell programs as a bundle of threads — where we can pack and unpack boxes of data, we can also inter-twine, unravel and tie threads together. These threads run parallel (don’t get confused with parallel computing!) with the flow of the game as they travel together, twisting, weaving and separating with each iteration. The boxes exist outside the loop and can interact <em>and</em> be interacted with. Threads, however, do not — any threads that aren’t passed to the next iteration are cut off and terminated, <strong><em>all</em></strong> data must be accounted for in the transition to the next frame of the game.</p>
+<p>While it may sound very inefficient passing your entire game around with functions every single frame, Haskell is actually designed to handle this and it isn’t as bad as you think. Also, because the data here isn’t somewhere in memory but is simply an echo of the initial state twisted continuously, multiple copies are made with every function call and so you can parallelise (yes, <a href="https://en.wikipedia.org/wiki/Parallel_computing">parallel computing</a>!) very easily. I won’t go into this as the information is out there.</p>
+</section>
+<section id="difficulties" class="article-section">
+<h1><span>Difficulties</span><a href="#difficulties" class="anchor las la-link" title="difficulties"></a></h1>
+<p>Drawing diagrams is fun and all, but it’s time to talk about why I’m exactly writing this. After I got to grips with how state is managed in Haskell, I started separating my code into modules like every good programmer should. <a href="https://github.com/Ashe/FirstGameHS/commit/7bcb2a0114fba1e2b0a491e3137371a1bdb6a1dc">This commit</a> was the next stepping stone for me, and looking at <a href="https://github.com/Crysikrend/FirstGameHS/blob/7bcb2a0114fba1e2b0a491e3137371a1bdb6a1dc/src/Main.hs"><code>Main.hs</code></a> will show how the loop has changed. I now have a <a href="https://github.com/Crysikrend/FirstGameHS/blob/7bcb2a0114fba1e2b0a491e3137371a1bdb6a1dc/src/GameState.hs"><code>GameState</code></a> which actually contains a <em>list</em> of <a href="https://github.com/Crysikrend/FirstGameHS/blob/7bcb2a0114fba1e2b0a491e3137371a1bdb6a1dc/src/Guy.hs"><code>Guy</code></a>s. The <code>GameState</code> is also a nice way of streamlining the calculations for <code>deltaTime</code> too, as that’s another element passed between frames, so why not put it into the state itself?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode hs"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Updates the game state's entities</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ot">updateGameState ::</span> <span class="dt">GameState</span> <span class="ot">-&gt;</span> <span class="dt">CDouble</span> <span class="ot">-&gt;</span> <span class="dt">GameState</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>updateGameState state delta <span class="ot">=</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  state</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  { deltaTime <span class="ot">=</span> delta</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  , elapsedTime <span class="ot">=</span> elapsedTime state <span class="op">+</span> delta</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  , entities <span class="ot">=</span> <span class="fu">map</span> (\(<span class="dt">Entity</span> _ up _) <span class="ot">-&gt;</span> up state) (entities state)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ot">updateGuy ::</span> <span class="dt">Guy</span> <span class="ot">-&gt;</span> <span class="dt">GameState</span> <span class="ot">-&gt;</span> <span class="dt">Guy</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>updateGuy g st <span class="ot">=</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  g</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  { position <span class="ot">=</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> (<span class="dt">P</span> pos) <span class="ot">=</span> position g</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        res <span class="ot">=</span> screenRes <span class="op">$</span> options <span class="op">$</span> st</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        (<span class="dt">V2</span> newPosX newPosY) <span class="ot">=</span> (pos <span class="op">+</span> velocity g) <span class="op">*</span> <span class="dt">V2</span> dt dt</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        fixedX <span class="ot">=</span> <span class="fu">max</span> <span class="dv">0</span> <span class="op">$</span> <span class="fu">min</span> newPosX (<span class="fu">fromIntegral</span> (<span class="fu">fst</span> res) <span class="op">-</span> <span class="dv">50</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        fixedY <span class="ot">=</span> <span class="fu">max</span> <span class="dv">0</span> <span class="op">$</span> <span class="fu">min</span> (<span class="fu">fromIntegral</span> (<span class="fu">snd</span> res) <span class="op">-</span> <span class="dv">100</span>) newPosY</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>     <span class="kw">in</span> <span class="dt">P</span> <span class="op">$</span> <span class="dt">V2</span> fixedX fixedY</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  , animation <span class="ot">=</span> updateAnimationState dt <span class="fl">0.1</span> (animation g)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> dt <span class="ot">=</span> deltaTime st</span></code></pre></div>
+<p>Every frame, each guy is updated using <a href="https://github.com/Crysikrend/FirstGameHS/blob/7bcb2a0114fba1e2b0a491e3137371a1bdb6a1dc/src/GameState.hs#L79"><code>updateGameState</code></a> which transforms the <code>GameState</code> into a new, updated <code>GameState</code> by also fmapping <a href="https://github.com/Crysikrend/FirstGameHS/blob/7bcb2a0114fba1e2b0a491e3137371a1bdb6a1dc/src/Guy.hs#L38"><code>updateGuy</code></a> onto every element inside the list of <code>Guy</code>s. This sounds really tidy, especially when all the code for <code>Guy</code> is in his module and out the way (even the function to render him). The problem is that for something to change within our game, our function signature needs to look similar to <code>ClassToChange -&gt; a -&gt; ClassToChange</code>, where <code>ClassToChange</code> here is a <code>Guy</code>. Another object will struggle to manipulate a guy in our collection in some way, as all of these functions are simply <em>transformations</em>. Unless you plan on transforming another class into a <code>Guy</code>, interacting with things inside the collection is much harder than it was with imperative structures.</p>
+<p>If items inside this collection cannot manipulate other items, then how do we get anything done? The solution is to <em>weave</em> all of the different things that would change your class into the update function. For instance, our <code>Guy</code> takes a <code>CDouble</code> that is <code>deltaTime</code>. Instead, we could pass the entirety of the <code>GameState</code> which contains <code>deltaTime</code> anyway. <code>Guy</code> can then sample data inside this state and make decisions on how to change based on all of this data. Because data is passed by copy, you can do whatever you like to it to make operating with <code>Guy</code>s easier, without any worries of impacting the original data or the performance of your game.</p>
+<p>For simple games, this is fine. However, any complex RPG will be tough to code when you have to imagine how to feed in this data. This get’s even worse when you want to make exceptions (such as when coding cutscenes or tutorials), as you then have to figure out a way of streamlining these to make things easier. This was definitely my biggest struggle as I couldn’t get my head around how I should go about doing this in a sensible way.</p>
+<div class="note infobox fill-horizontal">
+<div class="header">
+<span class="las la-info-circle mr-3"></span>Note - Making a game in Haskell is not impossible
+</div>
+<p>Please note that I’m not saying that making a game in Haskell is impossible, I’m simply saying that there are indeed challenges to someone not used to this style of programming. I wasn’t able to completely understand everything, and these are the challenges that were presented to me. I am a true believer of Haskell being a great language to work with, and I really want someone to break through these walls.</p>
+</div>
+</section>
+<section id="functional-reactive-programming" class="article-section">
+<h1><span>Functional Reactive Programming</span><a href="#functional-reactive-programming" class="anchor las la-link" title="functional-reactive-programming"></a></h1>
+<p>So I started looking into having dynamic data values to try and solve the challenges above. I found <a href="https://wiki.haskell.org/Functional_Reactive_Programming">FRP, or Functional Reactive Programming</a> and while I’m still unsure on whether it could be used to overcome this challenge, it was definitely something new for me to learn. I started with <a href="https://github.com/HeinrichApfelmus/reactive-banana">Reactive Banana</a> in <a href="https://github.com/Crysikrend/FirstGameHS/commit/c2c39b2060acbde2a9aa842b25ec824a85c71e07">this commit</a>, but later I moved on to using <a href="https://github.com/reflex-frp/reflex">Reflex FRP</a> in <a href="https://github.com/Crysikrend/FirstGameHS/commit/cbfef5323c8da3c9ec0fc0f9f9ea844db765eda9">this commit</a> — note that I moved my logic into <a href="https://github.com/Crysikrend/FirstGameHS/blob/cbfef5323c8da3c9ec0fc0f9f9ea844db765eda9/src/Game.hs"><code>Game.hs</code></a> to keep things tidy.</p>
+<p>I’m not going to go into the details of FRP, but the gist is this: In Functional Programming, calling a function with the same arguments will always yield the same output. FRP grants access to a set of data types typically called <code>Behaviours</code> and <code>Events</code> (and sometimes <code>Dynamics</code>) that have values that <em>vary over time</em>. To put it simply, imagine these variables to be simply a <code>Data.Map</code> with a time value as a key and the value as the type you want. This means that you can use these new types to create functions that <em>fire</em> when an <code>Event</code> is triggered and that can <em>sample</em> <code>Behaviours</code> at any point in time to get a value. A good example would be setting the location of the character to be the same position of the mouse whenever the mouse moves, or changing the orientation of an enemy’s gaze to face the player whenever the player’s position value has changed.</p>
+<p>FRP does make things a little more complex though. If you look at <a href="https://github.com/reflex-frp/reflex/blob/develop/Quickref.md">Reflex’s quick reference sheet</a> you will see that most of these FRP types rely on FRP. In terms of threads, you need to already have an existing thread before you can twist and weave it. <a href="http://hackage.haskell.org/package/reflex-sdl2">Reflex-SDL2</a> is a ‘host’, which essentially sinks itself into SDL and creates some crucial <code>Event</code>s for your to manipulate. When an <code>Event</code> fires, it contains information in context to the kind of <code>Event</code> you are using. Functions like <code>getDeltaTickEvent</code> will get you the number of milliseconds since the last frame tick, which means you can set up a function to render your game every time this event fires (every <em>tick</em>) using the information in the event.</p>
+<p>FRP does change the process a lot, but the problem I had with regards to having objects in the world react to each other still stood — I ended up needing to create an <code>Event</code> that fires every tick with the entire <code>GameState</code>, so all in all it was the same problem as before, just written in a different way. It meant that when I defined the event that is triggered every tick that produces a new <code>Guy</code>, I would also need to combine the tick <code>Event</code> with any other <code>Event</code> that would change my <code>Guy</code>.</p>
+</section>
+<section id="conclusion" class="article-section">
+<h1><span>Conclusion</span><a href="#conclusion" class="anchor las la-link" title="conclusion"></a></h1>
+<p>The requirement of forward thinking does worry me a little bit, but it does make the game cleaner. It will definitely be easier to iron out bugs if you knew precisely all the conditions in which your character dies, but at the same time it means you can’t add new <code>GameObjects</code> that call a <code>kill()</code> function on a character to kill them without making your character know about specific situations. I will continue to work on <a href="https://github.com/Crysikrend/FirstGameHS"><code>FirstGameHS</code></a> and post here what I find. Forward thinking is usually a good thing, but I find that the ability to box up data and not have to worry about how they integrate into the system so much is much friendlier for games with a more intertwined world such as an RPG than it is for more simple games such as puzzlers.</p>
+<p>That’s all for today. Thanks for reading!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+  <section class="container is-max-desktop">
+    <h3 class="title">Related project</h3>
+    
+      <div class="swiper-slide post-preview-featured">
+  <div class="internal apply-shadow">
+
+    <div class="left">
+      
+        <img src="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/preview.png" alt="Preview image for post 'HSRogue: A roguelike in Haskell'">
+      
+    </div>
+
+    <div class="right p-5">
+      <header class="mb-4">
+
+        <h4 class="title is-4"><a href="../../project/hsrogue/">HSRogue: A roguelike in Haskell</a></h4>
+
+        <div class="is-monospace is-size-7 mt-0 ">
+          <ul>
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> March  8, 2019
+            </li>
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 6 Minutes
+            </li>
+            <li class="mt-1 authors">
+              <i class="las la-user-circle"></i>
+              <span class="is-size-7">
+                
+                  Ashley Rose
+                
+              </span>
+            </li>
+            
+              <li class="mt-1 break-words has-text-left">
+                <i class="las la-tags"></i>
+                <div class="tags" style="display:inline;">
+                  
+                    <a class="tag Haskell" href="../../tag/Haskell/">Haskell</a>
+                  
+                    <a class="tag Game" href="../../tag/Game/">Game</a>
+                  
+                    <a class="tag Functional" href="../../tag/Functional/">Functional</a>
+                  
+                    <a class="tag OpenGL" href="../../tag/OpenGL/">OpenGL</a>
+                  
+                </div>
+              </li>
+            
+          </ul>
+        </div>
+        <p class="description">My first attempt at game development in the functional language, Haskell, as well as a description of the challenges I had to overcome to get things working.</p>
+      </header>
+      <a class="is-uppercase is-size-7 no-underline is-sans-serif" href="../../project/hsrogue/">
+        Read more
+      </a>
+    </div>
+
+  </div>
+</div>
+
+    
+  </section>
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1617292285/blog/2018/03/haskell_code_umjeh2.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/what-even-is-haskell/" class="no-underline">What even is Haskell?</a></h3>
+                <h6 class="subtitle is-6">An introduction to the functional language known as Haskell.</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/making-a-game-with-haskell-and-apecs/" class="no-underline">An Introduction to game development in Haskell using Apecs</a></h3>
+                <h6 class="subtitle is-6">A post about how I used Apecs ECS framework to make 'HSRogue'.</h6>
+              </div>
+              <img src="https://raw.githubusercontent.com/Ashe/HSRogue/master/img/gameplay.gif">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>

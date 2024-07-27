@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Goodbye DSD, Hello Jagex!">
+    <meta property="og:description" content="Roughly this time last year, I accepted a job at Deep Silver Dambuster Studios, but unfortunately it wasn't a great fit for me. I'm now pleased to announce that I managed to get a job at Jagex!">
+    <meta property="og:url" content="https://aas.sh/blog/hello-jagex/">
+    <meta property="og:image" content="https://res.cloudinary.com/aas-sh/image/upload/v1623570915/blog/2021/06/2021-06-13T08_54_23_424914738_01_00_un9zli.png">
+    <title>Goodbye DSD, Hello Jagex!</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="../../rss.xml">
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="../../atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../../assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="../../assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="../../assets/scripts/init-darkmode.js"></script>
+    <script src="../../assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    
+
+  </head>
+
+  <body>
+    <nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"></path>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="../../">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-widescreen apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <a href="../../"><li class="is-uppercase">Home</li></a>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../archive/">Archive</a></li>
+          <li><hr></li>
+          <li>
+            <div>
+  <a class="p-1" href="mailto:contact@aas.sh"><i class="las la-envelope-open-text"></i></a>
+  <a class="p-1" href="https://linkedin.com/in/itsashe"><i class="lab la-linkedin-in"></i></a>
+  <a class="p-1" href="https://github.com/ashe"><i class="lab la-github"></i></a>
+  <a class="p-1" href="https://instagram.com/theofficialashe"><i class="lab la-instagram"></i></a>
+</div>
+
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../projects/"><li class="is-uppercase">Projects</li></a>
+          <li><a href="../../projects/">All Projects</a></li>
+          <li><a href="../../posts-by-project/">Posts By Project</a></li>
+          <li><hr></li>
+          <li class="items-center">
+            <i class="las la-snowflake"></i>
+            <a href="https://github.com/ashe/dotfiles">
+              NixOS Config
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <a href="../../blog/"><li class="is-uppercase">Blog</li></a>
+          <li><a href="../../blog/">All Posts</a></li>
+          <li>
+            <i class="las la-rss"></i>
+            <a href="../../rss.xml">RSS</a>
+            <a href="../../atom.xml">Atom</a>
+          </li>
+          <li><hr></li>
+          <li>
+            <i class="las la-code-branch"></i>
+            Current rev.: 
+            <a href="https://github.com/ashe/ashe.github.io/commit/871ce24">
+              871ce24: Updated swiper sha
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+    <div id="nav-toc" class="table-of-contents">
+      <ul class><li><a href="#interviews">Interviews</a></li><li><a href="#deep-silver-dambuster">Deep Silver Dambuster</a></li><li><a href="#jagex">Jagex</a></li><li><a href="#the-future">The future?</a></li></ul>
+    </div>
+  
+
+</nav>
+
+
+    <main class="my-4">
+      <section>
+  
+
+  <div id="article-hero" class="container">
+    <div class="inner apply-shadow">
+      
+        <img class="standalone" src="https://res.cloudinary.com/aas-sh/image/upload/v1623570915/blog/2021/06/2021-06-13T08_54_23_424914738_01_00_un9zli.png" alt="Article image">
+      
+    </div>
+  </div>
+
+
+
+<header id="article-header" class="container is-max-widescreen">
+  <div class="columns is-vcentered is-8">
+
+    <div class="column p-4">
+      <h1 class="title is-1">Goodbye DSD, Hello Jagex!</h1>
+      
+        <h2 class="subtitle is-4">A short update about a change in my career.</h2>
+      
+      
+        <div class="description">
+          Roughly this time last year, I accepted a job at Deep Silver Dambuster Studios, but unfortunately it wasn't a great fit for me. I'm now pleased to announce that I managed to get a job at Jagex!
+        </div>
+      
+      <div class="authors is-monospace">
+        <span class="is-size-7">
+          
+            Ashley Rose
+          
+        </span>
+      </div>
+    </div>
+
+    <div class="column is-one-third p-4">
+      <div class="is-monospace is-size-7">
+        <ul>
+          
+            <li class="mt-1">
+              <i class="las la-calendar-day"></i> June 25, 2021
+            </li>
+          
+          
+            <li class="mt-1">
+              <i class="las la-stopwatch"></i> 9 Minutes
+            </li>
+          
+          
+          
+            <li class="mt-1 break-words has-text-left">
+              <i class="las la-tags"></i>
+              <div class="tags" style="display:inline;">
+                
+                  <a class="tag Career" href="../../tag/Career/">Career</a>
+                
+                  <a class="tag Life" href="../../tag/Life/">Life</a>
+                
+              </div>
+            </li>
+          
+          
+            <li style="margin-top:-0.25rem;">
+              <i class="las la-code-branch"></i>
+              <a href="https://github.com/ashe/ashe.github.io/commit/d7e5583">d7e5583: Removed all notion of 'categories' from site</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+
+<div class="container is-widescreen mb-2">
+  <div class="columns is-desktop is-centered m-0">
+
+    
+      <div id="side-toc" class="column is-3">
+        <div class="table-of-contents">
+          <ul class><li><a href="#interviews">Interviews</a></li><li><a href="#deep-silver-dambuster">Deep Silver Dambuster</a></li><li><a href="#jagex">Jagex</a></li><li><a href="#the-future">The future?</a></li></ul>
+        </div>
+      </div>
+    
+
+    <div class="column">
+      <article class="container is-max-desktop">
+        <div class="columns is-desktop is-centered">
+          <div class="column can-shrink-for-toc">
+            <p>I promise I tried my best, but unfortunately things don’t work out the way we planned — I know that I said I was trying to blog more often, but once again I am giving off the ‘one-blog-per-year’ impression since <a href="../../blog/no-longer-a-student">it’s been so long since my last blog</a>. There are reasons, but still.</p>
+<p>More importantly, the sentiment above is true for my career as well; last year I got a job at <a href="https://www.dsdambuster.com/">Deep Silver Dambuster Studios</a> — formerly named <a href="https://www.dsdambuster.com/studio">Free Radical Design</a> and <a href="https://www.dsdambuster.com/studio">Crytek UK</a>. With this being my first job I was overwhelmed with excitement at the prospect of being a part of a AAA studio and putting my foot in the door of the whole games industry. I’ll say this now, despite my departure, <strong>I do not regret the choice I made and I’ve learned a lot of lessons about what I personally need from a job</strong>.</p>
+<section id="interviews" class="article-section">
+<h1><span>Interviews</span><a href="#interviews" class="anchor las la-link" title="interviews"></a></h1>
+<p>Rewind to 2020, a few weeks before I wrote <a href="../../blog/no-longer-a-student/">this blog post</a>. I was applying to several games companies via a recruiter with <a href="https://aswift.com/">Aardvark Swift</a>, one of which being <a href="https://www.jagex.com/">Jagex</a> and another being <a href="https://www.dsdambuster.com/">DSD</a>, of course. At this time, I wasn’t really sure which one I’d choose if I was offered positions to both companies.</p>
+<p>Jagex had always meant a lot to me; I was an avid <a href="https://www.runescape.com/">RuneScape</a> player and since I was drifting from MMO to MMO like a lot of people I felt like I had enough knowledge about RPGs and MMOs to potentially make some form of contribution to whatever they were working on. However, this application wasn’t done with my recruiter, and so naturally there was no incentive for her to highlight this option over the others, even though she was trying her best to look out for me.</p>
+<p>I had slain all my interviews, including the ones I had for Jagex so far. I passed all my coding tests and project tests given to me and I was ready for my first (and last interview) with DSD. The interview went well, maybe too well, since I was offered my very first job just two hours later.</p>
+<p>This put me under a lot of pressure, since A: I had not finished the interview process at Jagex and B: I needed to accept some offer within a month or I’d have no idea where I needed to live since my tenancy on student accomodation was ending. It felt like the time was ticking — if I wasn’t able to get anything from Jagex then perhaps DSD will win by default, as I couldn’t risk the offer ‘expiring’ without knowing how likely it would be for Jagex to also offer something. I didn’t really think a job offer could expire, but the time you can leave them sitting there isn’t infinite either, so I had maybe a week or two.</p>
+<p>It turns out this was red flag number one — Jagex hadn’t offered anything because they are a huge company and they have a pipeline for processing applicants. The fact that I got the job at DSD near instantaneously was a signal that other than qualifying for the position, there wasn’t much else to the process. This isn’t a problem on it’s own, but ultimately my leaving DSD was a combination of many factors, this being one of them.</p>
+<p>Anyway, I had multiple options, the first being to accept DSDs offer. Option two was to risk it and complete the interview process for Jagex and decide then when I had both offers to compare. The final option was accepting one of the the 5 other offers I had been given from various other game studios. While I deep, sentimental reasons for wanting to risk it for Jagex, I also had sentiment towards the project at DSD and since they seemed very eager to get me on-board two hours after my interview, I accepted their offer.</p>
+</section>
+<section id="deep-silver-dambuster" class="article-section">
+<h1><span>Deep Silver Dambuster</span><a href="#deep-silver-dambuster" class="anchor las la-link" title="deep-silver-dambuster"></a></h1>
+<div class="danger infobox fill-horizontal">
+<div class="header">
+<span class="las la-exclamation-circle mr-3"></span>Danger - Under Non-Disclosure-Agreement (NDA)
+</div>
+<p>I can’t reveal anything secretive, so if you’re looking for dirt, look elsewhere.</p>
+</div>
+<p>I don’t feel comfortable revealing too much information about the interview or the internal structure of DSD, but essentially like every company there are multiple teams within the studio, and during my interview there were representatives of multiple teams present. While I knew this, I didn’t realise that my interview was more like an auction where multiple teams were deciding whether to take me on — these teams were more separated than they indicated at the time, and it turns out some of the things that were said by some people during the interview simply didn’t apply to the team I joined.</p>
+<p>Everyone was friendly, especially my boss, Steve Ellis. He was probably the nicest first boss I could ask for and I’d say settling in at DSD was a breeze for me. My colleagues were nice and I couldn’t wait to get started and to make a mark on the industry. Sadly, there were small issues which seemed benign on their own, but slowly grew over time.</p>
+<p>There were many factors that I don’t want to disclose publicly over the internet, although I do want to stress one thing:</p>
+<blockquote>
+<p>Despite the negative impression I may have given, my job was only a poor fit for me <em>personally</em>, and I do not want to speak too ill of the team when realistically a lot of people would be thrilled to work there.</p>
+</blockquote>
+<p>Additionally, some of these factors only became an issue because of Covid-19, and I feel like they had manifested because of the weird circumstances of joining a studio without an in-person interview, tour of the office, or team meet-n-greet.</p>
+<p>However, there is one thing that is now public knowledge that I can talk about:</p>
+<div class="caption-frame apply-shadow">
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+A new Deep Silver Studio is coming - Free Radical Design <a href="https://t.co/N5qTTcZfsW">pic.twitter.com/N5qTTcZfsW</a>
+</p>
+— Deep Silver (<span class="citation" data-cites="deepsilver">@deepsilver</span>) <a href="https://twitter.com/deepsilver/status/1395238772938264577?ref_src=twsrc%5Etfw">May 20, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div class="caption">
+<p>A tweet declaring that our team is splitting off into our own separate company.</p>
+<div class="caption-source">
+<a href="https://twitter.com/deepsilver/status/1395238772938264577" title="@deepsilver on Twitter">@deepsilver on Twitter</a>
+</div>
+</div>
+</div>
+<p>I did have a feeling that our relationship with the rest of the studio was strange, but I didn’t suspect that the disconnect was because eventually we’d be splitting off to become <a href="https://en.wikipedia.org/wiki/Free_Radical_Design">Free Radical Design</a> again. This tweet was actually trending that day and it was quite an experience to see the internet lose their shit over something I was at the center of.</p>
+<p>This wasn’t necessarily a bad thing, in fact I’d go as far to say that it was probably the solution to a lot of the issues I had, and <strong>I’m sure Free Radical will be a great studio for most people to work at</strong>.</p>
+<p>However, for me, I think back to my interview: I was given a different impression of the nature of the studio due to what the representatives of other teams had said, and I wasn’t really informed about the deep division between the teams. When I was choosing which job to accept, I was trying to select an offer that would allow me to settle for a little bit since I had been house hopping for most of my life. I wanted stability, and so I felt that the comparisons I made between my job offers was unfair. Even if I didn’t want to take a risk and complete Jagex’s interview process, I had several other offers I could have accepted, and I feel like my decision making was slightly swayed in the wrong direction.</p>
+<p>Fortunately, another team at Jagex contacted me and I began the interview process once again. This took a few months and there were a few stalls because of the pandemic and other external factors, but ultimately I finally got the job I originally had my heart set on — it felt right, it felt like it was destiny to be given another chance. Of course I’d accept.</p>
+</section>
+<section id="jagex" class="article-section">
+<h1><span>Jagex</span><a href="#jagex" class="anchor las la-link" title="jagex"></a></h1>
+<p>I can’t write a lot here, since I haven’t truly started my job yet. I have deliberately written this blog post before my true start date to encourage myself to write more. All I can say, is that I’m very excited. I’m going to be working on one of the unannounced projects listed on their career section, so don’t start stalking me to try and get information about the next RuneScape update please.</p>
+<p>This job suits me better in multiple ways. Not only is the project more to my taste, but I have the flexibility to work remotely if I wish, which is great for my personal situation and was one of my anxieties related to Free Radical. Also, <a href="https://www.visitcambridge.org/">Cambridge</a> is a gorgeous city and if there’s anywhere in the UK I’d want to settle long term at, it’d be Cambridge.</p>
+<div class="caption-frame apply-shadow">
+<div class="gallery-wall">
+<div class="child">
+<p><img src="https://res.cloudinary.com/aas-sh/image/upload/v1623576431/blog/2021/06/cambridge-1.png" />
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1623576431/blog/2021/06/cambridge-4.png" /></p>
+</div>
+<div class="child">
+<p><img src="https://res.cloudinary.com/aas-sh/image/upload/v1623576431/blog/2021/06/cambridge-2.png" />
+<img src="https://res.cloudinary.com/aas-sh/image/upload/v1623576431/blog/2021/06/cambridge-3.png" /></p>
+</div>
+</div>
+<div class="caption">
+<p>Some gorgeous photos of the city of Cambridge, UK</p>
+<div class="caption-source">
+Various news outlets
+</div>
+</div>
+</div>
+</section>
+<section id="the-future" class="article-section">
+<h1><span>The future?</span><a href="#the-future" class="anchor las la-link" title="the-future"></a></h1>
+<p>Hopefully, I’ll remain at Jagex for quite some time, but just like with DSD you never really know what will happen this time next year. As I have already said, despite going back on my decision and eventually choosing Jagex, I do not regret choosing DSD, as it has been a valuble learning experience and I’ve learned some lessons:</p>
+<div class="help infobox fill-horizontal">
+<div class="header">
+<span class="las la-question-circle mr-3"></span>Interviewing tips
+</div>
+<ul>
+<li>You are interviewing the companies just as much as they are interviewing you.</li>
+<li>It’s okay to be uncertain, you can’t blame yourself for not knowing things you weren’t told.</li>
+<li>Sometimes it takes a less-than-desirable experience to help you realise what you really need.</li>
+<li>You don’t know what will happen — a good opportunity may turn sour, but an opportunity you thought wasn’t for you could blossom into a favourable outcome.</li>
+<li>It’s okay to be disatisfied with what others would be satisfied with and the notion of ‘you should be happy’ makes no sense.</li>
+<li>Time always moves forward — quitting your job is career progression, not regression.</li>
+<li>Once you’re in the games industry, that’s it. You’ll find it much easier to find somewhere to accomodate you. Remember this if you’re not sure if your job is for you.</li>
+</ul>
+</div>
+<p>Who knows if this career change is the right choice, maybe one day I’ll be kicking myself for not sticking with Free Radical, but no one knows what the future holds, and from where I’m sitting I am very excited at the prospect of being a Jagex employee. I’m happy with the <a href="https://www.jagex.com/en-GB/careers">benefits</a> and everything else they offer, and I’m happy at the prospect of moving to Cambridge. I can’t wait to see people’s excitement when they see what we’re working on!</p>
+<p>Thanks for reading!</p>
+</section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+
+
+<div id="post-links">
+  <div class="columns is-desktop">
+
+    <div class="column left">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1617293178/blog/2020/06/student_meme_1_x80vax.png">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Previous Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/no-longer-a-student/" class="no-underline">No longer a student</a></h3>
+                <h6 class="subtitle is-6">An update about my experiences with finding employment after uni.</h6>
+              </div>
+            </div>
+          </div>
+        
+      
+    </div>
+
+    <div class="column right">
+      
+        
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="link-info p-3 w-full">
+                <small class="is-uppercase is-size-7 is-sans-serif">Next Post</small>
+                <h5 class="title is-5 m-0"><a href="../../blog/4-months-at-jagex/" class="no-underline">4 Months At Jagex</a></h3>
+                <h6 class="subtitle is-6">A short update about what I've been getting up to at Jagex.</h6>
+              </div>
+              <img src="https://res.cloudinary.com/aas-sh/image/upload/v1634662787/blog/2021/10/48375354_01_00_lvntr8.png">
+            </div>
+          </div>
+        
+      
+    </div>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column">
+        <h3 class="title is-5">Contact</h3>
+        <ul class="ml-1 ">
+          <li>
+            <a href="mailto:contact@aas.sh" class="no-underline">
+              <i class="las la-envelope-open-text"></i> contact@aas.sh
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/ashe" class="no-underline">
+              <i class="lab la-github"></i> github.com/ashe
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/itsashe" class="no-underline">
+              <i class="lab la-linkedin"></i></svg> linkedin.com/in/itsashe
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="column">
+        <h3 class="title is-5">About this blog</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i> 
+            Last updated: 
+            <a href="https://github.com/ashe/ashe.github.io">871ce24: Updated swiper sha (2024-07-27 09:40:18 +0100)</a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="../../">
+          <img src="../../assets/images/logo.png" alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+    <script src="../../assets/scripts/darkmode.js"></script>
+    <script src="../../assets/scripts/navbar-menu.js"></script>
+    <script src="../../assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="../../assets/thirdparty/katex/katex.min.css">
+    <script defer src="../../assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="../../assets/thirdparty/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);">
+    </script>
+
+    
+      <script src="../../assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="../../assets/scripts/init-scrollspy.js"></script>
+    
+  </body>
+
+</html>
