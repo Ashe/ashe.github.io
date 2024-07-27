@@ -29,7 +29,7 @@
       });
       swiperjs = (builtins.fetchTarball {
         url = "https://registry.npmjs.org/swiper/-/swiper-8.3.2.tgz";
-        sha256 = "1bn2zfg668zaj3sacqqnqn7df82801yq11wgx34xrd5qh6297x68";
+        sha256 = "0cwr1kvrsk0ryk923axikybjcjzlbjpj4jmms03a5m8n2blwpanf";
       });
       katex = (builtins.fetchTarball {
         url = "https://github.com/KaTeX/KaTeX/releases/download/v0.16.4/katex.tar.gz";
