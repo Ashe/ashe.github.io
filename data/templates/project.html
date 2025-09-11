@@ -1,0 +1,70 @@
+<section>
+  $partial("templates/includes/article.html")$
+</section>
+
+$if(project-posts)$
+  <section class="container is-max-desktop">
+    <h3 class="title">Related posts</h3>
+    <div class="swiper project-post-swiper small-slides px-5 pb-6">
+      <div class="swiper-wrapper pb-12">
+        $for(project-posts)$
+          <div class="swiper-slide">
+            $partial("templates/includes/post-preview-small.html")$
+          </div>
+        $endfor$
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <script>
+      var swiper = new Swiper(".project-post-swiper", {
+        slidesPerView: "auto",
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
+
+  </section>
+$endif$
+
+<div id="post-links">
+  <div class="columns">
+
+    <div class="column left">
+      $if(previous-post)$
+        $for(previous-post)$
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <img src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Previous Project</small>
+                <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
+                $if(subtitle)$<small class="subtitle">$subtitle$</small>$endif$
+              </div>
+            </div>
+          </div>
+        $endfor$
+      $endif$
+    </div>
+
+    <div class="column right">
+      $if(next-post)$
+        $for(next-post)$
+          <div class="post-link apply-shadow hover">
+            <div class="w-full is-flex is-flex-direction-row">
+              <div class="p-3 w-full">
+                <small class="uppercase text-sm">Next Project</small>
+                <h3 class="m-0"><a href="$url$" class="no-underline">$title$</a></h3>
+                $if(subtitle)$<small class="subtitle">$subtitle$</small>$endif$
+              </div>
+              <img src="$if(has-images)$$at-index("images", "0")$$else$$image$$endif$">
+            </div>
+          </div>
+        $endfor$
+      $endif$
+    </div>
+
+  </div>
+</div>

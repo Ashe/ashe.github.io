@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Metadata -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="$title$">
+    <meta property="og:description" content="$if(description)$$description$$else$$site-description$$endif$">
+    <meta property="og:url" content="$to-canonical(url)$">
+    <meta property="og:image" content="$if(has-images)$$at-index("images", "0")$$else$$if(image)$$image$$else$$to-canonical(site-logo)$$endif$$endif$">
+    <title>$title$</title>
+
+    <!-- Favicons -->
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml">
+    <link rel="alternate" type="application/atom+xml"  title="Atom Feed" href="/atom.xml">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/assets/images/favicon/site.webmanifest">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/thirdparty/line-awesome/css/line-awesome.min.css">
+    <link rel="stylesheet" href="/assets/thirdparty/swiperjs/swiper-bundle.min.css">
+
+    $if(slides)$
+      <link rel="stylesheet" href="/assets/thirdparty/revealjs/reveal.css">
+      $if(slide-theme)$
+        <link rel="stylesheet" href="/assets/thirdparty/revealjs/theme/$slide-theme$.css">
+      $else$
+        <link rel="stylesheet" href="/assets/thirdparty/revealjs/theme/black.css">
+      $endif$
+      $if(slide-code-theme)$
+        <link rel="stylesheet" href="/assets/css/themes/code/$slide-code-theme$.css">
+      $else$
+        <link rel="stylesheet" href="/assets/css/themes/code/rose-pine.css">
+      $endif$
+    $endif$
+
+    <!-- Important JS that needs to be loaded up front -->
+    <script src="/assets/scripts/init-darkmode.js"></script>
+    <script src="/assets/thirdparty/swiperjs/swiper-bundle.min.js"></script>
+    $if(slides)$
+      <script src="/assets/thirdparty/revealjs/reveal.js"></script>
+      <script src="/assets/thirdparty/revealjs/plugin/highlight/highlight.js"></script>
+      <script src="/assets/thirdparty/revealjs/plugin/markdown/markdown.js"></script>
+      <script src="/assets/thirdparty/revealjs/plugin/math/math.js"></script>
+    $endif$
+
+  </head>
+
+  <body>
+    $partial("templates/includes/nav.html")$
+
+    <main class="my-4">
+      $body$
+    </main>
+
+    $partial("templates/includes/footer.html")$
+
+    <script src="/assets/scripts/darkmode.js"></script>
+    <script src="/assets/scripts/navbar-menu.js"></script>
+    <script src="/assets/scripts/navbar-toc.js"></script>
+    <link rel="stylesheet" href="/assets/thirdparty/katex/katex.min.css">
+    <script defer src="/assets/thirdparty/katex/katex.min.js"></script>
+    <script type="text/javascript" script defer src="/assets/thirdparty/katex/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body);">
+    </script>
+
+    $if(toc)$
+      <script src="/assets/thirdparty/vanillajs-scrollspy/vanillajs-scrollspy.min.js"></script>
+      <script src="/assets/scripts/init-scrollspy.js"></script>
+    $endif$
+  </body>
+
+</html>

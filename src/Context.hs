@@ -1,0 +1,69 @@
+module Context
+( siteContext
+, feedContext
+, contentContext
+, blogPostContext
+, projectContext
+) where
+
+import Hakyll
+import Data.Default (def)
+
+import Config
+import Field
+
+--------------------------------------------------------------------------------
+
+siteContext :: Context String
+siteContext = headCommitField "git-head-commit" Commit
+           <> headCommitField "git-head-commit-hash" Hash
+           <> headCommitField "git-head-commit-full" Full
+           <> constField "item-type" "default"
+           <> concatField "concat"
+           <> markdownField "read-md"
+           <> slugField "slug"
+           <> atIndexField "at-index"
+           <> siteDetailsContext
+           <> defaultContext
+
+
+feedContext :: Context String
+feedContext = bodyField "description"
+           <> dateField "date" "%Y-%m-%d"
+           <> siteContext
+
+
+contentContext :: Tags -> Context String
+contentContext tags = dateField "date" "%B %e, %Y"
+                            <> allTagsField "tags" tags
+                            <> simpleListField "authors" "author"
+                            <> simpleListField "images" "image"
+                            <> constField "item-type" "post"
+                            <> teaserField "teaser" "posts-content"
+                            <> peekField 50 "peek" "posts-content"
+                            <> timeField "read-time" "posts-content"
+                            <> tableOfContentsField "toc" 4 def "posts-content"
+                            <> pathField "sourcefile"
+                            <> commitField "git-commit" Commit
+                            <> commitField "git-commit-hash" Hash
+                            <> siteContext
+
+
+blogPostContext :: Tags -> Context String
+blogPostContext = contentContext
+
+
+projectContext :: Tags -> Context String
+projectContext = contentContext
+
+--------------------------------------------------------------------------------
+
+siteDetailsContext :: Context String
+siteDetailsContext = constField "root" root
+                  <> canonicalUrlField "to-canonical" root
+                  <> constField "site-author" siteAuthor
+                  <> constField "site-author-username" siteAuthorUsername
+                  <> constField "site-description" siteDescription
+                  <> constField "site-logo" siteLogo
+                  <> constField "site-repo" siteRepo
+                  <> constField "site-repo-host" siteRepoHost

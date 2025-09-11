@@ -1,0 +1,13 @@
+// Collection of slides to be embedded in blog posts
+#slideshow {
+
+  // Sizing
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+
+  // Ensure reveal progress bar is at bottom
+  .progress {
+    margin: 0px;
+  }
+}

@@ -1,0 +1,48 @@
+// The tag cloud itself (visible on homepage and browse-by-tag pages)
+#tag-cloud {
+
+  // Sizing
+  padding: 1rem;
+
+  // Enlarge tags in tag-clouds
+  .tag {
+    font-size: 1rem;
+  }
+
+  // Invert colour for count
+  .has-addons .tag.count {
+    background-color: #252525;
+    color: #ffffff;
+  }
+}
+
+// Tag customisations
+.tag {
+
+  // Make tags have consistent font
+  font-family: 'Ubuntu', sans-serif;
+
+  // Revert changes to font size on request
+  &.unset-size {
+    font-size: unset;
+  }
+
+  /////////////////////
+  // Per-tag styling //
+  /////////////////////
+
+  &.C\+\+ {
+    background-color: #f34b7d;
+    color: #252525;
+  }
+
+  &.Game {
+    background-color: #40a97c;
+    color: #ffffff;
+  }
+
+  &.Lua {
+    background-color: #000080;
+    color: #ffffff;
+  }
+}

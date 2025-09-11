@@ -1,0 +1,15 @@
+// Third party imports
+@import "_thirdparty.scss";
+
+// General site imports
+@import "_base.scss";
+@import "_util.scss";
+@import "_reset.scss";
+@import "_fonts.scss";
+@import "_components.scss";
+@import "_pages.scss";
+
+// Enable dark mode
+.dark {
+  @import "_dark.scss";
+}

@@ -1,0 +1,123 @@
+/////////////////////
+// General styling //
+/////////////////////
+
+html {
+  background-color: rgba(37, 37, 37, 1);
+}
+
+html.dark {
+  background-color: rgba(16, 20, 41, 1);
+}
+
+body {
+  color: #252525;
+  background-color: #ffffff;
+  font-size: 1rem;
+  font-family: 'Ubuntu', sans-serif;
+  text-align: justify;
+
+  // Use serif fonts when not on mobile
+  @include tablet {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.25rem;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: left;
+  @include tablet {
+    font-weight: 500;
+  }
+}
+
+h1, .title.is-1, .subtitle.is-1 {
+  font-size: 1.625rem;
+  @include tablet {
+    font-size: 2.5rem;
+  }
+}
+
+h2, .title.is-2, .subtitle.is-2 {
+  font-size: 1.375rem;
+  @include tablet {
+    font-size: 2rem;
+  }
+}
+
+h3, .title.is-2, .subtitle.is-3 {
+  font-size: 1.25rem;
+  @include tablet {
+    font-size: 1.75rem;
+  }
+}
+
+h4, .title.is-4, .subtitle.is-4 {
+  font-size: 1.125rem;
+  @include tablet {
+    font-size: 1.5rem;
+  }
+}
+
+h5, .title.is-5, .subtitle.is-5 {
+  font-size: 1.1rem;
+  @include tablet {
+    font-size: 1.3rem;
+  }
+}
+
+h6, .title.is-6, .subtitle.is-6 {
+  font-size: 1.05rem;
+  @include tablet {
+    font-size: 1.15rem;
+  }
+}
+
+strong {
+  color: #252525;
+}
+
+header {
+  font-size: 110%;
+}
+
+a:hover, a:hover > * {
+  color: #5d8c91;
+}
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+
+img, video {
+  object-fit: cover;
+}
+
+code {
+  font-family: 'Fira Code', monospace;
+}
+
+////////////////////
+// Common classes //
+////////////////////
+
+.columns {
+  margin: unset;
+}
+
+.swiper-slide {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.la, .lab, .lad, .lal, .lar, .las {
+  font-size: 150%;
+  vertical-align: text-bottom;
+}
+
+.is-monospace {
+  font-family: 'Fira Code', monospace;
+}

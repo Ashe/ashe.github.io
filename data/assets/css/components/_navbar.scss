@@ -1,0 +1,71 @@
+// Everything inside the navbar
+#navbar-container {
+
+  // Show above all else
+  z-index: 50;
+
+  // Stretch full width
+  min-width: 100%;
+
+  // Always stick to top of the screen
+  position: -webkit-sticky;
+  position: sticky;
+  top: -1px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+
+  // Override normal padding of columns
+  .nav-section {
+    padding: 0.3rem;
+  }
+
+  // Appearance
+  font-family: monospace;
+  font-size: 0.95rem;
+  background-color: $white-bis;
+
+  // Text appearance
+  p, a, a > * {
+    color: #555555;
+  }
+
+  // Highlight all links when parent anchor hovered
+  a:hover, a:hover * {
+    color: #5d8c91;
+  }
+
+  // Theme toggle button
+  .theme-toggle button {
+
+    // Appearance
+    background-color: transparent;
+    &:not(:hover) {
+      color: #999999;
+    }
+    &:hover {
+      color: #5d8c91;
+    }
+  }
+}
+
+// Becomes visible when #nav-menu-trigger is hovered
+#nav-menu {
+
+  // Remove from dom and position just below navbar container
+  position: absolute;
+  top: 2rem;
+  left: 0px;
+  right: 0px;
+
+  // Hide by default
+  display: none;
+
+  // Appearance
+  background-color: $white;
+
+  // Columns mess up the appearance
+  .columns {
+    margin: 0px;
+  }
+}

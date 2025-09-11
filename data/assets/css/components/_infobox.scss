@@ -1,0 +1,84 @@
+// Info box snippets that can be used in articles
+.infobox {
+
+  // Positioning
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  padding: 1.5rem 1rem;
+
+  // Header text
+  > .header {
+    display: flex;
+    font-size: 1.25rem;
+    font-weight: 500;
+
+    :first-child {
+      display: flex;
+    }
+  }
+
+  // Captions
+  > .caption {
+    margin-top: 0.5rem;
+    padding-top: 0.25rem;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #252525;
+    font-size: 0.8em;
+  }
+
+  // Ensure infoboxes have standard font sizes
+  font-size: 1em;
+
+  // References are a special case as they are generated
+  &.references {
+    font-size: 1.1rem;
+    .header {
+      padding-bottom: 1rem;
+    }
+    .csl-entry {
+      padding: 0.5rem 0rem;
+      .csl-left-margin {
+        padding-right: 0.5rem;
+      }
+      * {
+        display: inline;
+      }
+    }
+  }
+
+  // Colours
+
+  &.note {
+    background-color: #a5d2ff;
+  }
+
+  &.help {
+    background-color: #85fcd2;
+  }
+
+  &.warning {
+    background-color: #ffbc89;
+  }
+
+  &.danger {
+    background-color: #ff8298;
+  }
+
+  &.live {
+    background-color: #ccff66;
+  }
+
+  &.gitrepo {
+    background-color: #ac9ddd;
+  }
+
+  &.itch {
+    background-color: #ea5b5b;
+  }
+
+  &.references {
+    background-color: #f5f5f5;
+  }
+}

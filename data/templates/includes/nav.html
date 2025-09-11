@@ -1,0 +1,126 @@
+<nav id="navbar-container">
+  <div class="container is-mobile is-max-desktop">
+    <div class="columns is-mobile">
+
+      <div class="column nav-section has-text-left">
+        <a id="nav-menu-trigger" class="icon-text">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M4 6h20 M4 12h20 M4 18h20"/>
+            </svg>
+          </span>
+          <span class="is-uppercase is-size-7">Menu</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-centered">
+        <a href="/">
+          <span class="is-size-7">aas.sh</span>
+        </a>
+      </div>
+
+      <div class="column nav-section has-text-right">
+        $if(toc)$
+          <a id="nav-toc-trigger">
+            <span class="mr-2 is-uppercase is-size-7">
+              <span class="mobile">Content</span>
+              <span class="desktop">Table of Contents</span>
+            </span>
+          </a>
+        $endif$
+
+        <span class="theme-toggle ml-2 my-auto">
+          <button id="theme-toggle-light" type="button" class="hidden">
+            <i class="lar la-moon is-clickable"></i>
+          </button>
+          <button id="theme-toggle-dark" type="button" class="hidden">
+            <i class="lar la-sun is-clickable"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="nav-menu" class="container is-max-desktop apply-shadow">
+    <div class="columns">
+      <div class="column">
+        <ul>
+          <li>
+            <a href="/projects/">
+              <i class="las la-cubes"></i> Projects
+            </a>
+          </li>
+          <li>
+            <a href="/blog/">
+              <i class="las la-comment"></i></svg> Posts
+            </a>
+          </li>
+          <li>
+            <a href="/archive/">
+              <i class="las la-archive"></i></svg> Archive
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <li>
+            <a href="/posts-by-project/">
+              <i class="las la-folder-open"></i></svg> Project Posts
+            </a>
+          </li>
+          <li>
+            <a href="/tags/">
+              <i class="las la-tags"></i></svg> Tags
+            </a>
+          </li>
+          <li>
+            <a href="/rss.xml">
+              <i class="las la-rss"></i></svg> RSS
+            </a>
+            <a href="/atom.xml">Atom</a>
+          </li>
+        </ul>
+      </div>
+      <div class="column">
+        <ul>
+          <li>
+            <a href="$site-repo-host$/$site-author-username$/">
+              <i class="lab la-github"></i></svg> GitHub
+            </a>
+          </li>
+          <li>
+            <a href="$site-repo-host$/$site-author-username$/dotfiles/">
+              <i class="las la-snowflake"></i></svg> Dotfiles
+            </a>
+          </li>
+          <li>
+            <a href="$site-repo$">
+              <i class="lab la-git"></i></svg> Source Code
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-11">
+        <hr class="m-0">
+        <p class="mt-2 px-3 is-size-7">
+          <i class="las la-code-branch"></i>
+          Last updated:
+          <a href="$site-repo$/commit/$git-head-commit-hash$">
+            $git-head-commit$
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  $if(toc)$
+    <div id="nav-toc" class="table-of-contents">
+      $toc$
+    </div>
+  $endif$
+
+</nav>

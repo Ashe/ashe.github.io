@@ -1,0 +1,25 @@
+<header class="p-2">
+  <h1 class="title is-1">Browse tags</h1>
+  $tag-cloud$
+</header>
+
+$if(tag)$
+  <section class="p-2 mt-1">
+    <h1 class="title is-1">Posts with tag:
+      <span class="tag unset-size $tag$ ml-4">$tag$</span>
+    </h1>
+    <div>
+
+      <div id="post-list" class="mx-auto">
+        <div class="is-flex is-flex-wrap-wrap">
+          $for(posts)$
+          <div class="post">
+            $partial("templates/includes/post-preview-small.html")$
+          </div>
+          $endfor$
+        </div>
+      </div>
+
+    </div>
+  </section>
+$endif$

@@ -1,0 +1,6 @@
+.direnv/
+build/
+dist/
+dist-newstyle/
+result
+result/

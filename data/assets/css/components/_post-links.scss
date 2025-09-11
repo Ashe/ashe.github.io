@@ -1,0 +1,79 @@
+// Links to the previous and next posts
+#post-links {
+
+  // Rework columns
+  .column {
+    padding: 0rem;
+    margin: 3rem;
+    &.left {
+      margin-left: 0rem;
+      * {
+        text-align: left;
+      }
+    }
+    &.right {
+      margin-right: 0rem;
+      .post-link {
+        margin-left: auto;
+      }
+      * {
+        text-align: right;
+      }
+    }
+  }
+
+  // Both links
+  .post-link {
+
+    // Sizing
+    width: 100%;
+    @include widescreen {
+      width: 90%;
+    }
+    @include fullhd {
+      width: 80%;
+    }
+
+    // Images
+    img {
+
+      // Positioning
+      margin-top: auto;
+      margin-bottom: auto;
+      display: block;
+      object-fit: cover;
+
+      // Sizing
+      width: 12rem;
+      height: 8rem;
+      @include desktop {
+        width: 16rem;
+        height: 9rem;
+      }
+    }
+
+    // Textual content
+    .link-info {
+
+      // Position in middle of box on mobile
+      margin: auto 0;
+      @include tablet {
+        margin: 0;
+      }
+
+      // 'Previous post' / 'Next post'
+      small {
+        color: #999999;
+      }
+
+      // Subtitle text
+      .subtitle {
+        margin-top: 0rem;
+        display: none;
+        @include tablet {
+          display: inline;
+        }
+      }
+    }
+  }
+}

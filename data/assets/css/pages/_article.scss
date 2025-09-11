@@ -1,0 +1,59 @@
+// Rules that only apply to article content
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+*+p, *+ul, *+ol, *+dl, *+pre, *+address, *+fieldset, *+figure {
+  margin-top: 1rem;
+}
+
+a {
+  color: #252525;
+  text-decoration: underline;
+}
+
+ol, ul {
+  margin-left: 2.25rem;
+  li:not(:first-child) {
+    margin-top: 0.5rem;
+  }
+}
+
+ul {
+  list-style-type: disc;
+}
+
+table {
+  margin: 0.5rem;
+  th {
+    font-weight: boldest;
+  }
+  th, td {
+    vertical-align: middle;
+    padding: 0.25rem 1rem;
+    border: 1px solid #dfdfdf;
+  }
+  tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+}
+
+.citation {
+  vertical-align: top;
+  margin-left: 0.05rem;
+  font-size: 0.7rem;
+}
+
+.math {
+  &.display {
+    display: block;
+    overflow-x: auto;
+  }
+  &:not(.inline) {
+    font-size: 1rem;
+    @include tablet {
+      font-size: 1.25rem;
+    }
+  }
+}

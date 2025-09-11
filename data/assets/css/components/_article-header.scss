@@ -1,0 +1,31 @@
+// Article header containing title, description, tags etc
+#article-header {
+
+  // Sizing
+  margin: 2rem auto;
+
+  // Make subtitles more compact
+  .subtitle {
+    margin-top: -1.2rem;
+    text-align: left;
+    @include tablet {
+      text-align: justify;
+    }
+  }
+
+  // Raise description up
+  .description {
+    margin-top: -1rem;
+    font-size: 1rem;
+    text-align: left;
+    @include tablet {
+      font-size: 1.25rem;
+      text-align: justify;
+    }
+  }
+
+  // Article authors
+  .authors {
+    color: #999999;
+  }
+}

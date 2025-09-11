@@ -1,0 +1,177 @@
+/////////////
+// General //
+/////////////
+
+body {
+  color: #cbd9f4;
+  background-color: #172136;
+}
+
+strong {
+  color: #cbd9f4;
+}
+
+a, a > * {
+  color: #8cabe6;
+}
+
+a:hover, a:hover > * {
+  color: #8fd8e0;
+}
+
+////////////////////////
+// General components //
+////////////////////////
+
+blockquote {
+  border-left-color: #cbd9f4;
+}
+
+footer {
+  background-color: rgba(16, 20, 41, 1);
+  a, a > * {
+    color: #8cabe6;
+  }
+}
+
+.title, .subtitle {
+  color: #cbd9f4;
+}
+
+.post-preview-featured, .post-preview-small {
+  .internal {
+    background-color: #273146;
+  }
+}
+
+.caption-frame {
+  background-color: #273146;
+  .caption-source {
+    &, a:not(:hover) {
+      color: #8cabe6;
+    }
+  }
+}
+
+#article-header .authors {
+  color: #cbd9f4;
+}
+
+#tag-cloud .has-addons .tag.count {
+  background-color: #cbd9f4;
+  color: #252525;
+}
+
+.table-of-contents a.active {
+  text-shadow: 0px 0px 1px #b6cfff;
+}
+
+.post-link {
+  background-color: #273146;
+}
+
+//////////////
+// Articles //
+//////////////
+
+article {
+
+  table {
+    background-color: #172136;
+    th, td {
+      color: #cbd9f4;
+      border-color: #273146;
+    }
+    tr:nth-child(even) {
+      background-color: #202439;
+    }
+  }
+
+}
+
+//////////////////////
+// Navbar and menus //
+//////////////////////
+
+#navbar-container {
+  background-color: #273146;
+  hr {
+    background-color: #273146;
+  }
+  .theme-toggle button {
+    &:not(:hover) {
+      color: #8cabe6;
+    }
+    &:hover {
+      color: #8fd8e0;
+    }
+  }
+  p, a, a > * {
+    color: #8cabe6;
+  }
+  a:hover, a:hover * {
+    color: #8fd8e0;
+  }
+}
+
+#nav-menu {
+  background-color: #172136;
+}
+
+#nav-toc {
+  background-color: #172136;
+}
+
+/////////////
+// Infobox //
+/////////////
+
+.infobox {
+
+  .caption {
+    border-top-color: #cbd9f4;
+  }
+
+  &.note {
+    background-color: #33608c;
+  }
+
+  &.help {
+    background-color: #24604b;
+  }
+
+  &.warning {
+    background-color: #897e00;
+  }
+
+  &.danger {
+    background-color: #661423;
+  }
+
+  &.live {
+    background-color: #339933;
+  }
+
+  &.gitrepo {
+    background-color: #32255e;
+  }
+
+  &.itch {
+    background-color: #4f2424;
+  }
+
+  &.references {
+    background-color: #273146;
+  }
+}
+
+/////////////////
+// Source code //
+/////////////////
+
+article {
+  :not(pre) > code {
+    background-color: #282a36;
+    color: #ff79c6;
+  }
+}

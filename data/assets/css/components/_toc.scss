@@ -1,0 +1,132 @@
+// Table of contents menu
+.table-of-contents {
+
+  // Force sans-serif font
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.95rem;
+  text-align: left;
+
+  // Sizing
+  width: fit-content;
+
+  // Indent sub-links
+  li {
+    margin-left: 1.5rem;
+  }
+
+  // Change link appearance
+  a {
+
+    // Change colours
+    color: #999999;
+    &:hover {
+      color: #5d8c91;
+    }
+
+    // Position icons next to each link
+    &::before {
+      color: #777777;
+      margin-right: 0.3rem;
+      content: "\f105";
+      font-family: 'Line Awesome Free';
+      font-weight: 900;
+    }
+
+    // Change appearance of current section
+    &.active {
+      text-shadow: 0px 0px 1px #777777;
+      &::before {
+        content: "\f101";
+      }
+    }
+  }
+}
+
+// 'Table of Contents' button in navbar
+#nav-toc-trigger {
+
+  // Placement
+  vertical-align: top;
+
+  // Hide on large screens
+  @include fullhd {
+    display: none;
+  }
+
+  // Mobile version
+  .mobile {
+    display: inline-block;
+    @include tablet {
+      display: none;
+    }
+  }
+
+  // Non-mobile version
+  .desktop {
+    display: none;
+    @include tablet {
+      display: inline-block;
+      @include fullhd {
+        display: none;
+      }
+    }
+  }
+}
+
+// Becomes visible when #toc-expand-trigger is hovered
+#nav-toc {
+
+  // Remove from dom and position just below navbar container to the right
+  position: absolute;
+  top: 2rem;
+  left: 0px;
+  right: 0px;
+
+  // Hide by default
+  display: none;
+
+  // Appearance
+  padding: 20px;
+  background-color: $white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  // When not on mobile, popup moves to right side
+  @include tablet {
+    left: unset;
+  }
+
+  // Ensure navbar toc is hidden when trigger also hides
+  @include fullhd {
+    visibility: hidden;
+  }
+}
+
+// Becomes visible when screen is wide
+#side-toc {
+
+  // Hide by default
+  display: none;
+
+  // Show when screen is wide enough to accommodate
+  @include fullhd {
+
+    // Show on full screen
+    display: block;
+
+    // Style toc differently when displayed to the side
+    .table-of-contents {
+      position: sticky;
+      top: 45px;
+      float: right;
+      padding: 2rem 0rem;
+    }
+  }
+}
+
+// Shrink main article to 80% when toc is visible
+article .can-shrink-for-toc {
+  max-width: 100%;
+  @include fullhd {
+    width: 80%;
+  }
+}

@@ -1,0 +1,62 @@
+// About page content
+& {
+
+  // First section is special
+  section#profile {
+
+    // Positioning
+    margin-top: 4rem;
+
+    // Actual profile image
+    img {
+
+      // Sizing
+      width: 100%;
+      @include tablet {
+        height: 24rem;
+        @include widescreen {
+          height: 26rem;
+        }
+      }
+
+      // Appearance
+      object-fit: cover;
+    }
+  }
+
+  // Entries should atlernate between being reversed
+  section:not(.reverse) .entries .entry:nth-child(odd),
+  section.reverse .entries .entry:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  // Section headers
+  section .section-header {
+    .title, .subtitle {
+      text-align: center;
+      padding: 0rem 3rem;
+      @include tablet {
+        text-align: left;
+      }
+    }
+  }
+
+  // Subsequent entries
+  .entry {
+
+    // Images
+    img {
+
+      // Positioning
+      display: block;
+
+      // Sizing
+      margin: auto;
+      height: 24rem;
+
+      // Appearance
+      border-radius: 0.25rem;
+      object-fit: cover;
+    }
+  }
+}

@@ -1,0 +1,80 @@
+<footer>
+  <div class="container is-max-desktop">
+    <div class="columns">
+
+      <div class="column mb-1">
+        <h3 class="title is-5">Links</h3>
+        <div class="columns is-mobile ml-1">
+          <div class="column p-0">
+            <ul>
+              <li>
+                <a href="/" class="no-underline">
+                  <i class="las la-home"></i> Home
+                </a>
+              </li>
+              <li>
+                <a href="/projects/" class="no-underline">
+                  <i class="las la-cubes"></i> Projects
+                </a>
+              </li>
+              <li>
+                <a href="/blog/" class="no-underline">
+                  <i class="las la-comment"></i></svg> Posts
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="column p-0">
+            <ul>
+              <li>
+                <a href="/tags/" class="no-underline">
+                  <i class="las la-tags"></i></svg> Tags
+                </a>
+              </li>
+              <li>
+                <a href="/archive/" class="no-underline">
+                  <i class="las la-archive"></i></svg> Archive
+                </a>
+              </li>
+              <li>
+                <a href="/rss.xml" class="no-underline">
+                  <i class="las la-rss"></i></svg> RSS
+                </a>
+                <a href="/atom.xml" class="no-underline">Atom</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="column mb-1">
+        <h3 class="title is-5">About</h3>
+        <ul class="ml-1">
+          <li>
+            Built with <i class="las la-code"></i> and <i class="lar la-heart"></i> using <a href="https://jaspervdj.be/hakyll/">Hakyll</a>
+          </li>
+          <li id="git-hash">
+            <i class="las la-code-branch"></i>
+            Last updated:
+            <a href="$site-repo$/commit/$git-head-commit-hash$">
+              $git-head-commit-full$
+            </a>
+          </li>
+          <li>
+            <a href="https://builtwithnix.org" rel="nofollow">
+              <img src="https://builtwithnix.org/badge.svg" alt="Built with Nix">
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="footer-logo" class="column">
+        <a href="/">
+          <img src="/assets/images/logo.png"
+               alt="Aas.sh site logo">
+        </a>
+      </div>
+
+    </div>
+  </div>
+</footer>
