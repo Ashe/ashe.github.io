@@ -41,6 +41,11 @@
     color: #ffffff;
   }
 
+  &.Clojure {
+    background-color: #db5855;
+    color: #ffffff;
+  }
+
   &.Game {
     background-color: #40a97c;
     color: #ffffff;
@@ -59,5 +64,10 @@
   &.Unity {
     background-color: #555555;
     color: #ffffff;
+  }
+
+  &.Web {
+    background-color: #f1e05a;
+    color: #252525;
   }
 }
