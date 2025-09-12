@@ -46,6 +46,8 @@ Without further ado, let's start making a game!
 
 :::{.warning header="Outdated code"}
 This post is a little bit old, but I know some people are still using this tutorial for getting started with [Apecs](https://hackage.haskell.org/package/apecs) --- feel free to continue to do so, although you might need to consult the documentation and fix some of the references to the old API.
+
+If you want to read a more up-to-date tutorial with links to each commit in a step-by-step guide, check out [Notakto](/blog/notakto-a-haskell-game-with-apecs-and-raylib/).
 :::
 
 ## Initialising
