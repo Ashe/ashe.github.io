@@ -24,7 +24,7 @@ GitHub repository for this website can be found [here](https://github.com/Ashe/V
 
 # What is this?
 
-I build this as part of my introduction to both [Haxe](https://haxe.org/) and [Heaps](https://heaps.io/). I started off with their [sample projects](https://heaps.io/samples/) and iterated until I had a good handle about what tools were available. The result is something similar to another project of mine, [HexagonalHS](/project/hexagonalhs/).
+I built this as part of my introduction to both [Haxe](https://haxe.org/) and [Heaps](https://heaps.io/). I started off with their [sample projects](https://heaps.io/samples/) and iterated until I had a good handle about what tools were available. The result is something similar to another project of mine, [HexagonalHS](/project/simpleroguelikehs/).
 
 You can test this project live at [https://aas.sh/Voronoi.haxe](https://aas.sh/Voronoi.haxe/).
 
