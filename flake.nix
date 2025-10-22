@@ -87,7 +87,6 @@
 
       # Build the website as a package
       packages = flake-utils.lib.flattenTree {
-        inherit (website);
         default = website.site-with-thirdparty;
       };
 
@@ -110,11 +109,11 @@
         # Build tools and development utilities
         buildInputs = with pkgs; [
           haskellPackages.cabal-install
-            haskellPackages.haskell-language-server
-            haskellPackages.ghcid
-            haskellPackages.ormolu
-            haskellPackages.hlint
-            git
+          haskellPackages.haskell-language-server
+          haskellPackages.ghcid
+          haskellPackages.ormolu
+          haskellPackages.hlint
+          git
         ];
 
         # Environment variables for your application
@@ -123,7 +122,7 @@
           echo "✓ Haskell development shell ready"
           echo "✓ Thirdparty assets available at: \$THIRDPARTY"
           echo "✓ Use: cabal run, cabal build, cabal repl, etc."
-          '';
+        '';
 
         # Make the thirdparty directory available to Nix builds too
         THIRDPARTY = thirdpartyDir;
